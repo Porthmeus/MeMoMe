@@ -17,6 +17,7 @@ bigg_metabolies = read.table("Databases/BiGG/bigg_models_metabolites.tsv", sep =
 summary(bigg_metabolies)
 ```
 ```{r}
+setwd("/home/td/sshfs_work/clean/MeMoMe")
 modelseed_metabolies = read.table("Databases/ModelSEED/compounds.tsv", sep = '\t', head = TRUE)
 summary(modelseed_metabolies)
 ```
