@@ -3,10 +3,21 @@ title: "Database documentation"
 output:
     md_document:
         variant: markdown_github
+        pandoc_args: ["--wrap=none"]
 ---
+## Problems with downlaoded files
+There is sth. weird going on when download the files via curl
+```{verbatim}
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  (
+README.rmd#14): line 103 did not have 21 elements
+```
 ```{r}
 setwd("/home/td/sshfs_work/clean/MeMoMe")
 bigg_metabolies = read.table("Databases/BiGG/bigg_models_metabolites.tsv", sep = '\t', head = TRUE)
 summary(bigg_metabolies)
+```
+```{r}
+modelseed_metabolies = read.table("Databases/ModelSEED/compounds.tsv", sep = '\t', head = TRUE)
+summary(modelseed_metabolies)
 ```
 
