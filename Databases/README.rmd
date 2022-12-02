@@ -1,0 +1,12 @@
+---
+title: "Database documentation"
+output:
+    md_document:
+        variant: markdown_github
+---
+```{r}
+setwd("/home/td/sshfs_work/clean/MeMoMe")
+bigg_metabolies = read.table("Databases/BiGG/bigg_models_metabolites.tsv", sep = '\t', head = TRUE)
+summary(bigg_metabolies)
+```
+
