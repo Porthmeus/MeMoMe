@@ -3,7 +3,6 @@ import os
 import urllib.request
 from pathlib import Path
 
-
 def create_folder(path: Path) -> Path:
     """
     :param path: Folder where we want to create the new Database folder
@@ -16,6 +15,9 @@ def create_folder(path: Path) -> Path:
         db_path.mkdir()
     except FileExistsError:
         return Path("")
+    except FileNotFoundError:
+        return Path("")
+
     return db_path
 
 
@@ -26,7 +28,7 @@ def download_modelseed(path: Path):
         path.joinpath(Path("modelSeed.tsv")))
 
 
-def download():
+def download() -> bool:
     """
     This method creates a folder to store the databases and also downloads them
     :return:
@@ -38,6 +40,6 @@ def download():
     database_path = create_folder(this_path.parent.parent)
     if database_path == "":
         # Error: We could not create the folder
-        sys.exit(1)
+        return False
     else:
         download_modelseed(database_path)
