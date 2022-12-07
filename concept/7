@@ -1,0 +1,67 @@
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
+set number
+set columns=85
+
+""" Enable syntax highlight for snakemake files
+au BufNewFile,BufRead Snakefile set syntax=snakemake
+au BufNewFile,BufRead snakefile set syntax=snakemake
+au BufNewFile,BufRead *.smk set syntax=snakemake
+
+""" change keymappings
+inoremap jj <Esc>
+
+call plug#begin('~/.vim/plugged')
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+Plug 'jpalardy/vim-slime'
+Plug 'snakemake/snakemake', {'rtp': 'misc/vim'}
+Plug 'jalvesaq/nvim-r'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-rmarkdown'
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'lukas-reineke/indent-blankline.nvim'
+endif
+
+Plug 'zchee/deoplete-jedi'
+Plug 'wellle/tmux-complete.vim'
+
+call plug#end()
+
+""" Slime config
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "0."}
+let g:slime_python_ipython = 1
+
+if has('nvim')
+    """ Deoplete config
+    let g:deoplete#enable_at_startup = 1
+    call deoplete#custom#option('source','r','omni')
+end
+
+""" indent-blankline config
+vim.opt.list = true
+vim.opt.listchars:append 'eol:↴'
+
+require('indent_blankline').setup {
+    show_end_of_line = true,
+}
+
+""" nvim-r custom
+let R_disable_cmds =['R_assign']
+let R_assign = 0
