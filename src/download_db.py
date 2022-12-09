@@ -2,6 +2,20 @@ import sys
 import os
 import urllib.request
 from pathlib import Path
+from enum import Enum
+from typing import Dict
+
+
+class Database(Enum):
+    ModelSeed = "modelSeed.tsv"
+    BiGG = "BiGG.tsv"
+
+
+database_links: Dict[Database, str] = {
+    Database.ModelSeed: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv",
+    Database.BiGG: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
+}
+
 
 def create_folder(path: Path) -> Path:
     """
@@ -21,11 +35,15 @@ def create_folder(path: Path) -> Path:
     return db_path
 
 
-def download_modelseed(path: Path):
-    # TODO Findout what happens when retrieving the file fails and handle it
-    urllib.request.urlretrieve(
-        "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv",
-        path.joinpath(Path("modelSeed.tsv")))
+def _download(path: Path, db: Database):
+    """
+    :param path: Path to a folder where the db should be stored, in our case this should the /Databases/ folder
+    :param db: which db to download
+    :return:
+    """
+    print("Downloading + " + str(db.value) + " +  to " + str(path))
+    # TODO Find out what happens when retrieving the file fails and handle it
+    urllib.request.urlretrieve(database_links[db], path.joinpath(Path(str(db.value))))
 
 
 def download() -> bool:
@@ -37,9 +55,10 @@ def download() -> bool:
     # ../src i.e. in the MeMoMe main directory
     this_path: Path = Path(__file__)
     # path where we want to save the downloaded files
-    database_path = create_folder(this_path.parent.parent)
-    if database_path == "":
+    database_path: Path = create_folder(this_path.parent.parent)
+    if database_path == Path(""):
         # Error: We could not create the folder
         return False
     else:
-        download_modelseed(database_path)
+        for k, v in database_links.items():
+            _download(database_path, k)
