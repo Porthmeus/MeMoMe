@@ -9,11 +9,13 @@ from typing import Dict
 class Database(Enum):
     ModelSeed = "modelSeed.tsv"
     BiGG = "BiGG.tsv"
+    VMH = "vmh.json"
 
 
 database_links: Dict[Database, str] = {
     Database.ModelSeed: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv",
-    Database.BiGG: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
+    Database.BiGG: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt",
+    Database.VMH: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
 }
 
 
@@ -62,3 +64,14 @@ def download() -> bool:
     else:
         for k, v in database_links.items():
             _download(database_path, k)
+
+    if Database.VMH in database_links:
+        #handle special casee for vmh
+        with open(database_path.joinpath(Database.VMH.value), mode='r+') as f:
+            content: str = f.read()
+            # This will break if the link changes
+            content = content.removeprefix("Ext.data.JsonP.callback19(")
+            content = content.removesuffix(");")
+            f.seek(0)
+            f.write(content)
+            f.truncate()
