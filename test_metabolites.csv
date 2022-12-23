@@ -1,0 +1,31 @@
+"ID","Source","Name","Formula","Charge","SMILES","InChi","InChiKey","Molfile","XML_file","SDF_file","Matching","Differentially protonated","Match"
+"cpd00047","ModelSEED","Formate","CHO2",-1,"[O-]C=O","InChI=1S/CH2O2/c2-1-3/h1H,(H,2,3)/p-1","BDAGIHXWWSANSR-UHFFFAOYSA-M","None",,,"YES","NO","for"
+"cpd00220","ModelSEED","Riboflavin","C17H19N4O6",-1,"OC[C@H]([C@H]([C@H](Cn1c2cc(C)c(cc2nc2c1nc(O)nc2=O)C)O)O)O","InChI=1S/C17H20N4O6/c1-7-3-9-10(4-8(7)2)21(5-11(23)14(25)12(24)6-22)15-13(18-9)16(26)20-17(27)19-15/h3-4,11-12,14,22-25H,5-6H2,1-2H3,(H,20,26,27)/p-1/t11-,12+,14-/m0/s1","AUNGANRZJHBGPY-SCRDCRAPSA-M","None",,,"YES","YES","ribflv"
+"for","VMH","Formate","CH1O2",-1,"[H]C([O-])=O","InChI=1S/CH2O2/c2-1-3/h1H,(H,2,3)/p-1","BDAGIHXWWSANSR-UHFFFAOYSA-M","chemical_structures/VMH_manually_retrieved/for.mol",,,"YES","NO","cpd00047"
+"ribflv","VMH","Riboflavin","C17H20N4O6",0,"[H]OC([H])([H])[C@@]([H])(O[H])[C@@]([H])(O[H])[C@@]([H])(O[H])C([H])([H])N1C2=NC(=O)N([H])C(=O)C2=NC2=C([H])C(=C(C([H])=C12)C([H])([H])[H])C([H])([H])[H]","InChI=1S/C17H20N4O6/c1-7-3-9-10(4-8(7)2)21(5-11(23)14(25)12(24)6-22)15-13(18-9)16(26)20-17(27)19-15/h3-4,11-12,14,22-25H,5-6H2,1-2H3,(H,20,26,27)/t11-,12+,14-/m0/s1","AUNGANRZJHBGPY-SCRDCRAPSA-N","chemical_structures/VMH_manually_retrieved/ribflv.mol",,,"YES","YES","cpd00220"
+"cpd00204","modelSEED","Carbon monoxide","CHO",1,"O=[CH+]",,"UGFAIRIUMAVXCW-UHFFFAOYSA-N",,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+"co: CO: 0",,,,,,,,,,,,,
+"cpd00038: C10H13N5O14P3: -3",,,,,,,,,,,,,
+"gtp: C10H12N5O14P3: -4",,,,,,,,,,,,,
+"cpd00047: CHO2: -1",,,,,,,,,,,,,
+"for: CH1O2: -1",,,,,,,,,,,,,
+"cpd00393: C19H17N7O6: -2",,,,,,,,,,,,,
+"fol: C19H18N7O6: -1",,,,,,,,,,,,,
+"cpd00081: HO3S: -1",,,,,,,,,,,,,
+"so3: O3S: -2",,,,,,,,,,,,,
+"cpd02992: C24H40N3O16R: 0",,,,,,,,,,,,,
+"core4: C24H40N3O15X: 0",,,,,,,,,,,,,
+"cpd00268: HO3S2: -1",,,,,,,,,,,,,
+"tsul: O3S2: -2",,,,,,,,,,,,,
+"cpd01092: C4H5N4O3: -1",,,,,,,,,,,,,
+"alltn: C4H6N4O3: 0",,,,,,,,,,,,,
