@@ -35,7 +35,7 @@ jobs:
         with:
             miniforge-variant: Mambaforge
             miniforge-version: latest
-            activate-environment: my-env
+            auto-activate-base: true
             use-mamba: true
 
       - name: Set cache date
@@ -48,13 +48,10 @@ jobs:
         id: cache
 
       - name: Update environment
-        run: mamba env update -n my-env -f requirements.yml 
+        run: mamba env update -n base -f requirements.yml 
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run tests
         shell: bash
         run:
-          conda init
-          conda activate my-env
-          ls
           python -m unittest
