@@ -57,4 +57,4 @@ jobs:
           conda init
           conda activate my-env
           ls
-          python -m unittests
+          python -m unittest
