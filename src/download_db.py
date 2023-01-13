@@ -1,10 +1,8 @@
 import urllib.request
 from pathlib import Path
-from enum import Enum
-from typing import Dict
 from urllib.error import URLError
 
-from config import *
+from src.config import *
 
 
 def create_folder(path: Path) -> Path:
