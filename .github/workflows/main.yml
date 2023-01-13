@@ -35,7 +35,7 @@ jobs:
         with:
             miniforge-variant: Mambaforge
             miniforge-version: latest
-            auto-activate-base: true
+            activate-environment: env
             use-mamba: true
 
       - name: Set cache date
@@ -48,7 +48,7 @@ jobs:
         id: cache
 
       - name: Update environment
-        run: mamba env update -n base -f requirements.yml 
+        run: mamba env update -n env -f requirements.yml 
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run tests
