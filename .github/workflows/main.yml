@@ -54,6 +54,6 @@ jobs:
       - name: Run tests
         shell: bash 
         run:
-          conda activaste my-env
+          mamba activate my-env
           ls
           python -m unittests
