@@ -52,8 +52,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run tests
-        shell: bash 
+        shell: bash
         run:
+          conda init
           conda activate my-env
           ls
           python -m unittests
