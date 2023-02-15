@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
+
 """
 Main entry point of the program
 """
 import argparse
-from download_db import download
+from src.download_db import download
 
 
 def main(args: argparse.Namespace):
