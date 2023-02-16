@@ -2,6 +2,7 @@ name: MeMoMe
 channels:
   - conda-forge
   - defaults
+  - mcs07
 dependencies:
   - _openmp_mutex
   - blas
@@ -29,6 +30,7 @@ dependencies:
   - pandas
   - pandoc
   - pip
+  - pubchempy
   - pyparsing
   - python
   - python-dateutil
