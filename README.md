@@ -11,6 +11,10 @@ or
 
 `mamba env create --file=requirements.yml` 
 
+if you just want to update a the environment use
+
+`mamba env update -f requirements.yml`
+
 
 ## Run Tests
 python -m unittest
