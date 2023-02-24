@@ -10,14 +10,15 @@ import libsbml as sbml
 import re
 import pandas as pd
 from os.path import exists
+from pathlib import Path
 
-def getMetaboliteInfo_SBML3(modelfile: str) -> pd.DataFrame:
+def parseMetaboliteInfoFromSBML(modelfile: Path) -> pd.DataFrame:
     '''
     This function reads an SBML file an returns a data frame with relevant information on all metabolites in the model
     '''
     # handle non-existing files as sbml won't complain
-    if not exists(modelfile):
-        raise FileExistsError(modelfile + " does not exist")
+    if not modelfile.exists():
+        raise FileExistsError(str(modelfile) + " does not exist")
     # read the sbml file
     reader = sbml.SBMLReader()
     doc = reader.readSBMLFromFile(modelfile)

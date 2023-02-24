@@ -8,7 +8,6 @@ Get a list of metabolite names, search pubchem for it and retrieve an InChI/Smil
 
 
 import pubchempy as pcp
-from src.getMetaboliteInformation import getMetaboliteInfo_SBML3
 import pandas as pd
 import numpy as np
 import time
