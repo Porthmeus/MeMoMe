@@ -35,7 +35,8 @@ jobs:
         with:
             miniforge-variant: Mambaforge
             miniforge-version: latest
-            activate-environment: env
+            activate-environment: anaconda-client-env
+            environment-file: requierements.yml
             use-mamba: true
 
       - name: Set cache date
@@ -54,5 +55,5 @@ jobs:
       - name: Run tests
         shell: bash
         run:
-          mamba activate MeMoMe
+          conda ls
           python -m unittest
