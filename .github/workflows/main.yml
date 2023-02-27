@@ -55,5 +55,5 @@ jobs:
       - name: Run tests
         shell: bash
         run:
-          conda ls
+          conda list
           python -m unittest
