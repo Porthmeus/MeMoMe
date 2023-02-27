@@ -54,4 +54,5 @@ jobs:
       - name: Run tests
         shell: bash
         run:
+          mamba activate MeMoMe
           python -m unittest
