@@ -36,7 +36,9 @@ jobs:
             miniforge-variant: Mambaforge
             miniforge-version: latest
             activate-environment: env
-            environment-file: requirements.yml
+            # The env should be cached so we should no try to 
+            # build a new one everytime
+            # environment-file: requirements.yml
             use-mamba: true
 
       - name: Set cache date
