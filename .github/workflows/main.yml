@@ -35,7 +35,7 @@ jobs:
         with:
             miniforge-variant: Mambaforge
             miniforge-version: latest
-            activate-environment: anaconda-client-env
+            activate-environment: env
             environment-file: requirements.yml
             use-mamba: true
 
