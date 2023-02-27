@@ -53,7 +53,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run tests
-        shell: bash
+        shell: bash -el {0}
         run: | 
+          conda activate MeMoMe
           conda list
           python -m unittest
