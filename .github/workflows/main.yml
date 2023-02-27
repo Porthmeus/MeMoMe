@@ -57,7 +57,7 @@ jobs:
       - name: Run tests
         shell: bash -el {0}
         run: | 
-          conda list
+          # conda list
           conda activate env
-          conda list
+          # conda list
           python -m unittest
