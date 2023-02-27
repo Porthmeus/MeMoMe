@@ -26,7 +26,7 @@ def downloadElements() -> pd.DataFrame:
     elements = pd.read_csv("https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV?response_type=save&response_basename=PubChemElements_all")
     return(elements)
 
-def looksLikeSumFormula(string:str, atoms:list = atoms_list) -> bool:
+def looksLikeSumFormula(string:str, atoms:list[str] = atoms_list) -> bool:
     '''
     Takes a string and tries to determine if it is likely a sum formula
     @atoms: a list of all atom symbols from the elements table
@@ -62,7 +62,7 @@ def looksLikeSumFormula(string:str, atoms:list = atoms_list) -> bool:
     else:
         return(False)
 
-def removeSumFormulaFromName(name:str, atoms:list = atoms_list) -> str:
+def removeSumFormulaFromName(name:str, atoms:list[str] = atoms_list) -> str:
     '''
     Takes a name of a metabolite and removes sum formulas, if they should be given for some reasons
     '''
@@ -89,7 +89,7 @@ def downloadCompInfo(metabolite:str) -> pd.DataFrame:
 
 
     
-def getPubchemInfo(metabolites:list) -> pd.DataFrame:
+def getPubchemInfo(metabolites:list[str]) -> pd.DataFrame:
     '''
     Go through a list of metabolites and return the info from a pubchem search of them as a pandas dataframe
     '''
