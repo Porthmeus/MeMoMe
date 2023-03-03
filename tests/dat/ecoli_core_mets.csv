@@ -1,0 +1,1803 @@
+,ID,Name,Charge,Compartment,Chemical_formula,Annotation_source,Annotation_value
+0,M_glc__D_e,D-Glucose,0,e,C6H12O6,bigg.metabolite,glc__D
+1,M_glc__D_e,D-Glucose,0,e,C6H12O6,biocyc,META:Glucopyranose
+2,M_glc__D_e,D-Glucose,0,e,C6H12O6,chebi,CHEBI:12965
+3,M_glc__D_e,D-Glucose,0,e,C6H12O6,chebi,CHEBI:20999
+4,M_glc__D_e,D-Glucose,0,e,C6H12O6,chebi,CHEBI:4167
+5,M_glc__D_e,D-Glucose,0,e,C6H12O6,chebi,CHEBI:17634
+6,M_glc__D_e,D-Glucose,0,e,C6H12O6,hmdb,HMDB00122
+7,M_glc__D_e,D-Glucose,0,e,C6H12O6,hmdb,HMDB06564
+8,M_glc__D_e,D-Glucose,0,e,C6H12O6,inchi_key,WQZGKKKJIJFFOK-GASJEMHNSA-N
+9,M_glc__D_e,D-Glucose,0,e,C6H12O6,kegg.compound,C00031
+10,M_glc__D_e,D-Glucose,0,e,C6H12O6,kegg.drug,D00009
+11,M_glc__D_e,D-Glucose,0,e,C6H12O6,metanetx.chemical,MNXM41
+12,M_glc__D_e,D-Glucose,0,e,C6H12O6,sabiork,1406
+13,M_glc__D_e,D-Glucose,0,e,C6H12O6,sabiork,1407
+14,M_glc__D_e,D-Glucose,0,e,C6H12O6,seed.compound,cpd26821
+15,M_glc__D_e,D-Glucose,0,e,C6H12O6,seed.compound,cpd00027
+16,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,bigg.metabolite,gln__L
+17,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,biocyc,META:GLN
+18,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:42943
+19,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:42899
+20,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:32679
+21,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:32678
+22,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:58359
+23,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:28300
+24,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:42812
+25,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:13110
+26,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:18050
+27,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:32666
+28,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:6227
+29,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:32665
+30,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:21308
+31,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:42814
+32,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:5432
+33,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,chebi,CHEBI:24316
+34,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,hmdb,HMDB00641
+35,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,inchi_key,ZDXPYRJPNDTMRX-VKHMYHEASA-N
+36,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,kegg.compound,C00064
+37,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,kegg.compound,C00303
+38,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,kegg.drug,D00015
+39,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,metanetx.chemical,MNXM37
+40,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,reactome.compound,113522
+41,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,reactome.compound,212615
+42,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,reactome.compound,29472
+43,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,sabiork,2011
+44,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,sabiork,74
+45,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,seed.compound,cpd00253
+46,M_gln__L_c,L-Glutamine,0,c,C5H10N2O3,seed.compound,cpd00053
+47,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,bigg.metabolite,gln__L
+48,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,biocyc,META:GLN
+49,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:42943
+50,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:42899
+51,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:32679
+52,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:32678
+53,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:58359
+54,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:28300
+55,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:42812
+56,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:13110
+57,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:18050
+58,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:32666
+59,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:6227
+60,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:32665
+61,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:21308
+62,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:42814
+63,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:5432
+64,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,chebi,CHEBI:24316
+65,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,hmdb,HMDB00641
+66,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,inchi_key,ZDXPYRJPNDTMRX-VKHMYHEASA-N
+67,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,kegg.compound,C00064
+68,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,kegg.compound,C00303
+69,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,kegg.drug,D00015
+70,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,metanetx.chemical,MNXM37
+71,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,reactome.compound,113522
+72,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,reactome.compound,212615
+73,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,reactome.compound,29472
+74,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,sabiork,2011
+75,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,sabiork,74
+76,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,seed.compound,cpd00253
+77,M_gln__L_e,L-Glutamine,0,e,C5H10N2O3,seed.compound,cpd00053
+78,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,bigg.metabolite,glu__L
+79,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,biocyc,META:Glutamates
+80,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,biocyc,META:GLT
+81,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:76051
+82,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:21301
+83,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:29985
+84,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:42825
+85,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:29987
+86,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:18237
+87,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:24314
+88,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:16015
+89,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:13107
+90,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:5431
+91,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:21304
+92,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:6224
+93,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:14321
+94,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,chebi,CHEBI:29988
+95,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,hmdb,HMDB00148
+96,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,hmdb,HMDB60475
+97,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,inchi_key,WHUUTDBJXJRKMK-VKHMYHEASA-M
+98,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,kegg.compound,C00025
+99,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,kegg.compound,C00302
+100,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,kegg.drug,D00007
+101,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,kegg.drug,D04341
+102,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,metanetx.chemical,MNXM89557
+103,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,reactome.compound,428614
+104,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,reactome.compound,29404
+105,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,reactome.compound,113552
+106,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,reactome.compound,210382
+107,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,sabiork,73
+108,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,sabiork,2010
+109,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,seed.compound,cpd27177
+110,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,seed.compound,cpd00023
+111,M_glu__L_c,L-Glutamate,0,c,C5H8NO4,seed.compound,cpd19002
+112,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,bigg.metabolite,glu__L
+113,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,biocyc,META:Glutamates
+114,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,biocyc,META:GLT
+115,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:76051
+116,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:21301
+117,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:29985
+118,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:42825
+119,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:29987
+120,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:18237
+121,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:24314
+122,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:16015
+123,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:13107
+124,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:5431
+125,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:21304
+126,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:6224
+127,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:14321
+128,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,chebi,CHEBI:29988
+129,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,hmdb,HMDB00148
+130,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,hmdb,HMDB60475
+131,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,inchi_key,WHUUTDBJXJRKMK-VKHMYHEASA-M
+132,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,kegg.compound,C00025
+133,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,kegg.compound,C00302
+134,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,kegg.drug,D00007
+135,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,kegg.drug,D04341
+136,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,metanetx.chemical,MNXM89557
+137,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,reactome.compound,428614
+138,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,reactome.compound,29404
+139,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,reactome.compound,113552
+140,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,reactome.compound,210382
+141,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,sabiork,73
+142,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,sabiork,2010
+143,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,seed.compound,cpd27177
+144,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,seed.compound,cpd00023
+145,M_glu__L_e,L-Glutamate,0,e,C5H8NO4,seed.compound,cpd19002
+146,M_glx_c,Glyoxylate,0,c,C2H1O3,bigg.metabolite,glx
+147,M_glx_c,Glyoxylate,0,c,C2H1O3,biocyc,META:GLYOX
+148,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:24420
+149,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:36655
+150,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:14368
+151,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:24421
+152,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:42767
+153,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:16891
+154,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:35977
+155,M_glx_c,Glyoxylate,0,c,C2H1O3,chebi,CHEBI:5509
+156,M_glx_c,Glyoxylate,0,c,C2H1O3,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/cdffdb1a-3322-4cc1-9171-d857bfaa198a
+157,M_glx_c,Glyoxylate,0,c,C2H1O3,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/aecbda66-6e98-4c11-aeaf-6a072f4f963c
+158,M_glx_c,Glyoxylate,0,c,C2H1O3,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/9dc0aa3b-447a-4b5d-8157-501b036f9626
+159,M_glx_c,Glyoxylate,0,c,C2H1O3,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/43b74f4f-bc8a-4b8b-b587-c97d8e9eed48
+160,M_glx_c,Glyoxylate,0,c,C2H1O3,hmdb,HMDB00119
+161,M_glx_c,Glyoxylate,0,c,C2H1O3,inchi_key,HHLFWLYXYJOTON-UHFFFAOYSA-M
+162,M_glx_c,Glyoxylate,0,c,C2H1O3,kegg.compound,C00048
+163,M_glx_c,Glyoxylate,0,c,C2H1O3,metanetx.chemical,MNXM69
+164,M_glx_c,Glyoxylate,0,c,C2H1O3,reactome.compound,904849
+165,M_glx_c,Glyoxylate,0,c,C2H1O3,reactome.compound,389678
+166,M_glx_c,Glyoxylate,0,c,C2H1O3,sabiork,1838
+167,M_glx_c,Glyoxylate,0,c,C2H1O3,seed.compound,cpd00040
+168,M_h2o_c,H2O H2O,0,c,H2O,bigg.metabolite,h2o
+169,M_h2o_c,H2O H2O,0,c,H2O,biocyc,META:CPD-15815
+170,M_h2o_c,H2O H2O,0,c,H2O,biocyc,META:OXONIUM
+171,M_h2o_c,H2O H2O,0,c,H2O,biocyc,META:HYDROXYL-GROUP
+172,M_h2o_c,H2O H2O,0,c,H2O,biocyc,META:WATER
+173,M_h2o_c,H2O H2O,0,c,H2O,biocyc,META:OH
+174,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:13352
+175,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:30490
+176,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:43228
+177,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:33813
+178,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:44292
+179,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:44641
+180,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:27313
+181,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:42043
+182,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:44819
+183,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:29356
+184,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:5594
+185,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:10743
+186,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:15377
+187,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:42857
+188,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:13365
+189,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:29412
+190,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:16234
+191,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:13419
+192,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:5585
+193,M_h2o_c,H2O H2O,0,c,H2O,chebi,CHEBI:44701
+194,M_h2o_c,H2O H2O,0,c,H2O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/799908db-b8c9-4982-86cb-1f225e2ad08c
+195,M_h2o_c,H2O H2O,0,c,H2O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/e7f34a8e-cded-4793-b6d5-792335b38636
+196,M_h2o_c,H2O H2O,0,c,H2O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/969d0227-3069-4e44-9525-7ae7bad84170
+197,M_h2o_c,H2O H2O,0,c,H2O,hmdb,HMDB02111
+198,M_h2o_c,H2O H2O,0,c,H2O,hmdb,HMDB01039
+199,M_h2o_c,H2O H2O,0,c,H2O,inchi_key,XLYOFNOQVPJJNP-UHFFFAOYSA-N
+200,M_h2o_c,H2O H2O,0,c,H2O,kegg.compound,C00001
+201,M_h2o_c,H2O H2O,0,c,H2O,kegg.compound,C01328
+202,M_h2o_c,H2O H2O,0,c,H2O,kegg.drug,D00001
+203,M_h2o_c,H2O H2O,0,c,H2O,kegg.drug,D06322
+204,M_h2o_c,H2O H2O,0,c,H2O,metanetx.chemical,MNXM2
+205,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,113521
+206,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,141343
+207,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,2022884
+208,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,5278291
+209,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,29356
+210,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,189422
+211,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,5668574
+212,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,5693747
+213,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,109276
+214,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,113519
+215,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,1605715
+216,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,8851517
+217,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,113518
+218,M_h2o_c,H2O H2O,0,c,H2O,reactome.compound,351603
+219,M_h2o_c,H2O H2O,0,c,H2O,sabiork,40
+220,M_h2o_c,H2O H2O,0,c,H2O,seed.compound,cpd27222
+221,M_h2o_c,H2O H2O,0,c,H2O,seed.compound,cpd00001
+222,M_h2o_c,H2O H2O,0,c,H2O,seed.compound,cpd15275
+223,M_h2o_e,H2O H2O,0,e,H2O,bigg.metabolite,h2o
+224,M_h2o_e,H2O H2O,0,e,H2O,biocyc,META:CPD-15815
+225,M_h2o_e,H2O H2O,0,e,H2O,biocyc,META:OXONIUM
+226,M_h2o_e,H2O H2O,0,e,H2O,biocyc,META:HYDROXYL-GROUP
+227,M_h2o_e,H2O H2O,0,e,H2O,biocyc,META:WATER
+228,M_h2o_e,H2O H2O,0,e,H2O,biocyc,META:OH
+229,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:13352
+230,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:30490
+231,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:43228
+232,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:33813
+233,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:44292
+234,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:44641
+235,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:27313
+236,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:42043
+237,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:44819
+238,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:29356
+239,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:5594
+240,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:10743
+241,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:15377
+242,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:42857
+243,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:13365
+244,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:29412
+245,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:16234
+246,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:13419
+247,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:5585
+248,M_h2o_e,H2O H2O,0,e,H2O,chebi,CHEBI:44701
+249,M_h2o_e,H2O H2O,0,e,H2O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/799908db-b8c9-4982-86cb-1f225e2ad08c
+250,M_h2o_e,H2O H2O,0,e,H2O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/e7f34a8e-cded-4793-b6d5-792335b38636
+251,M_h2o_e,H2O H2O,0,e,H2O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/969d0227-3069-4e44-9525-7ae7bad84170
+252,M_h2o_e,H2O H2O,0,e,H2O,hmdb,HMDB02111
+253,M_h2o_e,H2O H2O,0,e,H2O,hmdb,HMDB01039
+254,M_h2o_e,H2O H2O,0,e,H2O,inchi_key,XLYOFNOQVPJJNP-UHFFFAOYSA-N
+255,M_h2o_e,H2O H2O,0,e,H2O,kegg.compound,C00001
+256,M_h2o_e,H2O H2O,0,e,H2O,kegg.compound,C01328
+257,M_h2o_e,H2O H2O,0,e,H2O,kegg.drug,D00001
+258,M_h2o_e,H2O H2O,0,e,H2O,kegg.drug,D06322
+259,M_h2o_e,H2O H2O,0,e,H2O,metanetx.chemical,MNXM2
+260,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,113521
+261,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,141343
+262,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,2022884
+263,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,5278291
+264,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,29356
+265,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,189422
+266,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,5668574
+267,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,5693747
+268,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,109276
+269,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,113519
+270,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,1605715
+271,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,8851517
+272,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,113518
+273,M_h2o_e,H2O H2O,0,e,H2O,reactome.compound,351603
+274,M_h2o_e,H2O H2O,0,e,H2O,sabiork,40
+275,M_h2o_e,H2O H2O,0,e,H2O,seed.compound,cpd27222
+276,M_h2o_e,H2O H2O,0,e,H2O,seed.compound,cpd00001
+277,M_h2o_e,H2O H2O,0,e,H2O,seed.compound,cpd15275
+278,M_h_c,H+,0,c,H,bigg.metabolite,h
+279,M_h_c,H+,0,c,H,biocyc,META:PROTON
+280,M_h_c,H+,0,c,H,chebi,CHEBI:5584
+281,M_h_c,H+,0,c,H,chebi,CHEBI:13357
+282,M_h_c,H+,0,c,H,chebi,CHEBI:15378
+283,M_h_c,H+,0,c,H,chebi,CHEBI:10744
+284,M_h_c,H+,0,c,H,hmdb,HMDB59597
+285,M_h_c,H+,0,c,H,inchi_key,GPRLSGONYQIRFK-UHFFFAOYSA-N
+286,M_h_c,H+,0,c,H,kegg.compound,C00080
+287,M_h_c,H+,0,c,H,metanetx.chemical,MNXM1
+288,M_h_c,H+,0,c,H,reactome.compound,2000349
+289,M_h_c,H+,0,c,H,reactome.compound,425978
+290,M_h_c,H+,0,c,H,reactome.compound,74722
+291,M_h_c,H+,0,c,H,reactome.compound,428040
+292,M_h_c,H+,0,c,H,reactome.compound,427899
+293,M_h_c,H+,0,c,H,reactome.compound,428548
+294,M_h_c,H+,0,c,H,reactome.compound,156540
+295,M_h_c,H+,0,c,H,reactome.compound,70106
+296,M_h_c,H+,0,c,H,reactome.compound,425969
+297,M_h_c,H+,0,c,H,reactome.compound,1132304
+298,M_h_c,H+,0,c,H,reactome.compound,5668577
+299,M_h_c,H+,0,c,H,reactome.compound,1470067
+300,M_h_c,H+,0,c,H,reactome.compound,163953
+301,M_h_c,H+,0,c,H,reactome.compound,193465
+302,M_h_c,H+,0,c,H,reactome.compound,113529
+303,M_h_c,H+,0,c,H,reactome.compound,351626
+304,M_h_c,H+,0,c,H,reactome.compound,425999
+305,M_h_c,H+,0,c,H,reactome.compound,194688
+306,M_h_c,H+,0,c,H,reactome.compound,374900
+307,M_h_c,H+,0,c,H,reactome.compound,2872447
+308,M_h_c,H+,0,c,H,reactome.compound,372511
+309,M_h_c,H+,0,c,H,sabiork,39
+310,M_h_c,H+,0,c,H,seed.compound,cpd00067
+311,M_h_e,H+,0,e,H,bigg.metabolite,h
+312,M_h_e,H+,0,e,H,biocyc,META:PROTON
+313,M_h_e,H+,0,e,H,chebi,CHEBI:5584
+314,M_h_e,H+,0,e,H,chebi,CHEBI:13357
+315,M_h_e,H+,0,e,H,chebi,CHEBI:15378
+316,M_h_e,H+,0,e,H,chebi,CHEBI:10744
+317,M_h_e,H+,0,e,H,hmdb,HMDB59597
+318,M_h_e,H+,0,e,H,inchi_key,GPRLSGONYQIRFK-UHFFFAOYSA-N
+319,M_h_e,H+,0,e,H,kegg.compound,C00080
+320,M_h_e,H+,0,e,H,metanetx.chemical,MNXM1
+321,M_h_e,H+,0,e,H,reactome.compound,2000349
+322,M_h_e,H+,0,e,H,reactome.compound,425978
+323,M_h_e,H+,0,e,H,reactome.compound,74722
+324,M_h_e,H+,0,e,H,reactome.compound,428040
+325,M_h_e,H+,0,e,H,reactome.compound,427899
+326,M_h_e,H+,0,e,H,reactome.compound,428548
+327,M_h_e,H+,0,e,H,reactome.compound,156540
+328,M_h_e,H+,0,e,H,reactome.compound,70106
+329,M_h_e,H+,0,e,H,reactome.compound,425969
+330,M_h_e,H+,0,e,H,reactome.compound,1132304
+331,M_h_e,H+,0,e,H,reactome.compound,5668577
+332,M_h_e,H+,0,e,H,reactome.compound,1470067
+333,M_h_e,H+,0,e,H,reactome.compound,163953
+334,M_h_e,H+,0,e,H,reactome.compound,193465
+335,M_h_e,H+,0,e,H,reactome.compound,113529
+336,M_h_e,H+,0,e,H,reactome.compound,351626
+337,M_h_e,H+,0,e,H,reactome.compound,425999
+338,M_h_e,H+,0,e,H,reactome.compound,194688
+339,M_h_e,H+,0,e,H,reactome.compound,374900
+340,M_h_e,H+,0,e,H,reactome.compound,2872447
+341,M_h_e,H+,0,e,H,reactome.compound,372511
+342,M_h_e,H+,0,e,H,sabiork,39
+343,M_h_e,H+,0,e,H,seed.compound,cpd00067
+344,M_icit_c,Isocitrate,0,c,C6H5O7,bigg.metabolite,icit
+345,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:16087
+346,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:36454
+347,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:5998
+348,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:24886
+349,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:36453
+350,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:14465
+351,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:30887
+352,M_icit_c,Isocitrate,0,c,C6H5O7,chebi,CHEBI:24884
+353,M_icit_c,Isocitrate,0,c,C6H5O7,hmdb,HMDB00193
+354,M_icit_c,Isocitrate,0,c,C6H5O7,inchi_key,ODBLHEXUDAPZAU-UHFFFAOYSA-K
+355,M_icit_c,Isocitrate,0,c,C6H5O7,kegg.compound,C00311
+356,M_icit_c,Isocitrate,0,c,C6H5O7,metanetx.chemical,MNXM89661
+357,M_icit_c,Isocitrate,0,c,C6H5O7,sabiork,2013
+358,M_icit_c,Isocitrate,0,c,C6H5O7,seed.compound,cpd00260
+359,M_lac__D_c,D-Lactate,0,c,C3H5O3,bigg.metabolite,lac__D
+360,M_lac__D_c,D-Lactate,0,c,C3H5O3,biocyc,META:D-LACTATE
+361,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:16004
+362,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:341
+363,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:18684
+364,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:43701
+365,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:11001
+366,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:42111
+367,M_lac__D_c,D-Lactate,0,c,C3H5O3,chebi,CHEBI:42105
+368,M_lac__D_c,D-Lactate,0,c,C3H5O3,hmdb,HMDB01311
+369,M_lac__D_c,D-Lactate,0,c,C3H5O3,hmdb,HMDB00171
+370,M_lac__D_c,D-Lactate,0,c,C3H5O3,inchi_key,JVTAAEKCZFNVCJ-UWTATZPHSA-M
+371,M_lac__D_c,D-Lactate,0,c,C3H5O3,kegg.compound,C00256
+372,M_lac__D_c,D-Lactate,0,c,C3H5O3,metanetx.chemical,MNXM285
+373,M_lac__D_c,D-Lactate,0,c,C3H5O3,sabiork,1997
+374,M_lac__D_c,D-Lactate,0,c,C3H5O3,sabiork,2284
+375,M_lac__D_c,D-Lactate,0,c,C3H5O3,seed.compound,cpd00221
+376,M_lac__D_e,D-Lactate,0,e,C3H5O3,bigg.metabolite,lac__D
+377,M_lac__D_e,D-Lactate,0,e,C3H5O3,biocyc,META:D-LACTATE
+378,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:16004
+379,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:341
+380,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:18684
+381,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:43701
+382,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:11001
+383,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:42111
+384,M_lac__D_e,D-Lactate,0,e,C3H5O3,chebi,CHEBI:42105
+385,M_lac__D_e,D-Lactate,0,e,C3H5O3,hmdb,HMDB01311
+386,M_lac__D_e,D-Lactate,0,e,C3H5O3,hmdb,HMDB00171
+387,M_lac__D_e,D-Lactate,0,e,C3H5O3,inchi_key,JVTAAEKCZFNVCJ-UWTATZPHSA-M
+388,M_lac__D_e,D-Lactate,0,e,C3H5O3,kegg.compound,C00256
+389,M_lac__D_e,D-Lactate,0,e,C3H5O3,metanetx.chemical,MNXM285
+390,M_lac__D_e,D-Lactate,0,e,C3H5O3,sabiork,1997
+391,M_lac__D_e,D-Lactate,0,e,C3H5O3,sabiork,2284
+392,M_lac__D_e,D-Lactate,0,e,C3H5O3,seed.compound,cpd00221
+393,M_mal__L_c,L-Malate,0,c,C4H4O5,bigg.metabolite,mal__L
+394,M_mal__L_c,L-Malate,0,c,C4H4O5,biocyc,META:MAL
+395,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:15589
+396,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:30797
+397,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:423
+398,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:18784
+399,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:18785
+400,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:13140
+401,M_mal__L_c,L-Malate,0,c,C4H4O5,chebi,CHEBI:11066
+402,M_mal__L_c,L-Malate,0,c,C4H4O5,hmdb,HMDB00156
+403,M_mal__L_c,L-Malate,0,c,C4H4O5,inchi_key,BJEPYKJPYRNKOW-REOHCLBHSA-L
+404,M_mal__L_c,L-Malate,0,c,C4H4O5,kegg.compound,C00149
+405,M_mal__L_c,L-Malate,0,c,C4H4O5,metanetx.chemical,MNXM98
+406,M_mal__L_c,L-Malate,0,c,C4H4O5,reactome.compound,198498
+407,M_mal__L_c,L-Malate,0,c,C4H4O5,reactome.compound,113544
+408,M_mal__L_c,L-Malate,0,c,C4H4O5,sabiork,1918
+409,M_mal__L_c,L-Malate,0,c,C4H4O5,seed.compound,cpd00130
+410,M_mal__L_e,L-Malate,0,e,C4H4O5,bigg.metabolite,mal__L
+411,M_mal__L_e,L-Malate,0,e,C4H4O5,biocyc,META:MAL
+412,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:15589
+413,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:30797
+414,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:423
+415,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:18784
+416,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:18785
+417,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:13140
+418,M_mal__L_e,L-Malate,0,e,C4H4O5,chebi,CHEBI:11066
+419,M_mal__L_e,L-Malate,0,e,C4H4O5,hmdb,HMDB00156
+420,M_mal__L_e,L-Malate,0,e,C4H4O5,inchi_key,BJEPYKJPYRNKOW-REOHCLBHSA-L
+421,M_mal__L_e,L-Malate,0,e,C4H4O5,kegg.compound,C00149
+422,M_mal__L_e,L-Malate,0,e,C4H4O5,metanetx.chemical,MNXM98
+423,M_mal__L_e,L-Malate,0,e,C4H4O5,reactome.compound,198498
+424,M_mal__L_e,L-Malate,0,e,C4H4O5,reactome.compound,113544
+425,M_mal__L_e,L-Malate,0,e,C4H4O5,sabiork,1918
+426,M_mal__L_e,L-Malate,0,e,C4H4O5,seed.compound,cpd00130
+427,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,bigg.metabolite,nad
+428,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,biocyc,META:NAD
+429,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:7422
+430,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:44215
+431,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:13394
+432,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:21901
+433,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:57540
+434,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:15846
+435,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:44281
+436,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:44214
+437,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:13393
+438,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,chebi,CHEBI:29867
+439,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,hmdb,HMDB00902
+440,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,inchi_key,BAWFJGJZGIEFAR-NNYOXOHSSA-M
+441,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,kegg.compound,C00003
+442,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,kegg.drug,D00002
+443,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,metanetx.chemical,MNXM8
+444,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,reactome.compound,352330
+445,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,reactome.compound,192307
+446,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,reactome.compound,194653
+447,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,reactome.compound,113526
+448,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,reactome.compound,29360
+449,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,sabiork,37
+450,M_nad_c,Nicotinamide adenine dinucleotide,0,c,C21H26N7O14P2,seed.compound,cpd00003
+451,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,bigg.metabolite,nadh
+452,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,biocyc,META:NADH
+453,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:13395
+454,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:21902
+455,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:7423
+456,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:44216
+457,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:57945
+458,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:16908
+459,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,chebi,CHEBI:13396
+460,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,hmdb,HMDB01487
+461,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,inchi_key,BOPGDPNILDQYTO-NNYOXOHSSA-L
+462,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,kegg.compound,C00004
+463,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,metanetx.chemical,MNXM10
+464,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,reactome.compound,192305
+465,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,reactome.compound,73473
+466,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,reactome.compound,29362
+467,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,reactome.compound,194697
+468,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,sabiork,38
+469,M_nadh_c,Nicotinamide adenine dinucleotide - reduced,0,c,C21H27N7O14P2,seed.compound,cpd00004
+470,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,bigg.metabolite,nadp
+471,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,biocyc,META:NADP
+472,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:29868
+473,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:44405
+474,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:25523
+475,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:13397
+476,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:18009
+477,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:7424
+478,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:13398
+479,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:21903
+480,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:58349
+481,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,chebi,CHEBI:44409
+482,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,hmdb,HMDB00217
+483,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,inchi_key,XJLXINKUBYWONI-NNYOXOHSSA-K
+484,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,kegg.compound,C00006
+485,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,metanetx.chemical,MNXM5
+486,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,194668
+487,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,113563
+488,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,6790191
+489,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,5623650
+490,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,2000348
+491,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,389556
+492,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,29366
+493,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,351628
+494,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,reactome.compound,113564
+495,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,sabiork,1263
+496,M_nadp_c,Nicotinamide adenine dinucleotide phosphate,0,c,C21H25N7O17P3,seed.compound,cpd00006
+497,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,bigg.metabolite,nadph
+498,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,biocyc,META:NADPH
+499,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:16474
+500,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:7425
+501,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:57783
+502,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:21904
+503,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:13399
+504,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:13400
+505,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,chebi,CHEBI:44286
+506,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,hmdb,HMDB06341
+507,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,hmdb,HMDB00221
+508,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,hmdb,HMDB00799
+509,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,inchi_key,ACFIXJIJDZMPPO-NNYOXOHSSA-J
+510,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,kegg.compound,C00005
+511,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,metanetx.chemical,MNXM6
+512,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,113600
+513,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,6790135
+514,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,113602
+515,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,113601
+516,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,2000347
+517,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,351627
+518,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,29364
+519,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,5623644
+520,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,reactome.compound,194725
+521,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,sabiork,1262
+522,M_nadph_c,Nicotinamide adenine dinucleotide phosphate - reduced,0,c,C21H26N7O17P3,seed.compound,cpd00005
+523,M_nh4_c,Ammonium,0,c,H4N,bigg.metabolite,nh4
+524,M_nh4_c,Ammonium,0,c,H4N,biocyc,META:AMMONIUM
+525,M_nh4_c,Ammonium,0,c,H4N,biocyc,META:AMMONIA
+526,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:44284
+527,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:135980
+528,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:22533
+529,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:13406
+530,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:29337
+531,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:29340
+532,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:13771
+533,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:16134
+534,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:28938
+535,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:22534
+536,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:13405
+537,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:49783
+538,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:7434
+539,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:7435
+540,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:44269
+541,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:44404
+542,M_nh4_c,Ammonium,0,c,H4N,chebi,CHEBI:13407
+543,M_nh4_c,Ammonium,0,c,H4N,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/96667bd9-aeae-4e8f-89d3-100d0396af05
+544,M_nh4_c,Ammonium,0,c,H4N,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/41e4c903-407f-49f7-bf6b-0a94d39fa3a7
+545,M_nh4_c,Ammonium,0,c,H4N,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/27a89bdf-42f7-478f-91d8-e39881581096
+546,M_nh4_c,Ammonium,0,c,H4N,hmdb,HMDB00051
+547,M_nh4_c,Ammonium,0,c,H4N,hmdb,HMDB41827
+548,M_nh4_c,Ammonium,0,c,H4N,inchi_key,QGZKDVFQNNGYKY-UHFFFAOYSA-O
+549,M_nh4_c,Ammonium,0,c,H4N,kegg.compound,C00014
+550,M_nh4_c,Ammonium,0,c,H4N,kegg.compound,C01342
+551,M_nh4_c,Ammonium,0,c,H4N,kegg.drug,D02916
+552,M_nh4_c,Ammonium,0,c,H4N,kegg.drug,D02915
+553,M_nh4_c,Ammonium,0,c,H4N,metanetx.chemical,MNXM15
+554,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,5693978
+555,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,1132163
+556,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,29382
+557,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,76230
+558,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,140912
+559,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,389843
+560,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,2022135
+561,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,31633
+562,M_nh4_c,Ammonium,0,c,H4N,reactome.compound,113561
+563,M_nh4_c,Ammonium,0,c,H4N,sabiork,1268
+564,M_nh4_c,Ammonium,0,c,H4N,sabiork,43
+565,M_nh4_c,Ammonium,0,c,H4N,seed.compound,cpd19013
+566,M_nh4_c,Ammonium,0,c,H4N,seed.compound,cpd00013
+567,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,bigg.metabolite,13dpg
+568,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,biocyc,META:DPG
+569,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,chebi,CHEBI:57604
+570,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,chebi,CHEBI:20189
+571,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,chebi,CHEBI:11881
+572,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,chebi,CHEBI:16001
+573,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,chebi,CHEBI:1658
+574,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,hmdb,HMDB62758
+575,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,inchi_key,LJQLQCAXBUHEAZ-UWTATZPHSA-J
+576,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,kegg.compound,C00236
+577,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,metanetx.chemical,MNXM261
+578,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,reactome.compound,29800
+579,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,sabiork,21215
+580,M_13dpg_c,3-Phospho-D-glyceroyl phosphate,0,c,C3H4O10P2,seed.compound,cpd00203
+581,M_nh4_e,Ammonium,0,e,H4N,bigg.metabolite,nh4
+582,M_nh4_e,Ammonium,0,e,H4N,biocyc,META:AMMONIUM
+583,M_nh4_e,Ammonium,0,e,H4N,biocyc,META:AMMONIA
+584,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:44284
+585,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:135980
+586,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:22533
+587,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:13406
+588,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:29337
+589,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:29340
+590,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:13771
+591,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:16134
+592,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:28938
+593,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:22534
+594,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:13405
+595,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:49783
+596,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:7434
+597,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:7435
+598,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:44269
+599,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:44404
+600,M_nh4_e,Ammonium,0,e,H4N,chebi,CHEBI:13407
+601,M_nh4_e,Ammonium,0,e,H4N,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/96667bd9-aeae-4e8f-89d3-100d0396af05
+602,M_nh4_e,Ammonium,0,e,H4N,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/41e4c903-407f-49f7-bf6b-0a94d39fa3a7
+603,M_nh4_e,Ammonium,0,e,H4N,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/27a89bdf-42f7-478f-91d8-e39881581096
+604,M_nh4_e,Ammonium,0,e,H4N,hmdb,HMDB00051
+605,M_nh4_e,Ammonium,0,e,H4N,hmdb,HMDB41827
+606,M_nh4_e,Ammonium,0,e,H4N,inchi_key,QGZKDVFQNNGYKY-UHFFFAOYSA-O
+607,M_nh4_e,Ammonium,0,e,H4N,kegg.compound,C00014
+608,M_nh4_e,Ammonium,0,e,H4N,kegg.compound,C01342
+609,M_nh4_e,Ammonium,0,e,H4N,kegg.drug,D02916
+610,M_nh4_e,Ammonium,0,e,H4N,kegg.drug,D02915
+611,M_nh4_e,Ammonium,0,e,H4N,metanetx.chemical,MNXM15
+612,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,5693978
+613,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,1132163
+614,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,29382
+615,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,76230
+616,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,140912
+617,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,389843
+618,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,2022135
+619,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,31633
+620,M_nh4_e,Ammonium,0,e,H4N,reactome.compound,113561
+621,M_nh4_e,Ammonium,0,e,H4N,sabiork,1268
+622,M_nh4_e,Ammonium,0,e,H4N,sabiork,43
+623,M_nh4_e,Ammonium,0,e,H4N,seed.compound,cpd19013
+624,M_nh4_e,Ammonium,0,e,H4N,seed.compound,cpd00013
+625,M_o2_c,O2 O2,0,c,O2,bigg.metabolite,o2
+626,M_o2_c,O2 O2,0,c,O2,biocyc,META:OXYGEN-MOLECULE
+627,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:7860
+628,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:26689
+629,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:29097
+630,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:15379
+631,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:13416
+632,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:27140
+633,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:29793
+634,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:30491
+635,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:44742
+636,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:23833
+637,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:25366
+638,M_o2_c,O2 O2,0,c,O2,chebi,CHEBI:10745
+639,M_o2_c,O2 O2,0,c,O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/d5d12248-82d3-4cf3-b7d0-2e3d096768b4
+640,M_o2_c,O2 O2,0,c,O2,hmdb,HMDB01377
+641,M_o2_c,O2 O2,0,c,O2,inchi_key,MYMOFIZGZYHOMD-UHFFFAOYSA-N
+642,M_o2_c,O2 O2,0,c,O2,kegg.compound,C00007
+643,M_o2_c,O2 O2,0,c,O2,kegg.drug,D00003
+644,M_o2_c,O2 O2,0,c,O2,metanetx.chemical,MNXM4
+645,M_o2_c,O2 O2,0,c,O2,reactome.compound,113534
+646,M_o2_c,O2 O2,0,c,O2,reactome.compound,113535
+647,M_o2_c,O2 O2,0,c,O2,reactome.compound,113685
+648,M_o2_c,O2 O2,0,c,O2,reactome.compound,5668566
+649,M_o2_c,O2 O2,0,c,O2,reactome.compound,189461
+650,M_o2_c,O2 O2,0,c,O2,reactome.compound,113533
+651,M_o2_c,O2 O2,0,c,O2,reactome.compound,1131511
+652,M_o2_c,O2 O2,0,c,O2,reactome.compound,352327
+653,M_o2_c,O2 O2,0,c,O2,reactome.compound,351593
+654,M_o2_c,O2 O2,0,c,O2,reactome.compound,29368
+655,M_o2_c,O2 O2,0,c,O2,reactome.compound,1236709
+656,M_o2_c,O2 O2,0,c,O2,sabiork,1264
+657,M_o2_c,O2 O2,0,c,O2,seed.compound,cpd00007
+658,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,bigg.metabolite,2pg
+659,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,biocyc,META:2-PG
+660,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:39868
+661,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:21028
+662,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:58289
+663,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:24344
+664,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:12986
+665,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:17835
+666,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:11651
+667,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:1267
+668,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,chebi,CHEBI:88350
+669,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,hmdb,HMDB00362
+670,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,hmdb,HMDB62707
+671,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,hmdb,HMDB03391
+672,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,inchi_key,GXIURPTVHJPJLF-UWTATZPHSA-K
+673,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,kegg.compound,C00631
+674,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,metanetx.chemical,MNXM275
+675,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,reactome.compound,30485
+676,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,sabiork,31
+677,M_2pg_c,D-Glycerate 2-phosphate,0,c,C3H4O7P,seed.compound,cpd00482
+678,M_o2_e,O2 O2,0,e,O2,bigg.metabolite,o2
+679,M_o2_e,O2 O2,0,e,O2,biocyc,META:OXYGEN-MOLECULE
+680,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:7860
+681,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:26689
+682,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:29097
+683,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:15379
+684,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:13416
+685,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:27140
+686,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:29793
+687,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:30491
+688,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:44742
+689,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:23833
+690,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:25366
+691,M_o2_e,O2 O2,0,e,O2,chebi,CHEBI:10745
+692,M_o2_e,O2 O2,0,e,O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/d5d12248-82d3-4cf3-b7d0-2e3d096768b4
+693,M_o2_e,O2 O2,0,e,O2,hmdb,HMDB01377
+694,M_o2_e,O2 O2,0,e,O2,inchi_key,MYMOFIZGZYHOMD-UHFFFAOYSA-N
+695,M_o2_e,O2 O2,0,e,O2,kegg.compound,C00007
+696,M_o2_e,O2 O2,0,e,O2,kegg.drug,D00003
+697,M_o2_e,O2 O2,0,e,O2,metanetx.chemical,MNXM4
+698,M_o2_e,O2 O2,0,e,O2,reactome.compound,113534
+699,M_o2_e,O2 O2,0,e,O2,reactome.compound,113535
+700,M_o2_e,O2 O2,0,e,O2,reactome.compound,113685
+701,M_o2_e,O2 O2,0,e,O2,reactome.compound,5668566
+702,M_o2_e,O2 O2,0,e,O2,reactome.compound,189461
+703,M_o2_e,O2 O2,0,e,O2,reactome.compound,113533
+704,M_o2_e,O2 O2,0,e,O2,reactome.compound,1131511
+705,M_o2_e,O2 O2,0,e,O2,reactome.compound,352327
+706,M_o2_e,O2 O2,0,e,O2,reactome.compound,351593
+707,M_o2_e,O2 O2,0,e,O2,reactome.compound,29368
+708,M_o2_e,O2 O2,0,e,O2,reactome.compound,1236709
+709,M_o2_e,O2 O2,0,e,O2,sabiork,1264
+710,M_o2_e,O2 O2,0,e,O2,seed.compound,cpd00007
+711,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,bigg.metabolite,3pg
+712,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,biocyc,META:G3P
+713,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:11879
+714,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:11880
+715,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:17794
+716,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:21029
+717,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:1657
+718,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:58272
+719,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,chebi,CHEBI:12987
+720,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,hmdb,HMDB60180
+721,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,inchi_key,OSJPPGNTCRNQQC-UWTATZPHSA-K
+722,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,kegg.compound,C00197
+723,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,metanetx.chemical,MNXM126
+724,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,reactome.compound,6799493
+725,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,reactome.compound,29728
+726,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,sabiork,21216
+727,M_3pg_c,3-Phospho-D-glycerate,0,c,C3H4O7P,seed.compound,cpd00169
+728,M_oaa_c,Oxaloacetate,0,c,C4H2O5,bigg.metabolite,oaa
+729,M_oaa_c,Oxaloacetate,0,c,C4H2O5,biocyc,META:OXALACETIC_ACID
+730,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:25731
+731,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:24959
+732,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:12820
+733,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:16452
+734,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:30744
+735,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:14703
+736,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:24958
+737,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:7812
+738,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:25734
+739,M_oaa_c,Oxaloacetate,0,c,C4H2O5,chebi,CHEBI:29049
+740,M_oaa_c,Oxaloacetate,0,c,C4H2O5,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/133a11f3-81b0-4384-837e-1ccdd0a2a645
+741,M_oaa_c,Oxaloacetate,0,c,C4H2O5,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/40afaad4-431a-4e3c-b4c7-020dbe4bdd2a
+742,M_oaa_c,Oxaloacetate,0,c,C4H2O5,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/be7c543c-40bd-4698-9821-22f2e65c38f3
+743,M_oaa_c,Oxaloacetate,0,c,C4H2O5,hmdb,HMDB00223
+744,M_oaa_c,Oxaloacetate,0,c,C4H2O5,inchi_key,KHPXUQMNIQBQEV-UHFFFAOYSA-L
+745,M_oaa_c,Oxaloacetate,0,c,C4H2O5,kegg.compound,C00036
+746,M_oaa_c,Oxaloacetate,0,c,C4H2O5,lipidmaps,LMFA01170120
+747,M_oaa_c,Oxaloacetate,0,c,C4H2O5,metanetx.chemical,MNXM46
+748,M_oaa_c,Oxaloacetate,0,c,C4H2O5,reactome.compound,6810070
+749,M_oaa_c,Oxaloacetate,0,c,C4H2O5,reactome.compound,113587
+750,M_oaa_c,Oxaloacetate,0,c,C4H2O5,reactome.compound,76213
+751,M_oaa_c,Oxaloacetate,0,c,C4H2O5,sabiork,1915
+752,M_oaa_c,Oxaloacetate,0,c,C4H2O5,seed.compound,cpd00032
+753,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,bigg.metabolite,pep
+754,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,biocyc,META:PHOSPHO-ENOL-PYRUVATE
+755,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:18021
+756,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:44894
+757,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:26054
+758,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:14812
+759,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:26055
+760,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:8147
+761,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:58702
+762,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,chebi,CHEBI:44897
+763,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,hmdb,HMDB00263
+764,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,inchi_key,DTBNBXWJWCWCIK-UHFFFAOYSA-K
+765,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,kegg.compound,C00074
+766,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,metanetx.chemical,MNXM73
+767,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,reactome.compound,372364
+768,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,reactome.compound,29492
+769,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,sabiork,32
+770,M_pep_c,Phosphoenolpyruvate,0,c,C3H2O6P,seed.compound,cpd00061
+771,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,bigg.metabolite,6pgc
+772,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,biocyc,META:CPD-2961
+773,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:33851
+774,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:2231
+775,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:16863
+776,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:40282
+777,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:12232
+778,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:48928
+779,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,chebi,CHEBI:58759
+780,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,hmdb,HMDB01316
+781,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,hmdb,HMDB62800
+782,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,inchi_key,BIRSGZKFKXLSJQ-SQOUGZDYSA-K
+783,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,kegg.compound,C00345
+784,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,metanetx.chemical,MNXM325
+785,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,reactome.compound,29996
+786,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,sabiork,22801
+787,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,sabiork,2024
+788,M_6pgc_c,6-Phospho-D-gluconate,0,c,C6H10O10P,seed.compound,cpd00284
+789,M_pi_c,Phosphate,0,c,HO4P,bigg.metabolite,pi
+790,M_pi_c,Phosphate,0,c,HO4P,biocyc,META:Pi
+791,M_pi_c,Phosphate,0,c,HO4P,biocyc,META:CPD-16459
+792,M_pi_c,Phosphate,0,c,HO4P,biocyc,META:PHOSPHATE-GROUP
+793,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:26078
+794,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:18367
+795,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:29139
+796,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:39739
+797,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:43470
+798,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:35780
+799,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:43474
+800,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:26020
+801,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:45024
+802,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:39745
+803,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:29137
+804,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:14791
+805,M_pi_c,Phosphate,0,c,HO4P,chebi,CHEBI:7793
+806,M_pi_c,Phosphate,0,c,HO4P,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/db5219ee-60cb-4370-b066-340c9faf069c
+807,M_pi_c,Phosphate,0,c,HO4P,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/84684967-eade-48d4-b25d-c4aede0a0836
+808,M_pi_c,Phosphate,0,c,HO4P,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/ad82c39b-2edb-4953-b971-79a2d2ea6e26
+809,M_pi_c,Phosphate,0,c,HO4P,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/aac01fea-4223-49c1-8b12-cd50f11ebfc8
+810,M_pi_c,Phosphate,0,c,HO4P,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/c581b2ce-6238-45de-abc0-60ca8d47ed04
+811,M_pi_c,Phosphate,0,c,HO4P,hmdb,HMDB02105
+812,M_pi_c,Phosphate,0,c,HO4P,hmdb,HMDB00973
+813,M_pi_c,Phosphate,0,c,HO4P,hmdb,HMDB01429
+814,M_pi_c,Phosphate,0,c,HO4P,hmdb,HMDB02142
+815,M_pi_c,Phosphate,0,c,HO4P,hmdb,HMDB05947
+816,M_pi_c,Phosphate,0,c,HO4P,inchi_key,NBIIXXVUZAFLBC-UHFFFAOYSA-L
+817,M_pi_c,Phosphate,0,c,HO4P,kegg.compound,C00009
+818,M_pi_c,Phosphate,0,c,HO4P,kegg.drug,D05467
+819,M_pi_c,Phosphate,0,c,HO4P,metanetx.chemical,MNXM9
+820,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,5228339
+821,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,113550
+822,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,8851513
+823,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,113551
+824,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,109277
+825,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,29372
+826,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,8851226
+827,M_pi_c,Phosphate,0,c,HO4P,reactome.compound,113548
+828,M_pi_c,Phosphate,0,c,HO4P,sabiork,36
+829,M_pi_c,Phosphate,0,c,HO4P,seed.compound,cpd27787
+830,M_pi_c,Phosphate,0,c,HO4P,seed.compound,cpd00009
+831,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,bigg.metabolite,6pgl
+832,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,biocyc,META:D-6-P-GLUCONO-DELTA-LACTONE
+833,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:12233
+834,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:4160
+835,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:57955
+836,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:16938
+837,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:20989
+838,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,chebi,CHEBI:12958
+839,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,hmdb,HMDB62628
+840,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,hmdb,HMDB01127
+841,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,inchi_key,IJOJIVNDFQSGAB-SQOUGZDYSA-L
+842,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,kegg.compound,C01236
+843,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,metanetx.chemical,MNXM429
+844,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,reactome.compound,31467
+845,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,sabiork,1366
+846,M_6pgl_c,"6-phospho-D-glucono-1,5-lactone",0,c,C6H9O9P,seed.compound,cpd00911
+847,M_pi_e,Phosphate,0,e,HO4P,bigg.metabolite,pi
+848,M_pi_e,Phosphate,0,e,HO4P,biocyc,META:Pi
+849,M_pi_e,Phosphate,0,e,HO4P,biocyc,META:CPD-16459
+850,M_pi_e,Phosphate,0,e,HO4P,biocyc,META:PHOSPHATE-GROUP
+851,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:26078
+852,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:18367
+853,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:29139
+854,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:39739
+855,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:43470
+856,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:35780
+857,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:43474
+858,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:26020
+859,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:45024
+860,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:39745
+861,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:29137
+862,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:14791
+863,M_pi_e,Phosphate,0,e,HO4P,chebi,CHEBI:7793
+864,M_pi_e,Phosphate,0,e,HO4P,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/db5219ee-60cb-4370-b066-340c9faf069c
+865,M_pi_e,Phosphate,0,e,HO4P,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/84684967-eade-48d4-b25d-c4aede0a0836
+866,M_pi_e,Phosphate,0,e,HO4P,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/ad82c39b-2edb-4953-b971-79a2d2ea6e26
+867,M_pi_e,Phosphate,0,e,HO4P,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/aac01fea-4223-49c1-8b12-cd50f11ebfc8
+868,M_pi_e,Phosphate,0,e,HO4P,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/c581b2ce-6238-45de-abc0-60ca8d47ed04
+869,M_pi_e,Phosphate,0,e,HO4P,hmdb,HMDB02105
+870,M_pi_e,Phosphate,0,e,HO4P,hmdb,HMDB00973
+871,M_pi_e,Phosphate,0,e,HO4P,hmdb,HMDB01429
+872,M_pi_e,Phosphate,0,e,HO4P,hmdb,HMDB02142
+873,M_pi_e,Phosphate,0,e,HO4P,hmdb,HMDB05947
+874,M_pi_e,Phosphate,0,e,HO4P,inchi_key,NBIIXXVUZAFLBC-UHFFFAOYSA-L
+875,M_pi_e,Phosphate,0,e,HO4P,kegg.compound,C00009
+876,M_pi_e,Phosphate,0,e,HO4P,kegg.drug,D05467
+877,M_pi_e,Phosphate,0,e,HO4P,metanetx.chemical,MNXM9
+878,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,5228339
+879,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,113550
+880,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,8851513
+881,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,113551
+882,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,109277
+883,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,29372
+884,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,8851226
+885,M_pi_e,Phosphate,0,e,HO4P,reactome.compound,113548
+886,M_pi_e,Phosphate,0,e,HO4P,sabiork,36
+887,M_pi_e,Phosphate,0,e,HO4P,seed.compound,cpd27787
+888,M_pi_e,Phosphate,0,e,HO4P,seed.compound,cpd00009
+889,M_ac_c,Acetate,0,c,C2H3O2,bigg.metabolite,ac
+890,M_ac_c,Acetate,0,c,C2H3O2,biocyc,META:ACET
+891,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:13704
+892,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:22165
+893,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:22169
+894,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:40480
+895,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:15366
+896,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:2387
+897,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:30089
+898,M_ac_c,Acetate,0,c,C2H3O2,chebi,CHEBI:40486
+899,M_ac_c,Acetate,0,c,C2H3O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/9e26dcbe-4db9-46a0-8614-9f03545032d2
+900,M_ac_c,Acetate,0,c,C2H3O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/5e4989fc-13d3-45d4-ad57-3be380a9d3c0
+901,M_ac_c,Acetate,0,c,C2H3O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/a8f0be58-24e8-441b-8d81-a516a0ead4b3
+902,M_ac_c,Acetate,0,c,C2H3O2,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/d45256fe-61fa-4f5b-bb16-91a3d615e3d8
+903,M_ac_c,Acetate,0,c,C2H3O2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/b545cabc-8c9e-4b20-8848-efa015b481ea
+904,M_ac_c,Acetate,0,c,C2H3O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/3e2d750f-df31-4445-9255-163c627e9b4a
+905,M_ac_c,Acetate,0,c,C2H3O2,hmdb,HMDB00042
+906,M_ac_c,Acetate,0,c,C2H3O2,inchi_key,QTBSBXVTEAMEQO-UHFFFAOYSA-M
+907,M_ac_c,Acetate,0,c,C2H3O2,kegg.compound,C00033
+908,M_ac_c,Acetate,0,c,C2H3O2,kegg.drug,D00010
+909,M_ac_c,Acetate,0,c,C2H3O2,lipidmaps,LMFA01010002
+910,M_ac_c,Acetate,0,c,C2H3O2,metanetx.chemical,MNXM26
+911,M_ac_c,Acetate,0,c,C2H3O2,reactome.compound,1524044
+912,M_ac_c,Acetate,0,c,C2H3O2,reactome.compound,390305
+913,M_ac_c,Acetate,0,c,C2H3O2,reactome.compound,113539
+914,M_ac_c,Acetate,0,c,C2H3O2,reactome.compound,2022890
+915,M_ac_c,Acetate,0,c,C2H3O2,reactome.compound,29416
+916,M_ac_c,Acetate,0,c,C2H3O2,sabiork,1278
+917,M_ac_c,Acetate,0,c,C2H3O2,seed.compound,cpd00029
+918,M_ac_c,Acetate,0,c,C2H3O2,slm,000000449
+919,M_pyr_c,Pyruvate,0,c,C3H3O3,bigg.metabolite,pyr
+920,M_pyr_c,Pyruvate,0,c,C3H3O3,biocyc,META:PYRUVATE
+921,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:26462
+922,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:26466
+923,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:8685
+924,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:32816
+925,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:45253
+926,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:14987
+927,M_pyr_c,Pyruvate,0,c,C3H3O3,chebi,CHEBI:15361
+928,M_pyr_c,Pyruvate,0,c,C3H3O3,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/ccc99777-54dc-42d4-a97e-009b780d3905
+929,M_pyr_c,Pyruvate,0,c,C3H3O3,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/dc01020e-8c7e-4087-9f56-cf8c962b7437
+930,M_pyr_c,Pyruvate,0,c,C3H3O3,hmdb,HMDB00243
+931,M_pyr_c,Pyruvate,0,c,C3H3O3,inchi_key,LCTONWCANYUPML-UHFFFAOYSA-M
+932,M_pyr_c,Pyruvate,0,c,C3H3O3,kegg.compound,C00022
+933,M_pyr_c,Pyruvate,0,c,C3H3O3,lipidmaps,LMFA01060077
+934,M_pyr_c,Pyruvate,0,c,C3H3O3,metanetx.chemical,MNXM23
+935,M_pyr_c,Pyruvate,0,c,C3H3O3,reactome.compound,1130930
+936,M_pyr_c,Pyruvate,0,c,C3H3O3,reactome.compound,5357717
+937,M_pyr_c,Pyruvate,0,c,C3H3O3,reactome.compound,113557
+938,M_pyr_c,Pyruvate,0,c,C3H3O3,reactome.compound,29398
+939,M_pyr_c,Pyruvate,0,c,C3H3O3,reactome.compound,389680
+940,M_pyr_c,Pyruvate,0,c,C3H3O3,sabiork,33
+941,M_pyr_c,Pyruvate,0,c,C3H3O3,seed.compound,cpd00020
+942,M_pyr_e,Pyruvate,0,e,C3H3O3,bigg.metabolite,pyr
+943,M_pyr_e,Pyruvate,0,e,C3H3O3,biocyc,META:PYRUVATE
+944,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:26462
+945,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:26466
+946,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:8685
+947,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:32816
+948,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:45253
+949,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:14987
+950,M_pyr_e,Pyruvate,0,e,C3H3O3,chebi,CHEBI:15361
+951,M_pyr_e,Pyruvate,0,e,C3H3O3,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/ccc99777-54dc-42d4-a97e-009b780d3905
+952,M_pyr_e,Pyruvate,0,e,C3H3O3,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/dc01020e-8c7e-4087-9f56-cf8c962b7437
+953,M_pyr_e,Pyruvate,0,e,C3H3O3,hmdb,HMDB00243
+954,M_pyr_e,Pyruvate,0,e,C3H3O3,inchi_key,LCTONWCANYUPML-UHFFFAOYSA-M
+955,M_pyr_e,Pyruvate,0,e,C3H3O3,kegg.compound,C00022
+956,M_pyr_e,Pyruvate,0,e,C3H3O3,lipidmaps,LMFA01060077
+957,M_pyr_e,Pyruvate,0,e,C3H3O3,metanetx.chemical,MNXM23
+958,M_pyr_e,Pyruvate,0,e,C3H3O3,reactome.compound,1130930
+959,M_pyr_e,Pyruvate,0,e,C3H3O3,reactome.compound,5357717
+960,M_pyr_e,Pyruvate,0,e,C3H3O3,reactome.compound,113557
+961,M_pyr_e,Pyruvate,0,e,C3H3O3,reactome.compound,29398
+962,M_pyr_e,Pyruvate,0,e,C3H3O3,reactome.compound,389680
+963,M_pyr_e,Pyruvate,0,e,C3H3O3,sabiork,33
+964,M_pyr_e,Pyruvate,0,e,C3H3O3,seed.compound,cpd00020
+965,M_q8_c,Ubiquinone-8,0,c,C49H74O4,bigg.metabolite,q8
+966,M_q8_c,Ubiquinone-8,0,c,C49H74O4,biocyc,META:UBIQUINONE-8
+967,M_q8_c,Ubiquinone-8,0,c,C49H74O4,chebi,CHEBI:61683
+968,M_q8_c,Ubiquinone-8,0,c,C49H74O4,inchi_key,ICFIZJQGJAJRSU-SGHXUWJISA-N
+969,M_q8_c,Ubiquinone-8,0,c,C49H74O4,kegg.compound,C17569
+970,M_q8_c,Ubiquinone-8,0,c,C49H74O4,lipidmaps,LMPR02010005
+971,M_q8_c,Ubiquinone-8,0,c,C49H74O4,metanetx.chemical,MNXM232
+972,M_q8_c,Ubiquinone-8,0,c,C49H74O4,seed.compound,cpd15560
+973,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,bigg.metabolite,q8h2
+974,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,biocyc,META:CPD-9956
+975,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,chebi,CHEBI:61682
+976,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,hmdb,HMDB01060
+977,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,inchi_key,LOJUQFSPYHMHEO-SGHXUWJISA-N
+978,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,metanetx.chemical,MNXM191
+979,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,seed.compound,cpd29608
+980,M_q8h2_c,Ubiquinol-8,0,c,C49H76O4,seed.compound,cpd15561
+981,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,bigg.metabolite,r5p
+982,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,biocyc,META:CPD-15318
+983,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:18189
+984,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:22413
+985,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:12331
+986,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:10270
+987,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,inchi_key,KTVPXOYAKDPRHY-AIHAYLRMSA-L
+988,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,kegg.compound,C03736
+989,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,metanetx.chemical,MNXM15900
+990,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,sabiork,1473
+991,M_r5p_c,Alpha-D-Ribose 5-phosphate,0,c,C5H9O8P,seed.compound,cpd19028
+992,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,bigg.metabolite,ru5p__D
+993,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,biocyc,META:RIBULOSE-5P
+994,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:40192
+995,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:21088
+996,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:17363
+997,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:26572
+998,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:13040
+999,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:37455
+1000,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:58121
+1001,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:13018
+1002,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:4243
+1003,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,hmdb,HMDB02033
+1004,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,hmdb,HMDB02694
+1005,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,hmdb,HMDB00618
+1006,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,inchi_key,FNZLKVNUWIIPSJ-UHNVWZDZSA-L
+1007,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,kegg.compound,C00199
+1008,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,metanetx.chemical,MNXM145
+1009,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,reactome.compound,29732
+1010,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,sabiork,22814
+1011,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,sabiork,1313
+1012,M_ru5p__D_c,D-Ribulose 5-phosphate,0,c,C5H9O8P,seed.compound,cpd00171
+1013,M_ac_e,Acetate,0,e,C2H3O2,bigg.metabolite,ac
+1014,M_ac_e,Acetate,0,e,C2H3O2,biocyc,META:ACET
+1015,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:13704
+1016,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:22165
+1017,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:22169
+1018,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:40480
+1019,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:15366
+1020,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:2387
+1021,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:30089
+1022,M_ac_e,Acetate,0,e,C2H3O2,chebi,CHEBI:40486
+1023,M_ac_e,Acetate,0,e,C2H3O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/9e26dcbe-4db9-46a0-8614-9f03545032d2
+1024,M_ac_e,Acetate,0,e,C2H3O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/5e4989fc-13d3-45d4-ad57-3be380a9d3c0
+1025,M_ac_e,Acetate,0,e,C2H3O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/a8f0be58-24e8-441b-8d81-a516a0ead4b3
+1026,M_ac_e,Acetate,0,e,C2H3O2,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/d45256fe-61fa-4f5b-bb16-91a3d615e3d8
+1027,M_ac_e,Acetate,0,e,C2H3O2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/b545cabc-8c9e-4b20-8848-efa015b481ea
+1028,M_ac_e,Acetate,0,e,C2H3O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/3e2d750f-df31-4445-9255-163c627e9b4a
+1029,M_ac_e,Acetate,0,e,C2H3O2,hmdb,HMDB00042
+1030,M_ac_e,Acetate,0,e,C2H3O2,inchi_key,QTBSBXVTEAMEQO-UHFFFAOYSA-M
+1031,M_ac_e,Acetate,0,e,C2H3O2,kegg.compound,C00033
+1032,M_ac_e,Acetate,0,e,C2H3O2,kegg.drug,D00010
+1033,M_ac_e,Acetate,0,e,C2H3O2,lipidmaps,LMFA01010002
+1034,M_ac_e,Acetate,0,e,C2H3O2,metanetx.chemical,MNXM26
+1035,M_ac_e,Acetate,0,e,C2H3O2,reactome.compound,1524044
+1036,M_ac_e,Acetate,0,e,C2H3O2,reactome.compound,390305
+1037,M_ac_e,Acetate,0,e,C2H3O2,reactome.compound,113539
+1038,M_ac_e,Acetate,0,e,C2H3O2,reactome.compound,2022890
+1039,M_ac_e,Acetate,0,e,C2H3O2,reactome.compound,29416
+1040,M_ac_e,Acetate,0,e,C2H3O2,sabiork,1278
+1041,M_ac_e,Acetate,0,e,C2H3O2,seed.compound,cpd00029
+1042,M_ac_e,Acetate,0,e,C2H3O2,slm,000000449
+1043,M_acald_c,Acetaldehyde,0,c,C2H4O,bigg.metabolite,acald
+1044,M_acald_c,Acetaldehyde,0,c,C2H4O,biocyc,META:ACETALD
+1045,M_acald_c,Acetaldehyde,0,c,C2H4O,chebi,CHEBI:40533
+1046,M_acald_c,Acetaldehyde,0,c,C2H4O,chebi,CHEBI:13703
+1047,M_acald_c,Acetaldehyde,0,c,C2H4O,chebi,CHEBI:2383
+1048,M_acald_c,Acetaldehyde,0,c,C2H4O,chebi,CHEBI:22158
+1049,M_acald_c,Acetaldehyde,0,c,C2H4O,chebi,CHEBI:15343
+1050,M_acald_c,Acetaldehyde,0,c,C2H4O,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/9c8865b2-a99d-42e4-a042-c88504f04b51
+1051,M_acald_c,Acetaldehyde,0,c,C2H4O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/47aa8e53-36ae-4be3-987c-c1cfab66af78
+1052,M_acald_c,Acetaldehyde,0,c,C2H4O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/ee2c714d-ff9d-4df8-b343-48c1ec76ef0e
+1053,M_acald_c,Acetaldehyde,0,c,C2H4O,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/78f3645f-408e-4001-9dda-a52ea62a15d4
+1054,M_acald_c,Acetaldehyde,0,c,C2H4O,hmdb,HMDB00990
+1055,M_acald_c,Acetaldehyde,0,c,C2H4O,inchi_key,IKHGUXGNUITLKF-UHFFFAOYSA-N
+1056,M_acald_c,Acetaldehyde,0,c,C2H4O,kegg.compound,C00084
+1057,M_acald_c,Acetaldehyde,0,c,C2H4O,metanetx.chemical,MNXM75
+1058,M_acald_c,Acetaldehyde,0,c,C2H4O,reactome.compound,113532
+1059,M_acald_c,Acetaldehyde,0,c,C2H4O,reactome.compound,29510
+1060,M_acald_c,Acetaldehyde,0,c,C2H4O,reactome.compound,113681
+1061,M_acald_c,Acetaldehyde,0,c,C2H4O,reactome.compound,113745
+1062,M_acald_c,Acetaldehyde,0,c,C2H4O,sabiork,1292
+1063,M_acald_c,Acetaldehyde,0,c,C2H4O,seed.compound,cpd00071
+1064,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,bigg.metabolite,s7p
+1065,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,biocyc,META:D-SEDOHEPTULOSE-7-P
+1066,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:4244
+1067,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:15073
+1068,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:15721
+1069,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:26621
+1070,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:9083
+1071,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:15074
+1072,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,chebi,CHEBI:57483
+1073,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,hmdb,HMDB01068
+1074,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,hmdb,HMDB62754
+1075,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,inchi_key,JDTUMPKOJBQPKX-GBNDHIKLSA-L
+1076,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,kegg.compound,C05382
+1077,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,metanetx.chemical,MNXM271
+1078,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,reactome.compound,29882
+1079,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,sabiork,1618
+1080,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,sabiork,1325
+1081,M_s7p_c,Sedoheptulose 7-phosphate,0,c,C7H13O10P,seed.compound,cpd00238
+1082,M_acald_e,Acetaldehyde,0,e,C2H4O,bigg.metabolite,acald
+1083,M_acald_e,Acetaldehyde,0,e,C2H4O,biocyc,META:ACETALD
+1084,M_acald_e,Acetaldehyde,0,e,C2H4O,chebi,CHEBI:40533
+1085,M_acald_e,Acetaldehyde,0,e,C2H4O,chebi,CHEBI:13703
+1086,M_acald_e,Acetaldehyde,0,e,C2H4O,chebi,CHEBI:2383
+1087,M_acald_e,Acetaldehyde,0,e,C2H4O,chebi,CHEBI:22158
+1088,M_acald_e,Acetaldehyde,0,e,C2H4O,chebi,CHEBI:15343
+1089,M_acald_e,Acetaldehyde,0,e,C2H4O,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/9c8865b2-a99d-42e4-a042-c88504f04b51
+1090,M_acald_e,Acetaldehyde,0,e,C2H4O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/47aa8e53-36ae-4be3-987c-c1cfab66af78
+1091,M_acald_e,Acetaldehyde,0,e,C2H4O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/ee2c714d-ff9d-4df8-b343-48c1ec76ef0e
+1092,M_acald_e,Acetaldehyde,0,e,C2H4O,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/78f3645f-408e-4001-9dda-a52ea62a15d4
+1093,M_acald_e,Acetaldehyde,0,e,C2H4O,hmdb,HMDB00990
+1094,M_acald_e,Acetaldehyde,0,e,C2H4O,inchi_key,IKHGUXGNUITLKF-UHFFFAOYSA-N
+1095,M_acald_e,Acetaldehyde,0,e,C2H4O,kegg.compound,C00084
+1096,M_acald_e,Acetaldehyde,0,e,C2H4O,metanetx.chemical,MNXM75
+1097,M_acald_e,Acetaldehyde,0,e,C2H4O,reactome.compound,113532
+1098,M_acald_e,Acetaldehyde,0,e,C2H4O,reactome.compound,29510
+1099,M_acald_e,Acetaldehyde,0,e,C2H4O,reactome.compound,113681
+1100,M_acald_e,Acetaldehyde,0,e,C2H4O,reactome.compound,113745
+1101,M_acald_e,Acetaldehyde,0,e,C2H4O,sabiork,1292
+1102,M_acald_e,Acetaldehyde,0,e,C2H4O,seed.compound,cpd00071
+1103,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,bigg.metabolite,accoa
+1104,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,biocyc,META:ACETYL-COA
+1105,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:57288
+1106,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:22192
+1107,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:15351
+1108,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:13712
+1109,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:2408
+1110,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,chebi,CHEBI:40470
+1111,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/57bd5e24-9d14-4b91-bc60-64c8ea6c2d11
+1112,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,hmdb,HMDB01206
+1113,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,inchi_key,ZSLZBFCDCINBPY-ZSJPKINUSA-J
+1114,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,kegg.compound,C00024
+1115,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,lipidmaps,LMFA07050029
+1116,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,lipidmaps,LMFA07050281
+1117,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,metanetx.chemical,MNXM21
+1118,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,reactome.compound,727753
+1119,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,reactome.compound,76183
+1120,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,reactome.compound,113560
+1121,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,reactome.compound,353123
+1122,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,reactome.compound,113559
+1123,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,sabiork,1276
+1124,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,seed.compound,cpd00022
+1125,M_accoa_c,Acetyl-CoA,0,c,C23H34N7O17P3S,slm,000000297
+1126,M_succ_c,Succinate,0,c,C4H4O4,bigg.metabolite,succ
+1127,M_succ_c,Succinate,0,c,C4H4O4,biocyc,META:SUC
+1128,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:22941
+1129,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:26803
+1130,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:15741
+1131,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:132287
+1132,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:45639
+1133,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:30779
+1134,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:15125
+1135,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:22943
+1136,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:26807
+1137,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:9304
+1138,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:90372
+1139,M_succ_c,Succinate,0,c,C4H4O4,chebi,CHEBI:30031
+1140,M_succ_c,Succinate,0,c,C4H4O4,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/cc98aff0-7f64-4db4-9d59-de961c228496
+1141,M_succ_c,Succinate,0,c,C4H4O4,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/6377658b-03f6-4fed-a5bf-ff0f2389b693
+1142,M_succ_c,Succinate,0,c,C4H4O4,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/600b74d3-8fe5-426d-bedf-291175bd23e4
+1143,M_succ_c,Succinate,0,c,C4H4O4,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/8fdfd425-4343-4bf2-8427-b2ffa57fdbd7
+1144,M_succ_c,Succinate,0,c,C4H4O4,hmdb,HMDB00254
+1145,M_succ_c,Succinate,0,c,C4H4O4,inchi_key,KDYFGRWQOYBRFD-UHFFFAOYSA-L
+1146,M_succ_c,Succinate,0,c,C4H4O4,kegg.compound,C00042
+1147,M_succ_c,Succinate,0,c,C4H4O4,lipidmaps,LMFA01170043
+1148,M_succ_c,Succinate,0,c,C4H4O4,metanetx.chemical,MNXM25
+1149,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,389583
+1150,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,5278787
+1151,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,159939
+1152,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,433123
+1153,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,29434
+1154,M_succ_c,Succinate,0,c,C4H4O4,reactome.compound,113536
+1155,M_succ_c,Succinate,0,c,C4H4O4,sabiork,1924
+1156,M_succ_c,Succinate,0,c,C4H4O4,seed.compound,cpd00036
+1157,M_succ_e,Succinate,0,e,C4H4O4,bigg.metabolite,succ
+1158,M_succ_e,Succinate,0,e,C4H4O4,biocyc,META:SUC
+1159,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:22941
+1160,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:26803
+1161,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:15741
+1162,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:132287
+1163,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:45639
+1164,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:30779
+1165,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:15125
+1166,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:22943
+1167,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:26807
+1168,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:9304
+1169,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:90372
+1170,M_succ_e,Succinate,0,e,C4H4O4,chebi,CHEBI:30031
+1171,M_succ_e,Succinate,0,e,C4H4O4,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/cc98aff0-7f64-4db4-9d59-de961c228496
+1172,M_succ_e,Succinate,0,e,C4H4O4,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/6377658b-03f6-4fed-a5bf-ff0f2389b693
+1173,M_succ_e,Succinate,0,e,C4H4O4,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/600b74d3-8fe5-426d-bedf-291175bd23e4
+1174,M_succ_e,Succinate,0,e,C4H4O4,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/8fdfd425-4343-4bf2-8427-b2ffa57fdbd7
+1175,M_succ_e,Succinate,0,e,C4H4O4,hmdb,HMDB00254
+1176,M_succ_e,Succinate,0,e,C4H4O4,inchi_key,KDYFGRWQOYBRFD-UHFFFAOYSA-L
+1177,M_succ_e,Succinate,0,e,C4H4O4,kegg.compound,C00042
+1178,M_succ_e,Succinate,0,e,C4H4O4,lipidmaps,LMFA01170043
+1179,M_succ_e,Succinate,0,e,C4H4O4,metanetx.chemical,MNXM25
+1180,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,389583
+1181,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,5278787
+1182,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,159939
+1183,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,433123
+1184,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,29434
+1185,M_succ_e,Succinate,0,e,C4H4O4,reactome.compound,113536
+1186,M_succ_e,Succinate,0,e,C4H4O4,sabiork,1924
+1187,M_succ_e,Succinate,0,e,C4H4O4,seed.compound,cpd00036
+1188,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,bigg.metabolite,succoa
+1189,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,biocyc,META:SUC-COA
+1190,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:57292
+1191,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:10746
+1192,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:15127
+1193,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:15380
+1194,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:9310
+1195,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:45541
+1196,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,chebi,CHEBI:26811
+1197,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/359075fb-98d9-458d-ba82-db4020e753f3
+1198,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,hmdb,HMDB01022
+1199,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,inchi_key,VNOYUJKHFWYWIR-ITIYDSSPSA-I
+1200,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,kegg.compound,C00091
+1201,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,lipidmaps,LMFA07050370
+1202,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,metanetx.chemical,MNXM92
+1203,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,reactome.compound,70958
+1204,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,sabiork,1931
+1205,M_succoa_c,Succinyl-CoA,0,c,C25H35N7O19P3S,seed.compound,cpd00078
+1206,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,bigg.metabolite,acon_C
+1207,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,biocyc,META:CIS-ACONITATE
+1208,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:23306
+1209,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:16383
+1210,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:12798
+1211,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:32805
+1212,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:23308
+1213,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,chebi,CHEBI:10482
+1214,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/643481e5-a35b-477e-8665-70f4dca66baa
+1215,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,hmdb,HMDB00461
+1216,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,hmdb,HMDB00072
+1217,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,inchi_key,GTZCVFVGUGFEME-IWQZZHSRSA-K
+1218,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,kegg.compound,C00417
+1219,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,metanetx.chemical,MNXM813
+1220,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,sabiork,2043
+1221,M_acon_C_c,Cis-Aconitate,0,c,C6H3O6,seed.compound,cpd00331
+1222,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,bigg.metabolite,xu5p__D
+1223,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,biocyc,META:XYLULOSE-5-PHOSPHATE
+1224,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:13036
+1225,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:27354
+1226,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:4269
+1227,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:16332
+1228,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:57737
+1229,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,chebi,CHEBI:21121
+1230,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,hmdb,HMDB06212
+1231,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,hmdb,HMDB00868
+1232,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,inchi_key,FNZLKVNUWIIPSJ-RFZPGFLSSA-L
+1233,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,kegg.compound,C00231
+1234,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,metanetx.chemical,MNXM186
+1235,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,reactome.compound,29790
+1236,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,sabiork,1317
+1237,M_xu5p__D_c,D-Xylulose 5-phosphate,0,c,C5H9O8P,seed.compound,cpd00198
+1238,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,bigg.metabolite,actp
+1239,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,biocyc,META:ACETYL-P
+1240,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,chebi,CHEBI:13711
+1241,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,chebi,CHEBI:46262
+1242,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,chebi,CHEBI:15350
+1243,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,chebi,CHEBI:22191
+1244,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,chebi,CHEBI:2407
+1245,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,hmdb,HMDB01494
+1246,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,inchi_key,LIPOUNRJVLNBCD-UHFFFAOYSA-L
+1247,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,kegg.compound,C00227
+1248,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,metanetx.chemical,MNXM280
+1249,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,sabiork,1316
+1250,M_actp_c,Acetyl phosphate,0,c,C2H3O5P,seed.compound,cpd00196
+1251,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,bigg.metabolite,adp
+1252,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,biocyc,META:ADP
+1253,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:2342
+1254,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:16761
+1255,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:456216
+1256,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:40553
+1257,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:22244
+1258,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:87518
+1259,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,chebi,CHEBI:13222
+1260,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,hmdb,HMDB01341
+1261,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,inchi_key,XTWYTFMLZFPYCI-KQYNXXCUSA-K
+1262,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,kegg.compound,C00008
+1263,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,kegg.glycan,G11113
+1264,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,metanetx.chemical,MNXM7
+1265,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,114565
+1266,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,211606
+1267,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,114564
+1268,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,6798177
+1269,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,5632457
+1270,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,5696026
+1271,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,8869360
+1272,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,29370
+1273,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,113581
+1274,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,reactome.compound,113582
+1275,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,sabiork,35
+1276,M_adp_c,ADP C10H12N5O10P2,0,c,C10H12N5O10P2,seed.compound,cpd00008
+1277,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,bigg.metabolite,akg
+1278,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,biocyc,META:2-KETOGLUTARATE
+1279,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:40661
+1280,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:16810
+1281,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:11638
+1282,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:30916
+1283,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:19749
+1284,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:1253
+1285,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:30915
+1286,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,chebi,CHEBI:19748
+1287,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/5b0a94f6-d411-44fd-bcc1-fb79b4e697f5
+1288,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/6557f3f2-0ab8-494b-a865-8ce0eae788a9
+1289,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,hmdb,HMDB00208
+1290,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,hmdb,HMDB02812
+1291,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,hmdb,HMDB62781
+1292,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,inchi_key,KPGXRSRHYNQIFN-UHFFFAOYSA-L
+1293,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,kegg.compound,C00026
+1294,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,metanetx.chemical,MNXM20
+1295,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,113594
+1296,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,561075
+1297,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,5278317
+1298,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,113671
+1299,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,29406
+1300,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,reactome.compound,389537
+1301,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,sabiork,1922
+1302,M_akg_c,2-Oxoglutarate,0,c,C5H4O5,seed.compound,cpd00024
+1303,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,bigg.metabolite,akg
+1304,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,biocyc,META:2-KETOGLUTARATE
+1305,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:40661
+1306,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:16810
+1307,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:11638
+1308,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:30916
+1309,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:19749
+1310,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:1253
+1311,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:30915
+1312,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,chebi,CHEBI:19748
+1313,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/5b0a94f6-d411-44fd-bcc1-fb79b4e697f5
+1314,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/6557f3f2-0ab8-494b-a865-8ce0eae788a9
+1315,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,hmdb,HMDB00208
+1316,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,hmdb,HMDB02812
+1317,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,hmdb,HMDB62781
+1318,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,inchi_key,KPGXRSRHYNQIFN-UHFFFAOYSA-L
+1319,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,kegg.compound,C00026
+1320,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,metanetx.chemical,MNXM20
+1321,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,113594
+1322,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,561075
+1323,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,5278317
+1324,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,113671
+1325,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,29406
+1326,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,reactome.compound,389537
+1327,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,sabiork,1922
+1328,M_akg_e,2-Oxoglutarate,0,e,C5H4O5,seed.compound,cpd00024
+1329,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,bigg.metabolite,amp
+1330,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,biocyc,META:AMP-GROUP
+1331,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,biocyc,META:AMP
+1332,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:13736
+1333,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:2356
+1334,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:13234
+1335,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:22242
+1336,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:40786
+1337,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:16027
+1338,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:40721
+1339,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:40510
+1340,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:456215
+1341,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:13235
+1342,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:22245
+1343,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:40726
+1344,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:47222
+1345,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:13740
+1346,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:40826
+1347,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,chebi,CHEBI:12056
+1348,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,hmdb,HMDB00045
+1349,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,inchi_key,UDMBCSSLTHHNCD-KQYNXXCUSA-L
+1350,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,kegg.compound,C00020
+1351,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,kegg.drug,D02769
+1352,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,metanetx.chemical,MNXM14
+1353,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,reactome.compound,389620
+1354,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,reactome.compound,159448
+1355,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,reactome.compound,76577
+1356,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,reactome.compound,109275
+1357,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,reactome.compound,164121
+1358,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,sabiork,1273
+1359,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,seed.compound,cpd22272
+1360,M_amp_c,AMP C10H12N5O7P,0,c,C10H12N5O7P,seed.compound,cpd00018
+1361,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,bigg.metabolite,atp
+1362,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,biocyc,META:ATP
+1363,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:15422
+1364,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:10789
+1365,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:10841
+1366,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:2359
+1367,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:22249
+1368,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:13236
+1369,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:237958
+1370,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:30616
+1371,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:57299
+1372,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,chebi,CHEBI:40938
+1373,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,hmdb,HMDB00538
+1374,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,inchi_key,ZKHQWZAMYRWXGA-KQYNXXCUSA-J
+1375,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,kegg.compound,C00002
+1376,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,kegg.drug,D08646
+1377,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,metanetx.chemical,MNXM3
+1378,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,8878982
+1379,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,389573
+1380,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,8938081
+1381,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,211579
+1382,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,113593
+1383,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,113592
+1384,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,5632460
+1385,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,5696069
+1386,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,29358
+1387,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,8869363
+1388,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,reactome.compound,6798184
+1389,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,sabiork,34
+1390,M_atp_c,ATP C10H12N5O13P3,0,c,C10H12N5O13P3,seed.compound,cpd00002
+1391,M_cit_c,Citrate,0,c,C6H5O7,bigg.metabolite,cit
+1392,M_cit_c,Citrate,0,c,C6H5O7,biocyc,META:CIT
+1393,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35802
+1394,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:133748
+1395,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35809
+1396,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:76049
+1397,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:41523
+1398,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35810
+1399,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:30769
+1400,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:13999
+1401,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:23322
+1402,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35808
+1403,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:42563
+1404,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:16947
+1405,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:132362
+1406,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35804
+1407,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:23321
+1408,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:3727
+1409,M_cit_c,Citrate,0,c,C6H5O7,chebi,CHEBI:35806
+1410,M_cit_c,Citrate,0,c,C6H5O7,hmdb,HMDB00094
+1411,M_cit_c,Citrate,0,c,C6H5O7,inchi_key,KRKNYBCHXYNGOX-UHFFFAOYSA-K
+1412,M_cit_c,Citrate,0,c,C6H5O7,kegg.compound,C00158
+1413,M_cit_c,Citrate,0,c,C6H5O7,kegg.drug,D00037
+1414,M_cit_c,Citrate,0,c,C6H5O7,metanetx.chemical,MNXM131
+1415,M_cit_c,Citrate,0,c,C6H5O7,reactome.compound,29654
+1416,M_cit_c,Citrate,0,c,C6H5O7,reactome.compound,433138
+1417,M_cit_c,Citrate,0,c,C6H5O7,reactome.compound,76190
+1418,M_cit_c,Citrate,0,c,C6H5O7,sabiork,1952
+1419,M_cit_c,Citrate,0,c,C6H5O7,seed.compound,cpd00137
+1420,M_co2_c,CO2 CO2,0,c,CO2,bigg.metabolite,co2
+1421,M_co2_c,CO2 CO2,0,c,CO2,biocyc,META:CARBON-DIOXIDE
+1422,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:23011
+1423,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:3283
+1424,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:48829
+1425,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:16526
+1426,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:13283
+1427,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:13285
+1428,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:13284
+1429,M_co2_c,CO2 CO2,0,c,CO2,chebi,CHEBI:13282
+1430,M_co2_c,CO2 CO2,0,c,CO2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/2ec3da94-5f50-4525-81b1-5607c5c7a3d3
+1431,M_co2_c,CO2 CO2,0,c,CO2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/05f60af4-0a3f-4ead-9a29-33bb0f123379
+1432,M_co2_c,CO2 CO2,0,c,CO2,hmdb,HMDB01967
+1433,M_co2_c,CO2 CO2,0,c,CO2,inchi_key,CURLTUGMZLYLDI-UHFFFAOYSA-N
+1434,M_co2_c,CO2 CO2,0,c,CO2,kegg.compound,C00011
+1435,M_co2_c,CO2 CO2,0,c,CO2,kegg.drug,D00004
+1436,M_co2_c,CO2 CO2,0,c,CO2,metanetx.chemical,MNXM13
+1437,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,29376
+1438,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,5668565
+1439,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,189480
+1440,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,1132345
+1441,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,113528
+1442,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,1237009
+1443,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,159751
+1444,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,389536
+1445,M_co2_c,CO2 CO2,0,c,CO2,reactome.compound,159942
+1446,M_co2_c,CO2 CO2,0,c,CO2,sabiork,1266
+1447,M_co2_c,CO2 CO2,0,c,CO2,seed.compound,cpd00011
+1448,M_co2_e,CO2 CO2,0,e,CO2,bigg.metabolite,co2
+1449,M_co2_e,CO2 CO2,0,e,CO2,biocyc,META:CARBON-DIOXIDE
+1450,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:23011
+1451,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:3283
+1452,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:48829
+1453,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:16526
+1454,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:13283
+1455,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:13285
+1456,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:13284
+1457,M_co2_e,CO2 CO2,0,e,CO2,chebi,CHEBI:13282
+1458,M_co2_e,CO2 CO2,0,e,CO2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/2ec3da94-5f50-4525-81b1-5607c5c7a3d3
+1459,M_co2_e,CO2 CO2,0,e,CO2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/05f60af4-0a3f-4ead-9a29-33bb0f123379
+1460,M_co2_e,CO2 CO2,0,e,CO2,hmdb,HMDB01967
+1461,M_co2_e,CO2 CO2,0,e,CO2,inchi_key,CURLTUGMZLYLDI-UHFFFAOYSA-N
+1462,M_co2_e,CO2 CO2,0,e,CO2,kegg.compound,C00011
+1463,M_co2_e,CO2 CO2,0,e,CO2,kegg.drug,D00004
+1464,M_co2_e,CO2 CO2,0,e,CO2,metanetx.chemical,MNXM13
+1465,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,29376
+1466,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,5668565
+1467,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,189480
+1468,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,1132345
+1469,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,113528
+1470,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,1237009
+1471,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,159751
+1472,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,389536
+1473,M_co2_e,CO2 CO2,0,e,CO2,reactome.compound,159942
+1474,M_co2_e,CO2 CO2,0,e,CO2,sabiork,1266
+1475,M_co2_e,CO2 CO2,0,e,CO2,seed.compound,cpd00011
+1476,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,bigg.metabolite,coa
+1477,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,biocyc,META:COA-GROUP
+1478,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,biocyc,META:CO-A
+1479,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:41631
+1480,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:41597
+1481,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:741566
+1482,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:23355
+1483,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:13295
+1484,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:13298
+1485,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:57287
+1486,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:15346
+1487,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:3771
+1488,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,chebi,CHEBI:13294
+1489,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/19310484-6aa5-4dcf-b1da-855a8c21ecfd
+1490,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,hmdb,HMDB01423
+1491,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,hmdb,HMDB62184
+1492,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,inchi_key,RGJOEKWQDUBAIZ-IBOSZNHHSA-J
+1493,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,kegg.compound,C00010
+1494,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,metanetx.chemical,MNXM12
+1495,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,193514
+1496,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,162743
+1497,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,2485002
+1498,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,1678675
+1499,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,29374
+1500,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,76194
+1501,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,reactome.compound,8939024
+1502,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,sabiork,1265
+1503,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,seed.compound,cpd22528
+1504,M_coa_c,Coenzyme A,0,c,C21H32N7O16P3S,seed.compound,cpd00010
+1505,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,bigg.metabolite,dhap
+1506,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,biocyc,META:DIHYDROXY-ACETONE-PHOSPHATE
+1507,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:14341
+1508,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:5454
+1509,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:16108
+1510,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:14342
+1511,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:24355
+1512,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:39571
+1513,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,chebi,CHEBI:57642
+1514,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,hmdb,HMDB11735
+1515,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,hmdb,HMDB01473
+1516,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,inchi_key,GNGACRATGGDKBX-UHFFFAOYSA-L
+1517,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,kegg.compound,C00111
+1518,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,metanetx.chemical,MNXM77
+1519,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,reactome.compound,390404
+1520,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,reactome.compound,75970
+1521,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,reactome.compound,188451
+1522,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,sabiork,28
+1523,M_dhap_c,Dihydroxyacetone phosphate,0,c,C3H5O6P,seed.compound,cpd00095
+1524,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,bigg.metabolite,e4p
+1525,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,biocyc,META:ERYTHROSE-4P
+1526,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:4114
+1527,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:20927
+1528,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:12921
+1529,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:48153
+1530,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:16897
+1531,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,chebi,CHEBI:42349
+1532,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,hmdb,HMDB01321
+1533,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,inchi_key,NGHMDNPXVRFFGS-IUYQGCFVSA-L
+1534,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,kegg.compound,C00279
+1535,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,metanetx.chemical,MNXM258
+1536,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,reactome.compound,29878
+1537,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,sabiork,1324
+1538,M_e4p_c,D-Erythrose 4-phosphate,0,c,C4H7O7P,seed.compound,cpd00236
+1539,M_etoh_c,Ethanol,0,c,C2H6O,bigg.metabolite,etoh
+1540,M_etoh_c,Ethanol,0,c,C2H6O,biocyc,META:ETOH
+1541,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:42377
+1542,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:23978
+1543,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:30880
+1544,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:16236
+1545,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:52092
+1546,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:30878
+1547,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:4879
+1548,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:44594
+1549,M_etoh_c,Ethanol,0,c,C2H6O,chebi,CHEBI:14222
+1550,M_etoh_c,Ethanol,0,c,C2H6O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/a4a354fd-5003-4b7b-b11b-f54204aea384
+1551,M_etoh_c,Ethanol,0,c,C2H6O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/f89efe7c-1a6a-4d21-b99c-e3e1070a8062
+1552,M_etoh_c,Ethanol,0,c,C2H6O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/56e18a05-c059-433a-94f6-0e26c01b010f
+1553,M_etoh_c,Ethanol,0,c,C2H6O,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/9fb1fbdf-101b-4b82-a596-d2f52c870e4f
+1554,M_etoh_c,Ethanol,0,c,C2H6O,hmdb,HMDB00108
+1555,M_etoh_c,Ethanol,0,c,C2H6O,inchi_key,LFQSCWFLJHTTHZ-UHFFFAOYSA-N
+1556,M_etoh_c,Ethanol,0,c,C2H6O,kegg.compound,C00469
+1557,M_etoh_c,Ethanol,0,c,C2H6O,kegg.drug,D06542
+1558,M_etoh_c,Ethanol,0,c,C2H6O,kegg.drug,D02798
+1559,M_etoh_c,Ethanol,0,c,C2H6O,kegg.drug,D00068
+1560,M_etoh_c,Ethanol,0,c,C2H6O,kegg.drug,D04855
+1561,M_etoh_c,Ethanol,0,c,C2H6O,metanetx.chemical,MNXM303
+1562,M_etoh_c,Ethanol,0,c,C2H6O,reactome.compound,113748
+1563,M_etoh_c,Ethanol,0,c,C2H6O,reactome.compound,30203
+1564,M_etoh_c,Ethanol,0,c,C2H6O,sabiork,56
+1565,M_etoh_c,Ethanol,0,c,C2H6O,seed.compound,cpd00363
+1566,M_etoh_e,Ethanol,0,e,C2H6O,bigg.metabolite,etoh
+1567,M_etoh_e,Ethanol,0,e,C2H6O,biocyc,META:ETOH
+1568,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:42377
+1569,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:23978
+1570,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:30880
+1571,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:16236
+1572,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:52092
+1573,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:30878
+1574,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:4879
+1575,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:44594
+1576,M_etoh_e,Ethanol,0,e,C2H6O,chebi,CHEBI:14222
+1577,M_etoh_e,Ethanol,0,e,C2H6O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/a4a354fd-5003-4b7b-b11b-f54204aea384
+1578,M_etoh_e,Ethanol,0,e,C2H6O,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/f89efe7c-1a6a-4d21-b99c-e3e1070a8062
+1579,M_etoh_e,Ethanol,0,e,C2H6O,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/56e18a05-c059-433a-94f6-0e26c01b010f
+1580,M_etoh_e,Ethanol,0,e,C2H6O,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/9fb1fbdf-101b-4b82-a596-d2f52c870e4f
+1581,M_etoh_e,Ethanol,0,e,C2H6O,hmdb,HMDB00108
+1582,M_etoh_e,Ethanol,0,e,C2H6O,inchi_key,LFQSCWFLJHTTHZ-UHFFFAOYSA-N
+1583,M_etoh_e,Ethanol,0,e,C2H6O,kegg.compound,C00469
+1584,M_etoh_e,Ethanol,0,e,C2H6O,kegg.drug,D06542
+1585,M_etoh_e,Ethanol,0,e,C2H6O,kegg.drug,D02798
+1586,M_etoh_e,Ethanol,0,e,C2H6O,kegg.drug,D00068
+1587,M_etoh_e,Ethanol,0,e,C2H6O,kegg.drug,D04855
+1588,M_etoh_e,Ethanol,0,e,C2H6O,metanetx.chemical,MNXM303
+1589,M_etoh_e,Ethanol,0,e,C2H6O,reactome.compound,113748
+1590,M_etoh_e,Ethanol,0,e,C2H6O,reactome.compound,30203
+1591,M_etoh_e,Ethanol,0,e,C2H6O,sabiork,56
+1592,M_etoh_e,Ethanol,0,e,C2H6O,seed.compound,cpd00363
+1593,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,bigg.metabolite,f6p
+1594,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,biocyc,META:FRUCTOSE-6P
+1595,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:16084
+1596,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:12352
+1597,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:57634
+1598,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:22768
+1599,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:10375
+1600,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:42378
+1601,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,hmdb,HMDB03971
+1602,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,inchi_key,BGWGXPAPYGQALX-ARQDHWQXSA-L
+1603,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,kegg.compound,C05345
+1604,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,metanetx.chemical,MNXM89621
+1605,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,sabiork,25
+1606,M_f6p_c,D-Fructose 6-phosphate,0,c,C6H11O9P,seed.compound,cpd19035
+1607,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,bigg.metabolite,fdp
+1608,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,chebi,CHEBI:37736
+1609,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,chebi,CHEBI:49299
+1610,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,inchi_key,RNBGYGVWRKECFJ-VRPWFDPXSA-J
+1611,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,kegg.compound,C00354
+1612,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,metanetx.chemical,MNXM417
+1613,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,sabiork,1465
+1614,M_fdp_c,"D-Fructose 1,6-bisphosphate",0,c,C6H10O12P2,seed.compound,cpd00290
+1615,M_for_c,Formate,0,c,CH1O2,bigg.metabolite,for
+1616,M_for_c,Formate,0,c,CH1O2,biocyc,META:CPD1G-1532
+1617,M_for_c,Formate,0,c,CH1O2,biocyc,META:CPD1G-1535
+1618,M_for_c,Formate,0,c,CH1O2,biocyc,META:FORMATE
+1619,M_for_c,Formate,0,c,CH1O2,biocyc,META:CPD-9845
+1620,M_for_c,Formate,0,c,CH1O2,biocyc,META:CPD1G-1534
+1621,M_for_c,Formate,0,c,CH1O2,biocyc,META:CARBOXYL-GROUP
+1622,M_for_c,Formate,0,c,CH1O2,biocyc,META:CPD1G-1533
+1623,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:24081
+1624,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:30751
+1625,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:15740
+1626,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:5145
+1627,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:42460
+1628,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:14276
+1629,M_for_c,Formate,0,c,CH1O2,chebi,CHEBI:24082
+1630,M_for_c,Formate,0,c,CH1O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/9a9d20ae-b6ec-40a9-93ca-1de20597b1ed
+1631,M_for_c,Formate,0,c,CH1O2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/09c1ad08-016e-4477-8840-b97a031eae23
+1632,M_for_c,Formate,0,c,CH1O2,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/bf16ab32-cb3c-4427-a65a-089ab754823e
+1633,M_for_c,Formate,0,c,CH1O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/34fe3cd9-9b0b-46b0-a1c5-8a66509f1919
+1634,M_for_c,Formate,0,c,CH1O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/1d077cf2-3f9f-4163-aa49-0fca1b2b3ab3
+1635,M_for_c,Formate,0,c,CH1O2,hmdb,HMDB00142
+1636,M_for_c,Formate,0,c,CH1O2,inchi_key,BDAGIHXWWSANSR-UHFFFAOYSA-M
+1637,M_for_c,Formate,0,c,CH1O2,kegg.compound,C00058
+1638,M_for_c,Formate,0,c,CH1O2,metanetx.chemical,MNXM39
+1639,M_for_c,Formate,0,c,CH1O2,reactome.compound,29460
+1640,M_for_c,Formate,0,c,CH1O2,reactome.compound,194712
+1641,M_for_c,Formate,0,c,CH1O2,reactome.compound,389585
+1642,M_for_c,Formate,0,c,CH1O2,reactome.compound,6801451
+1643,M_for_c,Formate,0,c,CH1O2,sabiork,1285
+1644,M_for_c,Formate,0,c,CH1O2,seed.compound,cpd00047
+1645,M_for_c,Formate,0,c,CH1O2,seed.compound,cpd22511
+1646,M_for_e,Formate,0,e,CH1O2,bigg.metabolite,for
+1647,M_for_e,Formate,0,e,CH1O2,biocyc,META:CPD1G-1532
+1648,M_for_e,Formate,0,e,CH1O2,biocyc,META:CPD1G-1535
+1649,M_for_e,Formate,0,e,CH1O2,biocyc,META:FORMATE
+1650,M_for_e,Formate,0,e,CH1O2,biocyc,META:CPD-9845
+1651,M_for_e,Formate,0,e,CH1O2,biocyc,META:CPD1G-1534
+1652,M_for_e,Formate,0,e,CH1O2,biocyc,META:CARBOXYL-GROUP
+1653,M_for_e,Formate,0,e,CH1O2,biocyc,META:CPD1G-1533
+1654,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:24081
+1655,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:30751
+1656,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:15740
+1657,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:5145
+1658,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:42460
+1659,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:14276
+1660,M_for_e,Formate,0,e,CH1O2,chebi,CHEBI:24082
+1661,M_for_e,Formate,0,e,CH1O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/9a9d20ae-b6ec-40a9-93ca-1de20597b1ed
+1662,M_for_e,Formate,0,e,CH1O2,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/09c1ad08-016e-4477-8840-b97a031eae23
+1663,M_for_e,Formate,0,e,CH1O2,envipath,4fd7f3e0-dd25-43ac-9453-dda3e52396e4/compound/bf16ab32-cb3c-4427-a65a-089ab754823e
+1664,M_for_e,Formate,0,e,CH1O2,envipath,5882df9c-dae1-4d80-a40e-db4724271456/compound/34fe3cd9-9b0b-46b0-a1c5-8a66509f1919
+1665,M_for_e,Formate,0,e,CH1O2,envipath,650babc9-9d68-4b73-9332-11972ca26f7b/compound/1d077cf2-3f9f-4163-aa49-0fca1b2b3ab3
+1666,M_for_e,Formate,0,e,CH1O2,hmdb,HMDB00142
+1667,M_for_e,Formate,0,e,CH1O2,inchi_key,BDAGIHXWWSANSR-UHFFFAOYSA-M
+1668,M_for_e,Formate,0,e,CH1O2,kegg.compound,C00058
+1669,M_for_e,Formate,0,e,CH1O2,metanetx.chemical,MNXM39
+1670,M_for_e,Formate,0,e,CH1O2,reactome.compound,29460
+1671,M_for_e,Formate,0,e,CH1O2,reactome.compound,194712
+1672,M_for_e,Formate,0,e,CH1O2,reactome.compound,389585
+1673,M_for_e,Formate,0,e,CH1O2,reactome.compound,6801451
+1674,M_for_e,Formate,0,e,CH1O2,sabiork,1285
+1675,M_for_e,Formate,0,e,CH1O2,seed.compound,cpd00047
+1676,M_for_e,Formate,0,e,CH1O2,seed.compound,cpd22511
+1677,M_fru_e,D-Fructose,0,e,C6H12O6,bigg.metabolite,fru
+1678,M_fru_e,D-Fructose,0,e,C6H12O6,biocyc,META:D-Fructopyranose
+1679,M_fru_e,D-Fructose,0,e,C6H12O6,biocyc,META:Fructofuranose
+1680,M_fru_e,D-Fructose,0,e,C6H12O6,biocyc,META:CPD-15382
+1681,M_fru_e,D-Fructose,0,e,C6H12O6,biocyc,META:FRU
+1682,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:47424
+1683,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:28757
+1684,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:24110
+1685,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:20929
+1686,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:4119
+1687,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:15824
+1688,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:5172
+1689,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:24104
+1690,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:12923
+1691,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:4118
+1692,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:37714
+1693,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:37721
+1694,M_fru_e,D-Fructose,0,e,C6H12O6,chebi,CHEBI:48095
+1695,M_fru_e,D-Fructose,0,e,C6H12O6,hmdb,HMDB62538
+1696,M_fru_e,D-Fructose,0,e,C6H12O6,inchi_key,RFSUNEUAIZKAJO-VRPWFDPXSA-N
+1697,M_fru_e,D-Fructose,0,e,C6H12O6,kegg.compound,C01496
+1698,M_fru_e,D-Fructose,0,e,C6H12O6,kegg.compound,C05003
+1699,M_fru_e,D-Fructose,0,e,C6H12O6,kegg.compound,C00095
+1700,M_fru_e,D-Fructose,0,e,C6H12O6,kegg.compound,C10906
+1701,M_fru_e,D-Fructose,0,e,C6H12O6,kegg.drug,D00114
+1702,M_fru_e,D-Fructose,0,e,C6H12O6,metanetx.chemical,MNXM175
+1703,M_fru_e,D-Fructose,0,e,C6H12O6,reactome.compound,189049
+1704,M_fru_e,D-Fructose,0,e,C6H12O6,reactome.compound,29532
+1705,M_fru_e,D-Fructose,0,e,C6H12O6,sabiork,25055
+1706,M_fru_e,D-Fructose,0,e,C6H12O6,sabiork,1463
+1707,M_fru_e,D-Fructose,0,e,C6H12O6,sabiork,1464
+1708,M_fru_e,D-Fructose,0,e,C6H12O6,seed.compound,cpd00082
+1709,M_fru_e,D-Fructose,0,e,C6H12O6,seed.compound,cpd19015
+1710,M_fru_e,D-Fructose,0,e,C6H12O6,seed.compound,cpd27040
+1711,M_fum_c,Fumarate,0,c,C4H2O4,bigg.metabolite,fum
+1712,M_fum_c,Fumarate,0,c,C4H2O4,biocyc,META:FUM
+1713,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:36180
+1714,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:37155
+1715,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:42511
+1716,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:5190
+1717,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:18012
+1718,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:42743
+1719,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:22956
+1720,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:22957
+1721,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:24124
+1722,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:14284
+1723,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:37154
+1724,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:29806
+1725,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:22958
+1726,M_fum_c,Fumarate,0,c,C4H2O4,chebi,CHEBI:24122
+1727,M_fum_c,Fumarate,0,c,C4H2O4,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/709035ec-4868-4de8-9095-06428f6be14b
+1728,M_fum_c,Fumarate,0,c,C4H2O4,hmdb,HMDB00134
+1729,M_fum_c,Fumarate,0,c,C4H2O4,inchi_key,VZCYOOQTPOCHFL-OWOJBTEDSA-L
+1730,M_fum_c,Fumarate,0,c,C4H2O4,kegg.compound,C00122
+1731,M_fum_c,Fumarate,0,c,C4H2O4,kegg.drug,D02308
+1732,M_fum_c,Fumarate,0,c,C4H2O4,metanetx.chemical,MNXM93
+1733,M_fum_c,Fumarate,0,c,C4H2O4,reactome.compound,113588
+1734,M_fum_c,Fumarate,0,c,C4H2O4,reactome.compound,29586
+1735,M_fum_c,Fumarate,0,c,C4H2O4,sabiork,1910
+1736,M_fum_c,Fumarate,0,c,C4H2O4,seed.compound,cpd00106
+1737,M_fum_e,Fumarate,0,e,C4H2O4,bigg.metabolite,fum
+1738,M_fum_e,Fumarate,0,e,C4H2O4,biocyc,META:FUM
+1739,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:36180
+1740,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:37155
+1741,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:42511
+1742,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:5190
+1743,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:18012
+1744,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:42743
+1745,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:22956
+1746,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:22957
+1747,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:24124
+1748,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:14284
+1749,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:37154
+1750,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:29806
+1751,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:22958
+1752,M_fum_e,Fumarate,0,e,C4H2O4,chebi,CHEBI:24122
+1753,M_fum_e,Fumarate,0,e,C4H2O4,envipath,32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/709035ec-4868-4de8-9095-06428f6be14b
+1754,M_fum_e,Fumarate,0,e,C4H2O4,hmdb,HMDB00134
+1755,M_fum_e,Fumarate,0,e,C4H2O4,inchi_key,VZCYOOQTPOCHFL-OWOJBTEDSA-L
+1756,M_fum_e,Fumarate,0,e,C4H2O4,kegg.compound,C00122
+1757,M_fum_e,Fumarate,0,e,C4H2O4,kegg.drug,D02308
+1758,M_fum_e,Fumarate,0,e,C4H2O4,metanetx.chemical,MNXM93
+1759,M_fum_e,Fumarate,0,e,C4H2O4,reactome.compound,113588
+1760,M_fum_e,Fumarate,0,e,C4H2O4,reactome.compound,29586
+1761,M_fum_e,Fumarate,0,e,C4H2O4,sabiork,1910
+1762,M_fum_e,Fumarate,0,e,C4H2O4,seed.compound,cpd00106
+1763,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,bigg.metabolite,g3p
+1764,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,biocyc,META:GAP
+1765,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:5446
+1766,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:14333
+1767,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:12984
+1768,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:181
+1769,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:17138
+1770,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:21026
+1771,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:12983
+1772,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:18324
+1773,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:58027
+1774,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:59776
+1775,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,chebi,CHEBI:29052
+1776,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,hmdb,HMDB01112
+1777,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,inchi_key,LXJXRIRHZLFYRP-VKHMYHEASA-L
+1778,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,kegg.compound,C00661
+1779,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,kegg.compound,C00118
+1780,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,metanetx.chemical,MNXM74
+1781,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,reactome.compound,29578
+1782,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,sabiork,27
+1783,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,sabiork,1687
+1784,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,seed.compound,cpd00102
+1785,M_g3p_c,Glyceraldehyde 3-phosphate,0,c,C3H5O6P,seed.compound,cpd19005
+1786,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,bigg.metabolite,g6p
+1787,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,biocyc,META:D-glucopyranose-6-phosphate
+1788,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:61548
+1789,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:14314
+1790,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,chebi,CHEBI:4170
+1791,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,hmdb,HMDB01549
+1792,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,hmdb,HMDB01401
+1793,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,hmdb,HMDB06793
+1794,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,inchi_key,NBSCHQHZLSJFNQ-GASJEMHNSA-L
+1795,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,kegg.compound,C00092
+1796,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,metanetx.chemical,MNXM160
+1797,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,reactome.compound,1629756
+1798,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,sabiork,1404
+1799,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,sabiork,1405
+1800,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,seed.compound,cpd00079
+1801,M_g6p_c,D-Glucose 6-phosphate,0,c,C6H11O9P,seed.compound,cpd26836
