@@ -1,5 +1,5 @@
 ---
-Author: @Porthmeus
+Author: Porthmeus
 ---
 
 Merging and any editing of the model was performed by Karlis Moors (k.moors@iem.uni-kiel.de).
