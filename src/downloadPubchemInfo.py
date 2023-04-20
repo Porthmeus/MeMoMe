@@ -83,8 +83,12 @@ def downloadCompInfo(metabolite:str) -> pd.DataFrame:
         try :
             comp = pcp.get_compounds(metabolite_rm, 'name', as_dataframe = True)
         except KeyError:
-            # if the problem persists return an empty data frame
-            comp = pd.DataFrame()
+            try:
+                # if that does not help, see if a substance exists in the database
+                comp = pcp.get_substances(metabolite_rm, 'name', as_dataframe = True)
+            except:
+                # if the problem persists return an empty data frame
+                comp = pd.DataFrame()
     return(comp)
 
 

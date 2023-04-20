@@ -32,10 +32,11 @@ dependencies:
   - pip
   - pubchempy
   - pyparsing
-  - python
+  - python>=3.9
   - python-dateutil
   - python-libsbml
   - pytz
+  - rdkit
   - readline
   - setuptools
   - six

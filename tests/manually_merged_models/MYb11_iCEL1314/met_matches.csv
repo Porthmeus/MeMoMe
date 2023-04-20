@@ -1,0 +1,113 @@
+M1_myb11.mets,M2_iCEL_mets_KEGG,ProtonsToAddToM2,myb11.metCharges,iCEL_mets_charge,myb11.rxns,myb11.rxnNames,myb11.metFormula,myb11.metNames,myb11.metKEGGID,myb11.metBiGGID,combined_match,matching_KEGG,iCEL_mets_formula,iCEL_mets_KEGG,iCEL_mets_name,iCEL_EX_rxn,iCEL_EX_rxn_names
+cpd00794,tre_c,0,0,0,EX_cpd00794_e0,TRHL-e0 Exchange,C12H22O11,TRHL-e0,C01083,tre,SNK0013,C01083,C12H22O11,tre[c],Trehalose,SNK0013,trehalose sink
+cpd00009,pi_e,0,-2,-2,EX_cpd00009_e0,Phosphate-e0 Exchange,HO4P,Phosphate-e0,C00009,pi,EX00009,C00009,HO4P,pi[e],Phosphate, ,Phosphate exchange
+cpd00023,glu-L_e,0,-1,-1,EX_cpd00023_e0,L-Glutamate-e0 Exchange,C5H8NO4,L-Glutamate-e0,C00025; C00302,glu__L,EX00025,C00025,C5H8NO4,glu-L[e],L-Glutamate,EX00025,L-Glutamate exchange
+cpd00027,glc-D_e,0,0,0,EX_cpd00027_e0,D-Glucose-e0 Exchange,C6H12O6,D-Glucose-e0,C00031,glc__D,EX00031,C00031,C6H12O6,glc-D[e],D-Glucose,EX00031,D-Glucose exchange
+cpd00028,pheme_e,-2,-2,0,EX_cpd00028_e0,Heme-e0 Exchange,C34H30FeN4O4,Heme-e0,C00032,pheme,EX00032,C00032,C34H30FeN4O4,pheme[e],Protoheme,EX00032,Protoheme exchange
+cpd00039,lys-L_e,0,1,1,EX_cpd00039_e0,L-Lysine-e0 Exchange,C6H15N2O2,L-Lysine-e0,C00047; C16440,lys__L,EX00047,C00047,C6H15N2O2,lys-L[e],L-Lysine,EX00047,L-Lysine exchange
+cpd00041,asp-L_e,0,-1,-1,EX_cpd00041_e0,L-Aspartate-e0 Exchange,C4H6NO4,L-Aspartate-e0,C00049; C16433,asp__L,EX00049,C00049,C4H6NO4,asp-L[e],L-Aspartate,EX00049,L-Aspartate exchange
+cpd00048,so4_e,0,-2,-2,EX_cpd00048_e0,Sulfate-e0 Exchange,O4S,Sulfate-e0,C00059,so4,EX00059,C00059,O4S,so4[e],Sulfate,EX00059,Sulfate exchange
+cpd00051,arg-L_e,0,1,1,EX_cpd00051_e0,L-Arginine-e0 Exchange,C6H15N4O2,L-Arginine-e0,C00062; C02385,arg__L,EX00062,C00062,C6H15N4O2,arg-L[e],L-Arginine,EX00062,L-Arginine exchange
+cpd00053,gln-L_e,0,0,0,EX_cpd00053_e0,L-Glutamine-e0 Exchange,C5H10N2O3,L-Glutamine-e0,C00064; C00303,gln__L,EX00064,C00064,C5H10N2O3,gln-L[e],L-Glutamine,EX00064,L-Glutamine exchange
+cpd00064,orn_e,0,1,1,EX_cpd00064_e0,Ornithine-e0 Exchange,C5H13N2O2,Ornithine-e0,C00077; C01602,orn; orn__L,EX00077,C00077,C5H13N2O2,orn[e],Ornithine,EX00077,Ornithine exchange
+cpd00073,urea_e,0,0,0,EX_cpd00073_e0,Urea-e0 Exchange,CH4N2O,Urea-e0,C00086,urea,EX00086,C00086,CH4N2O,urea[e],Urea,EX00086,Urea exchange
+cpd00098,chol_e,0,1,1,EX_cpd00098_e0,Choline-e0 Exchange,C5H14NO,Choline-e0,C00114,chol,EX00114,C00114,C5H14NO,chol[e],Choline,EX00114,Choline exchange
+cpd00105,rib-D_e,0,0,0,EX_cpd00105_e0,D-Ribose-e0 Exchange,C5H10O5,D-Ribose-e0,C00121; C21057,rib__D,EX00121,C00121,C5H10O5,rib-D[e],D-Ribose,EX00121,D-Ribose exchange
+cpd00107,leu-L_e,0,0,0,EX_cpd00107_e0,L-Leucine-e0 Exchange,C6H13NO2,L-Leucine-e0,C00123; C16439,leu__L,EX00123,C00123,C6H13NO2,leu-L[e],L-Leucine,EX00123,L-Leucine exchange
+cpd00108,gal_e,0,0,0,EX_cpd00108_e0,Galactose-e0 Exchange,C6H12O6,Galactose-e0,C00124; C00984,gal,EX00124,C00124,C6H12O6,gal[e],D-Galactose,EX00124,D-Galactose exchange
+cpd00118,ptrc_e,0,2,2,EX_cpd00118_e0,Putrescine-e0 Exchange,C4H14N2,Putrescine-e0,C00134,ptrc,EX00134,C00134,C4H14N2,ptrc[e],Putrescine,EX00134,Putrescine exchange
+cpd00119,his-L_e,0,0,0,EX_cpd00119_e0,L-Histidine-e0 Exchange,C6H9N3O2,L-Histidine-e0,C00135; C00768,his__L,EX00135,C00135,C6H9N3O2,his-L[e],L-Histidine,EX00135,L-Histidine exchange
+cpd00129,pro-L_e,0,0,0,EX_cpd00129_e0,L-Proline-e0 Exchange,C5H9NO2,L-Proline-e0,C00148; C16435,pro__L,EX00148,C00148,C5H9NO2,pro-L[e],L-Proline,EX00148,L-Proline exchange
+cpd00154,xyl-D_e,0,0,0,EX_cpd00154_e0,Xylose-e0 Exchange,C5H10O5,Xylose-e0,C00181,xyl__D,EX00181,C00181,C5H10O5,xyl-D[e],D-Xylose,EX00181,D-Xylose exchange
+cpd00156,val-L_e,0,0,0,EX_cpd00156_e0,L-Valine-e0 Exchange,C5H11NO2,L-Valine-e0,C00183; C16436,val__L,EX00183,C00183,C5H11NO2,val-L[e],L-Valine,EX00183,L-Valine exchange
+cpd00161,thr-L_e,0,0,0,EX_cpd00161_e0,L-Threonine-e0 Exchange,C4H9NO3,L-Threonine-e0,C00188,thr__L,EX00188,C00188,C4H9NO3,thr-L[e],L-Threonine,EX00188,L-Threonine exchange
+cpd00179,malt_e,0,0,0,EX_cpd00179_e0,Maltose-e0 Exchange,C12H22O11,Maltose-e0,C00208; C00897,malt,EX00208,C00208,C12H22O11,malt[e],Maltose,EX00208,Maltose exchange
+cpd00210,taur_e,0,0,0,EX_cpd00210_e0,Taurine-e0 Exchange,C2H7NO3S,Taurine-e0,C00245,taur,EX00245,C00245,C2H7NO3S,taur[e],Taurine,EX00245,Taurine exchange
+cpd00224,arab-L_e,0,0,0,EX_cpd00224_e0,L-Arabinose-e0 Exchange,C5H10O5,L-Arabinose-e0,C00259,,EX00259,C00259,C5H10O5,arab-L[e],L-Arabinose,EX00259,L-Arabinose exchange
+cpd00264,spmd_c,0,3,3,EX_cpd00264_e0,Spermidine-e0 Exchange,C7H22N3,Spermidine-e0,C00315,spmd,DMN0034,C00315,C7H22N3,spmd[c],Spermidine,DMN0034,spermidine demand
+cpd00268,tsul_e,1,-1,-2,EX_cpd00268_e0,H2S2O3-e0 Exchange,HO3S2,H2S2O3-e0,C00320; C05529,tsul,EX00320,C00320,O3S2,tsul[e],Thiosulfate,EX00320,Thiosulfate exchange
+cpd00322,ile-L_e,0,0,0,EX_cpd00322_e0,L-Isoleucine-e0 Exchange,C6H13NO2,L-Isoleucine-e0,C00407,ile__L,EX00407,C00407,C6H13NO2,ile-L[e],L-Isoleucine,EX00407,L-Isoleucine exchange
+cpd00540,glyb_e,0,0,0,EX_cpd00540_e0,BET-e0 Exchange,C5H11NO2,BET-e0,C00719,glyb,EX00719,C00719,C5H11NO2,glyb[e],Glycine betaine,EX00719,Glycine betaine exchange
+cpd10516,fe3_c,0,3,3,EX_cpd10516_e0,fe3-e0 Exchange,Fe,fe3-e0,C14819,fe3,DMN0008,C14819,Fe,fe3[c],Fe3+,DMN0008,fe3 storage
+cpd00067,h_e,0,1,1,EX_cpd00067_e0,H+-e0 Exchange,H,H+-e0,C00080,h,EX00080,C00080,H,h[e],H+,EX00080,H+ exchange
+cpd00092,ura_e,0,0,0,EX_cpd00092_e0,Uracil-e0 Exchange,C4H4N2O2,Uracil-e0,C00106,ura,EX00106,C00106,C4H4N2O2,ura[e],Uracil,EX00106,Uracil exchange
+cpd00249,uri_e,0,0,0,EX_cpd00249_e0,Uridine-e0 Exchange,C9H12N2O6,Uridine-e0,C00299,uri,EX00299,C00299,C9H12N2O6,uri[e],Uridine,EX00299,Uridine exchange
+cpd00309,xan_e,0,0,0,EX_cpd00309_e0,XAN-e0 Exchange,C5H4N4O2,XAN-e0,C00385,xan,EX00385,C00385,C5H4N4O2,xan[e],Xanthine,EX00385,Xanthine exchange
+cpd00311,gsn_e,0,0,0,EX_cpd00311_e0,Guanosine-e0 Exchange,C10H13N5O5,Guanosine-e0,C00387,gsn,EX00387,C00387,C10H13N5O5,gsn[e],Guanosine,EX00387,Guanosine exchange
+cpd00130,mal-L_e,0,-2,-2,EX_cpd00130_e0,L-Malate-e0 Exchange,C4H4O5,L-Malate-e0,C00149,mal__L,EX00149,C00149,C4H4O5,mal-L[e],L-Malate,EX00149,L-Malate exchange
+cpd00971,na1_e,0,1,1,EX_cpd00971_e0,Na+-e0 Exchange,Na,Na+-e0,C01330,na1,EX01330,C01330,Na,na1[e],Sodium,EX01330,Sodium exchange
+cpd00137,cit_e,0,-3,-3,EX_cpd00137_e0,Citrate-e0 Exchange,C6H5O7,Citrate-e0,C00158,cit,EX00158,C00158,C6H5O7,cit[e],Citrate,EX00158,Citrate exchange
+cpd00035,ala-L_e,0,0,0,EX_cpd00035_e0,L-Alanine-e0 Exchange,C3H7NO2,L-Alanine-e0,C00041; C01401,ala__L,EX00041,C00041,C3H7NO2,ala-L[e],L-Alanine,EX00041,L-Alanine exchange
+cpd00060,met-L_e,0,0,0,EX_cpd00060_e0,L-Methionine-e0 Exchange,C5H11NO2S,L-Methionine-e0,C00073; C01733,met__L,EX00073,C00073,C5H11NO2S,met-L[e],L-Methionine,EX00073,L-Methionine exchange
+cpd00220,ribflv_e,-1,-1,0,EX_cpd00220_e0,Riboflavin-e0 Exchange,C17H19N4O6,Riboflavin-e0,C00255,ribflv,EX00255,C00255,C17H20N4O6,ribflv[e],Riboflavin,EX00255,riboflavin exchange
+cpd00084,cys-L_e,0,0,0,EX_cpd00084_e0,L-Cysteine-e0 Exchange,C3H7NO2S,L-Cysteine-e0,C00097; C00736,cys__L,EX00097,C00097,C3H7NO2S,cys-L[e],L-Cysteine,EX00097,L-Cysteine exchange
+cpd00069,tyr-L_e,0,0,0,EX_cpd00069_e0,L-Tyrosine-e0 Exchange,C9H11NO3,L-Tyrosine-e0,C00082; C01536,tyr__L,EX00082,C00082,C9H11NO3,tyr-L[e],L-Tyrosine,EX00082,L-Tyrosine exchange
+cpd00066,phe-L_e,0,0,0,EX_cpd00066_e0,L-Phenylalanine-e0 Exchange,C9H11NO2,L-Phenylalanine-e0,C00079; C02057,phe__L,EX00079,C00079,C9H11NO2,phe-L[e],L-Phenylalanine,EX00079,L-Phenylalanine exchange
+cpd00054,ser-L_e,0,0,0,EX_cpd00054_e0,L-Serine-e0 Exchange,C3H7NO3,L-Serine-e0,C00065; C00716,ser__L,EX00065,C00065,C3H7NO3,ser-L[e],L-Serine,EX00065,L-Serine exchange
+cpd00644,pnto-R_e,0,-1,-1,EX_cpd00644_e0,PAN-e0 Exchange,C9H16NO5,PAN-e0,C00864,pnto__R,EX00864,C00864,C9H16NO5,pnto-R[e],(R)-Pantothenate,EX00864,pantothenic acid uptake
+cpd00246,ins_e,0,0,0,EX_cpd00246_e0,Inosine-e0 Exchange,C10H12N4O5,Inosine-e0,C00294,ins,EX00294,C00294,C10H12N4O5,ins[e],Inosine,EX00294,Inosine exchange
+cpd00182,adn_e,0,0,0,EX_cpd00182_e0,Adenosine-e0 Exchange,C10H13N5O4,Adenosine-e0,C00212,adn,EX00212,C00212,C10H13N5O4,adn[e],Adenosine,EX00212,Adenosine exchange
+cpd00013,nh4_e,0,1,1,EX_cpd00013_e0,NH3-e0 Exchange,H4N,NH3-e0,C01342,nh3; nh4,EX00014,C00014,H4N,nh4[e],Ammonium,EX00014,Ammonium exchange
+cpd00020,pyr_e,0,-1,-1,EX_cpd00020_e0,Pyruvate-e0 Exchange,C3H3O3,Pyruvate-e0,C00022,pyr,EX00022,C00022,C3H3O3,pyr[e],Pyruvate,EX00022,Pyruvate exchange
+cpd00139,glyclt_e,0,-1,-1,EX_cpd00139_e0,Glycolate-e0 Exchange,C2H3O3,Glycolate-e0,C00160,glyclt,EX00160,C00160,C2H3O3,glyclt[e],Glycolate,EX00160,Glycolate exchange
+cpd00122,acgam_e,0,0,0,EX_cpd00122_e0,N-Acetyl-D-glucosamine-e0 Exchange,C8H15NO6,N-Acetyl-D-glucosamine-e0,C00140,acgam,EX00140,C00140,C8H15NO6,acgam[e],N-Acetyl-D-glucosamine,EX00140,N-acetylglucosamine uptake
+cpd00029,ac_e,0,-1,-1,EX_cpd00029_e0,Acetate-e0 Exchange,C2H3O2,Acetate-e0,C00033,ac,EX00033,C00033,C2H3O2,ac[e],Acetate,EX00033,Acetate exchange
+cpd00024,akg_e,0,-2,-2,EX_cpd00024_e0,2-Oxoglutarate-e0 Exchange,C5H4O5,2-Oxoglutarate-e0,C00026,akg,EX00026,C00026,C5H4O5,akg[e],2-Oxoglutarate,EX00026,2-Oxoglutarate exchange
+cpd00117,ala-D_e,0,0,0,EX_cpd00117_e0,D-Alanine-e0 Exchange,C3H7NO2,D-Alanine-e0,C00133,ala__D,EX00133,C00133,C3H7NO2,ala-D[e],D-Alanine,EX00133,D-Alanine exchange
+cpd00132,asn-L_e,0,0,0,EX_cpd00132_e0,L-Asparagine-e0 Exchange,C4H8N2O3,L-Asparagine-e0,C00152; C16438,asn__L,EX00152,C00152,C4H8N2O3,asn-L[e],L-Asparagine,EX00152,L-Asparagine exchange
+cpd10515,fe2_c,0,2,2,EX_cpd10515_e0,Fe2+-e0 Exchange,Fe,Fe2+-e0,C14818,fe2,DMN0007,C14818,Fe,fe2[c],Fe2+,DMN0007,fe2 demand
+cpd00082,fru_e,0,0,0,EX_cpd00082_e0,D-Fructose-e0 Exchange,C6H12O6,D-Fructose-e0,C00095; C01496; C05003; C10906,fru,EX00095,C00095,C6H12O6,fru[e],D-Fructose,EX00095,D-Fructose exchange
+cpd00106,fum_e,0,-2,-2,EX_cpd00106_e0,Fumarate-e0 Exchange,C4H2O4,Fumarate-e0,C00122,fum,EX00122,C00122,C4H2O4,fum[e],Fumarate,EX00122,Fumarate exchange
+cpd00281,4abut_e,0,0,0,EX_cpd00281_e0,GABA-e0 Exchange,C4H9NO2,GABA-e0,C00334,4abut,EX00334,C00334,C4H9NO2,4abut[e],4-Aminobutanoate,EX00334,4-Aminobutanoate exchange
+cpd00276,gam_e,0,1,1,EX_cpd00276_e0,GLUM-e0 Exchange,C6H14NO5,GLUM-e0,C00329,gam,EX00329,C00329,C6H14NO5,gam[e],D-Glucosamine,EX00329,D-Glucosamine exchange
+cpd00222,glcn_e,0,-1,-1,EX_cpd00222_e0,GLCN-e0 Exchange,C6H11O7,GLCN-e0,C00257,glcn; glcn__D,EX00257,C00257,C6H11O7,glcn[e],D-Gluconate,EX00257,gluconate uptake
+cpd00609,glcr_e,0,-2,-2,EX_cpd00609_e0,D-Glucarate-e0 Exchange,C6H8O8,D-Glucarate-e0,C00818,glcr,EX00818,C00818,C6H8O8,glcr[e],D-Glucarate,EX00818,D-Glucarate exchange
+cpd00164,glcur_e,0,-1,-1,EX_cpd00164_e0,Glucuronate-e0 Exchange,C6H9O7,Glucuronate-e0,C00191,glcur,EX00191,C00191,C6H9O7,glcur[e],D-Glucuronate,EX00191,D-Glucuronate exchange
+cpd00080,glyc3p_e,0,-2,-2,EX_cpd00080_e0,Glycerol-3-phosphate-e0 Exchange,C3H7O6P,Glycerol-3-phosphate-e0,C00093,glyc3p,EX00093,C00093,C3H7O6P,glyc3p[e],Glycerol 3-phosphate,EX00093,Glycerol 3-phosphate exchange
+cpd00100,glyc_e,0,0,0,EX_cpd00100_e0,Glycerol-e0 Exchange,C3H8O3,Glycerol-e0,C00116,glyc,EX00116,C00116,C3H8O3,glyc[e],Glycerol,EX00116,Glycerol exchange
+cpd00033,gly_e,0,0,0,EX_cpd00033_e0,Glycine-e0 Exchange,C2H5NO2,Glycine-e0,C00037,gly,EX00037,C00037,C2H5NO2,gly[e],Glycine,EX00037,Glycine exchange
+cpd00121,inost_e,0,0,0,EX_cpd00121_e0,L-Inositol-e0 Exchange,C6H12O6,L-Inositol-e0,C00137; C19891,inost,EX00137,C00137,C6H12O6,inost[e],myo-Inositol,EX00137,myo-Inositol exchange
+cpd00205,k_e,0,1,1,EX_cpd00205_e0,K+-e0 Exchange,K,K+-e0,C00238,k,EX00238,C00238,K,k[e],potassium,EX00238,potassium exchange
+cpd00208,lcts_e,0,0,0,EX_cpd00208_e0,LACT-e0 Exchange,C12H22O11,LACT-e0,C00243; C01970,lcts,EX00243,C00243,C12H22O11,lcts[e],Lactose,EX00243,Lactose exchange
+cpd00159,lac-L_e,0,-1,-1,EX_cpd00159_e0,L-Lactate-e0 Exchange,C3H5O3,L-Lactate-e0,C00186,lac__L,EX00186,C00186,C3H5O3,lac-L[e],L-Lactate,EX00186,L-Lactate exchange
+cpd00138,man_e,0,0,0,EX_cpd00138_e0,D-Mannose-e0 Exchange,C6H12O6,D-Mannose-e0,C00159,man,EX00159,C00159,C6H12O6,man[e],D-Mannose,EX00159,D-Mannose exchange
+cpd03198,melib_e,0,0,0,EX_cpd03198_e0,Melibiose-e0 Exchange,C12H22O11,Melibiose-e0,C05402,6dg,EX05402,C05402,C12H22O11,melib[e],Melibiose,EX05402,Melibiose exchange
+cpd11574,mobd_e,2,0,-2,EX_cpd11574_e0,Molybdate-e0 Exchange,H2MoO4,Molybdate-e0,C06232,mobd,EX06232,C06232,MoO4,mobd[e],Molybdate,EX06232,Molybdate exchange
+cpd00141,ppa_e,0,-1,-1,EX_cpd00141_e0,Propionate-e0 Exchange,C3H5O2,Propionate-e0,C00163,,EX00163,C00163,C3H5O2,ppa[e],Propionate (n-C3:0),EX00163,Propionate (n-C3:0) exchange
+cpd00036,succ_e,0,-2,-2,EX_cpd00036_e0,Succinate-e0 Exchange,C4H4O4,Succinate-e0,C00042,succ,EX00042,C00042,C4H4O4,succ[e],Succinate,EX00042,Succinate exchange
+cpd00076,sucr_e,0,0,0,EX_cpd00076_e0,Sucrose-e0 Exchange,C12H22O11,Sucrose-e0,C00089,sucr,EX00089,C00089,C12H22O11,sucr[e],Sucrose,EX00089,Sucrose exchange
+cpd00065,trp-L_e,0,0,0,EX_cpd00065_e0,L-Tryptophan-e0 Exchange,C11H12N2O2,L-Tryptophan-e0,C00078; C00806,trp__L,EX00078,C00078,C11H12N2O2,trp-L[e],L-Tryptophan,EX00078,L-Tryptophan exchange
+cpd01217,xtsn_e,0,0,0,EX_cpd01217_e0,Xanthosine-e0 Exchange,C10H12N4O6,Xanthosine-e0,C01762,xtsn,EX01762,C01762,C10H12N4O6,xtsn[e],Xanthosine,EX01762,Xanthosine exchange
+cpd00751,fuc-L_c,0,0,0,EX_cpd00751_e0,L-Fucose-e0 Exchange,C6H12O5,L-Fucose-e0,C01019,,SNK0101,C01019,C6H12O5,fuc-L[c],L-Fucose,SNK0101,L-Fucose Sink
+cpd00099,cl_e,0,-1,-1,EX_cpd00099_e0,Cl--e0 Exchange,Cl,Cl--e0,C00698; C01327,cl,EX00698,C00698,Cl,cl[e],Chloride,EX00698,Chloride exchange
+cpd00277,dgsn_e,0,0,0,EX_cpd00277_e0,Deoxyguanosine-e0 Exchange,C10H13N5O4,Deoxyguanosine-e0,C00330,dgsn,EX00330,C00330,C10H13N5O4,dgsn[e],Deoxyguanosine,EX00330,Deoxyguanosine exchange
+cpd00221,lac-D_e,0,-1,-1,EX_cpd00221_e0,D-Lactate-e0 Exchange,C3H5O3,D-Lactate-e0,C00256,lac__D,EX00256,C00256,C3H5O3,lac-D[e],D-Lactate,EX00256,D-Lactate exchange
+cpd00412,duri_e,0,0,0,EX_cpd00412_e0,Deoxyuridine-e0 Exchange,C9H12N2O5,Deoxyuridine-e0,C00526,duri,EX00526,C00526,C9H12N2O5,duri[e],Deoxyuridine,EX00526,Deoxyuridine exchange
+cpd01741,ddca_e,0,-1,-1,EX_cpd01741_e0,ddca-e0 Exchange,C12H23O2,ddca-e0,C02679,,EX02679,C02679,C12H23O2,ddca[e],Dodecanoate (n-C12:0),EX02679,Dodecanoate (n-C12:0) exchange
+cpd03847,ttdca_e,0,-1,-1,EX_cpd03847_e0,Myristic acid-e0 Exchange,C14H27O2,Myristic acid-e0,C06424,,EX06424,C06424,C14H27O2,ttdca[e],tetradecanoate (n-C14:0),EX06424,tetradecanoate (n-C14:0) exchange
+cpd00214,hdca_e,0,-1,-1,EX_cpd00214_e0,Palmitate-e0 Exchange,C16H31O2,Palmitate-e0,C00249,hdca,EX00249,C00249,C16H31O2,hdca[e],Hexadecanoate (n-C16:0),EX00249,Hexadecanoate (n-C16:0) exchange
+cpd01080,ocdca_e,0,-1,-1,EX_cpd01080_e0,ocdca-e0 Exchange,C18H35O2,ocdca-e0,C01530,ocdca,EX01530,C01530,C18H35O2,ocdca[e],octadecanoate (n-C18:0),EX01530,octadecanoate (n-C18:0) exchange
+cpd00305,thm_e,0,1,1,EX_cpd00305_e0,Thiamin-e0 Exchange,C12H17N4OS,Thiamin-e0,,thm,EX00378,C00378,C12H17N4OS,thm[e],Thiamin,EX00378,thiamine exchange
+cpd00017,amet_e,0,1,1,EX_cpd00017_e0,S-Adenosyl-L-methionine-e0 Exchange,C15H23N6O5S,S-Adenosyl-L-methionine-e0,C00019,amet,EX00019,C00019,C15H23N6O5S,amet[e],S-Adenosyl-L-methionine,EX00019,S-Adenosyl-L-methionine exchange
+cpd00489,4hphac_e,0,-1,-1,EX_cpd00489_e0,4-Hydroxyphenylacetate-e0 Exchange,C8H7O3,4-Hydroxyphenylacetate-e0,C00642,4hoxpac,EX00642,C00642,C8H7O3,4hphac[e],4-Hydroxyphenylacetate,EX00642,4-Hydroxyphenylacetate exchange
+cpd00081,so3_e,1,-1,-2,EX_cpd00081_e0,Sulfite-e0 Exchange,HO3S,Sulfite-e0,C00094; C11481,so3,EX00094,C00094,O3S,so3[e],Sulfite,EX00094,Sulfite exchange
+cpd00010,coa_c,0,-4,-4,EX_cpd00010_e0,CoA-e0 Exchange,C21H32N7O16P3S,CoA-e0,C00010,coa,DMN0044,C00010,C21H32N7O16P3S,coa[c],Coenzyme A,DMN0044,coenzyme A demand
+cpd00136,4hbz_e,0,-1,-1,EX_cpd00136_e0,4-Hydroxybenzoate-e0 Exchange,C7H5O3,4-Hydroxybenzoate-e0,C00156,4hbz,EX00156,C00156,C7H5O3,4hbz[e],4-Hydroxybenzoate,EX00156,4-Hydroxybenzoate exchange
+cpd15560,q8_e,0,0,0,EX_cpd15560_e0,Ubiquinone-8-e0 Exchange,C49H74O4,Ubiquinone-8-e0,C17569,q8,EXC0013,,C49H74O4,q8[e],Ubiquinone-8,EXC0013,Ubiquinone-8 exchange
+cpd01354,lcts_e,0,0,0,EX_cpd01354_e0,beta-Lactose-e0 Exchange,C12H22O11,beta-Lactose-e0,C00243; C01970,lcts,EX00243,C00243,C12H22O11,lcts[e],Lactose,EX00243,Lactose exchange
+cpd00001,h2o_e,0,0,0,EX_cpd00001_e0,H2O-e0 Exchange,H2O,H2O-e0,C00001; C01328,h2o,EX00001,C00001,H2O,h2o[e],H2O,EX00001,H2O exchange
+cpd00526,cholate_e,0,-1,-1,EX_cpd00526_e0,Cholate-e0 Exchange,C24H39O5,Cholate-e0,C00695,cholate,EX00695,C00695,C24H39O5,cholate[e],Cholate,EX00695,Cholate exchange
+cpd00011,co2_e,0,0,0,EX_cpd00011_e0,CO2-e0 Exchange,CO2,CO2-e0,C00011,co2,EX00011,C00011,CO2,co2[e],CO2,EX00011,CO2 exchange
+cpd00007,o2_e,0,0,0,EX_cpd00007_e0,O2-e0 Exchange,O2,O2-e0,C00007,o2,EX00007,C00007,O2,o2[e],O2,EX00007,O2 exchange
+cpd00453,12ppd-R_e,0,0,0,EX_cpd00453_e0,"1,2-Propanediol-e0 Exchange",C3H8O2,"1,2-Propanediol-e0",C00583,,EX00583,C00583,C3H8O2,12ppd-R[e],Propylene glycol,EX00583,Propylene glycol exchange
+cpd00071,acald_e,0,0,0,EX_cpd00071_e0,Acetaldehyde-e0 Exchange,C2H4O,Acetaldehyde-e0,C00084,acald,EX00084,C00084,C2H4O,acald[e],Acetaldehyde,EX00084,Acetaldehyde exchange
+cpd00150,cyan_e,0,0,0,EX_cpd00150_e0,HCN-e0 Exchange,CHN,HCN-e0,C00177; C01326,cyan,EX01326,C01326,CHN,cyan[e],Hydrogen cyanide,EX01326,Hydrogen cyanide exchange
+cpd00363,etoh_e,0,0,0,EX_cpd00363_e0,Ethanol-e0 Exchange,C2H6O,Ethanol-e0,C00469,etoh,EX00469,C00469,C2H6O,etoh[e],Ethanol,EX00469,Ethanol exchange
+cpd00055,fald_e,0,0,0,EX_cpd00055_e0,Formaldehyde-e0 Exchange,CH2O,Formaldehyde-e0,C00067,fald,EX00067,C00067,CH2O,fald[e],Formaldehyde,EX00067,Formaldehyde exchange
+cpd00448,glyald_e,0,0,0,EX_cpd00448_e0,D-Glyceraldehyde-e0 Exchange,C3H6O3,D-Glyceraldehyde-e0,C00577,glyald,EX00577,C00577,C3H6O3,glyald[e],D-Glyceraldehyde,EX00577,D-Glyceraldehyde exchange
+cpd00025,h2o2_e,0,0,0,EX_cpd00025_e0,H2O2-e0 Exchange,H2O2,H2O2-e0,C00027,h2o2,EX00027,C00027,H2O2,h2o2[e],Hydrogen peroxide,EX00027,Hydrogen peroxide exchange
+cpd01133,stachyose_e,0,0,0,EX_cpd01133_e0,Stachyose Exchange,C24H42O21,Stachyose,C01613,stchs; stys,EX01613,C01613,C24H42O21,stachyose[e],Stachyose,EX01613,Stachyose exchange
+cpd00393,fol_e,-1,-2,-1,EX_cpd00393_e0,Folate Exchange,C19H17N7O6,Folate,C00504,fol,EX00504,C00504,C19H18N7O6,fol[e],Folate,EX00504,Folate exchange
+cpd00218,nac_e,0,-1,-1,EX_cpd00218_e0,Niacin Exchange,C6H4NO2,Niacin,C00253,nac,EX00253,C00253,C6H4NO2,nac[e],Nicotinate,EX00253,Nicotinate exchange
+cpd00215,pydx_e,0,0,0,EX_cpd00215_e0,Pyridoxal Exchange,C8H9NO3,Pyridoxal,C00250,pydx,EX00250,C00250,C8H9NO3,pydx[e],Pyridoxal,EX00250,pyridoxal exchange/defecation
+cpd00059,ascb-L_c,-1,-1,0,EX_cpd00059_e0,L-Ascorbate Exchange,C6H7O6,L-Ascorbate,C00072; C20364,ascb__L,DMN0038,C00072,C6H8O6,ascb-L[c],L-Ascorbate,DMN0038,vitamin C demand
