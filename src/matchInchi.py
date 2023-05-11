@@ -20,15 +20,14 @@ def matchInchi(inchi1:str, inchi2:str) -> tuple:
     chargeDiff = charge1 - charge2
 
     # check the fingerprints - they should be the same
-    if compareInchiByFingerprint(inchi1,inchi2) != 1.0:
-        return(False,chargeDiff)
+    same = False
+    if compareInchiByFingerprint(inchi1,inchi2) == 1.0:
 
-    # checking the canonical InchiString
-    same = compareInchiByString(inchi1, inchi2)
-    if same == True:
-        return(same, chargeDiff)
+        # checking the canonical InchiString
+        same = compareInchiByString(inchi1, inchi2)
+        if same == False:
 
-
-    # if that is false check if there is one of the stereoisomers the same
-    same = compareInchiByStereoIsomer(inchi1,inchi2)
+            # if that is false check if there is one of the stereoisomers the
+            # same
+            same = compareInchiByStereoIsomer(inchi1,inchi2)
     return(same, chargeDiff)
