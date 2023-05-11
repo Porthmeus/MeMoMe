@@ -9,6 +9,10 @@
 
 import re
 
+
+
+def removeCompAndOrganismFromMetIds(metabolite_ids: list):
+    #TODO:  add handling of _comp0 suffixes
     """
     Removes the suffixes (which refer to the compartment in which the metabolites are found) from the metabolite ids, as well as the prefixes (which refer to the organism in which the metabolites are found) from the metabolite ids.
 
@@ -18,10 +22,6 @@ import re
     Returns:
         list: A list of the metabolites ids after removal of the compartment suffixes and organism prefixes.
     """
-
-    #TODO:  add handling of _comp0 suffixes
-
-def removeCompAndOrganismFromMetIds(metabolite_ids: list):
     # Create a new list to store the metabolite ids without compartments
     new_metabolite_ids = []
     # Define a regular expression pattern to match the format "met['c']" or "met[c]"
