@@ -8,6 +8,9 @@
 #         - compare by DB ids
 #         - compare by fuzzy name matching
 
+from typing import List
+from json import load
+from numpy import NaN as npNaN
             
 class MeMoMetabolite():
             
@@ -30,19 +33,19 @@ class MeMoMetabolite():
         The formula of the metabolite
     charge : float
        The charge number of the metabolite
-    databases: dict()
-       A dictionary whose keys are the names of the databases, and the items are the database-specific metabolite ids
+    annotations: dict()
+       A dictionary whose keys are the names of the databases/types of annotations, and the items are the database(or annotations)-specific metabolite ids
     """
 
     def __init__(
         self,
         orig_id:str = None,
         model:str = None,
-        names:list = [],
+        names:List[str] = [],
         inchi_string:str = None,
         formula:str = None,
         charge:float = None,
-        databases:dict = None,
+        annotations:dict = None,
     ) -> None:
         """Initialize MeMoMetaboblite
 
@@ -60,8 +63,8 @@ class MeMoMetabolite():
             The formula of the metabolite
         charge : float
            The charge number of the metabolite
-        databases: dict()
-           A dictionary whose keys are the names of the databases, and the items are the database-specific metabolite ids
+        annotations: dict()
+           A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite ids
         """
         self.orig_id = orig_id
         self.model = model
@@ -69,16 +72,45 @@ class MeMoMetabolite():
         self.formula = formula
         self.inchi_string = inchi_string
         self.charge = charge
-        self.databases = databases
+        self.annotations = annotations
 
         
     def annotate(self):
-        if "bigg.metabolite" in self.databases.keys():
-            met_db_id = self.databases["bigg.metabolite"]
-            bigg_db = pd.read_csv("../Databases/BiGG.tsv", sep='\t',index_col=0)
+        if self.inchi_string is None:
+            #TODO: for now I am assuming that the download already happened, we can either add it on some external class or perfrom it here
+            #downl_status = download()
+            #if downl_status:
+            #    print("Succesfully downloaded")
+
+            # series of if/else statements to handle querying all the types of databases we have to retrieve the inchi string
+            #we could define a sequence of databases/annotation from most relevant to less relevant and proceed following that sequence
+            if "vmh" in self.annotations.keys():
+                vmh_file = open("Databases/vmh.json","r")
+                vmh_db = load(vmh_file)
+                vmh_file.close()
+                # access the vmh_db query results and saves the indexes associated to each id
+                abbreviations_index = {vmh_db["results"][i]["abbreviation"]:i for i in range(len(vmh_db["results"]))}
+                vmh_id = self.annotations["vmh"]
+                met_vmh_index = abbreviations_index[vmh_id]
+                #TODO: add exception handling
+                inchiString = vmh_db["results"][met_vmh_index]["inchiString"]
+                if inchiString is not None and inchiString != npNaN and inchiString != "":
+                    self.inchi_string = inchiString
+            elif "bigg.metabolite" in self.annotations.keys():
+                met_db_id = self.annotations["bigg.metabolite"]
+                bigg_db = pd.read_csv("../Databases/BiGG.tsv", sep='\t',index_col=0) 
+                #TODO: continue BiGG handling and other databases...
+            
+                
+
+
+
+
+        # series of if/else statements to handle all the types of annotations we have (can be handled by calling the functions of conversion between i.e. smiles to inchi string
             
 
         return None
     
     def compare(self, metabolite):
+
         return None
