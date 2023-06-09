@@ -1,5 +1,9 @@
 # temporary files for testing
 temp/
+temp*
+
+# modelfiles for testing
+models/*.xml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
