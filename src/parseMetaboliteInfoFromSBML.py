@@ -4,13 +4,37 @@
 '''
 Read an SBML file and return a pandas df with all the information on its metabolites
 '''
-
+from typing import Optional
 
 import libsbml as sbml
 import re
 import pandas as pd
 from os.path import exists
 from pathlib import Path
+
+
+def extract_cpd(string: str) -> Optional[str]:
+    """
+    :param string: The string to extract the cpd from
+    :return: Returns the extract cpd or none if the given string did not contain `cpd` as a substring
+    """
+    cpd_index = string.find("cpd")
+    # check if the string contrains 'cpd'
+    if(cpd_index == -1):
+        return None
+    cpd_id = "cpd"
+    # if it does, go to the index of 'cpd' + 3(the length) of cpd because we now expect
+    # the numerical id
+    for i in range(cpd_index + 3, len(string)):
+        # only append the digits and stop as soon as you encounter a non-digit
+        if string[i].isdigit():
+            cpd_id += string[i]
+        else:
+            break
+    return cpd_id
+
+
+
 
 def parseMetaboliteInfoFromSBML(modelfile: Path) -> pd.DataFrame:
     '''
@@ -37,8 +61,10 @@ def parseMetaboliteInfoFromSBML(modelfile: Path) -> pd.DataFrame:
     for met_i in range(len(metabolites)):
         # get annotations first, if there are more than 1, use the length as multiplier
         met = mod.getSpecies(met_i)
+        # The getAnnotationString() function seems to return [""](i.e. a list with an empty string) when no Annotation is present thuse
+        # we test for len(urls) > 1 to actually try to parse annotations
         urls = met.getAnnotationString().split("\n")
-        if len(urls) > 0:
+        if len(urls) > 1:
             anno_source = [x.split("/")[3].strip('"') for x in urls if re.search("identifiers.org",x) != None]
             met_dic["Annotation_source"].extend(anno_source)
             met_dic["Annotation_value"].extend( ["/".join(x.split("/")[4:]).replace('"/>',"") for x in urls if re.search("identifiers.org",x) != None])
