@@ -11,6 +11,8 @@
 from typing import List
 from json import load
 from numpy import NaN as npNaN
+import warnings
+from src.nameHandling import removeMetabolitePrefixSuffix
             
 class MeMoMetabolite():
             
@@ -21,12 +23,14 @@ class MeMoMetabolite():
 
     Parameters
     ----------
-    orig_id : str
-        the original ID as specified in the model where the metabolite comes from
-    model : str
+    id : str
+        the id of the MeMoMetabolite - usually the core metabolite id from the model.
+    orig_ids : set()
+        the original ID as specified in the model where the metabolite comes from, including the "M_" prefix and the compartment suffix:
+    model_id : str
         the ID of the model where the metabolite comes from
-    names : list()
-        A list of synonims of the metabolite
+    names : set() 
+        A list of common names and synonyms of the metabolite, will be converted to a set, to remove duplicates
     inchi_string : string
        The Inchi string of the metabolite
     formula : str
@@ -34,14 +38,15 @@ class MeMoMetabolite():
     charge : float
        The charge number of the metabolite
     annotations: dict()
-       A dictionary whose keys are the names of the databases/types of annotations, and the items are the database(or annotations)-specific metabolite ids
+       A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite ids
     """
 
     def __init__(
         self,
-        orig_id:str = None,
-        model:str = None,
-        names:List[str] = [],
+        id: str = None,
+        orig_ids:list[str] = None,
+        model_id:str = None,
+        names:list[str] = [],
         inchi_string:str = None,
         formula:str = None,
         charge:float = None,
@@ -51,12 +56,14 @@ class MeMoMetabolite():
 
         Parameters
         ----------
-        orig_id : str
-            the original ID as specified in the model where the metabolite comes from
-        model : str
+        id : str
+            the id of the MeMoMetabolite - usually the core metabolite id from the model.
+        orig_ids : set()
+            the original ID as specified in the model where the metabolite comes from, including the "M_" prefix and the compartment suffix:
+        model_id : str
             the ID of the model where the metabolite comes from
-        names : list()
-            A list of synonims of the metabolite
+        names : set() 
+            A list of common names and synonyms of the metabolite, will be converted to a set, to remove duplicates
         inchi_string : string
            The Inchi string of the metabolite
         formula : str
@@ -66,15 +73,123 @@ class MeMoMetabolite():
         annotations: dict()
            A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite ids
         """
-        self.orig_id = orig_id
-        self.model = model
-        self.names = names
+        if id != None:
+            self.id =removeMetabolitePrefixSuffix(id)
+        else:
+            self.id = id
+        self.orig_ids = orig_ids
+        self.model_id = model_id
+        self.names = set(names)
         self.formula = formula
         self.inchi_string = inchi_string
         self.charge = charge
         self.annotations = annotations
+    
+    def set_id(self, new_id: str) -> None:
+        ''' set function for id '''
+        if self.id != None:
+            warnings.warn("changed metbolite id from {old} to {new}".format(old = self.id, new = new_id))
+        self.id = new_id
 
+    def set_model_id(self, new_model_id: str) -> None:
+        ''' set function for model_id '''
+        if self.model_id != None:
+            warnings.warn("changed metbolite model_id from {old} to {new}".format(old = self.model_id, new = new_model_id))
+        self.model_id = new_model_id
+    
+    def set_names(self, new_names: list[str]) -> None:
+        ''' set function for names '''
+        if self.names != []:
+            warnings.warn("changed metbolite names from {old} to {new}".format(old = str(self.names), new = str(new_names)))
+        self.names = set(new_names)
+    
+    def add_names(self, new_names: list[str]) -> None:
+        ''' append new names to the list of metabolite names'''
+        for x in new_names:
+            self.names.add(x)
+
+    def set_orig_ids(self, new_orig_ids: list[str]) -> None:
+        ''' set function for orig_ids '''
+        if self.orig_ids != []:
+            warnings.warn("changed metbolite orig_ids from {old} to {new}".format(old = str(self.orig_ids), new = str(new_orig_ids)))
+        self.orig_ids = set(new_orig_ids)
+    
+    def add_orig_ids(self, new_orig_ids: list[str]) -> None:
+        ''' append new orig_ids to the list of metabolite orig_ids'''
+        for x in new_orig_ids:
+            self.orig_ids.add(x)
+       
+    def set_formula(self, new_formula: str) -> None:
+        ''' set function for formula '''
+        if self.formula != None:
+            warnings.warn("changed metbolite formula from {old} to {new}".format(old = self.formula, new = new_formula))
+        self.formula = new_formula
+
+    def set_inchi_string(self, new_inchi_string: str) -> None:
+        ''' set function for inchi_string '''
+        if self.inchi_string != None:
+            warnings.warn("changed metbolite inchi_string from {old} to {new}".format(old = self.inchi_string, new = new_inchi_string))
+        self.inchi_string = new_inchi_string
+
+    def set_charge(self, new_charge: int) -> None:
+        ''' set function for charge '''
+        if self.charge != None:
+            warnings.warn("changed metbolite charge from {old} to {new}".format(old = str(self.charge), new = str(new_charge)))
+        self.charge = new_charge
+
+    def set_annotations(self, new_annotations: dict) -> None:
+        ''' set function for annotations '''
+        if self.annotations != None:
+            warnings.warn("changed metbolite annotations from {old} to {new}".format(old = str(self.annotations), new = str(new_annotations)))
+        self.annotations = new_annotations
+    
+    def add_annotations(self, new_annotations: dict) -> None:
+        ''' append new annotations to the dict of metabolite annotations'''
+        for x in new_annotations.keys():
+            if x in self.annotations.keys():
+                self.annotations[x].extent(new_annotations[x])
+            else:
+                self.annotations[x] = new_annotations[x]
+
+    def get_unique_attributes(self) -> list:
+        ''' Get a list of unique model attributes '''
+        return([
+            self.id,
+            self.model_id,
+            self.formula,
+            self.inchi_string,
+            self.charge
+            ])
+
+    def merge(self, new_metabolite: MeMoMeMetabolite, keep_entries = True, force = False) -> None:
+        ''' Merge two MeMoMetabolites into one entry 
+        variables:
+            new_metabolite:MeMoMetabolite - a MeMoMetabolite to merge into the self metabolite
+            keep_entries:bool - if the unique attributes of self and the new_metabolite differ, which attribute should be used? Keep the original ones (default, True) or take the id from the new_metabolite (False). Only used if force = True.
+            force:bool - if unique attributes differ, should the merging be forced (True). Default: False, will raise an Error if attributes differ.
+        '''
         
+        # check if the IDs are the same, if not check what to do:
+        if all([x == y for x,y in zip(self.get_unique_attributes(), new_metabolite.get_unique_attributes())]):
+            if force == False:
+                raise ValueError("Unique attributes differ in the two metabolites {old} vs. {new}".format(old = str(self.get_unique_attributes()), new = str(new_metabolite.get_unique_attributes())))
+            else:
+                warnings.warn("Will merge, althoug unique attributes differ in the two metabolites {old} vs. {new}".format(old = str(self.get_unique_attributes()), new = str(new_metabolite.get_unique_attributes())))
+
+        # if we want to overwrite the unique attributes do it here
+        if keep_entries == False:
+            self.set_id(new_metabolite.id)
+            self.set_model_id(new_metabolite.id)
+            self.set_formula(new_metabolite.formula)
+            self.set_inchi_string(new_metabolite.inchi_string)
+            self.set_charge(new_metabolite.charge)
+
+        # add the non-unique attrbutes
+        self.add_annotations(new_metabolite.annotations)
+        self.add_names(list(new_metabolite.names))
+        self.add_orig_ids(list(new_metabolite.orig_ids))
+
+
     def annotate(self):
         if self.inchi_string is None:
             #TODO: for now I am assuming that the download already happened, we can either add it on some external class or perfrom it here
