@@ -8,6 +8,11 @@
 #         - compare by DB _ids
 #         - compare by fuzzy name matching
 
+#### TODO:
+# - add a function which forms a dataframe from the metabolite
+
+
+from __future__ import annotations
 from typing import List
 from json import load
 from numpy import NaN as npNaN
@@ -164,7 +169,7 @@ class MeMoMetabolite():
             self._charge
             ])
 
-    def merge(self, new_metabolite, keep_entries = True, force = False) -> None:
+    def merge(self, new_metabolite:MeMoMetabolite, keep_entries:bool = True, force:bool = False) -> None:
         ''' Merge two MeMoMetabolites into one entry 
         variables:
             new_metabolite:MeMoMetabolite - a MeMoMetabolite to merge into the self metabolite
