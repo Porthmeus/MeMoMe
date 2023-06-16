@@ -45,6 +45,11 @@ def validateSBML(modelDoc:sbml.SBMLDocument, strict:bool = False) -> None:
         else:
             warning.warn(text.format(MSG = "WARNING"))
     
+def annotateMetabolites_bulk(metabolites:list[MeMoMetabolite]) -> None:
+    '''
+    This function tries to get the InChI string for each metabolite by leveraging the information in the annotation attribute of the metabolite
+    '''
+
 
 def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     '''
@@ -76,8 +81,8 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     for met in metabolites:
         annotations = getAnnotationFromMet(met)
         # check if the inchi_string is available
-        if "inchi_string" in annotations.keys():
-            inchi_string = annotations[inchi.string][0]
+        if "inchi" in annotations.keys():
+            inchi_string = annotations['inchi'][0]
         else:
             inchi_string = None
         # create a MeMoMetabolite
