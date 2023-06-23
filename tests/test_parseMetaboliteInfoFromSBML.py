@@ -29,6 +29,8 @@ class TestParseSBML(unittest.TestCase):
         # do some tests
         ids = pd.unique([removeMetabolitePrefixSuffix(x) for x in expected_df.loc[:,"ID"]])
         self.assertTrue(all([x._id in ids for x in test_mets]))
+        test_ids = [x._id for x in test_mets]
+        self.assertTrue(all([met_id in test_ids for met_id in ids]))
         # TODO add more tests here
     
     def test_SBMLfileNonExistant(self):
