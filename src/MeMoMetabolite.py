@@ -7,10 +7,12 @@
 #         - compare by InChI
 #         - compare by DB _ids
 #         - compare by fuzzy name matching
-
-#### TODO:
-# - add a function which forms a dataframe from the metabolite
-
+#    - to_dict(self): forms a dictionary with all the information encoded in the metabolite
+#    - get_id(self): returns the id
+#    - get_inchi_string(self): returns the inchi_string
+#    - get_annotations(self): returns a dictionary with the metabolite annotations
+#
+#TODO: add a function that forms a dataframe from the metabolite
 
 from __future__ import annotations
 from typing import List
@@ -168,9 +170,30 @@ class MeMoMetabolite():
             self._inchi_string,
             self._charge
             ])
+
+    def get_id(self) -> str:
+        ''' Get the id '''
+        return self._id
+
     def get_inchi_string(self) -> str:
         ''' Get the inchi string '''
         return self._inchi_string
+
+    def get_annotations(self) -> dict:
+        ''' Get the annotations '''
+        return self.annotations
+
+    def to_dict(self) -> dict:
+        met_dict = dict()
+        met_dict["id"] = self._id
+        met_dict["orig_ids"] = self.orig_ids.copy()
+        met_dict["model_id"] = self._model_id
+        met_dict["names"] = self.names.copy()
+        met_dict["inchi_string"] = self._inchi_string
+        met_dict["formula"] = self._formula
+        met_dict["charge"] = self._charge
+        met_dict["annotations"] = self.annotations.copy() 
+        return met_dict
 
     def merge(self, new_metabolite:MeMoMetabolite, keep_entries:bool = True, force:bool = False) -> None:
         ''' Merge two MeMoMetabolites into one entry 
