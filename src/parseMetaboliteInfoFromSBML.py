@@ -5,113 +5,101 @@
 Read an SBML file and return a pandas df with all the information on its metabolites
 '''
 
-
 import libsbml as sbml
 import re
 import pandas as pd
+import warnings
 from os.path import exists
 from pathlib import Path
+from src.MeMoMetabolite import MeMoMetabolite
 
-def parseMetaboliteInfoFromSBML(modelfile: Path) -> pd.DataFrame:
+def getAnnotationFromMet(met:sbml.Species) -> dict:
+    ''' extract a dictionary containing additional annotations'''
+    results = dict()
+    urls = met.getAnnotationString().split("\n")
+    if len(urls) > 1:
+        anno_source = [x.split("/")[3].strip('"') for x in urls if re.search("identifiers.org",x) != None]
+        anno_val = ["/".join(x.split("/")[4:]).replace('"/>',"") for x in urls if re.search("identifiers.org",x) != None]
+        for src_i in range(len(anno_source)):
+            src = anno_source[src_i]
+            val = anno_val[src_i]
+            if src in results.keys():
+                results[src].append(val)
+            else:
+                results[src] = [val]
+    return(results)
+                
+def validateSBML(modelDoc:sbml.SBMLDocument, strict:bool = False) -> None:
     '''
-    This function reads an SBML file an returns a data frame with relevant information on all metabolites in the model
+    Uses the libsbml validator to validate an sbml file. Throws an error or warning if the validation fails.
+    Params:
+        modelDoc:libsbml.SBMLDoc - a Path object to the sbml file.
+        strict:bool - Whether to raise an error or just a warning. Default: False - only raise Warning.
+    '''
+    validator = sbml.SBMLValidator()
+    errors = validator.validate(modelDoc)
+    if errors > 0:
+        text = '''{MSG}: SBML file not valid, following failures have been found:\n''' + validator.getErrorLog().printErrors()
+        if strict:
+            raise IOError(text.format(MSG = "ERROR"))
+        else:
+            warning.warn(text.format(MSG = "WARNING"))
+    
+def annotateMetabolites_bulk(metabolites:list[MeMoMetabolite]) -> None:
+    '''
+    This function tries to get the InChI string for each metabolite by leveraging the information in the annotation attribute of the metabolite
+    '''
+
+
+def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
+    '''
+    Parses through the SBML and extracts metabolite objects from it. 
+    Params:
+        modelfileTakes:Path - a Path object to a valid sbml file
+        validate:bool - whether to validate the modelfile before parsing, default: True.
+
     '''
     # handle non-existing files as sbml won't complain
     if not modelfile.exists():
         raise FileExistsError(str(modelfile) + " does not exist")
+
     # read the sbml file
     reader = sbml.SBMLReader()
     doc = reader.readSBMLFromFile(modelfile)
-    #doc = reader.readSBMLFromFile("./Recon3DModel_301.xml")
+
+    # validate if necessary
+    if validate:
+        validateSBML(doc, strict = False)
+
+    # get the actual model and its id from the file
     mod = doc.getModel()
+    mod_id = mod.getId()
+
     # go through the metabolites in the model and extract the relevant information
     metabolites = mod.getListOfSpecies() 
-
-    met_dic = {"ID":[],
-            "Name":[],
-            "Charge":[],
-            "Compartment":[],
-            "Chemical_formula":[],
-            "Annotation_source":[],
-            "Annotation_value":[]}
-    for met_i in range(len(metabolites)):
-        # get annotations first, if there are more than 1, use the length as multiplier
-        met = mod.getSpecies(met_i)
-        urls = met.getAnnotationString().split("\n")
-        if len(urls) > 0:
-            anno_source = [x.split("/")[3].strip('"') for x in urls if re.search("identifiers.org",x) != None]
-            met_dic["Annotation_source"].extend(anno_source)
-            met_dic["Annotation_value"].extend( ["/".join(x.split("/")[4:]).replace('"/>',"") for x in urls if re.search("identifiers.org",x) != None])
-            mult = len(anno_source)
+    memoMets = []
+    for met in metabolites:
+        annotations = getAnnotationFromMet(met)
+        # check if the inchi_string is available
+        if "inchi" in annotations.keys():
+            inchi_string = annotations['inchi'][0]
         else:
-            mult = 1
-            met_dic["Annotation_source"].extend([""] * mult)
-            met_dic["Annotation_value"].extend( [""]* mult)
-        
-        # get the rest of the information
-        met_dic["ID"].extend([met.getId()] * mult)
-        met_dic["Name"].extend([met.getName()] * mult)
-        met_dic["Charge"].extend([met.getCharge()] * mult)
-        met_dic["Compartment"].extend([met.getCompartment()] * mult)
-        
-        # finally look for the chemical formula
-        fbc = met.getPlugin("fbc")
-        met_dic["Chemical_formula"].extend([fbc.getChemicalFormula()] * mult)
+            inchi_string = None
+        # create a MeMoMetabolite
+        memomet = MeMoMetabolite(_id = met.getId(),
+                orig_ids = [met.getId()],
+                _model_id = mod_id,
+                names = [met.getName()],
+                _inchi_string = inchi_string,
+                _formula = None,
+                _charge = met.getCharge(),
+                annotations = annotations)
 
-        # debugging
-       # nrows = [len(x) for x in met_dic.values()]
-       # if not all(x == nrows[0] for x in nrows):
-       #     raise 
-       #     break
-    
-    # cast the dictionary into a data frame and return it
-    df = pd.DataFrame(met_dic)
-    return(df)
-
-def parseReactionInfoFromSBML(modelfile: Path) -> pd.DataFrame:
-    '''
-    This function reads an SBML file an returns a data frame with relevant information on all reaction in the model
-    '''
-    # handle non-existing files as sbml won't complain
-    if not modelfile.exists():
-        raise FileExistsError(str(modelfile) + " does not exist")
-    # read the sbml file
-    reader = sbml.SBMLReader()
-    doc = reader.readSBMLFromFile(modelfile)
-    #doc = reader.readSBMLFromFile("./Recon3DModel_301.xml")
-    mod = doc.getModel()
-    # go through the reactions in the model and extract the relevant information
-    reactions = mod.getListOfReactions() 
-
-    rxn_dic = {"ID":[],
-            "Name":[],
-            "Annotation_source":[],
-            "Annotation_value":[]}
-    for rxn_i in range(len(reactions)):
-        # get annotations first, if there are more than 1, use the length as multiplier
-        rxn = mod.getReaction(rxn_i)
-        urls = rxn.getAnnotationString().split("\n")
-        if len(urls) > 0:
-            anno_source = [x.split("/")[3].strip('"') for x in urls if re.search("identifiers.org",x) != None]
-            rxn_dic["Annotation_source"].extend(anno_source)
-            rxn_dic["Annotation_value"].extend( ["/".join(x.split("/")[4:]).replace('"/>',"") for x in urls if re.search("identifiers.org",x) != None])
-            mult = len(anno_source)
+        # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
+        if memomet._id in [x._id for x in memoMets]:
+            idx = [i for i in range(len(memoMets)) if memoMets[i]._id == memomet._id][0]
+            memoMets[idx].merge(memomet)
         else:
-            mult = 1
-            rxn_dic["Annotation_source"].extend([""] * mult)
-            rxn_dic["Annotation_value"].extend( [""]* mult)
-        
-        # get the rest of the information
-        rxn_dic["ID"].extend([rxn.getId()] * mult)
-        rxn_dic["Name"].extend([rxn.getName()] * mult)
-        
+            memoMets.append(memomet)
 
-        # debugging
-       # nrows = [len(x) for x in rxn_dic.values()]
-       # if not all(x == nrows[0] for x in nrows):
-       #     raise 
-       #     break
-    
-    # cast the dictionary into a data frame and return it
-    df = pd.DataFrame(rxn_dic)
-    return(df)
+    return(memoMets)

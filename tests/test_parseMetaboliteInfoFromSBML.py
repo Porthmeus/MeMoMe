@@ -3,9 +3,12 @@
 
 import unittest
 from pathlib import Path
+from unittest import TestCase
+
 import pandas as pd
 
-from src.parseMetaboliteInfoFromSBML import parseMetaboliteInfoFromSBML
+from src.parseMetaboliteInfoFromSBML import *
+from src.nameHandling import *
 
 
 class TestParseSBML(unittest.TestCase):
@@ -21,13 +24,34 @@ class TestParseSBML(unittest.TestCase):
         
         # parse the model
         ecoli_core_sbml = self.dat.joinpath("e_coli_core.xml")
-        test_df = parseMetaboliteInfoFromSBML(ecoli_core_sbml)
-        self.assertTrue(all(test_df == expected_df))
+        test_mets = parseMetaboliteInfoFromSBML(ecoli_core_sbml)
+
+        # do some tests
+        ids = pd.unique([removeMetabolitePrefixSuffix(x) for x in expected_df.loc[:,"ID"]])
+        self.assertTrue(all([x._id in ids for x in test_mets]))
+        test_ids = [x._id for x in test_mets]
+        self.assertTrue(all([met_id in test_ids for met_id in ids]))
+        # TODO add more tests here
     
     def test_SBMLfileNonExistant(self):
         # test whether the function still handles non existant files, as libSBML will not complain about that by default
         non_existent_path = Path("nonexsistent")
         self.assertRaises(FileExistsError, parseMetaboliteInfoFromSBML,non_existent_path)
+
+
+    def test_extract_cpd(self):
+        teststr = "M_cpd00001_c0"
+        self.assertEqual(extract_cpd(teststr), "cpd00001")
+        teststr = "M_cPd00001_c0"
+        self.assertEqual(extract_cpd(teststr), None)
+
+    def test_removeMetabolitePrefixSuffix(self):
+        teststr = "M_cpd00001_c0"
+        self.assertEqual(removeMetabolitePrefixSuffix(teststr), "cpd00001")
+        teststr = "M_glc__D_c"
+        self.assertEqual(removeMetabolitePrefixSuffix(teststr), "glc__D")
+        teststr = "M_glc__D_e"
+        self.assertEqual(removeMetabolitePrefixSuffix(teststr), "glc__D")
 
 if __name__ == '__main__':
     unittest.main()
