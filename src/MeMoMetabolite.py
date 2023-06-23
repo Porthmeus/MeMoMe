@@ -168,6 +168,9 @@ class MeMoMetabolite():
             self._inchi_string,
             self._charge
             ])
+    def get_inchi_string(self) -> str:
+        ''' Get the inchi string '''
+        return self._inchi_string
 
     def merge(self, new_metabolite:MeMoMetabolite, keep_entries:bool = True, force:bool = False) -> None:
         ''' Merge two MeMoMetabolites into one entry 
