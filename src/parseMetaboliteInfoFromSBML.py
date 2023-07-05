@@ -9,9 +9,12 @@ import libsbml as sbml
 import re
 import pandas as pd
 import warnings
+import numpy as np
 from os.path import exists
 from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
+from src.annotateInchiRoutines import findOptimalInchi
+
 
 def getAnnotationFromMet(met:sbml.Species) -> dict:
     ''' extract a dictionary containing additional annotations'''
@@ -49,14 +52,42 @@ def annotateMetabolites_bulk(metabolites:list[MeMoMetabolite]) -> None:
     '''
     This function tries to get the InChI string for each metabolite by leveraging the information in the annotation attribute of the metabolite
     '''
+    annotateChEBI_bulk(metatbolites)
+
+def annotateChEBI_bulk(metabolites:list[MeMoMetabolite]) -> None:
+    ''' Annotate the metaboltes with Inchis from ChEBI '''
+    
+    # check if any unannotated metabolites exist 
+    ids = [x for x,y in enumerate(metabolites) if y._inchi_string == None]
+    # check if chebis ids are actually present in the annotation slot
+    annos = any(["chebi" in x.annotations.keys() for i,x in enumerate(metabolites) if i in ids])
+    if annos == True:
+        
+        # download the information from the server
+        chebi_db = pd.read_table("https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv")
+        chebi_db.index = chebi_db['CHEBI_ID']
+
+        # annotate the metabolites with the inchi_string
+        for i in ids:
+            chebis = [int(x.replace("CHEBI:","")) for x in metabolites[i].annotations["chebi"]]
+            chebis = [x for x in chebis if x in chebi_db.index]
+            inchis = np.unique(chebi_db.loc[chebis,"InChI"])
+            if len(inchis) > 0:
+                inchi = findOptimalInchi(inchis)
+                metabolites[i].set_inchi_string(inchi)
+
+    return(None)
+
+
 
 
 def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     '''
     Parses through the SBML and extracts metabolite objects from it. 
-    Params:
-        modelfileTakes:Path - a Path object to a valid sbml file
-        validate:bool - whether to validate the modelfile before parsing, default: True.
+    Parameters
+    ----------
+        modelfile : Path - a Path object to a valid sbml file
+        validate : bool - whether to validate the modelfile before parsing, default: True.
 
     '''
     # handle non-existing files as sbml won't complain
@@ -75,6 +106,18 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     mod = doc.getModel()
     mod_id = mod.getId()
 
+    # extract the metabolites 
+    memoMets = parseMetaboliteInfoFromSBMLMod(model = mod)
+    return(memoMets)
+
+def parseMetaboliteInfoFromSBMLMod(model:sbml.model): -> list:
+    '''
+    Parses through the SBML model object and extracts metabolite objects from it. 
+    Parameters
+    ----------
+        model : sbml.model -  a valid sbml model which can be parsed
+    '''
+    
     # go through the metabolites in the model and extract the relevant information
     metabolites = mod.getListOfSpecies() 
     memoMets = []
