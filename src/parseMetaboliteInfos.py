@@ -1,8 +1,9 @@
 # Porthmeus
 # 15.02.23
+# edit: 07.07.23
 
 '''
-Read an SBML file and return a pandas df with all the information on its metabolites
+Functions to parse relevant metabolite infos into a list of MeMoMetabolites from different objects like: a path to an SBML file, a libsbml.Model object or a cobra.Model object
 '''
 
 import libsbml as sbml
@@ -10,10 +11,10 @@ import re
 import pandas as pd
 import warnings
 import numpy as np
+import cobra as cb
 from os.path import exists
 from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import findOptimalInchi
 
 
 def getAnnotationFromMet(met:sbml.Species) -> dict:
@@ -48,38 +49,6 @@ def validateSBML(modelDoc:sbml.SBMLDocument, strict:bool = False) -> None:
         else:
             warning.warn(text.format(MSG = "WARNING"))
     
-def annotateMetabolites_bulk(metabolites:list[MeMoMetabolite]) -> None:
-    '''
-    This function tries to get the InChI string for each metabolite by leveraging the information in the annotation attribute of the metabolite
-    '''
-    annotateChEBI_bulk(metatbolites)
-
-def annotateChEBI_bulk(metabolites:list[MeMoMetabolite]) -> None:
-    ''' Annotate the metaboltes with Inchis from ChEBI '''
-    
-    # check if any unannotated metabolites exist 
-    ids = [x for x,y in enumerate(metabolites) if y._inchi_string == None]
-    # check if chebis ids are actually present in the annotation slot
-    annos = any(["chebi" in x.annotations.keys() for i,x in enumerate(metabolites) if i in ids])
-    if annos == True:
-        
-        # download the information from the server
-        chebi_db = pd.read_table("https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv")
-        chebi_db.index = chebi_db['CHEBI_ID']
-
-        # annotate the metabolites with the inchi_string
-        for i in ids:
-            chebis = [int(x.replace("CHEBI:","")) for x in metabolites[i].annotations["chebi"]]
-            chebis = [x for x in chebis if x in chebi_db.index]
-            inchis = np.unique(chebi_db.loc[chebis,"InChI"])
-            if len(inchis) > 0:
-                inchi = findOptimalInchi(inchis)
-                metabolites[i].set_inchi_string(inchi)
-
-    return(None)
-
-
-
 
 def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     '''
@@ -110,7 +79,7 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     memoMets = parseMetaboliteInfoFromSBMLMod(model = mod)
     return(memoMets)
 
-def parseMetaboliteInfoFromSBMLMod(model:sbml.model): -> list:
+def parseMetaboliteInfoFromSBMLMod(model:sbml.Model) -> list:
     '''
     Parses through the SBML model object and extracts metabolite objects from it. 
     Parameters
@@ -136,6 +105,49 @@ def parseMetaboliteInfoFromSBMLMod(model:sbml.model): -> list:
                 _inchi_string = inchi_string,
                 _formula = None,
                 _charge = met.getCharge(),
+                annotations = annotations)
+
+        # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
+        if memomet._id in [x._id for x in memoMets]:
+            idx = [i for i in range(len(memoMets)) if memoMets[i]._id == memomet._id][0]
+            memoMets[idx].merge(memomet)
+        else:
+            memoMets.append(memomet)
+
+    return(memoMets)
+
+def parseMetaboliteInfoFromCobra(model:cb.Model) -> list[MeMoMetabolite]:
+    '''
+    Parses through and cobra model object and extracts metabolite objects from it. 
+    Parameters
+    ----------
+        model : cobra.model -  a valid sbml model which can be parsed
+    '''
+    
+    metabolites = []
+    for met in model.metabolites:
+        annotations = met.annotation
+        # make lists out of the annotations
+        for key in annotations.keys():
+            if type(annotations[key]) != list:
+                annotations[key] = [annotations[key]]
+
+        if "inchi" in annotations.keys():
+            inchi = annotations["inchi"]
+            # check whether there is more than one inchi in the annotations
+
+            if len(inchi) > 1:
+                inchi = findOptimalInchi(inchi)
+            else:
+                inchi = inchi[0]
+        # create the MeMoMetabolite object
+        memomet = MeMoMetabolite( _id = met.id,
+                orig_ids = [met.id],
+                _model_id = [model.id],
+                names = [met.name],
+                _inchi_string= inchi,
+                _formula = met.formula,
+                _charge = met.charge,
                 annotations = annotations)
 
         # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
