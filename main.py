@@ -5,7 +5,12 @@ Main entry point of the program
 """
 import argparse
 import logging
+import sys
 
+import cobra
+
+import src.MeMoModel
+from src.MeMoModel import *
 from src.download_db import download
 
 # Configure the logger
@@ -28,6 +33,24 @@ def main(args: argparse.Namespace):
         logger.debug("Starting to download databases")
         download()
         logger.debug("Finished downloading databases")
+
+    # Check if exactly two models were supplied
+    if args.model1 is None:
+        print("Please supply a second model with the --model1 parameter")
+        sys.exit(1)
+    if args.model2 is None:
+        print("Please supply a second model with the --model2 parameter")
+        sys.exit(1)
+
+    v = cobra.io.sbml.validate_sbml_model(args.model2)
+    print(v)
+    # model1 = MeMoModel.fromPath(Path(args.model1))
+    model2 = MeMoModel.fromPath(Path(args.model2))
+
+    #t = model1.annotate()
+    t = model2.annotate()
+    print("T")
+
 
 
 

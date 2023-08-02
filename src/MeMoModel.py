@@ -33,6 +33,7 @@ class MeMoModel:
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
         cobra_model = cb.io.read_sbml_model(sbmlfile)
+        # TODO CATCH ERROR FROM COBRA
         _id = cobra_model.id
         return MeMoModel(metabolites=metabolites, cobra_model=cobra_model, _id=_id)
 
@@ -58,5 +59,7 @@ class MeMoModel:
         # Use ChEBI
         unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
         print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+        # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+        annotateLove(self.metabolites)
 
 
