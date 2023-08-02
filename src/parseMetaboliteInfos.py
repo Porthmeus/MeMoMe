@@ -1,20 +1,24 @@
 # Porthmeus
 # 15.02.23
+# edit: 07.07.23
 
 '''
-Read an SBML file and return a pandas df with all the information on its metabolites
+Functions to parse relevant metabolite infos into a list of MeMoMetabolites from different objects like: a path to an SBML file, a libsbml.Model object or a cobra.Model object
 '''
 
 import libsbml as sbml
 import re
 import pandas as pd
 import warnings
+import numpy as np
+import cobra as cb
 from os.path import exists
 from pathlib import Path
 
 from debugpy.common.log import warning
 
 from src.MeMoMetabolite import MeMoMetabolite
+
 
 def getAnnotationFromMet(met:sbml.Species) -> dict:
     ''' extract a dictionary containing additional annotations'''
@@ -48,18 +52,14 @@ def validateSBML(modelDoc:sbml.SBMLDocument, strict:bool = False) -> None:
         else:
             warning.warn(text.format(MSG = "WARNING"))
     
-def annotateMetabolites_bulk(metabolites:list[MeMoMetabolite]) -> None:
-    '''
-    This function tries to get the InChI string for each metabolite by leveraging the information in the annotation attribute of the metabolite
-    '''
-
 
 def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     '''
     Parses through the SBML and extracts metabolite objects from it. 
-    Params:
-        modelfileTakes:Path - a Path object to a valid sbml file
-        validate:bool - whether to validate the modelfile before parsing, default: True.
+    Parameters
+    ----------
+        modelfile : Path - a Path object to a valid sbml file
+        validate : bool - whether to validate the modelfile before parsing, default: True.
 
     '''
     # handle non-existing files as sbml won't complain
@@ -78,6 +78,18 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
     mod = doc.getModel()
     mod_id = mod.getId()
 
+    # extract the metabolites 
+    memoMets = parseMetaboliteInfoFromSBMLMod(model = mod)
+    return(memoMets)
+
+def parseMetaboliteInfoFromSBMLMod(model:sbml.Model) -> list:
+    '''
+    Parses through the SBML model object and extracts metabolite objects from it. 
+    Parameters
+    ----------
+        model : sbml.model -  a valid sbml model which can be parsed
+    '''
+    
     # go through the metabolites in the model and extract the relevant information
     metabolites = mod.getListOfSpecies() 
     memoMets = []
@@ -96,6 +108,49 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate:bool = True) -> list:
                 _inchi_string = inchi_string,
                 _formula = None,
                 _charge = met.getCharge(),
+                annotations = annotations)
+
+        # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
+        if memomet._id in [x._id for x in memoMets]:
+            idx = [i for i in range(len(memoMets)) if memoMets[i]._id == memomet._id][0]
+            memoMets[idx].merge(memomet)
+        else:
+            memoMets.append(memomet)
+
+    return(memoMets)
+
+def parseMetaboliteInfoFromCobra(model:cb.Model) -> list[MeMoMetabolite]:
+    '''
+    Parses through and cobra model object and extracts metabolite objects from it. 
+    Parameters
+    ----------
+        model : cobra.model -  a valid sbml model which can be parsed
+    '''
+    
+    metabolites = []
+    for met in model.metabolites:
+        annotations = met.annotation
+        # make lists out of the annotations
+        for key in annotations.keys():
+            if type(annotations[key]) != list:
+                annotations[key] = [annotations[key]]
+
+        if "inchi" in annotations.keys():
+            inchi = annotations["inchi"]
+            # check whether there is more than one inchi in the annotations
+
+            if len(inchi) > 1:
+                inchi = findOptimalInchi(inchi)
+            else:
+                inchi = inchi[0]
+        # create the MeMoMetabolite object
+        memomet = MeMoMetabolite( _id = met.id,
+                orig_ids = [met.id],
+                _model_id = [model.id],
+                names = [met.name],
+                _inchi_string= inchi,
+                _formula = met.formula,
+                _charge = met.charge,
                 annotations = annotations)
 
         # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.

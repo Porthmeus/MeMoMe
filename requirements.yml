@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
   - mcs07
+  - bioconda
 dependencies:
   - _openmp_mutex
   - blas
@@ -10,6 +11,7 @@ dependencies:
   - bzip2
   - ca-certificates
   - certifi
+  - cobra
   - intel-openmp
   - ld_impl_linux-64
   - libffi
