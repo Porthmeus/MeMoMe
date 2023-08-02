@@ -54,7 +54,7 @@ class MeMoMetabolite():
             _id: str = None,
             orig_ids: list[str] = None,
             _model_id: str = None,
-            names: list[str] = [],
+            names=None,
             _inchi_string: str = None,
             _formula: str = None,
             _charge: int = None,
@@ -81,9 +81,12 @@ class MeMoMetabolite():
         annotations: dict()
            A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite _ids
         """
+        if names is None:
+            names = []
         if _id is not None:
             self._id = removeMetabolitePrefixSuffix(_id)
         else:
+            # TODO Why assign None?
             self._id = _id
         self.orig_ids = set(orig_ids)
         self._model_id = _model_id
