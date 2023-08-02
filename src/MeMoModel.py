@@ -5,21 +5,14 @@
 Store relevant information of a SBML file in a MeMoModel
 '''
 
-
-
-import libsbml as sbml
-import re
-import pandas as pd
-import warnings
-import numpy as np
-import cobra as cb
-from os.path import exists
 from pathlib import Path
-from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import findOptimalInchi
-from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, parseMetaboliteInfoFromCobra
-from src.annotateBulkRoutines import *
 
+import cobra as cb
+import libsbml as sbml
+
+from src.annotateBulkRoutines import *
+from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
+    parseMetaboliteInfoFromCobra
 
 
 class MeMoModel():
@@ -59,4 +52,3 @@ class MeMoModel():
         '''Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites in the model'''
         # Use ChEBI
         annotateChEBI(self.metabolites)
-
