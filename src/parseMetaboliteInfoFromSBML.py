@@ -11,6 +11,9 @@ import pandas as pd
 import warnings
 from os.path import exists
 from pathlib import Path
+
+from debugpy.common.log import warning
+
 from src.MeMoMetabolite import MeMoMetabolite
 
 def getAnnotationFromMet(met:sbml.Species) -> dict:

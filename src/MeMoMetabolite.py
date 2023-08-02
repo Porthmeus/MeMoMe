@@ -12,12 +12,12 @@
 # - add a function which forms a dataframe from the metabolite
 
 
-from __future__ import annotations
 from typing import List
 from json import load
 from numpy import NaN as npNaN
 import warnings
 from src.nameHandling import removeMetabolitePrefixSuffix
+import pandas as pd
             
 class MeMoMetabolite():
             
