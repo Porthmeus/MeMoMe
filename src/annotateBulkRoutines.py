@@ -4,7 +4,6 @@
 '''
 This file contains function to annotated MeMoMetabolites in a bulk manner. This means a list of MeMoMetabolites is parsed and the annotation takes place on the metabolites in that list. This is mainly to use within the MeMoModel.annotate() function
 '''
-from typing import Tuple
 
 import numpy as np
 import pandas as pd
@@ -13,7 +12,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import findOptimalInchi
 
 
-def annotateChEBI(metabolites: list[MeMoMetabolite]) -> Tuple[int, int]:
+def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from ChEBI """
 
     # check if any unannotated metabolites exist 
@@ -38,7 +37,19 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> Tuple[int, int]:
             inchis = np.unique(chebi_db.loc[chebis, "InChI"])
             if len(inchis) > 0:
                 inchi = findOptimalInchi(inchis)
-                annotated_by_chebi += 2
+                annotated_by_chebi += 1
+
             metabolites[i].set_inchi_string(inchi)
 
-    return annotated_by_chebi, not_annotated_metabolites
+    return not_annotated_metabolites, annotated_by_chebi
+
+
+def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
+    """ Annotate the metaboltes with Inchis from ChEBI """
+
+    # check if any unannotated metabolites exist
+    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    not_annotated_metabolites = len(ids)
+    print("NOT ANNO", not_annotated_metabolites)
+
+    return 0, 0
