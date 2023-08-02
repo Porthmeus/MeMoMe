@@ -35,4 +35,4 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> None:
                 inchi = findOptimalInchi(inchis)
             metabolites[i].set_inchi_string(inchi)
 
-    return (None)
+    return None
