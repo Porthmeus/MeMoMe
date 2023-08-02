@@ -56,4 +56,7 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
         # Use ChEBI
-        annotateChEBI(self.metabolites)
+        unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
+        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+
+
