@@ -28,8 +28,11 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string
+        # For each metabolite that does not have a INCHI string get its chebi id
         for i in ids:
-            # For each metabolite that does not have a INCHI string get its chebi id #TODO  KEY OR STRING
+            # If the current metabolite does not have an chebi annotation skip it
+            if "chebi" not in metabolites[i].annotations:
+                continue
             chebis = [int(x.replace("CHEBI:", "")) for x in metabolites[i].annotations["chebi"]]
             # Find all the corresponding INCHI key
             chebis = [x for x in chebis if x in chebi_db.index]

@@ -6,7 +6,7 @@ Main entry point of the program
 import argparse
 import logging
 import sys
-
+import time
 import cobra
 
 import src.MeMoModel
@@ -42,16 +42,20 @@ def main(args: argparse.Namespace):
         print("Please supply a second model with the --model2 parameter")
         sys.exit(1)
 
-    v = cobra.io.sbml.validate_sbml_model(args.model2)
-    print(v)
     # model1 = MeMoModel.fromPath(Path(args.model1))
+    start_time = time.time()
+    logger.info("Started loading the second model")
     model2 = MeMoModel.fromPath(Path(args.model2))
+    end_time = time.time()
+    logger.info(f"Loading the second model took {end_time - start_time }")
+    # t = model1.annotate()
 
-    #t = model1.annotate()
+    logger.info("Started annotating the second model")
+    start_time = time.time()
     t = model2.annotate()
+    end_time = time.time()
+    logger.info(f"Annotating the second model took {end_time  - start_time}")
     print("T")
-
-
 
 
 if __name__ == '__main__':

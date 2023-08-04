@@ -106,7 +106,7 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
         # create a MeMoMetabolite
         memomet = MeMoMetabolite(_id=met.getId(),
                                  orig_ids=[met.getId()],
-                                 _model_id=model.mod_id,
+                                 #_model_id=model.mod_id, TODO @JAN
                                  names=[met.getName()],
                                  _inchi_string=inchi_string,
                                  _formula=None,
