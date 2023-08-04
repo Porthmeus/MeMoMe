@@ -60,6 +60,6 @@ class MeMoModel:
         unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
         print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        annotateLove(self.metabolites)
+        annotateVMH(self.metabolites)
 
 
