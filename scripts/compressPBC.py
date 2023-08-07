@@ -39,9 +39,9 @@ if __name__ == "__main__":
         inchi_str = inchi.MolToInchi(i)
         id_to_inchi[name] = inchi_str
     end = time.time()
-    df = pd.DataFrame.from_dict(id_to_inchi, orient='index', columns=['column_name'])
-    print(f"Took {end - start} seconds")
-    out = sys.argv[2] + Path(sys.argv[1]).name
+    df = pd.DataFrame.from_dict(id_to_inchi, orient='index', columns=['inchi'])
+    out = sys.argv[2] + Path(sys.argv[1]).name.replace("sdf.gz", "csv")
     print(out)
     df.to_csv(out)
+    print(f"Took {end - start} seconds")
     # You can also access properties of each molecule as shown in the previous example.
