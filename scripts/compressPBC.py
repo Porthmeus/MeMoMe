@@ -1,10 +1,11 @@
 import gzip
 import sys
+from pathlib import Path
 
 from rdkit import Chem
 from rdkit.Chem import inchi
 import time
-
+import pandas as pd
 from rdkit import RDLogger
 RDLogger.DisableLog("rdApp.*")
 def read_gzipped_sdf_file(file_path):
@@ -23,7 +24,9 @@ def read_gzipped_sdf_file(file_path):
 
 if __name__ == "__main__":
     start = time.time()
-
+    if len(sys.argv) <= 2:
+        print("Not enough args supplied")
+        sys.exit(1)
     gzipped_sdf_file_path = sys.argv[1]
     print(f"Loading {gzipped_sdf_file_path}")
     molecules = read_gzipped_sdf_file(gzipped_sdf_file_path)
@@ -36,6 +39,9 @@ if __name__ == "__main__":
         inchi_str = inchi.MolToInchi(i)
         id_to_inchi[name] = inchi_str
     end = time.time()
-    print(end - start)
+    df = pd.DataFrame.from_dict(id_to_inchi, orient='index', columns=['column_name'])
+    print(f"Took {end - start} seconds")
+    out = sys.argv[2] + Path(sys.argv[1]).name
+    print(out)
+    df.to_csv(out)
     # You can also access properties of each molecule as shown in the previous example.
-    print("TESt")

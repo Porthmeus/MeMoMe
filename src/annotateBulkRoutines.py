@@ -7,11 +7,12 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 
 import numpy as np
 import pandas as pd
-import  logging
+import logging
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import findOptimalInchi
 
 logger = logging.getLogger('logger')
+
 
 def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from ChEBI """
@@ -47,7 +48,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     return not_annotated_metabolites, annotated_by_chebi
 
 
-def annotateVMH(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
+def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from """
     vmh_db = pd.read_json("/home/td/Projects/MeMoMe/Databases/vmh.json")
     res = vmh_db["results"]
@@ -61,6 +62,11 @@ def annotateVMH(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     annos = any(["hmdb" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
 
     for i in ids:
+        #####################
+        #
+        #                       HMDB
+        #
+        #####################
         # If the current metabolite does not have a hmdb annotation skip it
         if "hmdb" not in metabolites[i].annotations:
             continue
@@ -87,18 +93,23 @@ def annotateVMH(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
             assert len(splits) == 2
             missing_zeros = 7 - len(splits[1])
             new_id = splits[0] + "B" + "0" * missing_zeros + splits[1]
-            new_id = ""
-            matches: pd.DataFrame = vmh_db[vmh_db['hmdb'] == id_]
+            matches: pd.DataFrame = vmh_db[vmh_db['hmdb'] == new_id]
             if len(matches.index) > 0:
                 # Cool we got a match with the new id so we check if it contains an INCHI string
                 # If yes, we continue with the next metabolite otherwise.
                 # If no, we have to try the next useful identifier
+                inchi_strings = matches["inchiString"]
+                inchi_strings = list(inchi_strings)
+                if '' in inchi_strings:
+                    inchi_strings.remove('')
+                if len(inchi_strings) > 0:
+                    metabolites[i].set_inchi_string(findOptimalInchi(inchi_strings))
+                    annotate_counter_hmdb += 1
+                    continue
                 pass
-        if len(matches) > 1:
-            print("THIS DOES HAPPEN: WUHU2")
-        # We can have multiple entries in matches because universal_big_ids can have multiple annotation sources
-        # Thus we have to go through all of them by priority.
-        # BUT because we already went through CHEBI we can ignore those
-        matches = 1
     logger.info("Annotated by HMDB " + str(annotate_counter_hmdb))
-    return 0, 0
+
+    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    return not_annotated_metabolites, annotate_counter_hmdb
+
+

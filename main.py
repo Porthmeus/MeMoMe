@@ -42,13 +42,24 @@ def main(args: argparse.Namespace):
         print("Please supply a second model with the --model2 parameter")
         sys.exit(1)
 
-    # model1 = MeMoModel.fromPath(Path(args.model1))
+
     start_time = time.time()
-    logger.info("Started loading the second model")
+    logger.info("Started loading the first model")
+    model1 = MeMoModel.fromPath(Path(args.model1))
+    end_time = time.time()
+    logger.info(f"Loading the first model took {end_time - start_time }")
+
+    start_time = time.time()
+    logger.info("started loading the second model")
     model2 = MeMoModel.fromPath(Path(args.model2))
     end_time = time.time()
     logger.info(f"Loading the second model took {end_time - start_time }")
-    # t = model1.annotate()
+
+    logger.info("Started annotating the first model")
+    start_time = time.time()
+    t = model1.annotate()
+    end_time = time.time()
+    logger.info(f"Annotating the first model took {end_time  - start_time}")
 
     logger.info("Started annotating the second model")
     start_time = time.time()
