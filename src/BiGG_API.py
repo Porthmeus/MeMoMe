@@ -1,28 +1,41 @@
 import pandas as pd
 import requests
 import time
+from tqdm import tqdm
 
-# load BiGG as dataframe
-BiGG = pd.read_csv("http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt", sep="\t").fillna("")
 
-# get InChIKey, formulae and charges for metabolites from BiGG API
-data_list = []
-for metabolite in BiGG["universal_bigg_id"]:
-  endpoint = f"http://bigg.ucsd.edu/api/v2/universal/metabolites/{metabolite}"
-  r = requests.get(endpoint)
-  if not r.ok: # skip names that don't exist as metabolites  ### BiGG = BiGG[~BiGG["universal_bigg_id"].isin(["Recon3D", "iYS854"])]
-    continue
-  result = r.json()
-  if "InChI Key" in result["database_links"]:
-    InChIKey = [inchikey["id"] for inchikey in result["database_links"]["InChI Key"]]
-  else:
-    InChIKey = ""
-  formulae = result["formulae"]
-  charges = result["charges"]
-  row = [InChIKey,  formulae, charges] # each one is a list with strings
-  data_list.append(row)
-  time.sleep(0.1) # delay some seconds
 
-# save the list with the retrived info as a dataframe and in a file
-data_df = pd.DataFrame(data_list, columns = ["InChIKey","formulae","charges"])
-data_df.to_csv("BiGG_API.csv",index=False)
+def BiGG_API():
+
+  # load BiGG as dataframe
+  BiGG = pd.read_csv("http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt", sep="\t").fillna("")
+
+  # fix the 3 wrongly parsed metabolites in BiGG
+  # find their indeces
+  i1 = BiGG[BiGG["universal_bigg_id"] == "Recon3D"].index
+  i2 = BiGG[BiGG["universal_bigg_id"] == "iYS854"].index
+  i = i1.append(i2)
+  # shuffle their information at the right columns
+  temp = BiGG["universal_bigg_id"][i]
+  BiGG["name"][i] = BiGG["bigg_id"][i]
+  BiGG["bigg_id"][i] = ""
+  BiGG["universal_bigg_id"][i] = BiGG["model_list"][i].str.split("; ").str[0]
+  BiGG["old_bigg_ids"][i] = BiGG["model_list"][i].str.split("; ").str[1]
+  BiGG["model_list"][i] = temp
+
+
+  # get formulae and charges for metabolites from BiGG API
+  data_list = []
+  for metabolite in tqdm(BiGG["universal_bigg_id"]):
+    endpoint = f"http://bigg.ucsd.edu/api/v2/universal/metabolites/{metabolite}"
+    r = requests.get(endpoint)
+    result = r.json()
+    formulae = result["formulae"]
+    charges = result["charges"]
+    row = [formulae, charges] # each one is a list with strings
+    data_list.append(row)
+    time.sleep(0.1) # delay
+
+  # save the list with the retrieved info as a dataframe and in a file
+  data_df = pd.DataFrame(data_list, columns = ["formulae","charges"])
+  data_df.to_csv("BiGG_API.csv",index=False)
