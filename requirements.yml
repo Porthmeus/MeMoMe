@@ -38,6 +38,7 @@ dependencies:
   - pytz
   - rdkit
   - readline
+  - requests
   - setuptools
   - six
   - sqlite
