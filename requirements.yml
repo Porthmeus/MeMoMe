@@ -5,12 +5,15 @@ channels:
   - mcs07
 dependencies:
   - _openmp_mutex
+  - ast
   - blas
   - bottleneck
   - bzip2
   - ca-certificates
   - certifi
   - intel-openmp
+  - io
+  - json
   - ld_impl_linux-64
   - libffi
   - libgcc-ng
@@ -43,8 +46,11 @@ dependencies:
   - six
   - sqlite
   - tabulate
+  - time
   - tk
+  - tqdm
   - tzdata
+  - urllib.request
   - wheel
   - xz
   - zlib

@@ -5,6 +5,7 @@ from io import StringIO
 
 
 def VMH():
+  # get the necessary metabolite info from VMH, and return it in a dataframe
 
   # load VMH as dataframe
   url = urlopen("https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19")

@@ -4,6 +4,7 @@ from ast import literal_eval
 
 
 def BiGG():
+  # get the necessary metabolite info from BiGG, and return it in a dataframe
 
   # load BiGG as dataframe
   BiGG = pd.read_csv("http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt", sep="\t").fillna("")
