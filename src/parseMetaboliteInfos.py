@@ -106,7 +106,7 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
         # create a MeMoMetabolite
         memomet = MeMoMetabolite(_id=met.getId(),
                                  orig_ids=[met.getId()],
-                                 _model_id=model.mod_id,
+                                 _model_id=model.getId(),
                                  names=[met.getName()],
                                  _inchi_string=inchi_string,
                                  _formula=None,
@@ -132,6 +132,7 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
     '''
 
     metabolites = []
+    memoMets = []
     for met in model.metabolites:
         annotations = met.annotation
         # make lists out of the annotations
@@ -147,6 +148,8 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
                 inchi = findOptimalInchi(inchi)
             else:
                 inchi = inchi[0]
+        else:
+            inchi = None
         # create the MeMoMetabolite object
         memomet = MeMoMetabolite(_id=met.id,
                                  orig_ids=[met.id],

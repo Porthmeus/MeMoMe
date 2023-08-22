@@ -24,7 +24,8 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     annos = any(["chebi" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
     if annos:
         # download the information from the server
-        chebi_db = pd.read_table("/home/td/Downloads/chebiId_inchi.tsv")
+        #chebi_db = pd.read_table("/home/td/Downloads/chebiId_inchi.tsv")
+        chebi_db = pd.read_table("https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv")
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string

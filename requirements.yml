@@ -12,6 +12,7 @@ dependencies:
   - ca-certificates
   - certifi
   - cobra
+  - debugpy
   - intel-openmp
   - ld_impl_linux-64
   - libffi

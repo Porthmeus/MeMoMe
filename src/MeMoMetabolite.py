@@ -52,13 +52,13 @@ class MeMoMetabolite():
     def __init__(
             self,
             _id: str = None,
-            orig_ids: list[str] = None,
+            orig_ids: list[str] = [],
             _model_id: str = None,
             names=None,
             _inchi_string: str = None,
             _formula: str = None,
             _charge: int = None,
-            annotations: dict = None,
+            annotations: dict = {},
     ) -> None:
         """Initialize MeMoMetaboblite
 
@@ -125,7 +125,7 @@ class MeMoMetabolite():
 
     def set_orig_ids(self, new_orig_ids: list[str]) -> None:
         """ set function for orig_ids """
-        if self.orig_ids:
+        if self.orig_ids != []:
             warnings.warn(
                 "changed metbolite orig_ids from {old} to {new}".format(old=str(self.orig_ids), new=str(new_orig_ids)))
         self.orig_ids = set(new_orig_ids)
@@ -157,7 +157,7 @@ class MeMoMetabolite():
 
     def set_annotations(self, new_annotations: dict) -> None:
         """ set function for annotations """
-        if self.annotations is not None:
+        if self.annotations != {}:
             warnings.warn("changed metbolite annotations from {old} to {new}".format(old=str(self.annotations),
                                                                                      new=str(new_annotations)))
         self.annotations = new_annotations
