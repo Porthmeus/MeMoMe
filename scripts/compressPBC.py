@@ -1,5 +1,10 @@
+print("test")
+print("Current Python interpreter:")
+
+
 import gzip
 import sys
+print(sys.executable)
 from pathlib import Path
 
 from rdkit import Chem
@@ -8,6 +13,7 @@ import time
 import pandas as pd
 from rdkit import RDLogger
 RDLogger.DisableLog("rdApp.*")
+print("Imports are done")
 def read_gzipped_sdf_file(file_path):
     molecules = []
     with gzip.open(file_path, 'rt') as f:
@@ -23,6 +29,7 @@ def read_gzipped_sdf_file(file_path):
 
 
 if __name__ == "__main__":
+    print("args" + str(sys.argv))
     start = time.time()
     if len(sys.argv) <= 2:
         print("Not enough args supplied")
@@ -40,7 +47,7 @@ if __name__ == "__main__":
         id_to_inchi[name] = inchi_str
     end = time.time()
     df = pd.DataFrame.from_dict(id_to_inchi, orient='index', columns=['inchi'])
-    out = sys.argv[2] + Path(sys.argv[1]).name.replace("sdf.gz", "csv")
+    out = sys.argv[2] 
     print(out)
     df.to_csv(out)
     print(f"Took {end - start} seconds")
