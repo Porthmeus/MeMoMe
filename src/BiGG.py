@@ -35,5 +35,5 @@ def BiGG():
   BiGG["inchikey"] = BiGG["database_links"].str.split("InChI Key: https://identifiers.org/inchikey/").str[1].str.split("; ").str[0].fillna("")
 
   # get final dataframe with info from BiGG
-  df_BiGG = BiGG[["universal_bigg_id","name","formula","charge","inchikey"]]
+  df_BiGG = BiGG[["universal_bigg_id","name","formula","charge","inchikey","database_links"]]
   return df_BiGG
