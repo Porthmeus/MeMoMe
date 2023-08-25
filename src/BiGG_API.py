@@ -2,10 +2,11 @@ import pandas as pd
 import requests
 import time
 from tqdm import tqdm
+import os
+from pathlib import Path
 
 
-
-def BiGG_API():
+def BiGG_API(output = Path("BiGG_API.csv")) -> None:
   # extract metabolite formulae and charges from BiGG API, and save them in BiGG_API.csv
 
   # load BiGG as dataframe
@@ -24,18 +25,29 @@ def BiGG_API():
   BiGG["old_bigg_ids"][i] = BiGG["model_list"][i].str.split("; ").str[1]
   BiGG["model_list"][i] = temp
 
+  if os.path.exists(output):
+      bigg_api = pd.read_csv(output)
+      already_in = list(bigg_api.metabolite)
+  else:
+      already_in = []
+
   # get formulae and charges for metabolites from BiGG API
   data_list = []
-  for metabolite in tqdm(BiGG["universal_bigg_id"]):
-    endpoint = f"http://bigg.ucsd.edu/api/v2/universal/metabolites/{metabolite}"
-    r = requests.get(endpoint)
-    result = r.json()
-    formulae = result["formulae"]
-    charges = result["charges"]
-    row = [formulae, charges] # each one is a list with strings
-    data_list.append(row)
-    time.sleep(0.1) # delay some seconds
+  for metabolite in tqdm(BiGG["universal_bigg_id"].unique()):
+    if metabolite not in already_in:
+        endpoint = f"http://bigg.ucsd.edu/api/v2/universal/metabolites/{metabolite}"
+        r = requests.get(endpoint)
+        result = r.json()
+        formulae = result["formulae"]
+        charges = result["charges"]
+        df = pd.DataFrame({"metabolite":[metabolite],
+            "formulae": [formulae],
+            "charges" : [charges]}) # each one is a list with strings
+        if os.path.exists(output):
+            with open(output, "a") as ff:
+                df.to_csv(ff, index = False)
+        else:
+            df.to_csv(output, index = False)
+        #data_list.append(row)
+        time.sleep(0.1) # delay some seconds
 
-  # save the list with the retrieved info as a dataframe and in a file
-  data_df = pd.DataFrame(data_list, columns = ["formulae","charges"])
-  data_df.to_csv("BiGG_API.csv",index=False)
