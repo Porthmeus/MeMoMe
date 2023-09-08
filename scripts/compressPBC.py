@@ -43,8 +43,13 @@ if __name__ == "__main__":
     id_to_inchi = {}
     for i in molecules:
         name = i.GetProp("PUBCHEM_SUBSTANCE_ID")  # Replace "PUBCHEM_COMPOUND_NAME" with the desired property name.
-        inchi_str = inchi.MolToInchi(i)
-        id_to_inchi[name] = inchi_str
+        try:
+            inchi_str = inchi.MolToInchi(i)
+        except:
+            inchi_str = "NA"
+        finally:
+            id_to_inchi[name] = inchi_str
+
     end = time.time()
     df = pd.DataFrame.from_dict(id_to_inchi, orient='index', columns=['inchi'])
     out = sys.argv[2] 
