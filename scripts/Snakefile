@@ -1,0 +1,44 @@
+##### 
+input_folder=config["params"][0]["read_folder"]
+out_folder=config["params"][1]["out_folder"]
+
+
+import pathlib
+
+# The folder were the output files should be stored
+
+
+from os.path import isfile, join
+from os import listdir
+import sys
+import glob, os
+
+samples = []
+for file in glob.glob(input_folder + "*.gz"):
+    samples.append(file)
+
+samples_without_suf = set()
+for f in samples:
+    s = f.removesuffix(".sdf.gz")
+    samples_without_suf.add(pathlib.Path(s).name)
+
+samples = list(samples_without_suf)
+rule all:
+    input:
+        expand(input_folder + "{t}.sdf.gz", t = samples),
+        expand(out_folder + "{t}.csv", t = samples),
+ 
+
+rule convert:
+    input:
+        sample = input_folder + "{f}.sdf.gz"
+    output:
+        out = out_folder + "{f}.csv"
+    resources:
+        time="2:00:00",
+        slurm_extra="--cpus-per-task=1 --mem-per-cpu=10GB"
+    conda:
+        "pbc.yaml"
+    shell :
+        "python compressPBC.py {input.sample} {output.out}"
+
