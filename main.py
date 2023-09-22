@@ -57,7 +57,7 @@ def main(args: argparse.Namespace):
 
     logger.info("Started annotating the first model")
     start_time = time.time()
-    t = model1.annotate()
+    #t = model1.annotate()
     end_time = time.time()
     logger.info(f"Annotating the first model took {end_time  - start_time}")
 

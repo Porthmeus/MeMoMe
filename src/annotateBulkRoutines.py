@@ -109,7 +109,46 @@ def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
                 pass
     logger.info("Annotated by HMDB " + str(annotate_counter_hmdb))
 
-    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
     return not_annotated_metabolites, annotate_counter_hmdb
+
+
+def annotate_PBC(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
+    """ Annotate the metaboltes with Inchis from """
+    pbc_db = pd.read_csv("/home/td/Projects/MeMoMe/Databases/all_with_inchi.csv", header = None)
+    # check if any unannotated metabolites exist
+    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    not_annotated_metabolites = len(ids)
+    print("Not annotated before PBC " + str(not_annotated_metabolites))
+    annotate_counter_pbc = 0
+    annos = any(["pubchem.compound" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
+
+    for i in ids:
+        #####################
+        #
+        #                       HMDB
+        #
+        #####################
+        # If the current metabolite does not have a hmdb annotation skip it
+        if "pubchem.compound" not in metabolites[i].annotations:
+            continue
+        # Get the bigg ids for each metabolite
+        seeds = metabolites[i].annotations["pubchem.compound"]
+        if len(seeds) > 1:
+            print("THIS DOES HAPPEN: WUHU")
+        id_ = int(seeds[0])
+        print(id_)
+        if id_  > 3_000_000:
+            print("STOP")
+        matches: pd.DataFrame = pbc_db[pbc_db.iloc[:, 0] == id_]
+        if len(matches) > 1:
+            raise NotImplementedError("UPSIDUS")
+        inchi_strings = matches.iloc[:, 1]
+
+        if len(inchi_strings) > 0:
+            metabolites[i].set_inchi_string(findOptimalInchi(inchi_strings))
+            annotate_counter_pbc += 1
+            continue
+    logger.info("Annotated by PBC" + str(annotate_counter_pbc))
+    return not_annotated_metabolites,annotate_counter_pbc
 
 
