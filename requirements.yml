@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
   - mcs07
+  - bioconda
 dependencies:
   - _openmp_mutex
   - ast
@@ -11,6 +12,8 @@ dependencies:
   - bzip2
   - ca-certificates
   - certifi
+  - cobra
+  - debugpy
   - intel-openmp
   - io
   - json
