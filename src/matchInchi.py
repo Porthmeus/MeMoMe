@@ -12,16 +12,16 @@ def matchInchi(inchi1:str, inchi2:str) -> tuple:
     m2 = Chem.MolFromInchi(inchi2)
     charge1 = Chem.GetFormalCharge(m1)
     charge2 = Chem.GetFormalCharge(m2)
+    chargeDiff = charge1 - charge2
     if charge1 != charge2:
         m1 = NeutraliseCharges(m1)
         m2 = NeutraliseCharges(m2)
         inchi1 = Chem.MolToInchi(m1)
         inchi2 = Chem.MolToInchi(m2)
-    chargeDiff = charge1 - charge2
 
-    # check the fingerprints - they should be the same
+    # check the fingerprints - they should be the same, if not, check at the same time, whether after H removal there is only one atom left.
     same = False
-    if compareInchiByFingerprint(inchi1,inchi2) == 1.0:
+    if compareInchiByFingerprint(inchi1,inchi2) == 1.0 or m1.GetNumAtoms() == m2.GetNumAtoms() == 1:
 
         # checking the canonical InchiString
         same = compareInchiByString(inchi1, inchi2)
