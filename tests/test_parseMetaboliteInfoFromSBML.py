@@ -38,13 +38,6 @@ class TestParseSBML(unittest.TestCase):
         non_existent_path = Path("nonexsistent")
         self.assertRaises(FileExistsError, parseMetaboliteInfoFromSBML,non_existent_path)
 
-
-    def test_extract_cpd(self):
-        teststr = "M_cpd00001_c0"
-        self.assertEqual(extract_cpd(teststr), "cpd00001")
-        teststr = "M_cPd00001_c0"
-        self.assertEqual(extract_cpd(teststr), None)
-
     def test_handle_metabolites_prefix_suffix(self):
         teststr = "M_cpd00001_c0"
         self.assertEqual(handle_metabolites_prefix_suffix(teststr), "cpd00001")
@@ -52,6 +45,8 @@ class TestParseSBML(unittest.TestCase):
         self.assertEqual(handle_metabolites_prefix_suffix(teststr), "glc__D")
         teststr = "M_glc__D_e"
         self.assertEqual(handle_metabolites_prefix_suffix(teststr), "glc__D")
+        teststr = "M_cPd00001_c0"
+        self.assertEqual(handle_metabolites_prefix_suffix(teststr), None)
 
 if __name__ == '__main__':
     unittest.main()
