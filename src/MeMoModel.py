@@ -12,7 +12,7 @@ import cobra as cb
 import libsbml as sbml
 import pandas as pd
 from src.annotateBulkRoutines import *
-from src.matchMets import matchMetsByDB, matchMetsByInchi
+from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 
@@ -64,11 +64,13 @@ class MeMoModel:
         annotateLove(self.metabolites)
 
 
-    def match(self, model2: MeMoModel) -> pd.DataFrame:
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
         res_inchi = self.matchOnInchi(model2)
         res_db = self.matchOnDB(model2)
+        res_name = self.matchOnName(model2)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
+        res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         # TODO add comparison on the base of names
         return(res)
 
@@ -137,14 +139,55 @@ class MeMoModel:
 
 
         # remove one to many matches
+        results = pd.DataFrame(results)
         if keep1ToMany== False : 
-            results = pd.DataFrame(results)
-            results = results.sort_values(by = "DB_score")
+            results = results.sort_values(by = "DB_score", ascending = False)
             results = results.drop_duplicates("met_id1")
-            results = results.sort_values(by = "DB_score")
+            results = results.sort_values(by = "DB_score", ascending = False)
             results = results.drop_duplicates("met_id2")
         return(results)
 
+    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False) -> pd.DataFrame:
+        # compare two models by the entries in the databases
+        mets1 = self.metabolites
+        mets2 = model2.metabolites
+        results = {"met_id1":[],
+                "met_id2":[],
+                "Name_score":[],
+                "charge_diff":[],
+                "inchi_string":[]}
+        for met1 in mets1:
+            for met2 in mets2:
+                levenshtein = matchMetsByName(met1,met2)
+                if levenshtein > threshold:
+                    results["met_id1"].append(met1.id)
+                    results["met_id2"].append(met2.id)
+                    results["Name_score"].append(levenshtein)
+                    # try to calculate charge differences and add them as information
+                    try:
+                        charge_diff = met1._charge - met2._charge
+                    except:
+                        charge_diff = None
+                    results["charge_diff"].append(charge_diff)
+                    # try to find an inchi string for the pair and keep only the reference inchi
+                    if met1._inchi_string != None or met2._inchi_string != None:
+                        if met1._inchi_string != None:
+                            inchi = met1._inchi_string
+                        else:
+                            inchi = met2._inchi_string
+                        results["inchi_string"].append(inchi)
+                    else:
+                        results["inchi_string"].append(None)
+
+
+        # remove one to many matches
+        results = pd.DataFrame(results)
+        if keep1ToMany== False : 
+            results = results.sort_values(by = "Name_score", ascending = False)
+            results = results.drop_duplicates("met_id1")
+            results = results.sort_values(by = "Name_score", ascending = False)
+            results = results.drop_duplicates("met_id2")
+        return(results)
 
 
 

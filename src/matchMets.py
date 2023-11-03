@@ -5,6 +5,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 import pandas as pd
 from src.matchInchiRoutines import *
 from rdkit import Chem
+from Levenshtein import ratio
 
 
 def matchMetsByInchi(inchi1:str, inchi2:str) -> tuple:
@@ -47,6 +48,15 @@ def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
     union_len = len(list(set1 | set2))
     return(inter_len/union_len)
 
-#def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
-    # use the metabolite name to match
+def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
+    # use the metabolite names to match
+    score = 0
+    for name1 in met1.names:
+        for name2 in met2.names:
+            tmp_score = ratio(name1,name2)
+            if tmp_score > score:
+                score = tmp_score
+    return(score)
     
+    
+

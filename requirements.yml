@@ -76,6 +76,7 @@ dependencies:
   - lcms2=2.15=haa2dc70_1
   - ld_impl_linux-64=2.40=h41732ed_0
   - lerc=4.0.0=h27087fc_0
+  - levenshtein=0.23.0=py39h3d6467e_0
   - libblas=3.8.0=17_openblas
   - libbrotlicommon=1.0.9=h166bdaf_8
   - libbrotlidec=1.0.9=h166bdaf_8
@@ -130,7 +131,7 @@ dependencies:
   - numpy=1.22.3=py39h7a5d4dd_0
   - numpy-base=1.22.3=py39hb8be1f0_0
   - openjpeg=2.5.0=hfec8fc6_2
-  - openssl=3.1.2=hd590300_0
+  - openssl=3.1.4=hd590300_0
   - optlang=1.4.4=pyh9f0ad1d_0
   - packaging=23.1=pyhd8ed1ab_0
   - pandas=2.0.3=py39h40cae4c_1
@@ -156,10 +157,12 @@ dependencies:
   - pysocks=1.7.1=pyha2e5f31_6
   - python=3.9.17=h0755675_0_cpython
   - python-dateutil=2.8.2=pyhd8ed1ab_0
+  - python-levenshtein=0.23.0=pyhd8ed1ab_0
   - python-libsbml=5.20.1=py39h3d6467e_0
   - python-tzdata=2023.3=pyhd8ed1ab_0
   - python_abi=3.9=3_cp39
   - pytz=2023.3=pyhd8ed1ab_0
+  - rapidfuzz=3.5.2=py39h3d6467e_0
   - rdkit=2023.03.3=py39h55a5abb_0
   - readline=8.2=h8228510_1
   - reportlab=3.6.13=py39h12ba270_0
