@@ -13,6 +13,7 @@ import libsbml as sbml
 import pandas as pd
 from src.annotateBulkRoutines import *
 from src.matchInchi import matchInchi
+from src.compareMetsByDB import compareMetsByDB
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 
@@ -66,11 +67,13 @@ class MeMoModel:
 
     def compare(self, model2: MeMoModel) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
-        res = self.compareOnInchi(model2)
-        # TODO add data base comparison
+        res_inchi = self.compareOnInchi(model2)
+        res_db = self.compareOnDB(model2)
+        res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
+        # TODO add comparison on the base of names
         return(res)
 
-
+    
     def compareOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
         # start with the comparison of inchi strings
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
@@ -80,6 +83,7 @@ class MeMoModel:
         # go through the inchis of the second model and find the corresponding inchi in self
         matches = {"met_id1" : [],
                 "met_id2" : [],
+                "inchi_score":[],
                 "inchi_string":[],
                 "charge_diff" : []}
         for i in range(len(mod1_inchis)):
@@ -96,7 +100,53 @@ class MeMoModel:
                             matches["met_id2"].append(id2)
                             matches["inchi_string"].append(inchi1)
                             matches["charge_diff"].append(res[1])
+                            matches["inchi_score"].append(1)
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
+
+    def compareOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False) -> pd.DataFrame:
+        # compare two models by the entries in the databases
+        mets1 = self.metabolites
+        mets2 = model2.metabolites
+        results = {"met_id1":[],
+                "met_id2":[],
+                "DB_score":[],
+                "charge_diff":[],
+                "inchi_string":[]}
+        for met1 in mets1:
+            for met2 in mets2:
+                jaccard = compareMetsByDB(met1,met2)
+                if jaccard > threshold:
+                    results["met_id1"].append(met1.id)
+                    results["met_id2"].append(met2.id)
+                    results["DB_score"].append(jaccard)
+                    # try to calculate charge differences and add them as information
+                    try:
+                        charge_diff = met1._charge - met2._charge
+                    except:
+                        charge_diff = None
+                    results["charge_diff"].append(charge_diff)
+                    # try to find an inchi string for the pair and keep only the reference inchi
+                    if met1._inchi_string != None or met2._inchi_string != None:
+                        if met1._inchi_string != None:
+                            inchi = met1._inchi_string
+                        else:
+                            inchi = met2._inchi_string
+                        results["inchi_string"].append(inchi)
+                    else:
+                        results["inchi_string"].append(None)
+
+
+        # remove one to many matches
+        if keep1ToMany== False : 
+            results = pd.DataFrame(results)
+            results = results.sort_values(by = "DB_score")
+            results = results.drop_duplicates("met_id1")
+            results = results.sort_values(by = "DB_score")
+            results = results.drop_duplicates("met_id2")
+        return(results)
+
+
+
 
 
