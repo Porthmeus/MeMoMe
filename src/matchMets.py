@@ -1,10 +1,13 @@
 # Porthmeus
-# 27.04.23
+# 02.11.23
 
+from src.MeMoMetabolite import MeMoMetabolite
+import pandas as pd
 from src.matchInchiRoutines import *
 from rdkit import Chem
 
-def matchInchi(inchi1:str, inchi2:str) -> tuple:
+
+def matchMetsByInchi(inchi1:str, inchi2:str) -> tuple:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
 
     # check whether the molecules are differently charged, if so neutralize the charges
@@ -31,3 +34,19 @@ def matchInchi(inchi1:str, inchi2:str) -> tuple:
             # same
             same = compareInchiByStereoIsomer(inchi1,inchi2)
     return(same, chargeDiff)
+
+def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
+    # use the database annotations to compare two metabolites
+    # get common database entries
+    commonDB = list(set(met1.annotations.keys()) & set(met2.annotations.keys()))
+    # get the individual entries for each data base
+    set1 = set([x+"."+item for x in commonDB for item in met1.annotations[x]])
+    set2 = set([x+"."+item for x in commonDB for item in met2.annotations[x]])
+    # calculate jaccard index
+    inter_len = len(list(set1 & set2))
+    union_len = len(list(set1 | set2))
+    return(inter_len/union_len)
+
+#def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
+    # use the metabolite name to match
+    

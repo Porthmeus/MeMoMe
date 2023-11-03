@@ -12,8 +12,7 @@ import cobra as cb
 import libsbml as sbml
 import pandas as pd
 from src.annotateBulkRoutines import *
-from src.matchInchi import matchInchi
-from src.compareMetsByDB import compareMetsByDB
+from src.matchMets import matchMetsByDB, matchMetsByInchi
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 
@@ -65,16 +64,16 @@ class MeMoModel:
         annotateLove(self.metabolites)
 
 
-    def compare(self, model2: MeMoModel) -> pd.DataFrame:
+    def match(self, model2: MeMoModel) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
-        res_inchi = self.compareOnInchi(model2)
-        res_db = self.compareOnDB(model2)
+        res_inchi = self.matchOnInchi(model2)
+        res_db = self.matchOnDB(model2)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         # TODO add comparison on the base of names
         return(res)
 
     
-    def compareOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
+    def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
         # start with the comparison of inchi strings
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in self.metabolites]]})
@@ -94,7 +93,7 @@ class MeMoModel:
                     inchi2 = mod2_inchis.loc[j, "inchis"]
                     if inchi2 != None:
                         id2 = mod2_inchis.loc[j,"met_id"]
-                        res = matchInchi(inchi1, inchi2)
+                        res = matchMetsByInchi(inchi1, inchi2)
                         if res[0] == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
@@ -104,7 +103,7 @@ class MeMoModel:
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
-    def compareOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False) -> pd.DataFrame:
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -115,7 +114,7 @@ class MeMoModel:
                 "inchi_string":[]}
         for met1 in mets1:
             for met2 in mets2:
-                jaccard = compareMetsByDB(met1,met2)
+                jaccard = matchMetsByDB(met1,met2)
                 if jaccard > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
