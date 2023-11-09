@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pandas as pd
 
-from src.parseMetaboliteInfoFromSBML import *
+from src.parseMetaboliteInfos import *
 from src.nameHandling import *
 
 
