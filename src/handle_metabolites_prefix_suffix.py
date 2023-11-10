@@ -15,17 +15,20 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
     '''
 
     identifier = met_id
-    if "cpd" in met_id: # extract cpd
-        cpd_index = met_id.find("cpd")
-        identifier = "cpd"
-        # go to the index of 'cpd' + 3(the length) of cpd because we now expect
-        # the numerical id
-        for i in range(cpd_index + 3, len(met_id)):
-            # only append the digits and stop as soon as you encounter a non-digit
-            if met_id[i].isdigit():
-                identifier += met_id[i]
-            else:
-                break
+    if "cpd" in met_id.lower():
+        if "cpd" not in met_id: #the "cpd" part of the string contains one or more uppercase charachters. It will be considered as an invalid id
+            identifier = None
+        else: # extract cpd
+            cpd_index = met_id.find("cpd")
+            identifier = "cpd"
+            # go to the index of 'cpd' + 3(the length) of cpd because we now expect
+            # the numerical id
+            for i in range(cpd_index + 3, len(met_id)):
+                # only append the digits and stop as soon as you encounter a non-digit
+                if met_id[i].isdigit():
+                    identifier += met_id[i]
+                else:
+                    break
     else: # remove 'M_' prefix and compartment string from metabolite id, preserving content between them.
         identifier = re.sub("^M_(.*)_[a-z]\d?$","\g<1>", met_id)
         identifier = re.sub("^M_(.*)__91__[a-z]\d?__93__$","\g<1>", identifier)
