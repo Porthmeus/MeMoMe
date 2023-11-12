@@ -26,7 +26,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     annos = any(["chebi" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
     if annos:
         # download the information from the server
-        chebi_db = pd.read_table("/home/td/Downloads/chebiId_inchi.tsv")
+        chebi_db = pd.read_table("/home/td/Projects/MeMoMe/Databases/chebiId_inchi.tsv")
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string
@@ -114,34 +114,37 @@ def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
 def annotate_PBC(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from """
-    pbc_db = pd.read_csv("/home/td/Projects/MeMoMe/Databases/all_with_inchi.csv", header = None)
+    pbc_db = pd.read_csv("/home/td/Projects/MeMoMe/Databases/all_compounds.csv", header = None)
     # check if any unannotated metabolites exist
+    # Apparently this list contains duplicates 9/10 are both 10-hydrofolate sth in Dafnis Models
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
     not_annotated_metabolites = len(ids)
     print("Not annotated before PBC " + str(not_annotated_metabolites))
     annotate_counter_pbc = 0
-    annos = any(["pubchem.compound" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
+    have_pub_but_no_inchi = ["pubchem.compound" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids]
+    # Just for testing purpose, tells use how many metabolites do not have an inchi annotation but do have a pubmed id
+    c = have_pub_but_no_inchi.count(True)
+    print(c)
+    annos = any(have_pub_but_no_inchi)
 
     for i in ids:
         #####################
         #
-        #                       HMDB
+        #                       Pubchem
         #
         #####################
-        # If the current metabolite does not have a hmdb annotation skip it
+        # If the current metabolite does not have a PUBCHEM annotation skip it
         if "pubchem.compound" not in metabolites[i].annotations:
             continue
-        # Get the bigg ids for each metabolite
+        # Get the PUBHCEM ids for each metabolite
         seeds = metabolites[i].annotations["pubchem.compound"]
         if len(seeds) > 1:
-            print("THIS DOES HAPPEN: WUHU")
+            print("This metabolite has more then one PBC id. Please handle. FOR NOW I will ignore this and take the first id")
         id_ = int(seeds[0])
-        print(id_)
-        if id_  > 3_000_000:
-            print("STOP")
         matches: pd.DataFrame = pbc_db[pbc_db.iloc[:, 0] == id_]
         if len(matches) > 1:
             raise NotImplementedError("UPSIDUS")
+
         inchi_strings = matches.iloc[:, 1]
 
         if len(inchi_strings) > 0:
