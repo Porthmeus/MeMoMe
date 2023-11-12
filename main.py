@@ -28,6 +28,13 @@ file_handler = logging.FileHandler('app.log', mode='w')
 logger.addHandler(file_handler)
 
 
+import warnings
+from rdkit import RDLogger
+
+# Suppress all RDKit warnings
+RDLogger.DisableLog('rdApp.*')
+warnings.filterwarnings("ignore", category=Warning)
+
 def main(args: argparse.Namespace):
     if args.download:
         logger.debug("Starting to download databases")
