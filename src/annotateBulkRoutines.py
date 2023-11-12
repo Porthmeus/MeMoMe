@@ -4,6 +4,7 @@
 '''
 This file contains function to annotated MeMoMetabolites in a bulk manner. This means a list of MeMoMetabolites is parsed and the annotation takes place on the metabolites in that list. This is mainly to use within the MeMoModel.annotate() function
 '''
+import logging
 
 import numpy as np
 import pandas as pd
@@ -55,7 +56,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
 def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from """
-    vmh_db = pd.read_json("/home/td/Projects/MeMoMe/Databases/vmh.json")
+    vmh_db = pd.read_json("../Databases/vmh.json")
     res = vmh_db["results"]
     vmh_db = pd.DataFrame.from_records(res)
 
