@@ -13,6 +13,7 @@ import libsbml as sbml
 from src.annotateBulkRoutines import *
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
+logger = logging.getLogger('logger')
 
 
 class MeMoModel:
@@ -58,11 +59,11 @@ class MeMoModel:
         in the model"""
         # Use ChEBI
         unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+        logger.info(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
         unannoted, annoted_by_chebi = annotateVMH_HMDB(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by VMH_HMDB')
+        logger.info(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by VMH_HMDB')
 
         unannoted, annoted_by_chebi = annotate_PBC(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by PBC')
+        logger.info(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by PBC')
 

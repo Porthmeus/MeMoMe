@@ -19,14 +19,18 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
     # check if any unannotated metabolites exist 
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    if len(ids) == 0:
+        return len(ids), 0
     not_annotated_metabolites = len(ids)
+    logger.info("Not annotated before PBC " + str(not_annotated_metabolites))
+
     annotated_by_chebi = 0
     # check if chebis ids are actually present in the annotation slot
     # TODO This does not work with 35, because we try to access the "chebi" even for thos metabolies that don;t have one
     annos = any(["chebi" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
     if annos:
         # download the information from the server
-        chebi_db = pd.read_table("/home/td/Projects/MeMoMe/Databases/chebiId_inchi.tsv")
+        chebi_db = pd.read_table("Databases/chebiId_inchi.tsv")
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string
@@ -56,8 +60,10 @@ def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
     # check if any unannotated metabolites exist
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    if len(ids) == 0:
+        return len(ids), 0
     not_annotated_metabolites = len(ids)
-    print("Not annotated before VMH " + str(not_annotated_metabolites))
+    logger.info("Not annotated before VMH " + str(not_annotated_metabolites))
     annotate_counter_hmdb = 0
     annos = any(["hmdb" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
 
@@ -107,24 +113,25 @@ def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
                     annotate_counter_hmdb += 1
                     continue
                 pass
-    logger.info("Annotated by HMDB " + str(annotate_counter_hmdb))
-
     return not_annotated_metabolites, annotate_counter_hmdb
 
 
 def annotate_PBC(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from """
-    pbc_db = pd.read_csv("/home/td/Projects/MeMoMe/Databases/all_compounds.csv", header = None)
     # check if any unannotated metabolites exist
     # Apparently this list contains duplicates 9/10 are both 10-hydrofolate sth in Dafnis Models
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
+    if len(ids) == 0:
+        return len(ids), 0
+    # Only load DB if we really need it
+    pbc_db = pd.read_csv("Databases/all_compounds.csv", header = None)
     not_annotated_metabolites = len(ids)
-    print("Not annotated before PBC " + str(not_annotated_metabolites))
+    logger.info("Not annotated before PBC " + str(not_annotated_metabolites))
     annotate_counter_pbc = 0
     have_pub_but_no_inchi = ["pubchem.compound" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids]
     # Just for testing purpose, tells use how many metabolites do not have an inchi annotation but do have a pubmed id
     c = have_pub_but_no_inchi.count(True)
-    print(c)
+    logger.info("Amount of keys that have a PBC id but no inchi " + str(c))
     annos = any(have_pub_but_no_inchi)
 
     for i in ids:
@@ -151,7 +158,10 @@ def annotate_PBC(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
             metabolites[i].set_inchi_string(findOptimalInchi(inchi_strings))
             annotate_counter_pbc += 1
             continue
-    logger.info("Annotated by PBC" + str(annotate_counter_pbc))
+        else:
+            # Metabolites that have a PBC id but no inchi
+            print(seeds)
+
     return not_annotated_metabolites,annotate_counter_pbc
 
 
