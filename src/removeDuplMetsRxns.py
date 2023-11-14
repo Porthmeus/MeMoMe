@@ -1,14 +1,37 @@
 from src.MeMoModel import *
+# bramnap 11-2023
 
 
-def identify_remove_rxn_dupl_metid(model, duplcmets, metid2keep=None):
+def update_model_duplicateMetId(memomemodel, duplcmets, metid2keep=None):
+    # TODO: make it so it can take a dictionary with key being the metid2keep?
 
+    """Main script that calls on the modular functions to identify, remove and or update reactions with pre-defined
+    duplicated metabolites
+
+    Input:
+    memomemodel = MeMoMe model structure. Needs to have the .cobra_model field
+    duplcmets = a list of strings with identical metabolites
+    metid2keep = string, the metabolite ID to keep in the model
+
+    Output:
+    upd_rmv_memomemodel = updated memomemodel
+    """
+
+    # If metid2keep is undefined, pick the first element in duplcmets
     if metid2keep is None:
-        targetid = duplcmets[0]
+        metid2keep = duplcmets[0]
     else:
-        targetid = metid2keep
+        metid2keep = metid2keep
 
-    rxnDict = {}
+    # Run the different functions to identify, remove and update reactions
+    duplcRxn, rxn2remove, forUsrCons, rxn2update = identify_rxn_dupl_metid(memomemodel, duplcmetsm, targetid=metid2keep)
+    rmv_memomemodel = remove_reaction(memomemodel, rxn2remove)
+    upd_rmv_memomemodel = update_reaction(rmv_memomemodel, xn2update, metid2keep)
+    return upd_rmv_memomemodel
+
+
+def identify_rxn_dupl_metid(model, duplcmets, targetid):
+
     metRxn = {}
     easyReadRxnDict = {}
     altEasyReadRxnDict = {}
@@ -51,7 +74,7 @@ def identify_remove_rxn_dupl_metid(model, duplcmets, metid2keep=None):
     duplcRxn = {}
     rxn2remove = []
     rxn2update = []
-    forUsrCons = []
+    forUsrCons = {}
 
     for rxnIns in rxns2inspect:
         rxn1 = easyReadRxnDict[rxnIns]
@@ -89,8 +112,38 @@ def identify_remove_rxn_dupl_metid(model, duplcmets, metid2keep=None):
                     duplcRxn[reactionComp] = [rxnIns]
                 else:
                     duplcRxn[reactionComp] += [rxnIns]
+            else:
+                for key in metRxn:
+                    if rxnIns in metRxn[key]:
+                        rxn2update[rxnIns] = [key]
 
-    return duplcRxn, rxn2remove, forUsrCons
+    return duplcRxn, rxn2remove, forUsrCons, rxn2update
+
+
+def remove_reaction(memome_model, reactions2remove):
+
+    for rxn in reactions2remove:
+        memome_model.cobra_model.reactions.get_by_id(rxn).upper_bound = 0
+        memome_model.cobra_model.reactions.get_by_id(rxn).lower_bound = 0
+    return memome_model
+
+
+def update_reaction(memome_model, reactions_oldMet, newmetID):
+    for rxn in reactions_oldMet:
+        oldmet = reactions_oldMet[rxn]
+                      
+        rxn2update = memome_model.cobra_model.reactions.get_by_id(rxn)
+        totalmets = rxn2update.metabolites
+        oldmetentry = [(key, value) for key, value in totalmets.items() if key.startswith(oldmet)]
+        oldmet2remove = oldmetentry[0][0]
+        stoich = oldmetentry[0][1]
+        comp = oldmet2remove[-3:len(oldmet2remove)]
+        met2add = newmetID+comp
+
+        rxn2update.subtract_metabolites({memome_model.cobra_model.metabolites.get_by_id(oldmet2remove): stoich})
+        rxn2update.add_metabolites({memome_model.cobra_model.metabolites.get_by_id(met2add): stoich})
+
+    return memome_model
 
 
 if __name__ == '__main__':
