@@ -15,6 +15,7 @@ def update_model_duplicateMetId(memomemodel, duplcmets, metid2keep=None):
 
     Output:
     upd_rmv_memomemodel = updated memomemodel
+    upd_rmv_cobramodel = updated cobra model
     """
 
     # If metid2keep is undefined, pick the first element in duplcmets
@@ -28,6 +29,8 @@ def update_model_duplicateMetId(memomemodel, duplcmets, metid2keep=None):
     rmv_memomemodel = remove_reaction(memomemodel, rxn2remove)
     upd_rmv_memomemodel = update_reaction(rmv_memomemodel, xn2update, metid2keep)
     upd_rmv_cobramodel = upd_rmv_memomemodel.cobra_model
+
+    # TODO: save changes and things that have to be looked as .txt files?
     return upd_rmv_memomemodel, upd_rmv_cobramodel
 
 
