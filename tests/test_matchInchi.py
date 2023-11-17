@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 import pandas as pd
 
-from src.matchInchi import matchInchi
+from src.matchMets import matchMetsByInchi
 
 
 class TestMatchInchit(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestMatchInchit(unittest.TestCase):
         for i in range(len(test_dat)):
                 inchi1 = test_dat.loc[i,"Inchi1"]
                 inchi2 = test_dat.loc[i,"Inchi2"]
-                res.append(matchInchi(inchi1,inchi2)[0])
+                res.append(matchMetsByInchi(inchi1,inchi2)[0])
         expected_res = [bool(x) for x in test_dat.loc[:,"Result"]]
         self.assertTrue(all([x==y for x,y in zip(expected_res,res)]))
 
