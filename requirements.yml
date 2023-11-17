@@ -214,4 +214,3 @@ dependencies:
   - zope.event=4.6=pyhd8ed1ab_0
   - zope.interface=6.0=py39h72bdee0_0
   - zstd=1.5.2=h3eb15da_6
-prefix: /home/taube/miniconda3/envs/MeMoMe
