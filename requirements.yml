@@ -6,7 +6,6 @@ channels:
   - bioconda
 dependencies:
   - _openmp_mutex
-  - ast
   - blas
   - bottleneck
   - bzip2
@@ -15,8 +14,6 @@ dependencies:
   - cobra
   - debugpy
   - intel-openmp
-  - io
-  - json
   - ld_impl_linux-64
   - libffi
   - libgcc-ng
@@ -53,7 +50,5 @@ dependencies:
   - tk
   - tqdm
   - tzdata
-  - urllib.request
   - wheel
   - xz
-  - zlib

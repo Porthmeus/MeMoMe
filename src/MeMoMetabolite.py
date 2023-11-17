@@ -20,7 +20,7 @@ from json import load
 import pandas as pd
 from numpy import NaN as npNaN
 
-from src.nameHandling import removeMetabolitePrefixSuffix
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 
 
 class MeMoMetabolite():
@@ -84,7 +84,7 @@ class MeMoMetabolite():
         if names is None:
             names = []
         if _id is not None:
-            self._id = removeMetabolitePrefixSuffix(_id)
+            self._id = handle_metabolites_prefix_suffix(_id)
         else:
             # TODO Why assign None?
             self._id = _id
@@ -103,7 +103,7 @@ class MeMoMetabolite():
         """
         if self._id is not None:
             warnings.warn("changed metbolite _id from {old} to {new}".format(old=self._id, new=new_id))
-        self._id = removeMetabolitePrefixSuffix(new_id)
+        self._id = handle_metabolites_prefix_suffix(new_id)
 
     def set_model_id(self, new_model_id: str) -> None:
         """ set function for _model_id """
