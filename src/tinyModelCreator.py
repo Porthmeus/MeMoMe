@@ -27,7 +27,7 @@ required_excretions = ['EX_ala_D(e)','EX_ala_L(e)','EX_trp_L(e)',
  'EX_etoh(e)', 'EX_ac(e)','EX_h2(e)','EX_for(e)','EX_h(e)',
  'EX_lac_D(e)','EX_lac_L(e)'] #manually chosen from the list of potentially excretable compounds (fva results)
 
-desired_medium = dict() #setting the mandatory components the final medium and their constraints
+desired_medium = dict() #setting the mandatory components of the final medium and their constraints
 desired_medium["EX_adn(e)"] = 1.0
 desired_medium["EX_gsn(e)"] = 1.0
 desired_medium["EX_nmn(e)"] = 100.0
@@ -40,7 +40,6 @@ desired_medium["EX_o2(e)"] = 10.0
 new_model_id = "mock_e_coli_vmh"
 new_model_name = "Simplified model obtained subsetting vmh's ecoli K12_substr_MG1655"
 output_file = "../tests/dat/subset_of_e_coli_vmh.xml"
-
 
 #MAIN SCRIPT
 #load the full e_coli model
@@ -76,7 +75,7 @@ model.objective = "biomass_simplified"
 #calculate optimal growth with new biomass function
 max_growth = model.slim_optimize()
 
-#obtain a minimal medium able to produce at least 10% of the maximal biomass
+#obtain a minimal medium able to support at least 10% of the maximal biomass growth rate
 required_medium = cobra.medium.minimal_medium(model, max_growth/10)
 
 #close all the medium's influxes
@@ -85,8 +84,8 @@ for reac_id in model.medium.keys():
 
 #include the medium components specified by the user
 for reac_id in desired_medium.keys():
-    required_medium = desired_medium[reac_id]
-    
+    required_medium[reac_id] = desired_medium[reac_id]
+
 #set the new medium
 for reac_id in required_medium.keys():
     model.reactions.get_by_id(reac_id).lower_bound = - required_medium[reac_id]
@@ -111,7 +110,7 @@ for r in model.boundary:
         reacs_to_remove.append(r)        
 model.remove_reactions(reacs_to_remove)
 
-#obtain a small list of reaction that supports a 10% maximal biomass production(not proven to be minimal, but with 5 iterations, and using pFBA,the total number of reactions should be small). The excretion of all the compounds required by the user will be guaranteed. All medium reactions required by the user will be kept
+#obtain a small list of reactions that support a 10% maximal biomass production(not proven to be minimal, but with 5 iterations, and using pFBA,the total number of reactions should be small). The excretion of all the compounds required by the user will be guaranteed. All medium reactions required by the user will be kept
 for i in range(5):
     model.reactions.get_by_id("biomass_simplified").lower_bound = 0.1 * model.slim_optimize()
     reactions_to_keep = set(required_excretions).union(set(required_medium.keys()))
@@ -151,5 +150,3 @@ for reac in model.reactions:
     reac.lower_bound = float(reac.lower_bound)
     reac.upper_bound = float(reac.upper_bound)
 cobra.io.write_sbml_model(model,output_file)
-
-
