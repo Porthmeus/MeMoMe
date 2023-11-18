@@ -1,7 +1,7 @@
 # Porthmeus
 # 16.06.23
 
-from src.matchInchi import matchInchi
+from src.matchMets import matchMetsByInchi
 
 
 def findOptimalInchi(inchis: list[str]) -> str:
@@ -21,7 +21,7 @@ def findOptimalInchi(inchis: list[str]) -> str:
         k = 0
         for j in range(len(inchis)):
             if j != i:
-                k = k + int(matchInchi(inchis[i], inchis[j])[0])
+                k = k + int(matchMetsByInchi(inchis[i], inchis[j])[0])
         matches.append(k)
 
     max_match = max(matches)
