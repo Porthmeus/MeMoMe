@@ -56,7 +56,11 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
 def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from """
-    vmh_db = pd.read_json("../Databases/vmh.json")
+    # TODO Catch error and look cwd in the case because Python is annoying as fuck
+    from pathlib import Path
+
+    vmh_db = pd.read_json("Databases/vmh.json")
+
     res = vmh_db["results"]
     vmh_db = pd.DataFrame.from_records(res)
 

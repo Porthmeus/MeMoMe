@@ -134,3 +134,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+
+.idea/
+Databases/
+notebooks/
+tests/manually_merged_models/gapSeqMeta-expanded.xml
+tests/manually_merged_models/gapSeqMeta-expanded.zip
+tests/manually_merged_models/gapseq_recon3D/Aeromonas_assembly.xml
+tests/models/M2_bacterial_model.xml
+tests/test_downloadPubchemInfo.py
+
