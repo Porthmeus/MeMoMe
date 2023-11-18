@@ -48,9 +48,9 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
             if len(inchis) > 0:
                 inchi = findOptimalInchi(inchis)
                 annotated_by_chebi += 1
-
+            # TODO: Inchi might not initialized here
             metabolites[i].set_inchi_string(inchi)
-
+    
     return not_annotated_metabolites, annotated_by_chebi
 
 
