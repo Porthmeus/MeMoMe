@@ -6,9 +6,9 @@ import pandas as pd
 from src.matchInchiRoutines import *
 from rdkit import Chem, RDLogger
 from Levenshtein import ratio
+from warnings import warn
 
-
-def matchMetsByInchi(inchi1:str, inchi2:str, verbose:bool = True) -> tuple:
+def matchMetsByInchi(inchi1:str, inchi2:str, verbose:bool = False) -> tuple:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
 
     # turn off chattiness of rdkit
@@ -17,9 +17,9 @@ def matchMetsByInchi(inchi1:str, inchi2:str, verbose:bool = True) -> tuple:
 
     # rdkit is somewhat chatty. To supress the warning:
     # check whether the molecules are differently charged, if so neutralize the charges
+#try:
     m1 = Chem.MolFromInchi(inchi1)
     m2 = Chem.MolFromInchi(inchi2)
-    #try:
     charge1 = Chem.GetFormalCharge(m1)
     charge2 = Chem.GetFormalCharge(m2)
     chargeDiff = charge1 - charge2
@@ -28,7 +28,11 @@ def matchMetsByInchi(inchi1:str, inchi2:str, verbose:bool = True) -> tuple:
         m2 = NeutraliseCharges(m2)
         inchi1 = Chem.MolToInchi(m1)
         inchi2 = Chem.MolToInchi(m2)
-
+# except:
+#     warn("Something went wrong with the InChI comparison\nmet1: " + inchi1 + "\nmet2: " + inchi2)
+#     same = False
+#     chargeDiff = None
+# else:
     # check the fingerprints - they should be the same, if not, check at the same time, whether after H removal there is only one atom left.
     same = False
     if compareInchiByFingerprint0(m1,m2, verbose = verbose) == 1.0 or m1.GetNumAtoms() == m2.GetNumAtoms() == 1:
@@ -40,10 +44,7 @@ def matchMetsByInchi(inchi1:str, inchi2:str, verbose:bool = True) -> tuple:
             # if that is false check if there is one of the stereoisomers the
             # same
             same = compareInchiByStereoIsomer0(m1,m2, verbose = verbose)
-    #except:
-    #    print("Something went wrong with the InChI comparison\nmet1: " + inchi1 + "\nmet2: " + inchi2)
-    #    same = False
-    #    chargeDiff = None
+# finally:
     return(same, chargeDiff)
 
 def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
@@ -56,7 +57,11 @@ def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
     # calculate jaccard index
     inter_len = len(list(set1 & set2))
     union_len = len(list(set1 | set2))
-    return(inter_len/union_len)
+    if union_len == 0:
+        sim = 0
+    else: 
+        sim = inter_len/union_len
+    return(sim)
 
 def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
     # use the metabolite names to match
