@@ -34,13 +34,18 @@ def main(args: argparse.Namespace):
         download()
         logger.debug("Finished downloading databases")
 
-    # Check if exactly two models were supplied
-    if args.model1 is None:
-        print("Please supply a second model with the --model1 parameter")
+    # Validate and load both models
+    if args.model1 is None or args.model2 is None:
+        print("Please supply two models with --model1 and --model2 parameters")
         sys.exit(1)
-    if args.model2 is None:
-        print("Please supply a second model with the --model2 parameter")
-        sys.exit(1)
+
+    model1 = MeMoModel.fromPath(Path(args.model1))
+    model2 = MeMoModel.fromPath(Path(args.model2))
+    
+    v1 = cobra.io.sbml.validate_sbml_model(model1.cobramodel)
+    v2 = cobra.io.sbml.validate_sbml_model(model2.cobramodel)
+    print("Validation results for Model 1:", v1)
+    print("Validation results for Model 2:", v2)
 
     v = cobra.io.sbml.validate_sbml_model(args.model2)
     print(v)
