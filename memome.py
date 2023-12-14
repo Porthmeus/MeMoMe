@@ -12,6 +12,8 @@ import cobra
 import src.MeMoModel
 from src.MeMoModel import *
 from src.download_db import download
+# Import the function for duplicate metabolites handling
+# from src.removeDuplMetsRxns import update_model_duplicateMetId
 
 # Configure the logger
 logging.basicConfig(
@@ -42,18 +44,20 @@ def main(args: argparse.Namespace):
     model1 = MeMoModel.fromPath(Path(args.model1))
     model2 = MeMoModel.fromPath(Path(args.model2))
     
-    v1 = cobra.io.sbml.validate_sbml_model(model1.cobramodel)
-    v2 = cobra.io.sbml.validate_sbml_model(model2.cobramodel)
+    v1 = cobra.io.sbml.validate_sbml_model(args.model1)
+    v2 = cobra.io.sbml.validate_sbml_model(args.model2)
     print("Validation results for Model 1:", v1)
     print("Validation results for Model 2:", v2)
 
-    v = cobra.io.sbml.validate_sbml_model(args.model2)
-    print(v)
-    # model1 = MeMoModel.fromPath(Path(args.model1))
-    model2 = MeMoModel.fromPath(Path(args.model2))
+    # Optional execution of update_model_duplicateMetId based on a feature flag
+    if args.update_dup_mets:
+        logger.debug("Updating models for duplicate metabolite IDs")
+        # update_model_duplicateMetId()  # Uncomment when function is available
+        pass
 
-    #t = model1.annotate()
-    t = model2.annotate()
+
+    t2 = model1.annotate()
+    t2 = model2.annotate()
     print("T")
 
 
@@ -66,6 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('--download', action='store_true', help='Download all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
+    parser.add_argument('--update-dup-mets', action='store_true', help='Update models for duplicate metabolite IDs')
     args = parser.parse_args()
     # Log arguments
     logger.debug(args)
