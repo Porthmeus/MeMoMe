@@ -14,10 +14,12 @@ import numpy as np
 import cobra as cb
 from os.path import exists
 from pathlib import Path
+from rdkit import Chem
 
 from debugpy.common.log import warning
 
 from src.MeMoMetabolite import MeMoMetabolite
+from src.annotateInchiRoutines import validateInchi, findOptimalInchi
 
 
 def getAnnotationFromMet(met: sbml.Species) -> dict:
@@ -101,6 +103,9 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
         # check if the inchi_string is available
         if "inchi" in annotations.keys():
             inchi_string = annotations['inchi'][0]
+            # check for validity of the inchi
+            if not validateInchi(inchi_string):
+                inchi_string = None
         else:
             inchi_string = None
         # create a MeMoMetabolite
@@ -146,8 +151,10 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
 
             if len(inchi) > 1:
                 inchi = findOptimalInchi(inchi)
-            else:
+            elif validateInchi(inchi[0]):
                 inchi = inchi[0]
+            else:
+                inchi = None
         else:
             inchi = None
         # create the MeMoMetabolite object
