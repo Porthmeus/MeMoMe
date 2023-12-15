@@ -1,0 +1,19 @@
+# File to configure MeMoMe properly
+#
+DB_location: "Databases" # a directory relative to the path of the main script
+
+# define databases
+databases:
+  ModelSeed:
+    URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
+    file: "modelSeed.tsv"
+  BiGG:
+    URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
+    file: "BiGG.tsv"
+  VMH:
+    URL: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
+    file: "vmh.json"
+  ChEBI:
+    URL: "https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv"
+    file: "chebiId_inchi.tsv"
+  
