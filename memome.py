@@ -6,8 +6,9 @@ Main entry point of the program
 import argparse
 import logging
 import sys
-
+from os import makedirs os.makedirs
 import cobra
+from os import makedirs
 
 import src.MeMoModel
 from src.MeMoModel import *
@@ -56,12 +57,19 @@ def main(args: argparse.Namespace):
         pass
 
 
-    t2 = model1.annotate()
-    t2 = model2.annotate()
-    print("T")
+    ann1 = model1.annotate()
+    ann2 = model2.annotate()
+    
+    matches_table = model1.match(model2)
+    
+    inchi_matches = matches_table[matches_table["inchi_score"]==1]
+    makedirs('Output/matches', exist_ok=True)
+    inchi_matches.loc[:,["met_id1","met_id2"]].to_csv("Output/matches/inchi_matches.csv")
+    unsure_matches = matches_table[matches_table["inchi_score"]!=1]
+    unsure_matches.to_csv("Output/matches/to_be_confirmed.csv")
 
-
-
+    print(str(len(inchi_matches)) + " metabolite couples have a perfect Inchi string match. The list of matches have been saved under 'Output/matches/inchi_matches.csv\nAdditionally, " +str(len(unsure_matches)) + " potential matches are listed under 'Output/matches/to_be_confirmed.csv'. You can ")
+    
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
