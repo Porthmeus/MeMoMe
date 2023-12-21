@@ -1,6 +1,0 @@
-params:
-# The folder that contains all reads that should be used
-- read_folder: "../../PubChemClone/"
-# The folder were the output files should be stored
-- out_folder: "outfolder/"
-

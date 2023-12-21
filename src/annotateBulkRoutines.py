@@ -122,52 +122,5 @@ def annotateVMH_HMDB(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     return not_annotated_metabolites, annotate_counter_hmdb
 
 
-def annotate_PBC(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
-    """ Annotate the metaboltes with Inchis from """
-    # check if any unannotated metabolites exist
-    # Apparently this list contains duplicates 9/10 are both 10-hydrofolate sth in Dafnis Models
-    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
-    if len(ids) == 0:
-        return len(ids), 0
-    # Only load DB if we really need it
-    pbc_db = pd.read_csv("Databases/all_compounds.csv", header = None)
-    not_annotated_metabolites = len(ids)
-    logger.info("Not annotated before PBC " + str(not_annotated_metabolites))
-    annotate_counter_pbc = 0
-    have_pub_but_no_inchi = ["pubchem.compound" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids]
-    # Just for testing purpose, tells use how many metabolites do not have an inchi annotation but do have a pubmed id
-    c = have_pub_but_no_inchi.count(True)
-    logger.info("Amount of keys that have a PBC id but no inchi " + str(c))
-    annos = any(have_pub_but_no_inchi)
-
-    for i in ids:
-        #####################
-        #
-        #                       Pubchem
-        #
-        #####################
-        # If the current metabolite does not have a PUBCHEM annotation skip it
-        if "pubchem.compound" not in metabolites[i].annotations:
-            continue
-        # Get the PUBHCEM ids for each metabolite
-        seeds = metabolites[i].annotations["pubchem.compound"]
-        if len(seeds) > 1:
-            print("This metabolite has more then one PBC id. Please handle. FOR NOW I will ignore this and take the first id")
-        id_ = int(seeds[0])
-        matches: pd.DataFrame = pbc_db[pbc_db.iloc[:, 0] == id_]
-        if len(matches) > 1:
-            raise NotImplementedError("UPSIDUS")
-
-        inchi_strings = matches.iloc[:, 1]
-
-        if len(inchi_strings) > 0:
-            metabolites[i].set_inchi_string(findOptimalInchi(inchi_strings))
-            annotate_counter_pbc += 1
-            continue
-        else:
-            # Metabolites that have a PBC id but no inchi
-            print(seeds)
-
-    return not_annotated_metabolites,annotate_counter_pbc
 
 

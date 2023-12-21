@@ -65,8 +65,6 @@ class MeMoModel:
         unannoted, annoted_by_chebi = annotateVMH_HMDB(self.metabolites)
         logger.info(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by VMH_HMDB')
 
-        unannoted, annoted_by_chebi = annotate_PBC(self.metabolites)
-        logger.info(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by PBC')
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
