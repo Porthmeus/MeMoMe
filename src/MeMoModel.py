@@ -58,10 +58,14 @@ class MeMoModel:
     def annotate(self) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+        # BiGG
+        unannotated, annotated = annotateBiGG(self.metabolites)
+        print(f"annotated BiGG database")
         # Use ChEBI
         unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
         print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+
         annotateLove(self.metabolites)
 
 
