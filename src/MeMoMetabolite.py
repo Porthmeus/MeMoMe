@@ -167,6 +167,8 @@ class MeMoMetabolite():
         for x in new_annotations.keys():
             if x in self.annotations.keys():
                 self.annotations[x].extend(new_annotations[x])
+                # remove duplicates
+                self.annotations[x] = list(set(self.annotations[x]))
             else:
                 self.annotations[x] = new_annotations[x]
 
@@ -214,7 +216,8 @@ class MeMoMetabolite():
 
     def annotate(self):
         if self._inchi_string is None:
-            # TODO: for now I am assuming that the download already happened, we can either add it on some external class or perfrom it here
+            # TODO: for now I am assuming that the download already happened,
+            # we can either add it on some external class or perfrom it here
             # downl_status = download()
             # if downl_status:
             #    print("Succesfully downloaded")
