@@ -49,14 +49,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         
         annotateChEBI(metabolites)
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
-        def test_MeMoModelCompare(self):
-            # test the comparison for metabolite matching
-            mod_path = self.dat.joinpath("e_coli_core.xml")
-            mod = MeMoModel.fromPath(mod_path)
-            # self comparison
-            res = mod.match(mod)
-            self.assertIsInstance(res, pd.DataFrame)
-            self.asserTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
+    def test_MeMoModelCompare(self):
+        # test the comparison for metabolite matching
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        # self comparison
+        res = mod.match(mod)
+        self.assertIsInstance(res, pd.DataFrame)
+        self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
 
 
 

@@ -7,7 +7,7 @@ Store relevant information of a SBML file in a MeMoModel
 from __future__ import annotations
 
 from pathlib import Path
-
+from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
@@ -51,6 +51,7 @@ class MeMoModel:
     @classmethod
     def fromSBML(cls, model: sbml.Model) -> MeMoModel:
         """ Read the model from the libsbml model """
+        warn("Reading from SBML model object is depricated, please do not use anymore")
         metabolites = parseMetaboliteInfoFromSBMLMod(model)
         _id = model.getId()
         return MeMoModel(metabolites=metabolites, _id=_id)
