@@ -28,25 +28,6 @@ class MeMoMetabolite():
     The original information comes from a model, while the "inferred" information is either obtained though elaboration of the
     available information such as Inchi string or retrieved from the databases
     Metabolite is a class for holding directly know and inferred information regarding a metabolite 
-
-    Parameters
-    ----------
-    _id : str
-        the _id of the MeMoMetabolite - usually the core metabolite _id from the model.
-    orig_ids : set()
-        the original ID as specified in the model where the metabolite comes from, including the "M_" prefix and the compartment suffix:
-    _model_id : str
-        the ID of the model where the metabolite comes from
-    names : set() 
-        A list of common names and synonyms of the metabolite, will be converted to a set, to remove duplicates
-    _inchi_string : string
-       The Inchi string of the metabolite
-    _formula : str
-        The _formula of the metabolite
-    _charge : float
-       The _charge number of the metabolite
-    annotations: dict()
-       A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite _ids
     """
 
     def __init__(
@@ -58,6 +39,8 @@ class MeMoMetabolite():
             _inchi_string: str = None,
             _formula: str = None,
             _charge: int = None,
+            _pKa: float = None,
+            _pKb: float = None,
             annotations: dict = {},
     ) -> None:
         """Initialize MeMoMetaboblite
@@ -78,6 +61,10 @@ class MeMoMetabolite():
             The _formula of the metabolite
         _charge : float
            The _charge number of the metabolite
+        _pKa : float
+            The pKa of the metabolite
+        _pKb : float
+            The pKb of the metabolite
         annotations: dict()
            A dictionary whose keys are the names of the annotations, and the items are the database-specific metabolite _ids
         """
@@ -94,6 +81,8 @@ class MeMoMetabolite():
         self._formula = _formula
         self._inchi_string = _inchi_string
         self._charge = _charge
+        self._pKa = _pKa
+        self._pKb = _pKb
         self.annotations = annotations
 
     def set_id(self, new_id: str) -> None:
@@ -154,6 +143,32 @@ class MeMoMetabolite():
             warnings.warn(
                 "changed metbolite _charge from {old} to {new}".format(old=str(self._charge), new=str(new_charge)))
         self._charge = new_charge
+    
+    def set_pKa(self, new_pKa:float) -> None:
+        """ set function for _pKa """
+        if self._pKa is not None:
+            warnings.warn("changed metabolite _pKa from {old} to {new}".format(old = str(self._pKa), new = str(new_pKa)))
+        self._pKa = new_pKa
+    
+    def add_pKa(self, new_pKa:float) -> float:
+        """ add a new pKa value, this is a simple mean calculation and might need some review"""
+        if self._pKa is not None:
+            self._pKa = (self._pKa + new_pKa)/2
+        else:
+            self._pKa = new_pKa
+
+    def set_pKs(self, new_pKs:float) -> None:
+        """ set function for _pKs """
+        if self._pKs is not None:
+            warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = str(self._pKs), new = str(new_pKs)))
+        self._pKs = new_pKs
+    
+    def add_pKs(self, new_pKs:float) -> float:
+        """ add a new pKs value, this is a simple mean calculation and might need some review"""
+        if self._pKs is not None:
+            self._pKs = (self._pKs + new_pKs)/2
+        else:
+            self._pKs = new_pKs
 
     def set_annotations(self, new_annotations: dict) -> None:
         """ set function for annotations """
