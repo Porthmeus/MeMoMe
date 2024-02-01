@@ -30,7 +30,7 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
                 else:
                     break
     else: # remove 'M_' prefix and compartment string from metabolite id, preserving content between them.
-        identifier = re.sub("^M_(.*)_[a-z]\d?$","\g<1>", met_id)
-        identifier = re.sub("^M_(.*)__91__[a-z]\d?__93__$","\g<1>", identifier)
-        identifier = re.sub("^M_(.*)__40__[a-z]\d?__41__$","\g<1>", identifier)
+        identifier = re.sub(r"^M_(.*)_[a-z]\d?$",r"\g<1>", met_id)
+        identifier = re.sub(r"^M_(.*)__91__[a-z]\d?__93__$",r"\g<1>", identifier)
+        identifier = re.sub(r"^M_(.*)__40__[a-z]\d?__41__$",r"\g<1>", identifier)
     return identifier

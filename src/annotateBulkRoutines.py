@@ -7,13 +7,23 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 
 import numpy as np
 import pandas as pd
+from pathlib import Path
+
+
 
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import findOptimalInchi
+from src.download_db import databases_available, get_config, get_database_path
+
 
 
 def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from ChEBI """
+
+    # check if databases are available and if so load the config
+    if databases_available():
+        config = get_config()
+        db_path = get_database_path()
 
     # check if any unannotated metabolites exist 
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
@@ -25,7 +35,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     if annos:
         # download the information from the server
         #chebi_db = pd.read_table("/home/td/Downloads/chebiId_inchi.tsv")
-        chebi_db = pd.read_table("https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv")
+        chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string
