@@ -10,7 +10,8 @@
 
 #### TODO:
 # - add a function which forms a dataframe from the metabolite
-
+# - getter and setter functions should ensure sorted and unique lists and dictionaries
+# - add_ functions should return 1 if really something was added, else it should return 0
 
 from __future__ import annotations
 
@@ -39,8 +40,8 @@ class MeMoMetabolite():
             _inchi_string: str = None,
             _formula: str = None,
             _charge: int = None,
-            _pKa: float = None,
-            _pKb: float = None,
+            _pKa: dict = None,
+            _pKb: dict = None,
             annotations: dict = {},
     ) -> None:
         """Initialize MeMoMetaboblite
@@ -112,17 +113,32 @@ class MeMoMetabolite():
         for x in new_names:
             self.names.add(x)
 
+
     def set_orig_ids(self, new_orig_ids: list[str]) -> None:
         """ set function for orig_ids """
         if self.orig_ids != []:
             warnings.warn(
                 "changed metbolite orig_ids from {old} to {new}".format(old=str(self.orig_ids), new=str(new_orig_ids)))
         self.orig_ids = set(new_orig_ids)
+        self.orig_ids.sort()
 
-    def add_orig_ids(self, new_orig_ids: list[str]) -> None:
-        """ append new orig_ids to the list of metabolite orig_ids"""
+    def add_orig_ids(self, new_orig_ids: list[str]) -> int:
+        """ append new orig_ids to the list of metabolite orig_ids
+        returns 1 if change has occured, else 0"""
+        old_orig_ids = self.orig_ids
+        old_orig_ids.sort()
         for x in new_orig_ids:
             self.orig_ids.add(x)
+        # make sure that there are no duplicates
+        self.orig_ids = list(set(self.orig_ids))
+        self.orig_ids.sort()
+        # check whethter there was acutally an addition of values
+        change = 0 
+        if old_orig_ids =! self.orig_ids:
+            change = 1
+        return(change)
+
+
 
     def set_formula(self, new_formula: str) -> None:
         """ set function for _formula """
@@ -136,6 +152,22 @@ class MeMoMetabolite():
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
         self._inchi_string = new_inchi_string
+    
+    def add_inchi_string(self, new_inchi_string:str) -> int:
+        """ compares to inchis and takes the most appropiate one"""
+        changed = 0
+        if self._inchi_string != None:
+            old = self._inchi_string
+            new = findOptimalInchi(self._inchi_string, new_inchi_string)
+            if new != old:
+                self._inchi_string = new
+                changed =  1
+        else:
+            self._inchi_string = new_inchi_string
+            changed = 1
+        return changed
+    
+
 
     def set_charge(self, new_charge: int) -> None:
         """ set function for _charge """
@@ -144,32 +176,43 @@ class MeMoMetabolite():
                 "changed metbolite _charge from {old} to {new}".format(old=str(self._charge), new=str(new_charge)))
         self._charge = new_charge
     
-    def set_pKa(self, new_pKa:float) -> None:
-        """ set function for _pKa """
-        if self._pKa is not None:
-            warnings.warn("changed metabolite _pKa from {old} to {new}".format(old = str(self._pKa), new = str(new_pKa)))
-        self._pKa = new_pKa
     
     def add_pKa(self, new_pKa:float) -> float:
         """ add a new pKa value, this is a simple mean calculation and might need some review"""
+        # TODO: check for correct calulations of pKa mean
         if self._pKa is not None:
-            self._pKa = (self._pKa + new_pKa)/2
-        else:
-            self._pKa = new_pKa
+            for key,value in new_pKa.items():
+                if key in self._pKa.keys():
+                    self._pKa[key] = (self._pKa[key] + value)/2
+                else:
+                    self._pKa[key] = value
 
-    def set_pKs(self, new_pKs:float) -> None:
-        """ set function for _pKs """
-        if self._pKs is not None:
-            warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = str(self._pKs), new = str(new_pKs)))
-        self._pKs = new_pKs
+    def set_pKa(self, new_pKa:dict) -> None:
+        """ set function for _pKa """
+        if self._pKa is not None:
+            old = ";".join([x+":"+str(y) for x,y in self._pKa.items()])
+            new = ";".join([x+":"+str(y) for x,y in new_pKa.items()])
+            warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
+        self._pKa = new_pKa
+
+    def add_pKb(self, new_pKb:float) -> float:
+        """ add a new pKb value, this is a simple mean calculation and might need some review"""
+        # TODO: check for correct calulations of pKb mean
+        if self._pKb is not None:
+            for key,value in new_pKb.items():
+                if key in self._pKb.keys():
+                    self._pKb[key] = (self._pKb[key] + value)/2
+                else:
+                    self._pKb[key] = value
+
+    def set_pKb(self, new_pKb:dict) -> None:
+        """ set function for _pKb """
+        if self._pKb is not None:
+            old = ";".join([x+":"+str(y) for x,y in self._pKb.items()])
+            new = ";".join([x+":"+str(y) for x,y in new_pKb.items()])
+            warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
+        self._pKb = new_pKb
     
-    def add_pKs(self, new_pKs:float) -> float:
-        """ add a new pKs value, this is a simple mean calculation and might need some review"""
-        if self._pKs is not None:
-            self._pKs = (self._pKs + new_pKs)/2
-        else:
-            self._pKs = new_pKs
-
     def set_annotations(self, new_annotations: dict) -> None:
         """ set function for annotations """
         if self.annotations != {}:

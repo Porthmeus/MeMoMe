@@ -3,6 +3,7 @@
 
 from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
+import warnings
 
 def validateInchi(inchi:str, verbose:bool = False) -> bool:
     """
@@ -21,6 +22,22 @@ def validateInchi(inchi:str, verbose:bool = False) -> bool:
     except:
         validated = False
     return(validated)
+
+def smile2inchi(smile:str, verbose:bool = False) -> str:
+    """ Takes a smile and returns inchi_string """
+    
+    # silence rdkit
+    if verbose == False:
+        RDLogger.DisableLog("rdApp.*")
+
+    # load smiles and convert to inchi
+        m = Chem.MolFromSmiles(smile)
+    try:
+        log = Chem.SanitizeMol(m)
+    except:
+        warnings.warn("Could not sanitize {mol}".format(mol = smile))
+    inchi = Chem.MolToInchi(m)
+    return(inchi)
 
 def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
     """
