@@ -70,7 +70,7 @@ def download() -> bool:
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
-        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
+        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
             content: str = f.read()
             # This will break if the link changes
             content = content.removeprefix("Ext.data.JsonP.callback19(")
