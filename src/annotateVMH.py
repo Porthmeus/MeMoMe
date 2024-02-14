@@ -64,7 +64,6 @@ def annotateVMH_id(metabolites: list[MeMoMetabolite]) -> int:
     counter = 0
     for met in metabolites:
         new_met_anno = dict()
-        #if met._id in bigg["universal_bigg_id"]: # does not work, for whatever reason
         if any(vmh["abbreviation"]==met._id):
             new_met_anno,new_names = annotateVMH_entry(entry = met._id,
                     annotations = new_met_anno,
