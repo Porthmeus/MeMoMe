@@ -1,57 +1,44 @@
+
+# Import necessary libraries
+import argparse
 import cobra
 import pandas as pd
 import os
 
-#HARDCODED PARAMETERS
-model_file_path = "../tests/dat/e_coli_vmh.xml"
-biomass_id = "biomass525" # biomass id of the model
+# Setup argparse to handle input arguments
+parser = argparse.ArgumentParser(description="Modify a metabolic model based on specified parameters.")
+parser.add_argument("--model_file_path", type=str, default="../tests/dat/script_accessories/e_coli_vmh.xml", help="Path to the model file.")
+parser.add_argument("--biomass_id", type=str, default="biomass525", help="ID of the biomass reaction in the model.")
+parser.add_argument("--desired_biomass_components_file", type=str, default="../tests/dat/script_accessories/desired_biomass_components.txt", help="File containing desired biomass components.")
+parser.add_argument("--required_excretions_file", type=str, default="../tests/dat/script_accessories/required_excretions.txt", help="File containing required excretions.")
+parser.add_argument("--desired_medium_file", type=str, default="../tests/dat/script_accessories/desired_medium.csv", help="CSV file containing desired medium components and constraints.")
+parser.add_argument("--new_model_id", type=str ,default="minimal_model", help="New ID for the modified model.")
+parser.add_argument("--new_model_name", type=str, default="minimal_model", help="New name for the modified model.")
+parser.add_argument("--output_file", type=str, default="../tests/dat/script_accessories/modified_model.xml", help="Path for the output modified model.")
 
-desired_biomass_components =['biomass[c]',
-                             'h[c]',
-                             'pi[c]',
-                             'ppi[c]',
-                             'ala_L[c]',
-                             'amet[c]',
-                             'arg_L[c]',
-                             'asn_L[c]',
-                             'asp_L[c]',
-                             'atp[c]',
-                             'ca2[c]',
-                             'cl[c]',
-                             'proteinsynth[c]',
-                             'dnarep[c]',
-                             'rnatrans[c]'] #arbitrarily chosen from the biomass components
+args = parser.parse_args()
 
-required_excretions = ['EX_ala_D(e)','EX_ala_L(e)','EX_trp_L(e)',
- 'EX_co2(e)','EX_h2o(e)',
- 'EX_etoh(e)', 'EX_ac(e)','EX_h2(e)','EX_for(e)','EX_h(e)',
- 'EX_lac_D(e)','EX_lac_L(e)'] #manually chosen from the list of potentially excretable compounds (fva results)
+# Read in the desired biomass components
+with open(args.desired_biomass_components_file) as file:
+    desired_biomass_components = [line.strip() for line in file]
 
-desired_medium = dict() #setting the mandatory components of the final medium and their constraints
-desired_medium["EX_adn(e)"] = 1.0
-desired_medium["EX_gsn(e)"] = 1.0
-desired_medium["EX_nmn(e)"] = 100.0
-desired_medium["EX_glc_D(e)"] = 1.0
-desired_medium["EX_h(e)"] = 10.0
-desired_medium["EX_pi(e)"] = 10.0
-desired_medium["EX_h2o(e)"] = 1000.0
-desired_medium["EX_o2(e)"] = 10.0
+# Read in the required excretions
+with open(args.required_excretions_file) as file:
+    required_excretions = [line.strip() for line in file]
 
-new_model_id = "mock_e_coli_vmh"
-new_model_name = "Simplified model obtained subsetting vmh's ecoli K12_substr_MG1655"
-output_file = "../tests/dat/subset_of_e_coli_vmh.xml"
+# Load the desired medium from CSV
+desired_medium_df = pd.read_csv(args.desired_medium_file)
+desired_medium = pd.Series(desired_medium_df['Constraint'].values, index=desired_medium_df['Component']).to_dict()
 
-#MAIN SCRIPT
-#load the full e_coli model
-model = cobra.io.read_sbml_model(model_file_path)
-model
+# Load the full model
+model = cobra.io.read_sbml_model(args.model_file_path)
 
-#keep copy of the old medium and old biomass function
+# Keep a copy of the old medium and old biomass function
 old_medium = model.medium.copy()
-biomass_func = model.reactions.get_by_id(biomass_id)
+biomass_func = model.reactions.get_by_id(args.biomass_id)
 old_biomass = biomass_func.copy()
 
-#create a reduced version of the biomass reaction
+# Create a reduced version of the biomass reaction 
 reactions_toadd = cobra.core.DictList()
 new_react = cobra.core.reaction.Reaction("biomass_simplified")
 new_react.name = "biomass with less metabolic requirement"
@@ -61,36 +48,36 @@ new_react.reversibility = False
 new_react_mets = dict()
 for met in desired_biomass_components:
     new_react_met = model.metabolites.get_by_id(met)
-    new_react_mets[new_react_met] = model.reactions.get_by_id(biomass_id).metabolites[model.metabolites.get_by_id(met)]
+    new_react_mets[new_react_met] = model.reactions.get_by_id(args.biomass_id).metabolites[model.metabolites.get_by_id(met)]
 new_react.add_metabolites(new_react_mets)
 reactions_toadd.add(new_react)
 model.add_reactions(reactions_toadd)
 
-#remove old biomass reaction
-model.remove_reactions(cobra.core.DictList([model.reactions.get_by_id(biomass_id)]))
+# Remove old biomass reaction
+model.remove_reactions(cobra.core.DictList([model.reactions.get_by_id(args.biomass_id)]))
 
-#set the new biomass reaction as objective
+# Set the new biomass reaction as objective
 model.objective = "biomass_simplified"
 
-#calculate optimal growth with new biomass function
+# Calculate optimal growth with new biomass function
 max_growth = model.slim_optimize()
 
-#obtain a minimal medium able to support at least 10% of the maximal biomass growth rate
+# Obtain a minimal medium able to support at least 10% of the maximal biomass growth rate
 required_medium = cobra.medium.minimal_medium(model, max_growth/10)
 
-#close all the medium's influxes
+# Close all the medium's influxes
 for reac_id in model.medium.keys():
     model.reactions.get_by_id(reac_id).lower_bound = 0.0
 
-#include the medium components specified by the user
+# Include the medium components specified by the user
 for reac_id in desired_medium.keys():
     required_medium[reac_id] = desired_medium[reac_id]
 
-#set the new medium
+# Set the new medium
 for reac_id in required_medium.keys():
     model.reactions.get_by_id(reac_id).lower_bound = - required_medium[reac_id]
 
-#use fva to calculate the excretion and uptakes that the model can achieve while keeping 10% optimality
+# Use fva to calculate the excretion and uptakes that the model can achieve while keeping 10% optimality
 fva_sol = cobra.flux_analysis.flux_variability_analysis(model, fraction_of_optimum=0.1)
 active_fva_ids = list(set(fva_sol[fva_sol["minimum"] < -1e-06].index)
                       .union(set(fva_sol[fva_sol["maximum"] > 1e-06].index)))
@@ -98,19 +85,19 @@ active_fva_exchanges = sorted([r_id for r_id in active_fva_ids if "EX_" in r_id]
 possible_excretions = sorted([r_id for r_id in active_fva_exchanges if fva_sol.loc[r_id].maximum > 1e-06])
 possible_uptakes = sorted([r_id for r_id in active_fva_exchanges if fva_sol.loc[r_id].minimum < -1e-06])
 
-#select all the sinks and demands that can carry a flux
+# Select all the sinks and demands that can carry a flux
 boundary_ids = {r.id for r in model.boundary}
 other_reacs_like_sinks_or_demands = sorted([r_id for r_id in boundary_ids.intersection(set(active_fva_ids)) 
                                               if r_id not in set(possible_excretions).union(set(possible_uptakes))])
 
-#remove from the model all the boundary reactions that are not feasible uptakes, excretions, sinks or demands
+# Remove from the model all the boundary reactions that are not feasible uptakes, excretions, sinks or demands
 reacs_to_remove = list()
 for r in model.boundary:
     if r.id not in set(possible_excretions).union(set(possible_uptakes)).union(other_reacs_like_sinks_or_demands):
         reacs_to_remove.append(r)        
 model.remove_reactions(reacs_to_remove)
 
-#obtain a small list of reactions that support a 10% maximal biomass production(not proven to be minimal, but with 5 iterations, and using pFBA,the total number of reactions should be small). The excretion of all the compounds required by the user will be guaranteed. All medium reactions required by the user will be kept
+# Obtain a small list of reactions that support a 10% maximal biomass production(not proven to be minimal, but with 5 iterations, and using pFBA,the total number of reactions should be small). The excretion of all the compounds required by the user will be guaranteed. All medium reactions required by the user will be kept
 for i in range(5):
     model.reactions.get_by_id("biomass_simplified").lower_bound = 0.1 * model.slim_optimize()
     reactions_to_keep = set(required_excretions).union(set(required_medium.keys()))
@@ -141,12 +128,12 @@ for i in range(5):
             genes_to_delete.append(gene)
     cobra.manipulation.remove_genes(model, gene_list = genes_to_delete)
 
-#set new id and name to the model
-model.id = new_model_id
-model.name = new_model_name
+# Set new id and name to the model
+model.id = args.new_model_id
+model.name = args.new_model_name
 
-#save the model
+# Save the model
 for reac in model.reactions:
     reac.lower_bound = float(reac.lower_bound)
     reac.upper_bound = float(reac.upper_bound)
-cobra.io.write_sbml_model(model,output_file)
+cobra.io.write_sbml_model(model, args.output_file)
