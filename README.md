@@ -19,3 +19,6 @@ if you just want to update a the environment use
 ## Run Tests
 python -m unittest
 
+
+## Execute bulk performance test
+python3 -m tests.test_bulkPerformance  && google-chrome table.html 
