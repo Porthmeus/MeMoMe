@@ -11,6 +11,8 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
+from src.annotateChEBI import annotateChEBI
+from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateBulkRoutines import *
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
@@ -58,14 +60,27 @@ class MeMoModel:
     def annotate(self) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+        # count the number of newly annotated metabolites
+        new_n_inchi = 0
+        new_n_anno = 0
+        new_n_names = 0
         # BiGG
-        unannotated, annotated = annotateBiGG(self.metabolites)
-        print(f"annotated BiGG database")
+        x,y,z = annotateBiGG(self.metabolites)
+        print(f"annotated BiGG database - inchi:{x},anno:{y},names:{z}".format(x=x,y=y,z=z))
+        new_n_inchi = new_n_inchi+x
+        new_n_anno = new_n_anno +y
+        new_n_names = new_n_names+z
         # Use ChEBI
-        unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+        x,y,z = annotateChEBI(self.metabolites)
+        print(f"annotated ChEBI database - inchi:{x},anno:{y},names:{z}".format(x=x,y=y,z=z))
+        new_n_inchi = new_n_inchi+x
+        new_n_anno = new_n_anno +y
+        new_n_names = new_n_names+z
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-
+        print(f"annotated a total of - inchi:{x},anno:{y},names:{z}".format(
+            x=new_n_inchi,
+            y=new_n_anno,
+            z=new_n_names))
         annotateLove(self.metabolites)
 
 
