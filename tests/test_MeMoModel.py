@@ -5,11 +5,14 @@ import unittest
 from pathlib import Path
 import cobra as cb
 import pandas as pd
+import warnings
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateBulkRoutines import *
+from src.annotateChEBI import annotateChEBI
+from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
@@ -34,6 +37,13 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod.annotate()
         post_inchis = [x._inchi_string for x in mod.metabolites]
         self.assertTrue(any([x != y for x,y in zip(pre_inchis, post_inchis)]))
+        # check if it also works if we remove the annotations
+        mod = MeMoModel.fromPath(mod_path)
+        # ignore the warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            [x.set_annotations({}) for x in mod.metabolites]
+        mod.annotate()
 
     def test_annotateChEBI(self):
         # test the matchInchi algorithm and find expected matches
@@ -49,6 +59,22 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         
         annotateChEBI(metabolites)
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
+
+    def test_annotateBiGG(self):
+        # create a small test for the annotateBigg functions
+        # create a mock list of metabolites
+        m1 = MeMoMetabolite(_id = "glc__D")
+        m2 = MeMoMetabolite(_id = "mock_id",annotations = {"bigg.metabolite":["glc__D"]})
+        mets = [m1,m2]
+        x,y,z = annotateBiGG(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 1)
+        self.assertTrue(z == 1)
+        x,y,z = annotateBiGG_id(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 1)
+        self.assertTrue(z == 1)
+
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching
         mod_path = self.dat.joinpath("e_coli_core.xml")
