@@ -21,22 +21,31 @@ from debugpy.common.log import warning
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import validateInchi, findOptimalInchi
 
+def getAnnoFromIdentifierURL(url:str) -> tuple[str, str]:
+    """Small function to extract the db and db id from an identifier.org url"""
+    db = url.split("/")[3].strip('"')
+    db_id = "/".join(url.split("/")[4:]).replace('"/>', "")
+    return db, db_id
 
 def getAnnotationFromMet(met: sbml.Species) -> dict:
     ''' extract a dictionary containing additional annotations'''
     results = dict()
     urls = met.getAnnotationString().split("\n")
-    if len(urls) > 1:
-        anno_source = [x.split("/")[3].strip('"') for x in urls if re.search("identifiers.org", x) != None]
-        anno_val = ["/".join(x.split("/")[4:]).replace('"/>', "") for x in urls if
-                    re.search("identifiers.org", x) != None]
-        for src_i in range(len(anno_source)):
-            src = anno_source[src_i]
-            val = anno_val[src_i]
+    # filter those anntations which have an identifier.org url attached
+    urls = [x for x in urls if re.search("identifiers.org", x) != None]
+    # if annotations are available extract the identifier.org db and id and put it in the annotations dictionary
+    if len(urls) > 0:
+        for url in urls:
+            src,val =getAnnoFromIdentifierURL(url)
             if src in results.keys():
                 results[src].append(val)
             else:
                 results[src] = [val]
+
+    # remove duplicates from the annotations
+    for key in results.keys():
+       new_val = list(set(results[key]))
+       results[key] = new_val
     return results
 
 
