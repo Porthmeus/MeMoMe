@@ -103,7 +103,7 @@ def generate_html_table(data):
     return html
 
 
-def save_html_table(html_table, filename_prefix='table'):
+def save_html_table(html_table, filename_prefix='performace_table'):
     """
     Save HTML table to an HTML file with a filename containing the current date and time.
     
@@ -124,6 +124,21 @@ def save_html_table(html_table, filename_prefix='table'):
 # Print the generated HTML table
 
 def generate_value_row(res_value: int, exp_value: int) -> tuple[str, str, str]:
+  """
+  Generate a row for displaying result and expected values with color indication.
+
+  Parameters:
+  - res_value (int): The actual result value.
+  - exp_value (int): The expected value.
+
+  Returns:
+  tuple[str, str, str]: A tuple containing three strings:
+      - The result value.
+      - The expected value.
+      - A string indicating the color for styling:
+          - "red" if the result value is less than the expected value.
+          - "green" if the result value is greater than or equal to the expected value.
+  """
   if res_value < exp_value:
    return (res_value, exp_value, "red")
   else:

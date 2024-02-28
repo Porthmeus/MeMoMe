@@ -21,4 +21,6 @@ python -m unittest
 
 
 ## Execute bulk performance test
-python3 -m tests.test_bulkPerformance  && google-chrome table.html 
+Executing 
+`python3 -m tests.test_bulkPerformance  && google-chrome table.html.`
+should generate a table called performace_table.html in the current folder.
