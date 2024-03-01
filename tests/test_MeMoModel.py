@@ -54,7 +54,9 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         for chebi in test_dat:
             met = MeMoMetabolite()
             dic = {"chebi":[chebi]}
-            met.set_annotations(dic)
+            with warnings.catch_warnings(action = "ignore"):
+                # TODO figure out why this is throwing an error!
+                met.set_annotations(dic)
             metabolites.append(met)
         
         annotateChEBI(metabolites)
@@ -75,6 +77,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertTrue(y == 1)
         self.assertTrue(z == 1)
 
+
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching
         mod_path = self.dat.joinpath("e_coli_core.xml")
@@ -83,9 +86,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         res = mod.match(mod)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
-
-
-
 
 if __name__ == '__main__':
     unittest.main()

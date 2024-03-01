@@ -231,7 +231,7 @@ class MeMoMetabolite():
 
     def set_pKb(self, new_pKb:dict) -> None:
         """ set function for _pKb """
-        if self._pKb is not None:
+        if self._pKb is not None and self._pKb != {}:
             old = ";".join([x+":"+str(y) for x,y in self._pKb.items()])
             new = ";".join([x+":"+str(y) for x,y in new_pKb.items()])
             warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
@@ -308,7 +308,7 @@ class MeMoMetabolite():
         self.add_orig_ids(list(new_metabolite.orig_ids))
 
     def annotate(self):
-        if self._inchi_string is None:
+#        if self._inchi_string is None:
             # TODO: for now I am assuming that the download already happened,
             # we can either add it on some external class or perfrom it here
             # downl_status = download()
@@ -319,26 +319,6 @@ class MeMoMetabolite():
             # databases we have to retrieve the inchi string
             # we could define a sequence of databases/annotation from most
             # relevant to less relevant and proceed following that sequence
-            if "vmh" in self.annotations.keys():
-                vmh_file = open("Databases/vmh.json", "r")
-                vmh_db = load(vmh_file)
-                vmh_file.close()
-                # access the vmh_db query results and saves the indexes associated to each _id
-                abbreviations_index = {vmh_db["results"][i]["abbreviation"]: i for i in range(len(vmh_db["results"]))}
-                vmh_id = self.annotations["vmh"]
-                met_vmh_index = abbreviations_index[vmh_id]
-                # TODO: add exception handling
-                inchiString = vmh_db["results"][met_vmh_index]["inchiString"]
-                if inchiString is not None and inchiString != npNaN and inchiString != "":
-                    self._inchi_string = inchiString
-            elif "bigg.metabolite" in self.annotations.keys():
-                met_db_id = self.annotations["bigg.metabolite"]
-                bigg_db = pd.read_csv("../Databases/BiGG.tsv", sep='\t', index_col=0)
-                # TODO: continue BiGG handling and other databases...
-
-        # series of if/else statements to handle all the types of annotations
-        # we have (can be handled by calling the functions of conversion
-        # between i.e. smiles to inchi string
 
         return None
 

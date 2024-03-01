@@ -14,10 +14,8 @@ from src.download_db import databases_available, get_config, get_database_path
 def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
     """ Annotate the metaboltes with Inchis from ChEBI """
 
-    # check if databases are available and if so load the config
-    if databases_available():
-        config = get_config()
-        db_path = get_database_path()
+    config = get_config()
+    db_path = get_database_path()
 
     # check if any unannotated metabolites exist and whether these have a ChEBI entry
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None and "chebi" in y.annotations.keys()]
