@@ -1,10 +1,10 @@
 name: MeMoMe
 channels:
+  - rdkit
   - conda-forge
   - bioconda
   - defaults
   - anaconda
-  - rdkit
 dependencies:
   - cobra
   - debugpy
