@@ -17,11 +17,13 @@ from __future__ import annotations
 
 import warnings
 from json import load
+from copy import deepcopy
 
 import pandas as pd
 from numpy import NaN as npNaN
 
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
+from src.annotateInchiRoutines import findOptimalInchi
 
 
 class MeMoMetabolite():
@@ -33,16 +35,16 @@ class MeMoMetabolite():
 
     def __init__(
             self,
-            _id: str = None,
-            orig_ids: list[str] = [],
-            _model_id: str = None,
-            names=None,
-            _inchi_string: str = None,
-            _formula: str = None,
-            _charge: int = None,
-            _pKa: dict = {},
-            _pKb: dict = {},
-            annotations: dict = {},
+            _id: str|None = None,
+            orig_ids: list[str]|None = None,
+            _model_id: str|None = None,
+            names: list[str]|None = None,
+            _inchi_string: str|None = None,
+            _formula: str|None = None,
+            _charge: int|None = None,
+            _pKa: dict|None= None,
+            _pKb: dict|None = None,
+            annotations: dict|None = None,
     ) -> None:
         """Initialize MeMoMetaboblite
 
@@ -72,34 +74,65 @@ class MeMoMetabolite():
         if _id is not None:
             self._id = handle_metabolites_prefix_suffix(_id)
         else:
-            # TODO Why assign None? What else?
             self._id = None 
-
-        self.orig_ids = []
-        self._model_id = None
-        self.names = [] 
-        self._formula = None
-        self._inchi_string = None
-        self._charge = None
-        self._pKa = {}
-        self._pKb = {}
-        self.annotations = {}
+    
         
         # use setter function to acutally set the values to make sure to remove
         # duplicates and sort all the lists - this is important and you should
         # not circumvent this step just for fun
-        self.set_orig_ids(orig_ids)
-        self.set_model_id(_model_id)
-        if names is None:
-            names = []
+        if orig_ids is None:
+            self.orig_ids = []
         else:
+            self.orig_ids = []
+            self.set_orig_ids(orig_ids)
+
+        if _model_id is None:
+            self._model_id = None
+        else:
+            self._model_id = None
+            self.set_model_id(_model_id)
+
+        if names is None:
+            self.names = []
+        else:
+            self.names = []
             self.set_names(names)
-        self.set_formula(_formula)
-        self.set_inchi_string(_inchi_string)
-        self.set_charge(_charge)
-        self.set_pKa(_pKa)
-        self.set_pKb(_pKb)
-        self.set_annotations(annotations)
+
+        if _formula is None:
+            self._formula = None
+        else:
+            self._formula = None
+            self.set_formula(_formula)
+
+        if _inchi_string is None:
+            self._inchi_string = None
+        else:
+            self._inchi_string = None
+            self.set_inchi_string(_inchi_string)
+
+        if _charge is None:
+            self._charge = None
+        else:
+            self._charge = None
+            self.set_charge(_charge)
+
+        if _pKa is None:
+            self._pKa = {}
+        else:
+            self._pKa = {}
+            self.set_pKa(_pKa)
+        
+        if _pKb is None:
+            self._pKb = {}
+        else:
+            self._pKb = {}
+            self.set_pKb(_pKb)
+
+        if annotations is None:
+            self.annotations = {}
+        else:
+            self.annotations = {}
+            self.set_annotations(annotations)
 
 
     def set_id(self, new_id: str) -> None:
@@ -128,7 +161,7 @@ class MeMoMetabolite():
 
     def add_names(self, new_names: list[str]) -> int:
         ''' append new names to the list of metabolite names'''
-        old_names = self.names.copy()
+        old_names = deepcopy(self.names)
         for x in new_names:
             self.names.append(x)
         # remove duplicates and sort lexographically
@@ -139,6 +172,7 @@ class MeMoMetabolite():
 
     def set_orig_ids(self, new_orig_ids: list[str]) -> None:
         """ set function for orig_ids """
+        
         if self.orig_ids != []:
             warnings.warn(
                 "changed metbolite orig_ids from {old} to {new}".format(
@@ -150,7 +184,7 @@ class MeMoMetabolite():
     def add_orig_ids(self, new_orig_ids: list[str]) -> int:
         """ append new orig_ids to the list of metabolite orig_ids
         returns 1 if change has occured, else 0"""
-        old_orig_ids = self.orig_ids.copy()
+        old_orig_ids = deepcopy(self.orig_ids)
         for x in new_orig_ids:
             self.orig_ids.append(x)
         # make sure that there are no duplicates
@@ -167,7 +201,7 @@ class MeMoMetabolite():
 
     def set_inchi_string(self, new_inchi_string: str) -> int:
         """ set function for _inchi_string """
-        old_inchi = self._inchi_string
+        old_inchi = deepcopy(self._inchi_string)
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
@@ -179,7 +213,7 @@ class MeMoMetabolite():
         changed = 0
         if self._inchi_string != None:
             old = self._inchi_string
-            new = findOptimalInchi(self._inchi_string, new_inchi_string)
+            new = findOptimalInchi([self._inchi_string, new_inchi_string])
             if new != old:
                 self._inchi_string = new
                 changed =  1
@@ -199,7 +233,7 @@ class MeMoMetabolite():
     def add_pKa(self, new_pKa:float) -> int:
         """ add a new pKa value, this is a simple mean calculation and might need some review"""
         # TODO: check for correct calulations of pKa mean
-        old_pKa = self._pKa.copy()
+        old_pKa = deepcopy(self._pKa)
         if self._pKa is not None:
             for key,value in new_pKa.items():
                 if key in self._pKa.keys():
@@ -220,7 +254,7 @@ class MeMoMetabolite():
     def add_pKb(self, new_pKb:float) -> int:
         """ add a new pKb value, this is a simple mean calculation and might need some review"""
         # TODO: check for correct calulations of pKb mean
-        old_pKb = self._pKb.copy()
+        old_pKb = deepcopy(self._pKb)
         if self._pKb is not None and self._pKb != {}:
             for key,value in new_pKb.items():
                 if key in self._pKb.keys():
@@ -248,7 +282,7 @@ class MeMoMetabolite():
     def add_annotations(self, new_annotations: dict) -> int:
         """ append new annotations to the dict of metabolite annotations
         check if there have been actually added new annotation, if so return 1,else 0"""
-        old_annotation = self.annotations.copy()
+        old_annotation = deepcopy(self.annotations)
         for x in new_annotations.keys():
             if x in self.annotations.keys():
                 self.annotations[x].extend(new_annotations[x])

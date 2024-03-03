@@ -10,7 +10,7 @@ import warnings
 #from src.MeMoModel import MeMoModel
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotateBulkRoutines import *
+from src.annotateModelSEED import annotateModelSeed, annotateModelSeed_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 
@@ -54,9 +54,9 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         for chebi in test_dat:
             met = MeMoMetabolite()
             dic = {"chebi":[chebi]}
-            with warnings.catch_warnings(action = "ignore"):
+#            with warnings.catch_warnings(action = "ignore"):
                 # TODO figure out why this is throwing an error!
-                met.set_annotations(dic)
+            met.set_annotations(dic)
             metabolites.append(met)
         
         annotateChEBI(metabolites)
@@ -76,7 +76,39 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertTrue(x == 0)
         self.assertTrue(y == 1)
         self.assertTrue(z == 1)
+        # redo to test for correct counting
+        x,y,z = annotateBiGG(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 0)
+        self.assertTrue(z == 0)
+        x,y,z = annotateBiGG_id(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 0)
+        self.assertTrue(z == 0)
 
+    def test_annotateModelSEED(self):
+        # create a small test for the annotateBigg functions
+        # create a mock list of metabolites
+        m1 = MeMoMetabolite(_id = "cpd00027")
+        m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
+        mets = [m1,m2]
+        x,y,z = annotateModelSeed(mets)
+        self.assertTrue(x == 1)
+        self.assertTrue(y == 1)
+        self.assertTrue(z == 1)
+        x,y,z = annotateModelSeed_id(mets)
+        self.assertTrue(x == 1)
+        self.assertTrue(y == 1)
+        self.assertTrue(z == 1)
+        # redo the test and check that nothing is added
+        x,y,z = annotateModelSeed_id(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 0)
+        self.assertTrue(z == 0)
+        x,y,z = annotateModelSeed(mets)
+        self.assertTrue(x == 0)
+        self.assertTrue(y == 0)
+        self.assertTrue(z == 0)
 
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching

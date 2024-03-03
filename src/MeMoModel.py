@@ -13,7 +13,7 @@ import libsbml as sbml
 import pandas as pd
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
-from src.annotateBulkRoutines import *
+from src.annotateModelSEED import annotateModelSeed, annotateModelSeed_id
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -81,7 +81,6 @@ class MeMoModel:
             x=new_n_inchi,
             y=new_n_anno,
             z=new_n_names))
-        annotateLove(self.metabolites)
 
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:

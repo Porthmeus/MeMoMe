@@ -13,9 +13,8 @@ import warnings
 from io import StringIO
 import re
 from pathlib import Path
-from src.annotateInchiRoutines import smile2inchi
+from src.annotateInchiRoutines import findOptimalInchi, smile2inchi
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import findOptimalInchi
 from src.download_db import databases_available, get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 
@@ -146,7 +145,7 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
         # load the database
         config = get_config()
         db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-        mseed = pd.read_table(db_path)
+        mseed = pd.read_table(db_path, low_memory= False)
     else:
         mseed = database
 
@@ -207,15 +206,14 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
 
     return(new_anno, new_names, pka_vals, pkb_vals)
 
-def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->int:
+def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
     """
     Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite._id slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
-
 
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    mseed = pd.read_table(db_path)
+    mseed = pd.read_table(db_path, low_memory=False)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
@@ -223,11 +221,10 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->int:
             
             # get the names, annotations, pka and pkb
             new_met_anno,new_names,new_pka,new_pkb = annotateModelSeed_entry(entry = met._id,
-                    annotations = new_met_anno,
-                    database = bigg)
+                    database = mseed)
 
             # get the inchi strings
-            smiles = mseeds.loc[mseed["id"] == met._id, smiles]
+            smiles = mseed.loc[mseed["id"] == met._id, "smiles"]
             smiles = smiles.loc[~pd.isna(smiles)]
             inchi_strings = []
             # there are only smiles in modelseed and rdkit sometimes fails to convert them - report here if that happens
@@ -246,13 +243,11 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->int:
 
             # add new names
             if len(new_names) > 0:
-                #counter[0] = counter[0] + 
-                met.add_names(new_names)
+                counter[0] = counter[0] + met.add_names(new_names)
 
             # add the annotations to the slot in the metabolites
             if len(new_met_anno) > 0:
-                #counter[1] = counter[1] + 
-                met.add_annotations(new_met_anno)
+                counter[1] = counter[1] + met.add_annotations(new_met_anno)
             
             # add the inchi_string
             if inchi_string != None:
@@ -260,17 +255,15 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->int:
 
             # add the pka
             if len(new_pka) > 0:
-                # counter[3] = counter[3] +
-                met.add_pka(new_pka)
+                 counter[3] = counter[3] + met.add_pKa(new_pka)
 
             # add the pkb
             if len(new_pkb) > 0:
-                # counter[4] = counter[4] + 
-                met.add_pkb(new_pkb)
+                 counter[4] = counter[4] + met.add_pKb(new_pkb)
 
-    return counter[2]
+    return counter[2],counter[1],counter[0]
 
-def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->int:
+def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
     """
     Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite.anotation slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
 
@@ -278,23 +271,21 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->int:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    mseed = pd.read_table(db_path)
+    mseed = pd.read_table(db_path, low_memory= False)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
-        if "seed.compound" in met.annotation.keys():
-            mseeds = met.annotations["seed.compounds"]
+        if "seed.compound" in met.annotations.keys():
+            mod_mseeds = met.annotations["seed.compound"]
             met_counter = [0,0,0,0,0]
-            for seed_id in mseeds:
+            for seed_id in mod_mseeds:
                 if any(mseed["id"]==seed_id):
                     # get the names, annotations, pka and pkb
-                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSeed_entry(
-                            entry = met._id,
-                            annotations = new_met_anno,
-                            database = bigg)
+                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSeed_entry( entry = seed_id,
+                            database = mseed)
 
                     # get the inchi strings
-                    smiles = mseeds.loc[mseed["id"] == met._id, smiles]
+                    smiles = mseed.loc[mseed["id"] == seed_id, "smiles"]
                     smiles = smiles.loc[~pd.isna(smiles)]
                     inchi_strings = []
                     # there are only smiles in modelseed and rdkit sometimes fails to convert them - report here if that happens
@@ -310,17 +301,15 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->int:
                         inchi_string = inchi_strings[0]
                     else:
                         inchi_string = None
+                    
                 
-
                     # add new names
                     if len(new_names) > 0:
-                        #met_counter[0] = met_counter[0] + 
-                        met.add_names(new_names)
+                        met_counter[0] = met_counter[0] + met.add_names(new_names)
 
                     # add the annotations to the slot in the metabolites
                     if len(new_met_anno) > 0:
-                        #met_counter[1] = met_counter[1] + 
-                        met.add_annotations(new_met_anno)
+                        met_counter[1] = met_counter[1] + met.add_annotations(new_met_anno)
                     
                     # add the inchi_string
                     if inchi_string != None:
@@ -328,16 +317,14 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->int:
 
                     # add the pka
                     if len(new_pka) > 0:
-                        # met_counter[3] = met_counter[3] +
-                        met.add_pka(new_pka)
+                         met_counter[3] = met_counter[3] + met.add_pKa(new_pka)
 
                     # add the pkb
                     if len(new_pkb) > 0:
-                        # met_counter[4] = met_counter[4] + 
-                        met.add_pkb(new_pkb)
+                         met_counter[4] = met_counter[4] + met.add_pKb(new_pkb)
 
             # sum the counters
             met_counter = [int(x>0) for x in met_counter]
             counter = [x+y for x,y in zip(counter, met_counter)]
 
-    return counter[2]
+    return counter[2],counter[1],counter[0]
