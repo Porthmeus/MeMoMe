@@ -11,8 +11,7 @@ import warnings
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateBulkRoutines import *
-from src.annotateChEBI import annotateChEBI
-from src.annotateBiGG import annotateBiGG, annotateBiGG_id
+
 this_directory = Path(__file__).parent
 dat = this_directory.joinpath("dat")
 
