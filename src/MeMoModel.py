@@ -16,6 +16,8 @@ from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 
+from rdkit import Chem, RDLogger
+
 
 class MeMoModel:
     """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
@@ -88,15 +90,43 @@ class MeMoModel:
                 "inchi_score":[],
                 "inchi_string":[],
                 "charge_diff" : []}
+
+        # Define your function
+        def custom_function(inchi):
+            if inchi is not None:
+                return Chem.MolFromInchi(inchi)
+            else:
+                return None
+
+
+        # Define your function
+        def custom_function2(mol):
+            if mol is not None:
+                return Chem.RDKFingerprint(mol)
+            else:
+                return None
+        
+        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(custom_function)
+        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(custom_function)
+
+
+        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(custom_function2)
+        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(custom_function2)
+
+
         for i in range(len(mod1_inchis)):
             inchi1 = mod1_inchis.loc[i, "inchis"]
+            mol1   = mod1_inchis.loc[i, "Mol"]
+            fp1 = mod1_inchis.loc[i, "fingerprint"]
             if inchi1 != None:
                 id1 = mod1_inchis.loc[i,"met_id"]
                 for j in range(len(mod2_inchis)):
                     inchi2 = mod2_inchis.loc[j, "inchis"]
+                    mol2   = mod2_inchis.loc[i, "Mol"]
+                    fp2 = mod2_inchis.loc[i, "fingerprint"]
                     if inchi2 != None:
                         id2 = mod2_inchis.loc[j,"met_id"]
-                        res = matchMetsByInchi(inchi1, inchi2)
+                        res = matchMetsByInchi(inchi1, inchi2, mol1, mol2, fp1, fp2)
                         if res[0] == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
