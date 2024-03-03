@@ -36,19 +36,17 @@ def main(args: argparse.Namespace):
 
     # Check if exactly two models were supplied
     if args.model1 is None:
-        print("Please supply a first model with the --model1 parameter")
+        print("Please supply a first model with the --model1 parameter", file=sys.stderr)
+        logger.error("User did not provide the path to the first model")
         sys.exit(1)
     if args.model2 is None:
-        print("Please supply a second model with the --model2 parameter")
+        print("Please supply a second model with the --model2 parameter", file=sys.stderr)
+        logger.error("User did not provide the path to the second model")
         sys.exit(1)
     if args.output is None:
-        print("Please provide at path and output file name <path>/<outname>.csv")
+        print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
+        logger.error("User did not provide an output path")
         sys.exit(1)
-    
-    # Check if the model is valid cobra model
-    # TODO This already return a cobra model, so we load the model twice which is unnecessary
-    cobra_model1, errors1 = cobra.io.sbml.validate_sbml_model(args.model1)
-    cobra_model2, errors2 = cobra.io.sbml.validate_sbml_model(args.model2)
     
     # Load the model
     model1 = MeMoModel.fromPath(Path(args.model1))

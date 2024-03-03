@@ -11,11 +11,13 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
+import logging
 from src.annotateBulkRoutines import *
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 
+logger = logging.getLogger('logger')
 
 class MeMoModel:
     """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
@@ -30,12 +32,16 @@ class MeMoModel:
         self.cobra_model = cobra_model
         self._id = _id
 
+
+
     @classmethod
-    def fromPath(cls, sbmlfile: Path) -> MeMoModel:
+    def fromPath(cls, sbmlfile: Path) -> MeMoModel :
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
-        cobra_model = cb.io.read_sbml_model(str(sbmlfile))
-        # TODO CATCH ERROR FROM COBRA
+        cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
+        if len(errors) > 0:
+          logger.error(f"There were problems with the sbml model {sbmlfile}")
+          logger.error(f"{errors}")
         _id = cobra_model.id
         return MeMoModel(metabolites=metabolites, cobra_model=cobra_model, _id=_id)
 
