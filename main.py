@@ -36,23 +36,30 @@ def main(args: argparse.Namespace):
 
     # Check if exactly two models were supplied
     if args.model1 is None:
-        print("Please supply a second model with the --model1 parameter")
+        print("Please supply a first model with the --model1 parameter")
         sys.exit(1)
     if args.model2 is None:
         print("Please supply a second model with the --model2 parameter")
         sys.exit(1)
-
-    v = cobra.io.sbml.validate_sbml_model(args.model2)
-    print(v)
-    # model1 = MeMoModel.fromPath(Path(args.model1))
+    if args.output is None:
+        print("Please provide at path and output file name <path>/<outname>.csv")
+        sys.exit(1)
+    
+    # Check if the model is valid cobra model
+    # TODO This already return a cobra model, so we load the model twice which is unnecessary
+    cobra_model1, errors1 = cobra.io.sbml.validate_sbml_model(args.model1)
+    cobra_model2, errors2 = cobra.io.sbml.validate_sbml_model(args.model2)
+    
+    # Load the model
+    model1 = MeMoModel.fromPath(Path(args.model1))
     model2 = MeMoModel.fromPath(Path(args.model2))
+    # bulk annotate the model
+    model1.annotate()
+    model2.annotate()
 
-    #t = model1.annotate()
-    t = model2.annotate()
-    print("T")
+    matched_model = model1.match(model2)
 
-
-
+    matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
@@ -61,6 +68,7 @@ if __name__ == '__main__':
     parser.add_argument('--download', action='store_true', help='Download all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
+    parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')
     args = parser.parse_args()
     # Log arguments
     logger.debug(args)
