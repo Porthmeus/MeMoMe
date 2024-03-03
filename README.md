@@ -19,3 +19,6 @@ if you just want to update a the environment use
 ## Run Tests
 python -m unittest
 
+
+## Run performance test
+python -m unittest tests/test_matchPerformace.py
