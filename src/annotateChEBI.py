@@ -36,6 +36,8 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
             inchis = np.unique(chebi_db.loc[chebis, "InChI"])
             if len(inchis) > 0:
                 inchi = findOptimalInchi(inchis)
+                if inchi is None:
+                    raise NotImplementedError()
             annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)
 
     return  annotated_by_chebi,0,0

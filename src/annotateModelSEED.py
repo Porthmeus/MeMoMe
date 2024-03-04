@@ -236,6 +236,9 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]
             # get the correct inchi_string, if there was more than one
             if len(inchi_strings) > 1:
                 inchi_string = findOptimalInchi(inchi_strings)
+                if inchi_string is None:
+                    raise NotImplementedError()
+
             elif len(inchi_strings) == 1:
                 inchi_string = inchi_strings[0]
             else:
