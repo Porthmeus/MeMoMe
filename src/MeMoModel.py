@@ -92,7 +92,7 @@ class MeMoModel:
                 "charge_diff" : []}
 
         # Define your function
-        def custom_function(inchi):
+        def molToInchi(inchi):
             if inchi is not None:
                 return Chem.MolFromInchi(inchi)
             else:
@@ -100,18 +100,18 @@ class MeMoModel:
 
 
         # Define your function
-        def custom_function2(mol):
+        def molToRDK(mol):
             if mol is not None:
                 return Chem.RDKFingerprint(mol)
             else:
                 return None
         
-        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(custom_function)
-        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(custom_function)
+        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(molToInchi)
+        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(molToInchi)
 
 
-        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(custom_function2)
-        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(custom_function2)
+        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
+        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
 
 
         for i in range(len(mod1_inchis)):
