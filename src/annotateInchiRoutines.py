@@ -1,5 +1,6 @@
 # Porthmeus
 # 16.06.23
+from typing import Optional
 
 from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
@@ -39,7 +40,7 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
     inchi = Chem.MolToInchi(m)
     return(inchi)
 
-def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
+def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     """
     Find the "best" inchi string of equivalently annotated inchi strings.
 
@@ -52,7 +53,7 @@ def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
     
 
     # first validate the inchi strings
-    inchis = [x for x in inchis if validateInchi(x, verbose = verbose)]
+    inchis = [x for x in inchis_ if validateInchi(x, verbose = verbose)]
     # return the inchi if there is only one left
     if len(inchis) == 1:
         return(inchis[0])
