@@ -2,8 +2,6 @@ import argparse
 import libsbml
 import cobra
 import pandas as pd
-import random
-import tempfile
 import os
 
 
@@ -22,7 +20,7 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
     old_biomass = biomass_func.copy()
 
     # Create a reduced version of the biomass reaction 
-    reactions_toadd = cobra.core.DictList()
+    reactions_to_add = cobra.core.DictList()
     new_react = cobra.core.reaction.Reaction("biomass_simplified")
     new_react.name = "biomass with less metabolic requirement"
     new_react.lower_bound = 0
@@ -33,8 +31,8 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
         new_react_met = cobra_model.metabolites.get_by_id(met)
         new_react_mets[new_react_met] = cobra_model.reactions.get_by_id(args.biomass_id).metabolites[cobra_model.metabolites.get_by_id(met)]
     new_react.add_metabolites(new_react_mets)
-    reactions_toadd.add(new_react)
-    cobra_model.add_reactions(reactions_toadd)
+    reactions_to_add.add(new_react)
+    cobra_model.add_reactions(reactions_to_add)
 
     # Remove old biomass reaction
     cobra_model.remove_reactions(cobra.core.DictList([cobra_model.reactions.get_by_id(args.biomass_id)]))
@@ -46,7 +44,7 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
     max_growth = cobra_model.slim_optimize()
 
     # Obtain a minimal medium able to support at least 10% of the maximal biomass growth rate
-    required_medium = cobra.medium.minimal_medium(cobra_model, max_growth/10)
+    required_medium = cobra.medium.minimal_medium(cobra_model, max_growth / 10)
 
     # Close all the medium's influxes
     for reac_id in cobra_model.medium.keys():
@@ -70,14 +68,14 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
 
     # Select all the sinks and demands that can carry a flux
     boundary_ids = {r.id for r in cobra_model.boundary}
-    other_reacs_like_sinks_or_demands = sorted([r_id for r_id in boundary_ids.intersection(set(active_fva_ids)) 
-                                                  if r_id not in set(possible_excretions).union(set(possible_uptakes))])
+    other_reacs_like_sinks_or_demands = sorted([r_id for r_id in boundary_ids.intersection(set(active_fva_ids))
+                                                if r_id not in set(possible_excretions).union(set(possible_uptakes))])
 
     # Remove from the model all the boundary reactions that are not feasible uptakes, excretions, sinks or demands
     reacs_to_remove = list()
     for r in cobra_model.boundary:
         if r.id not in set(possible_excretions).union(set(possible_uptakes)).union(other_reacs_like_sinks_or_demands):
-            reacs_to_remove.append(r)        
+            reacs_to_remove.append(r)
     cobra_model.remove_reactions(reacs_to_remove)
 
     # Obtain a small list of reactions that support a 10% maximal biomass production(not proven to be minimal, but with 5 iterations, and using pFBA,the total number of reactions should be small). The excretion of all the compounds required by the user will be guaranteed. All medium reactions required by the user will be kept
@@ -88,17 +86,17 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
             cobra_model.objective = reac
         pfba_sol = cobra.flux_analysis.pfba(cobra_model)
         pfba_sol = pfba_sol.to_frame()
-        reactions_to_keep = reactions_to_keep.union(set(pfba_sol[abs(pfba_sol["fluxes"])>1e-06].index))
-        if(pfba_sol["fluxes"][reac] <= 1e-06):
+        reactions_to_keep = reactions_to_keep.union(set(pfba_sol[abs(pfba_sol["fluxes"]) > 1e-06].index))
+        if (pfba_sol["fluxes"][reac] <= 1e-06):
             raise Exception("warning: required product " + reac + " cannot be produced by the model")
         cobra_model.reactions.get_by_id("biomass_simplified").lower_bound = 0.0
         cobra_model.objective = "biomass_simplified"
         reacs_to_remove = list()
         for reac in cobra_model.reactions:
-    	    if reac.id not in reactions_to_keep:
-    	        reacs_to_remove.append(reac)
+            if reac.id not in reactions_to_keep:
+                reacs_to_remove.append(reac)
         cobra_model.remove_reactions(reacs_to_remove)
-        #remove all unused metabolites and genes
+        # remove all unused metabolites and genes
         cobra_model, removed_metabolites = cobra.manipulation.delete.prune_unused_metabolites(cobra_model)
         model_reac_ids = [r.id for r in cobra_model.reactions]
         genes_to_delete = list()
@@ -109,17 +107,17 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
                 useful_gene = True
         if not useful_gene:
             genes_to_delete.append(gene)
-        cobra.manipulation.remove_genes(cobra_model, gene_list = genes_to_delete)
+        cobra.manipulation.remove_genes(cobra_model, gene_list=genes_to_delete)
 
     # Set new id and name to the model
     cobra_model.id = cobra_model.id + "_shrunk"
     cobra_model.name = cobra_model.name + "after shrinking model's content"
 
-    # This avoid problems that would occur when saving the model
+    # This avoids problems that would occur when saving the model
     for reac in cobra_model.reactions:
         reac.lower_bound = float(reac.lower_bound)
         reac.upper_bound = float(reac.upper_bound)
-    
+
     return cobra_model
 
 
@@ -129,47 +127,48 @@ def adjust_sbml_annotations(sbml_model, keep_identifiers):
 
     for species in sbml_model.getListOfSpecies():
         annotation = species.getAnnotation()
-        #print(annotation)
+
         if not annotation:
             continue
 
         rdf_index = -1
         for i in range(annotation.getNumChildren()):
-            #print(i)
+            # print(i)
             child = annotation.getChild(i)
-            #print(child)
+            # print(child)
             if child.getName() == "RDF":
                 rdf_index = i
-                #print(rdf_index)
+                # print(rdf_index)
                 break
 
         if rdf_index == -1:  # RDF node not found
             continue
 
         rdf_node = annotation.getChild(rdf_index)
-        #new_rdf_node = libsbml.XMLNode(libsbml.XMLTriple("RDF", rdf_node.getPrefix(), rdf_node.getURI()),
-          #                             libsbml.XMLAttributes())
 
         for i in range(rdf_node.getNumChildren()):
             desc_node = rdf_node.getChild(i)
             if desc_node.getName() == "Description":
-                print("desc_node: "+str(desc_node))
-                #new_desc_node = libsbml.XMLNode(
-                #    libsbml.XMLTriple("Description", desc_node.getPrefix(), desc_node.getURI()),
-                #    libsbml.XMLAttributes())
+                #print("desc_node: " + str(desc_node))
                 for j in range(desc_node.getNumChildren()):
                     is_node = desc_node.getChild(j)
+                    #print("is_node: " + str(is_node))
                     for k in range(is_node.getNumChildren()):
                         bag_node = is_node.getChild(k)
+                        #print("bag_node: " + str(is_node))
                         li_indices_to_remove = []
-                        li_to_remove = []
                         for l in range(bag_node.getNumChildren()):
                             li_node = bag_node.getChild(l)
-                            resource = li_node.getAttrValue("rdf:resource")
-                            print("resource: " + str(resource))
-                            if not any(identifier in resource for identifier in keep_identifiers):
-                                # Mark index for removal if it doesn't contain any of the keep identifiers
-                                li_indices_to_remove.append(l)
+                            li_attributes = li_node.getAttributes()
+                            for ll in range(0, li_attributes.getLength()):
+                                #print(f"Attribute name: {li_attributes.getName(ll)}")
+                                attr_name = li_attributes.getName(ll)
+                                if attr_name == "resource":
+                                    resource = li_attributes.getValue(ll)
+                                    #print(f"Attribute value: {resource}")
+                                    if not any(identifier in resource for identifier in keep_identifiers):
+                                        # Mark index for removal if it doesn't contain any of the keep identifiers
+                                        li_indices_to_remove.append(l)
 
                         # Remove the marked <rdf:li> elements by index, in reverse order
                         for index in reversed(li_indices_to_remove):
@@ -179,65 +178,54 @@ def adjust_sbml_annotations(sbml_model, keep_identifiers):
         species.setAnnotation(annotation)
 
 
-      #          for j in range(desc_node.getNumChildren()):
-      #              li_node = desc_node.getChild(j)
-      #              if li_node.getName() == "li":
-      #                  print("li_noe " + str(li_node))
-      #                  resource_attr = li_node.getAttributes().getValue("rdf:resource")
-      #                  print("resource_attr: " + str(resource_attr))
-      #                  # Extract the identifier namespace from the URL
-      #                  identifier_namespace = resource_attr.split("/")[2].split(".")[0]  # Assumes URL format "https://identifiers.org/NAMESPACE/ID"
-      #                  print(identifier_namespace)
-      #                  if identifier_namespace.lower() in keep_identifiers_lower:
-      #                      new_desc_node.addChild(li_node.clone())
-#
-      #          if new_desc_node.getNumChildren() > 0:
-      #              new_rdf_node.addChild(new_desc_node)
-
-      #  if new_rdf_node.getNumChildren() > 0:
-      #      new_annotation = libsbml.XMLNode()
-      #      new_annotation.addChild(new_rdf_node)
-      #      species.setAnnotation(new_annotation)
-
-
-
 def main():
     # Setup argparse to handle input arguments
-    
+
     parser = argparse.ArgumentParser(description="Modify a metabolic model based on specified parameters.")
-    
-    parser.add_argument("--model_file_path", type=str, default="../tests/dat/script_accessories/e_coli_vmh.xml", help="Path to the model file.")
-    
-    parser.add_argument("--biomass_id", type=str, default="biomass525", help="ID of the biomass reaction in the model.")
-    
-    parser.add_argument("--desired_biomass_components_file", type=str, default="../tests/dat/script_accessories/desired_biomass_components.txt", help="File containing desired biomass components.")
-    
-    parser.add_argument("--required_excretions_file", type=str, default="../tests/dat/script_accessories/required_excretions.txt", help="File containing required excretions.")
-    
-    parser.add_argument("--desired_medium_file", type=str, default="../tests/dat/script_accessories/desired_medium.csv", help="CSV file containing desired medium components and constraints.")
-    
+
+    parser.add_argument("--model_file_path", type=str, default="../tests/dat/script_accessories/e_coli_vmh.xml",
+                        help="Path to the model file.")
+
+    parser.add_argument("--biomass_id", type=str, default="biomass525",
+                        help="ID of the biomass reaction in the model.")
+
+    parser.add_argument("--desired_biomass_components_file", type=str,
+                        default="../tests/dat/script_accessories/desired_biomass_components.txt",
+                        help="File containing desired biomass components.")
+
+    parser.add_argument("--required_excretions_file", type=str,
+                        default="../tests/dat/script_accessories/required_excretions.txt",
+                        help="File containing required excretions.")
+
+    parser.add_argument("--desired_medium_file", type=str,
+                        default="../tests/dat/script_accessories/desired_medium.csv",
+                        help="CSV file containing desired medium components and constraints.")
+
     # New argument for specifying identifier types to keep
-    parser.add_argument("--keep_identifiers", nargs="+", required=True, help="List of identifier types to keep, e.g., vmh chebi bigg")
-    
-    parser.add_argument("--new_model_id", type=str ,default="minimal_model", help="New ID for the modified model.")
-    
-    parser.add_argument("--new_model_name", type=str, default="minimal_model", help="New name for the modified model.")
-    
-    parser.add_argument("--output_file", type=str, default="../tests/dat/modified_model.xml", help="Path for the output modified model.")
-    
-    
+    parser.add_argument("--keep_identifiers", nargs="+", required=True,
+                        help="List of identifier types to keep, e.g., vmh chebi bigg")
+
+    parser.add_argument("--new_model_id", type=str, default="minimal_model",
+                        help="New ID for the modified model.")
+
+    parser.add_argument("--new_model_name", type=str, default="minimal_model",
+                        help="New name for the modified model.")
+
+    parser.add_argument("--output_file", type=str, default="../tests/dat/modified_model.xml",
+                        help="Path for the output modified model.")
+
     args = parser.parse_args()
-    
-    
+
     # Load the model
     cobra_model = cobra.io.read_sbml_model(args.model_file_path)
-    
+
     # Read input files
     desired_biomass_components = read_list_from_file(args.desired_biomass_components_file)
     required_excretions = read_list_from_file(args.required_excretions_file)
     desired_medium = pd.read_csv(args.desired_medium_file, header=0)
-    desired_medium = pd.Series([float(val) for val in desired_medium.iloc[:, 1]], index=desired_medium.iloc[:, 0]).to_dict()
-    
+    desired_medium = (pd.Series([float(val) for val in desired_medium.iloc[:, 1]], index=desired_medium.iloc[:, 0])
+                      .to_dict())
+
     # Call the shrink_model function
     cobra_model = shrink_model(cobra_model, desired_biomass_components, required_excretions, desired_medium, args)
 
@@ -249,7 +237,6 @@ def main():
     sbml_model = sbml_document.getModel()
     print(sbml_model)
 
-
     # Adjust annotations based on the user's specified identifier types to keep
     adjust_sbml_annotations(sbml_model, args.keep_identifiers)
 
@@ -257,10 +244,11 @@ def main():
     libsbml.writeSBMLToFile(sbml_document, args.output_file)
 
     os.remove(args.output_file.replace(".xml", "_original_sbml.xml"))
-    
+
     print(f"Final model with adjusted annotations saved to {args.output_file}")
     pass
 
+
 if __name__ == '__main__':
-    #freeze_support()
+    # freeze_support()
     main()
