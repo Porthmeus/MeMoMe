@@ -8,6 +8,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateChEBI import *
 from src.annotateBiGG import *
+from src.annotateModelSEED import *
 from datetime import datetime
 
   # Example data for the table
@@ -43,8 +44,24 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory.joinpath("dat")
 
+
+    def test_ecoli_core_seed(self):
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(54, 54, 54)
+        res = AnnotationResult.fromTuple(annotateModelSeed(mod.metabolites))
+        add_test_case_to_table(self.test_ecoli_core_seed.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_ecoli_core_seed_id(self):
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0, 0,0 )
+        res = AnnotationResult.fromTuple(annotateModelSeed_id(mod.metabolites))
+        add_test_case_to_table(self.test_ecoli_core_seed_id.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
     def test_ecoli_core_bigg(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 54, 0)
@@ -53,7 +70,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_bigg_id(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 54, 0)
@@ -62,7 +78,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(54, 0, 0)
@@ -71,7 +86,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_bigg_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(54, 54, 0)
@@ -81,7 +95,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
     def test_ecoli_vmh_bigg(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
@@ -91,7 +104,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
 
     def test_ecoli_vmh_bigg_id(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,866,358)
@@ -100,7 +112,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_vmh_bigg_id_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,866,358)
@@ -111,7 +122,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
 
     def test_ecoli_vmh_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
@@ -119,6 +129,22 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         add_test_case_to_table(self.test_ecoli_vmh_chebi.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
     
+    def test_ecoli_vmh_seed(self):
+        mod_path = self.dat.joinpath("e_coli_vmh.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromTuple(annotateModelSeed(mod.metabolites))
+        add_test_case_to_table(self.test_ecoli_vmh_seed.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_ecoli_vmh_seed_id(self):
+        mod_path = self.dat.joinpath("e_coli_vmh.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromTuple(annotateModelSeed_id(mod.metabolites))
+        add_test_case_to_table(self.test_ecoli_vmh_seed_id.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
     # ############################ AT THE MOMENT NOTHING GETS ANNOTATED FOR RECON ANYWAY SO WE IGNORE IT FOR NOW ####################################33
     #def test_recon3D_301_bigg(self):
     #    # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
@@ -148,16 +174,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     #    self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(999,999,999)
+        exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromTuple(annotateChEBI(mod.metabolites))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_chebi.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
@@ -166,7 +190,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,577,196)
@@ -175,7 +198,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id_chebi(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,577,196)
@@ -184,6 +206,30 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_chebi.__name__, res1 + res2, exp)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
+    def test_adlercreutzia_equolifaciens_bigg_id_seed(self):
+        mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,577,196)
+        res1 = AnnotationResult.fromTuple(annotateBiGG_id(mod.metabolites))
+        res2 = AnnotationResult.fromTuple(annotateModelSeed(mod.metabolites))
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_seed.__name__, res1 + res2, exp)   
+        self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
+
+    def test_adlercreutzia_equolifaciens_seed(self):
+        mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromTuple(annotateModelSeed(mod.metabolites))
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_adlercreutzia_equolifaciens_seed_id(self):
+        mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromTuple(annotateModelSeed_id(mod.metabolites))
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
 def generate_html_table(data):
     """
