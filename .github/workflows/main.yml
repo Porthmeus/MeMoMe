@@ -60,4 +60,5 @@ jobs:
           # conda list
           conda activate env
           # conda list
+          python main.py --download
           python -m unittest
