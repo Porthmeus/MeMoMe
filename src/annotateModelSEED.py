@@ -17,6 +17,7 @@ from src.annotateInchiRoutines import findOptimalInchi, smile2inchi
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import databases_available, get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
+from src.annotateAux import AnnotationResult
 
 
 def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
@@ -30,7 +31,7 @@ def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     return 0, 0
 
 
-def extractModelSeedAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
+def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
     '''
     Takes an entry from the model seed database ("https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv") and retrieves the crosslinked databases into the annotation dictionary
     '''
@@ -111,7 +112,7 @@ def correctAnnotationKeys(anno:dict) -> dict:
         
     return(new_anno_corrected)
 
-def extractModelSeedpKapKb(pkab:str) -> dict:
+def extractModelSEEDpKapKb(pkab:str) -> dict:
     """Auxiliary function to reformat the values in the modelseed database for pKa and pKb into dictionaries"""
     # make sure there is an actual value for the entry
     if not pd.isna(pkab):
@@ -130,10 +131,10 @@ def extractModelSeedpKapKb(pkab:str) -> dict:
     return(pkab_dict)
 
 
-def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> list[dict, list, dict, dict]:
+def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> list[dict, list, dict, dict]:
     """
     A small helper function to avoid redundant code
-    Uses a ModelSeed identifiers and annotates it with the identifiers.org entries.
+    Uses a ModelSEED identifiers and annotates it with the identifiers.org entries.
     The results are stored in the annotations dictionary. This is empty by
     default, but if it exists, the entries will be simply added (duplicates are
     allowed here). Further it will return a list of alternative names, and pKa/pKb values
@@ -158,7 +159,7 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
     new_names = list()
     if len(aliases) >0:
         for alias in aliases:
-            annos, names = extractModelSeedAnnotationsFromAlias(alias)
+            annos, names = extractModelSEEDAnnotationsFromAlias(alias)
             # combine annos for the entry
             for key,value in annos.items():
                 if key in new_anno.keys():
@@ -183,7 +184,7 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
     if len(pka) > 0:
         pka_vals = dict()
         for val in pka:
-            pka_temp = extractModelSeedpKapKb(val)
+            pka_temp = extractModelSEEDpKapKb(val)
             for key,value in pka_temp.items():
                 if key in pka_vals.keys():
                     pka_vals[key] = (pka_vals[key] + value)/2
@@ -195,7 +196,7 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
     if len(pkb) > 0:
         pkb_vals = dict()
         for val in pkb:
-            pkb_temp = extractModelSeedpKapKb(val)
+            pkb_temp = extractModelSEEDpKapKb(val)
             for key,value in pkb_temp.items():
                 if key in pkb_vals.keys():
                     pkb_vals[key] = (pkb_vals[key] + value)/2
@@ -206,7 +207,7 @@ def annotateModelSeed_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
 
     return(new_anno, new_names, pka_vals, pkb_vals)
 
-def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
+def annotateModelSEED_id(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     """
     Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite._id slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
 
@@ -220,7 +221,7 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]
         if any(mseed["id"]==met._id):
             
             # get the names, annotations, pka and pkb
-            new_met_anno,new_names,new_pka,new_pkb = annotateModelSeed_entry(entry = met._id,
+            new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry(entry = met._id,
                     database = mseed)
 
             # get the inchi strings
@@ -263,12 +264,13 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]
             # add the pkb
             if len(new_pkb) > 0:
                  counter[4] = counter[4] + met.add_pKb(new_pkb)
+    anno_result = AnnotationResult(counter[2], counter[1], counter[0])
+    return anno_result 
 
-    return counter[2],counter[1],counter[0]
-
-def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
+def annotateModelSEED(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     """
-    Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite.anotation slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
+    Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite.anotation slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible
+    """
 
 
     # load the database
@@ -284,7 +286,7 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
             for seed_id in mod_mseeds:
                 if any(mseed["id"]==seed_id):
                     # get the names, annotations, pka and pkb
-                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSeed_entry( entry = seed_id,
+                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry( entry = seed_id,
                             database = mseed)
 
                     # get the inchi strings
@@ -331,5 +333,5 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
             # sum the counters
             met_counter = [int(x>0) for x in met_counter]
             counter = [x+y for x,y in zip(counter, met_counter)]
-
-    return counter[2],counter[1],counter[0]
+    anno_result = AnnotationResult(counter[2], counter[1], counter[0])
+    return anno_result 

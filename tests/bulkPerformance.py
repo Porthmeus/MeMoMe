@@ -8,34 +8,12 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateChEBI import *
 from src.annotateBiGG import *
+from src.annotateAux import AnnotationResult
 from datetime import datetime
 
   # Example data for the table
 table_data = [
 ]
-    
-
-class AnnotationResult():
-  def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
-    self.annotated_inchis: int =  annotated_inchis
-    self.annotated_dbs: int = annotated_dbs
-    self.annotated_names: int = annotated_names
-  
-  @classmethod
-  def fromTuple(cls, annotationResult: tuple[int, int, int]) -> 'AnnotationResult':
-    return cls(annotationResult[0], annotationResult[1], annotationResult[2])
-
-  def __str__(self) -> str:
-    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
-
-  def __le__(self, other) -> bool:
-    return self.annotated_inchis <= other.annotated_inchis and self.annotated_dbs <= other.annotated_dbs and self.annotated_names <= other.annotated_names
-
-  def __gt__(self, other):
-    return not (self.__le__(other))
-
-  def __add__(self, other):
-    return AnnotationResult(self.annotated_inchis + other.annotated_inchis, self.annotated_dbs + other.annotated_dbs, self.annotated_names + other.annotated_names)
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
