@@ -1,5 +1,6 @@
 # Porthmeus
 # 16.06.23
+from typing import Optional
 
 from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
@@ -39,7 +40,7 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
     inchi = Chem.MolToInchi(m)
     return(inchi)
 
-def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
+def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     """
     Find the "best" inchi string of equivalently annotated inchi strings.
 
@@ -52,7 +53,7 @@ def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
     
 
     # first validate the inchi strings
-    inchis = [x for x in inchis if validateInchi(x, verbose = verbose)]
+    inchis = [x for x in inchis_ if validateInchi(x, verbose = verbose)]
     # return the inchi if there is only one left
     if len(inchis) == 1:
         return(inchis[0])
@@ -65,7 +66,8 @@ def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
             if j != i:
                 k = k + int(matchMetsByInchi(inchis[i], inchis[j], verbose = verbose)[0])
         matches.append(k)
-
+    if len(matches) == 0:
+        return None
     max_match = max(matches)
     inchis = [x for x, y in zip(inchis, matches) if y == max_match]
 
@@ -73,6 +75,8 @@ def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
     counts = []
     for inchi in inchis:
         counts.append(inchi.count("/"))
+    if len(counts) == 0:
+        return None
     max_count = max(counts)
     inchis = [x for x, y in zip(inchis, counts) if y == max_count]
 
@@ -80,8 +84,12 @@ def findOptimalInchi(inchis: list[str], verbose:bool = False) -> str:
     counts = []
     for inchi in inchis:
         counts.append(len(inchi))
+    if len(counts) == 0:
+        return None
     max_count = max(counts)
     inchis = [x for x, y in zip(inchis, counts) if y == max_count]
+    if len(inchis) == 0:
+        return None
 
     # rule 4. For determinism, we sort them first so we always get the same result
     inchis.sort()

@@ -236,6 +236,9 @@ def annotateModelSeed_id(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]
             # get the correct inchi_string, if there was more than one
             if len(inchi_strings) > 1:
                 inchi_string = findOptimalInchi(inchi_strings)
+                if inchi_string is None:
+                    raise NotImplementedError()
+
             elif len(inchi_strings) == 1:
                 inchi_string = inchi_strings[0]
             else:
@@ -291,7 +294,9 @@ def annotateModelSeed(metabolites: list[MeMoMetabolite]) ->tuple[int,int,int]:
                     # there are only smiles in modelseed and rdkit sometimes fails to convert them - report here if that happens
                     for smile in smiles:
                         try:
-                            inchi_strings.append(smile2inchi(smile))
+                            s = smile2inchi(smile)
+                            if(len(s) > 0):
+                                inchi_strings.append(s)
                         except Exception as e:
                             warnings.warn("Could not convert smile to inchi for metabolite {met} and {smile}\n". format(met = met._id, smile = smile) + str(e))
                     # get the correct inchi_string, if there was more than one
