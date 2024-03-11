@@ -27,7 +27,7 @@ class TestParseSBML(unittest.TestCase):
         test_mets = parseMetaboliteInfoFromSBML(ecoli_core_sbml)
 
         # do some tests
-        ids = pd.unique([handle_metabolites_prefix_suffix(x) for x in expected_df.loc[:,"ID"]])
+        ids = list(set([handle_metabolites_prefix_suffix(x) for x in expected_df.loc[:,"ID"]]))
         self.assertTrue(all([x._id in ids for x in test_mets]))
         test_ids = [x._id for x in test_mets]
         self.assertTrue(all([met_id in test_ids for met_id in ids]))

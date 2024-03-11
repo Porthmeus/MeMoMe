@@ -1,7 +1,8 @@
 # Porthmeus
 # 02.11.23
 
-from src.MeMoMetabolite import MeMoMetabolite
+#from src.MeMoMetabolite import MeMoMetabolite
+from __future__ import annotations
 import pandas as pd
 from src.matchInchiRoutines import *
 from rdkit import Chem, RDLogger

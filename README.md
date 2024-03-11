@@ -20,5 +20,7 @@ if you just want to update a the environment use
 python -m unittest
 
 
-## Run performance test
-python -m unittest tests/test_matchPerformace.py
+## Execute bulk performance test
+Executing 
+`python3 -m tests.test_bulkPerformance  && google-chrome performace_table.html.`
+should generate a table called performace_table.html in the current folder.
