@@ -11,7 +11,10 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
-from src.annotateBulkRoutines import *
+from src.annotateChEBI import annotateChEBI
+from src.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -58,11 +61,21 @@ class MeMoModel:
     def annotate(self) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+        # count the number of newly annotated metabolites
+        anno_result= AnnotationResult(0,0,0)
+        # BiGG
+        temp_result = annotateBiGG(self.metabolites)
+        print("BiGG:",temp_result)
+        anno_result = anno_result + temp_result
         # Use ChEBI
-        unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+        temp = annotateChEBI(self.metabolites)
+        print("ChEBI:",temp_result)
+        anno_result = anno_result + temp_result
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        annotateLove(self.metabolites)
+        temp_result = annotateModelSEED(self.metabolites)
+        print("ModelSEED:", temp_result)
+        anno_result = anno_result + temp_result
+        print("Total:", anno_result)
 
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:

@@ -16,4 +16,7 @@ databases:
   ChEBI:
     URL: "https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv"
     file: "chebiId_inchi.tsv"
-  
+  Identifiers:
+    URL: "https://registry.api.identifiers.org/restApi/namespaces?page=0&size=999999&sort=name%2Casc"
+    file: "identifiers.org_registry.json"
+
