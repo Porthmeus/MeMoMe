@@ -10,8 +10,9 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import findOptimalInchi
 from src.download_db import databases_available, get_config, get_database_path
+from src.annotateAux import AnnotationResult
 
-def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
+def annotateChEBI(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     """ Annotate the metaboltes with Inchis from ChEBI """
 
     config = get_config()
@@ -36,6 +37,9 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
             inchis = np.unique(chebi_db.loc[chebis, "InChI"])
             if len(inchis) > 0:
                 inchi = findOptimalInchi(inchis)
+                if inchi is None:
+                    continue
             annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)
-
-    return  annotated_by_chebi,0,0
+    
+    anno_result = AnnotationResult(annotated_by_chebi, 0, 0)
+    return anno_result 

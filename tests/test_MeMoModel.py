@@ -10,9 +10,10 @@ import warnings
 #from src.MeMoModel import MeMoModel
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotateModelSEED import annotateModelSeed, annotateModelSeed_id
+from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotateAux import AnnotationResult
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
@@ -59,7 +60,8 @@ class Test_annotateBulkRoutines(unittest.TestCase):
             met.set_annotations(dic)
             metabolites.append(met)
         
-        annotateChEBI(metabolites)
+        anno_res = annotateChEBI(metabolites)
+        self.assertTrue(anno_res == AnnotationResult(3,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
 
     def test_annotateBiGG(self):
@@ -68,23 +70,15 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m1 = MeMoMetabolite(_id = "glc__D")
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"bigg.metabolite":["glc__D"]})
         mets = [m1,m2]
-        x,y,z = annotateBiGG(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 1)
-        self.assertTrue(z == 1)
-        x,y,z = annotateBiGG_id(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 1)
-        self.assertTrue(z == 1)
+        anno_res = annotateBiGG(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,1,1))
+        anno_res = annotateBiGG_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,1,1))
         # redo to test for correct counting
-        x,y,z = annotateBiGG(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 0)
-        self.assertTrue(z == 0)
-        x,y,z = annotateBiGG_id(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 0)
-        self.assertTrue(z == 0)
+        anno_res = annotateBiGG(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        anno_res = annotateBiGG_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
 
     def test_annotateModelSEED(self):
         # create a small test for the annotateBigg functions
@@ -92,23 +86,15 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m1 = MeMoMetabolite(_id = "cpd00027")
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
         mets = [m1,m2]
-        x,y,z = annotateModelSeed(mets)
-        self.assertTrue(x == 1)
-        self.assertTrue(y == 1)
-        self.assertTrue(z == 1)
-        x,y,z = annotateModelSeed_id(mets)
-        self.assertTrue(x == 1)
-        self.assertTrue(y == 1)
-        self.assertTrue(z == 1)
+        anno_res = annotateModelSEED(mets)
+        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        anno_res = annotateModelSEED_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(1,1,1))
         # redo the test and check that nothing is added
-        x,y,z = annotateModelSeed_id(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 0)
-        self.assertTrue(z == 0)
-        x,y,z = annotateModelSeed(mets)
-        self.assertTrue(x == 0)
-        self.assertTrue(y == 0)
-        self.assertTrue(z == 0)
+        anno_res = annotateModelSEED_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        anno_res = annotateModelSEED(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
 
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching

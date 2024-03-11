@@ -10,6 +10,7 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
+from src.annotateAux import AnnotationResult
 
 
 def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tuple[dict, list]:
@@ -50,7 +51,7 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
     
     
 
-def annotateBiGG(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
+def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from BiGG. Look for BiGG ids in the annotation slot of the metabolites and if one is found use these. Since BiGG does not provide any InChI strings, this will not results in any new annotated Inchi strings, but it will increase the number of entries in the metabolite annotation.
     The function will directly add the annotation and names to the MeMoMetabolite object.
@@ -92,10 +93,11 @@ def annotateBiGG(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
     
 
     # get the tuple for returning the annotation counts - this is just done to comply to a standard (there will be no InChI annotation from this database
-    return 0,new_annos_added,new_names_added
+    anno_result = AnnotationResult(0, new_names_added, new_names_added)
+    return anno_result
 
 
-def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
+def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from BiGG. Look for BiGG ids in the metabolite._id slot and if one is found use these. Since BiGG does not provide any InChI strings, this will not results in any new annotated Inchi strings, but it will increase the number of entries in the metabolite annotation.
     """
@@ -122,4 +124,5 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> tuple[int, int, int]:
 
     # return the number of metabolites which got newly annotated with inchis,
     # annotations and names
-    return 0,new_annos, new_names
+    anno_result = AnnotationResult(0, new_annos, new_names)
+    return anno_result

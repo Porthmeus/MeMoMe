@@ -160,6 +160,8 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
 
             if len(inchi) > 1:
                 inchi = findOptimalInchi(inchi)
+                if inchi is None:
+                    raise NotImplementedError()
             elif validateInchi(inchi[0]):
                 inchi = inchi[0]
             else:

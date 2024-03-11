@@ -13,7 +13,8 @@ import libsbml as sbml
 import pandas as pd
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
-from src.annotateModelSEED import annotateModelSeed, annotateModelSeed_id
+from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -61,26 +62,20 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
         # count the number of newly annotated metabolites
-        new_n_inchi = 0
-        new_n_anno = 0
-        new_n_names = 0
+        anno_result= AnnotationResult(0,0,0)
         # BiGG
-        x,y,z = annotateBiGG(self.metabolites)
-        print(f"annotated BiGG database - inchi:{x},anno:{y},names:{z}".format(x=x,y=y,z=z))
-        new_n_inchi = new_n_inchi+x
-        new_n_anno = new_n_anno +y
-        new_n_names = new_n_names+z
+        temp_result = annotateBiGG(self.metabolites)
+        print("BiGG:",temp_result)
+        anno_result = anno_result + temp_result
         # Use ChEBI
-        x,y,z = annotateChEBI(self.metabolites)
-        print(f"annotated ChEBI database - inchi:{x},anno:{y},names:{z}".format(x=x,y=y,z=z))
-        new_n_inchi = new_n_inchi+x
-        new_n_anno = new_n_anno +y
-        new_n_names = new_n_names+z
+        temp = annotateChEBI(self.metabolites)
+        print("ChEBI:",temp_result)
+        anno_result = anno_result + temp_result
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        print(f"annotated a total of - inchi:{x},anno:{y},names:{z}".format(
-            x=new_n_inchi,
-            y=new_n_anno,
-            z=new_n_names))
+        temp_result = annotateModelSEED(self.metabolites)
+        print("ModelSEED:", temp_result)
+        anno_result = anno_result + temp_result
+        print("Total:", anno_result)
 
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
