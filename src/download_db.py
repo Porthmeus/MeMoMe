@@ -3,8 +3,15 @@ import os
 from pathlib import Path
 from urllib.error import URLError
 
+import logging
 #from src.config import *
 import yaml
+import time
+from concurrent.futures import ThreadPoolExecutor
+
+
+logger = logging.getLogger('logger')
+
 
 def get_config() -> dict:
     """ load the config file and return the dictionary"""
@@ -62,11 +69,19 @@ def download() -> bool:
     config = get_config()
     database_path = get_database_path()
     # path where we want to save the downloaded files
+    start_time =  time.time()
     create_folder(database_path)
+    
+    # Start all downloads at the same time
+    with ThreadPoolExecutor(max_workers=8) as executor:
+      for i in config["databases"]:
+          db_path = database_path.joinpath(config["databases"][i]["file"])
+          executor.submit(_download, db_path, config["databases"][i]["URL"])
 
-    for i in config["databases"]:
-        db_path = database_path.joinpath(config["databases"][i]["file"])
-        _download(db_path, config["databases"][i]["URL"])
+    # Wait until all downloads are finished
+    executor.shutdown(wait=True)
+    end_time =  time.time()
+    logger.debug(f"Downloading databases took {end_time - start_time} seconds")
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
@@ -81,6 +96,8 @@ def download() -> bool:
             f.write(content)
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
+
+
     return True
 
 def databases_available() -> bool:
