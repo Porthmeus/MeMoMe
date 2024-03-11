@@ -1,6 +1,7 @@
 # Porthmeus
 # 08.03.24
 
+from __future__ import annotations
 #### original code by @unaimed ####
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -9,8 +10,12 @@ class AnnotationResult():
     self.annotated_names: int = annotated_names
   
   @classmethod
-  def fromTuple(cls, annotationResult: tuple[int, int, int]) -> 'AnnotationResult':
+  def fromTuple(cls, annotationResult: tuple[int, int, int]) -> AnnotationResult:
     return cls(annotationResult[0], annotationResult[1], annotationResult[2])
+  
+  @classmethod
+  def fromAnnotation(cls, annotationResult: AnnotationResult) -> AnnotationResult:
+    return cls(annotationResult.annotated_inchis, annotationResult.annotated_dbs, annotationResult.annotated_names)
 
   def __str__(self) -> str:
     return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
