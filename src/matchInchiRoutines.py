@@ -8,6 +8,7 @@ from rdkit import Chem, DataStructs, RDLogger
 from rdkit.Chem import AllChem
 from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers, StereoEnumerationOptions
 from rdkit.Chem.rdchem import Mol
+from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 
 
 def compareInchiByFingerprint(met1: str, met2: str, method: str = "Dice", verbose = False) -> float:
@@ -35,7 +36,7 @@ def compareInchiByFingerprint(met1: str, met2: str, method: str = "Dice", verbos
     sim = DataStructs.FingerprintSimilarity(fp1, fp2, metric=eval("DataStructs." + method + "Similarity"))
     return (sim)
 
-def compareInchiByFingerprint0(fp1, fp2, method: str = "Dice", verbose:bool = False) -> float:
+def compareInchiByFingerprint0(fp1:ExplicitBitVect, fp2:ExplicitBitVect, method: str = "Dice", verbose:bool = False) -> float:
     ''' Simple function to compare based on fingerprints
     @met1 - str of the first inchi string
     @met2 - str of the second inchi string
