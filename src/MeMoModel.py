@@ -18,7 +18,7 @@ from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
-
+from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
 
 from rdkit import Chem
