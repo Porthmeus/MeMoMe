@@ -4,7 +4,35 @@ from typing import Optional
 
 from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
+from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import warnings
+
+from rdkit import Chem, RDLogger
+
+# Define your function
+def inchiToMol(inchi:str)->Chem.rdchem.Mol|None:
+    if inchi is not None:
+        return Chem.MolFromInchi(inchi)
+    else:
+        return None
+
+
+# Define your function
+def molToRDK(mol:Chem.rdchem.Mol)->ExplicitBitVect|None:
+    if mol is not None:
+        return Chem.RDKFingerprint(mol)
+    else:
+        return None
+
+
+def molToNormalizedInchi(mol:Chem.rdchem.Mol, verbose = False) -> str|None:
+    if verbose == False:
+        RDLogger.DisableLog("rdApp.*")
+
+    if mol is not None:
+        return Chem.MolToInchi(mol)
+    else:
+        return None
 
 def validateInchi(inchi:str, verbose:bool = False) -> bool:
     """
@@ -64,7 +92,12 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
         k = 0
         for j in range(len(inchis)):
             if j != i:
-                k = k + int(matchMetsByInchi(inchis[i], inchis[j], verbose = verbose)[0])
+                m1 = inchiToMol(inchis[i])
+                m2 = inchiToMol(inchis[j])
+
+                nminchi1 = molToNormalizedInchi(m1)
+                nminchi2 = molToNormalizedInchi(m2)
+                k = k + int(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), verbose = verbose)[0])
         matches.append(k)
     if len(matches) == 0:
         return None
@@ -94,3 +127,6 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     # rule 4. For determinism, we sort them first so we always get the same result
     inchis.sort()
     return inchis[0]
+
+
+
