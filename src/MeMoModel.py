@@ -29,8 +29,8 @@ class MeMoModel:
 
     def __init__(self,
                  metabolites: list[MeMoMetabolite] = [],
-                 cobra_model: cb.Model = None,
-                 _id: str = None) -> None:
+                 cobra_model: cb.Model | None = None,
+                 _id: str | None = None) -> None:
         ''' Stump for construction '''
         self.metabolites = metabolites
         self.cobra_model = cobra_model
@@ -61,24 +61,33 @@ class MeMoModel:
         _id = model.getId()
         return MeMoModel(metabolites=metabolites, _id=_id)
 
-    def annotate(self) -> None:
+    def annotate(self) -> AnnotationResult:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+        print(self._id)
+
         # count the number of newly annotated metabolites
-        anno_result= AnnotationResult(0,0,0)
-        # BiGG
-        temp_result = annotateBiGG(self.metabolites)
-        print("BiGG:",temp_result)
-        anno_result = anno_result + temp_result
-        # Use ChEBI
-        temp = annotateChEBI(self.metabolites)
-        print("ChEBI:",temp_result)
-        anno_result = anno_result + temp_result
-        # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        temp_result = annotateModelSEED(self.metabolites)
-        print("ModelSEED:", temp_result)
-        anno_result = anno_result + temp_result
-        print("Total:", anno_result)
+        anno_result = annotateBiGG_id(self.metabolites)
+        anno_result = anno_result +  annotateModelSEED_id(self.metabolites)
+        while True:
+          old_res = AnnotationResult.fromAnnotation(anno_result)
+          # BiGG
+          temp_result = annotateBiGG(self.metabolites)
+          print("BiGG:",temp_result)
+          anno_result = anno_result + temp_result
+          # Use ChEBI
+          temp_result = annotateChEBI(self.metabolites)
+          print("ChEBI:",temp_result)
+          anno_result = anno_result + temp_result
+          # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+          temp_result = annotateModelSEED(self.metabolites)
+          print("ModelSEED:", temp_result)
+          anno_result = anno_result + temp_result
+          print("Total:", anno_result, "\n")
+          if anno_result == old_res:
+            break
+          
+        return anno_result
 
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
