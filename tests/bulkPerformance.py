@@ -187,7 +187,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     def test_adlercreutzia_equolifaciens_bigg_id_seed(self):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(0,577,196)
+        exp = AnnotationResult(337,577,671)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_seed.__name__, res1 + res2, exp)   
