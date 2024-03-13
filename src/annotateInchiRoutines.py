@@ -4,12 +4,13 @@ from typing import Optional
 
 from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
+from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import warnings
 
 from rdkit import Chem, RDLogger
 
 # Define your function
-def inchiToMol(inchi):
+def inchiToMol(inchi:str)->Chem.rdchem.Mol|None:
     if inchi is not None:
         return Chem.MolFromInchi(inchi)
     else:
@@ -17,14 +18,14 @@ def inchiToMol(inchi):
 
 
 # Define your function
-def molToRDK(mol):
+def molToRDK(mol:Chem.rdchem.Mol)->ExplicitBitVect|None:
     if mol is not None:
         return Chem.RDKFingerprint(mol)
     else:
         return None
 
 
-def molToNormalizedInchi(mol, verbose = False) -> str:
+def molToNormalizedInchi(mol:Chem.rdchem.Mol, verbose = False) -> str|None:
     if verbose == False:
         RDLogger.DisableLog("rdApp.*")
 
