@@ -155,7 +155,7 @@ def compareInchiByStereoIsomer(met1: str, met2: str, verbose = False) -> bool:
               stereo2.append(Chem.MolToInchi(x))
     except RuntimeError as e:
         logger.error(f"There was an error during in RDkit (1)")
-        logger.error(e)
+        #logger.error(e)
     intersect = list(set(stereo1).intersection(stereo2))
     return len(intersect) > 0
 
@@ -183,7 +183,7 @@ def compareInchiByStereoIsomer0(m1:rdkit.Chem.rdchem.Mol, m2:rdkit.Chem.rdchem.M
               stereo2.append(Chem.MolToInchi(x))
     except RuntimeError as e:
         logger.error(f"There was an error during in RDkit (1)")
-        logger.error(e)
+        #logger.error(e)
     
     intersect = list(set(stereo1).intersection(stereo2))
     return len(intersect) > 0
