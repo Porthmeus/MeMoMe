@@ -25,7 +25,12 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     # check if chebis ids are actually present in the annotation slot
     annos = any(["chebi" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
     if annos:
-        chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
+        chebi_db = None
+        try:
+          chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
+        except FileNotFoundError as e:
+          print(f"Could not find file {e}")
+          return AnnotationResult(0, 0, 0)
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string

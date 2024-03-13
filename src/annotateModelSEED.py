@@ -60,6 +60,8 @@ def correctAnnotationKeys(anno:dict) -> dict:
 
     config = get_config()
     identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
+
+    # TODO 
     with open(identifiers_file, "r") as json_file:
         identifiers = json.load(json_file)
     prefixes = json.dumps(identifiers["_embedded"]["namespaces"])

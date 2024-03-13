@@ -24,8 +24,13 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
     if len(database) == 0:
         # load the database
         config = get_config()
-        db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-        bigg = pd.read_table(db_path)
+        try:
+          db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
+          bigg = pd.read_table(db_path)
+        except FileNotFoundError as e:
+          print(f"File could not be found {e}")
+          # TODO What do we return 
+          raise NotImplementedError()
     else:
         bigg = database
 
@@ -60,8 +65,13 @@ def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     
     # load the database
     config = get_config()
-    db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-    bigg = pd.read_table(db_path)
+    bigg = None
+    try:
+      db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
+      bigg = pd.read_table(db_path)
+    except FileNotFoundError as e:
+      print(f"File not found {e}")
+      return AnnotationResult(0, 0,0 )
     
     new_annos_added = 0
     new_names_added = 0
