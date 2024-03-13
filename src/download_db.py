@@ -97,10 +97,10 @@ def update_database() -> bool:
         if os.path.exists(db_path):
             os.remove(db_path)
         _download(db_path, config["databases"][i]["URL"])
-
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
-        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
+        try:
+          with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
             content: str = f.read()
             # This will break if the link changes
             content = content.removeprefix("Ext.data.JsonP.callback19(")
@@ -111,4 +111,6 @@ def update_database() -> bool:
             f.write(content)
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
+        except FileNotFoundError: 
+          print("VMH could not be found, not tryting to reformat it")
     return True
