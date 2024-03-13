@@ -1,4 +1,4 @@
-# Porthmeus
+# Porthmeus | None
 # 07.07.23
 
 '''
@@ -142,11 +142,17 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
     """
     
     # check if the database was given, if not, try to load it
+    mseed = None
     if len(database) == 0:
         # load the database
         config = get_config()
         db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-        mseed = pd.read_table(db_path, low_memory= False)
+        try:
+          mseed = pd.read_table(db_path, low_memory= False)
+        except FileNotFoundError as e:
+          print(f"No such file {e}")
+          raise NotImplementedError()
+          # TODO What should we return here
     else:
         mseed = database
 
@@ -214,7 +220,12 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    mseed = pd.read_table(db_path, low_memory=False)
+    mseed = None
+    try:
+      mseed = pd.read_table(db_path, low_memory= False)
+    except FileNotFoundError as e:
+      print(f"No such file {e}")
+      return AnnotationResult(0 ,0, 0)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
@@ -276,7 +287,12 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    mseed = pd.read_table(db_path, low_memory= False)
+    mseed = None
+    try:
+      mseed = pd.read_table(db_path, low_memory= False)
+    except FileNotFoundError as e:
+      print(f"No such file {e}")
+      return AnnotationResult(0, 0, 0)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
