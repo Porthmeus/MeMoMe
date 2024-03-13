@@ -20,8 +20,12 @@ from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetabolit
     parseMetaboliteInfoFromCobra
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
-
+from src.origin_databases import origin_databases
 from rdkit import Chem
+import logging
+
+logger = logging.getLogger('logger')
+
 
 class MeMoModel:
     """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
@@ -65,25 +69,35 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
         print(self._id)
+        
+        #TEMP FIX
+        annotationDict = {"VMH" : annotateBiGG_id,
+                          "ModelSEED": annotateModelSEED_id,
+                          "BiGG": annotateBiGG_id
+                          }
 
-        # count the number of newly annotated metabolites
-        anno_result = annotateBiGG_id(self.metabolites)
-        anno_result = anno_result +  annotateModelSEED_id(self.metabolites)
+        origin_dbs = origin_databases(self.metabolites)
+        origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
+        print(f"ORIG DB {origin_db}")
+        
+        logger.debug(origin_db)
+         # count the number of newly annotated metabolites
+        anno_result = annotationDict[origin_db](self.metabolites)
         while True:
           old_res = AnnotationResult.fromAnnotation(anno_result)
           # BiGG
           temp_result = annotateBiGG(self.metabolites)
-          print("BiGG:",temp_result)
+          #print("BiGG:",temp_result)
           anno_result = anno_result + temp_result
           # Use ChEBI
           temp_result = annotateChEBI(self.metabolites)
-          print("ChEBI:",temp_result)
+          #print("ChEBI:",temp_result)
           anno_result = anno_result + temp_result
           # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
           temp_result = annotateModelSEED(self.metabolites)
-          print("ModelSEED:", temp_result)
+          #print("ModelSEED:", temp_result)
           anno_result = anno_result + temp_result
-          print("Total:", anno_result, "\n")
+          #print("Total:", anno_result, "\n")
           if anno_result == old_res:
             break
           
