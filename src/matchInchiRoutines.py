@@ -2,13 +2,14 @@
 # 15.03.23
 
 # Some functions to compare InChi keys/strings and tell if it is the same chemical structure
-
 import rdkit
-from rdkit import Chem, DataStructs, RDLogger
-from rdkit.Chem import AllChem
+from rdkit.Chem import AllChem, RDKFingerprint
 from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers, StereoEnumerationOptions
 from rdkit.Chem.rdchem import Mol
+from rdkit import Chem, DataStructs, RDLogger
+import logging 
 
+logger = logging.getLogger('logger')
 
 def compareInchiByFingerprint(met1: str, met2: str, method: str = "Dice", verbose = False) -> float:
     ''' Simple function to compare based on fingerprints
@@ -137,13 +138,23 @@ def compareInchiByStereoIsomer(met1: str, met2: str, verbose = False) -> bool:
     if verbose == False:
         RDLogger.DisableLog("rdApp.*")
 
+
     # do conversion
     m1 = Chem.MolFromInchi(met1)
     m2 = Chem.MolFromInchi(met2)
     # find also stereoisomers in defined InChI
     opts = StereoEnumerationOptions(onlyUnassigned=False)
-    stereo1 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m1, options=opts)]
-    stereo2 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m2, options=opts)]
+    stereo1 = []
+    stereo2 = []
+    try:
+      for x in EnumerateStereoisomers(m1, options=opts):
+              stereo1.append(Chem.MolToInchi(x))
+      
+      for x in EnumerateStereoisomers(m2, options=opts):
+              stereo2.append(Chem.MolToInchi(x))
+    except RuntimeError as e:
+        logger.error(f"There was an error during in RDkit (1)")
+        logger.error(e)
     intersect = list(set(stereo1).intersection(stereo2))
     return len(intersect) > 0
 
@@ -160,8 +171,19 @@ def compareInchiByStereoIsomer0(m1:rdkit.Chem.rdchem.Mol, m2:rdkit.Chem.rdchem.M
      
     # find also stereoisomers in defined InChI
     opts = StereoEnumerationOptions(onlyUnassigned=False)
-    stereo1 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m1, options=opts)]
-    stereo2 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m2, options=opts)]
+    stereo1 = []
+    stereo2 = []
+
+    try:
+      for x in EnumerateStereoisomers(m1, options=opts):
+              stereo1.append(Chem.MolToInchi(x))
+      
+      for x in EnumerateStereoisomers(m2, options=opts):
+              stereo2.append(Chem.MolToInchi(x))
+    except RuntimeError as e:
+        logger.error(f"There was an error during in RDkit (1)")
+        logger.error(e)
+    
     intersect = list(set(stereo1).intersection(stereo2))
     return len(intersect) > 0
 
