@@ -81,11 +81,13 @@ class MeMoModel:
         print("Total:", anno_result)
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
-        """ compares the metabolites of two models and returns a data frame with additional information """
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False) -> pd.DataFrame:
+        """ compares the metabolites of two models and returns a data frame with additional information 
+        output_names: If true, output the names of the metabolites that led to match based on levenshtein
+        """
         res_inchi = self.matchOnInchi(model2)
         res_db = self.matchOnDB(model2)
-        res_name = self.matchOnName(model2)
+        res_name = self.matchOnName(model2, output_names)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         # TODO add comparison on the base of names
@@ -183,7 +185,7 @@ class MeMoModel:
             results = results.drop_duplicates("met_id2")
         return(results)
 
-    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -191,14 +193,25 @@ class MeMoModel:
                 "met_id2":[],
                 "Name_score":[],
                 "charge_diff":[],
-                "inchi_string":[]}
+                "inchi_string":[],
+                   "name_id1" : [],
+                   "name_id2": []}
+        
+
+        if not output_names:
+          results.pop("name_id1")
+          results.pop("name_id2")
+
         for met1 in mets1:
             for met2 in mets2:
                 levenshtein = matchMetsByName(met1,met2)
-                if levenshtein > threshold:
+                if levenshtein.score > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
-                    results["Name_score"].append(levenshtein)
+                    if output_names:
+                      results["name_id1"].append(levenshtein.name_id1)
+                      results["name_id2"].append(levenshtein.name_id2)
+                    results["Name_score"].append(levenshtein.score)
                     # try to calculate charge differences and add them as information
                     try:
                         charge_diff = met1._charge - met2._charge
