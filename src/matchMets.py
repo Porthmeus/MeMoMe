@@ -8,6 +8,7 @@ from src.matchInchiRoutines import *
 from rdkit import Chem, RDLogger
 from Levenshtein import ratio
 from warnings import warn
+from collections import namedtuple
 
 def matchMetsByInchi(nminchi1: str, nminchi2: str, mol1: Chem.rdchem.Mol, mol2: Chem.rdchem.Mol, fp1, fp2, verbose:bool = False) -> tuple:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
@@ -55,15 +56,24 @@ def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
         sim = inter_len/union_len
     return(sim)
 
-def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
+
+NamedResult = namedtuple("NamedResult", ["name_id1", "name_id2", "score"])
+
+def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> NamedResult:
     # use the metabolite names to match
     score = 0
+    # Name with the highest score in model 1
+    temp_name_1 = ""
+    # Name with the highest score in model 2:w
+    temp_name_2 = ""
     for name1 in met1.names:
         for name2 in met2.names:
             tmp_score = ratio(name1,name2)
             if tmp_score > score:
+                temp_name_1 = name1
+                temp_name_2 = name2
                 score = tmp_score
-    return(score)
+    return (NamedResult(temp_name_1, temp_name_2, score))
     
     
 
