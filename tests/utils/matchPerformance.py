@@ -12,7 +12,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 
 this_directory = Path(__file__).parent
-dat = this_directory.joinpath("manually_merged_models")
+dat = this_directory.joinpath("../manually_merged_models")
 
 #class Test_annotateBulkRoutines(unittest.TestCase):
 def test_MeMoModelCompare2():
