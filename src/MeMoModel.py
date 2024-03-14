@@ -86,8 +86,11 @@ class MeMoModel:
         output_names: If true, output the names of the metabolites that led to match based on levenshtein
         """
         res_inchi = self.matchOnInchi(model2)
+        print((res_inchi.head()))
         res_db = self.matchOnDB(model2)
+        print((res_db.head()))
         res_name = self.matchOnName(model2, output_names)
+        print((res_name.head()))
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         # TODO add comparison on the base of names
