@@ -45,7 +45,7 @@ class MeMoModel:
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
         cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
-        if len(errors) > 0:
+        if any([len(x) > 0 for x in errors.values() ]):
           logger.error(f"There were problems with the sbml model {sbmlfile}")
           logger.error(f"{errors}")
         _id = cobra_model.id
