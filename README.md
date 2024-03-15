@@ -20,6 +20,10 @@ if you just want to update a the environment use
 python -m unittest
 
 
+
+## Run application with test model
+python3 main.py --model1 tests/dat/e_coli_core.xml  --model2 tests/dat/e_coli_core.xml --output here.csv
+
 ## Execute bulk performance test
 Executing 
 `python3 -m tests.test_bulkPerformance  && google-chrome performace_table.html.`
