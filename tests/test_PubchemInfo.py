@@ -20,5 +20,9 @@ class TestPubchemInfo(unittest.TestCase):
     def test_getPubchemInfo(self):
         self.assertIsInstance(getPubchemInfo(["alkdjfa", "Carnitine"]), pd.DataFrame)
 
+    def test_getPubchemInfo_noInternet(self):
+        self.assertIsInstance(getPubchemInfo(["alkdjfa", "Carnitine"]), pd.DataFrame)
+        self.assertTrue(getPubchemInfo(["alkdjfa", "Carnitine"]).empty)
+
 if __name__ == "__main__":
     unittest.main()
