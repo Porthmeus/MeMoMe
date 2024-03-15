@@ -79,7 +79,7 @@ def databases_available() -> bool:
     database_path = get_database_path()
     # check if all database files exists if not try to download
     if not os.path.exists(database_path):
-        is_there = download()
+        is_there = False
     else:
         for db in config["databases"]:
             if not os.path.exists(Path(database_path, config["databases"][db]["file"])):
