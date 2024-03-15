@@ -40,7 +40,9 @@ def matchMetsByInchi(nminchi1: str, nminchi2: str, mol1: Chem.rdchem.Mol, mol2: 
 # finally:
     return(same, chargeDiff)
 
-def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
+DBResult = namedtuple("DBResult", ["commonDBs", "commonIds", "allIds", "score"])
+
+def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> DBResult:
     # use the database annotations to compare two metabolites
     # get common database entries
     commonDB = list(set(met1.annotations.keys()) & set(met2.annotations.keys()))
@@ -48,13 +50,19 @@ def matchMetsByDB(met1:MeMoMetabolite, met2:MeMoMetabolite) -> float:
     set1 = set([x+"."+item for x in commonDB for item in met1.annotations[x]])
     set2 = set([x+"."+item for x in commonDB for item in met2.annotations[x]])
     # calculate jaccard index
-    inter_len = len(list(set1 & set2))
-    union_len = len(list(set1 | set2))
+    inter = list(set1 & set2)
+    unio = list(set1 | set2)
+    inter_len = len(inter)
+    union_len = len(unio)
     if union_len == 0:
         sim = 0
     else: 
         sim = inter_len/union_len
-    return(sim)
+    # TODO: This sort is only so the result is always the samr order which is
+    # necessary for the tests. If this slows down the program, think of another soluion
+    inter.sort()
+    unio.sort()
+    return(DBResult(commonDB, str(inter), str(unio), sim))
 
 
 NamedResult = namedtuple("NamedResult", ["name_id1", "name_id2", "score"])

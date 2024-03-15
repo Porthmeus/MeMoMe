@@ -126,5 +126,31 @@ class Test_MiscStuff(unittest.TestCase):
       self.assertEqual(res["name_id1"][0], "Glucose")
       self.assertEqual(res["name_id2"][0], "Glukose")
 
+
+    def test_MeMoModelOutputDBs(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      # TODO: How does a sensible annoation example look like 
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
+      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteB])
+      res = model.match(model2, output_names = False, output_dbs = False)
+      self.assertFalse("commonDBs" in res.columns)
+      self.assertFalse("commonIds" in res.columns)
+      self.assertFalse("distinctIds" in res.columns)
+
+      res = model.match(model2, output_names = False, output_dbs = True)
+      self.assertTrue("commonDBs" in res.columns)
+      self.assertTrue("commonIds" in res.columns)
+      self.assertTrue("allIds" in res.columns)
+      
+      self.assertEqual(res["commonDBs"][0], "DatabaseA")
+      self.assertEqual(res["commonIds"][0], "['DatabaseA.stuff']")
+      self.assertEqual(res["allIds"][0], "['DatabaseA.stuff', 'DatabaseA.stuff3']")
+
+
+
 if __name__ == '__main__':
     unittest.main()
