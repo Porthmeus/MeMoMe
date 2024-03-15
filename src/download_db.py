@@ -5,6 +5,10 @@ from urllib.error import URLError
 
 #from src.config import *
 import yaml
+import logging
+
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 def get_config() -> dict:
     """ load the config file and return the dictionary"""
@@ -78,7 +82,7 @@ def databases_available() -> bool:
     database_path = get_database_path()
     # check if all database files exists if not try to download
     if not os.path.exists(database_path):
-        is_there = download()
+        is_there = False
     else:
         for db in config["databases"]:
             if not os.path.exists(Path(database_path, config["databases"][db]["file"])):
@@ -92,15 +96,23 @@ def update_database() -> bool:
     config = get_config()
     database_path = get_database_path()
 
-    for i in config["databases"]:
-        db_path = database_path.joinpath(config["databases"][i]["file"])
-        if os.path.exists(db_path):
-            os.remove(db_path)
-        _download(db_path, config["databases"][i]["URL"])
+    start_time =  time.time()
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+      for i in config["databases"]:
+          db_path = database_path.joinpath(config["databases"][i]["file"])
+          if os.path.exists(db_path):
+              os.remove(db_path)
+          executor.submit(_download, db_path, config["databases"][i]["URL"])
+
+    # Wait until all downloads are finished
+    executor.shutdown(wait=True)
+    end_time =  time.time()
+    logging.debug(f"Downloading databases took: {end_time - start_time}")
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
-        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf-8") as f:
+        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
             content: str = f.read()
             # This will break if the link changes
             content = content.removeprefix("Ext.data.JsonP.callback19(")
