@@ -11,6 +11,7 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
+import logging
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
@@ -27,6 +28,8 @@ import logging
 logger = logging.getLogger('logger')
 
 
+logger = logging.getLogger('logger')
+
 class MeMoModel:
     """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
     it will store the cobra representation for the model"""
@@ -40,12 +43,16 @@ class MeMoModel:
         self.cobra_model = cobra_model
         self._id = _id
 
+
+
     @classmethod
-    def fromPath(cls, sbmlfile: Path) -> MeMoModel:
+    def fromPath(cls, sbmlfile: Path) -> MeMoModel :
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
-        cobra_model = cb.io.read_sbml_model(str(sbmlfile))
-        # TODO CATCH ERROR FROM COBRA
+        cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
+        if any([len(x) > 0 for x in errors.values() ]):
+          logger.error(f"There were problems with the sbml model {sbmlfile}")
+          logger.error(f"{errors}")
         _id = cobra_model.id
         return MeMoModel(metabolites=metabolites, cobra_model=cobra_model, _id=_id)
 
