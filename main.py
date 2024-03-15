@@ -45,30 +45,21 @@ def main(args: argparse.Namespace):
         if args.model2 is None:
             print("Please supply a second model with the --model2 parameter")
             sys.exit(1)
-
-    # Check if exactly two models were supplied
-    if args.model1 is None:
-        print("Please supply a first model with the --model1 parameter", file=sys.stderr)
-        logger.error("User did not provide the path to the first model")
-        sys.exit(1)
-    if args.model2 is None:
-        print("Please supply a second model with the --model2 parameter", file=sys.stderr)
-        logger.error("User did not provide the path to the second model")
-        sys.exit(1)
-    if args.output is None:
-        print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
-        logger.error("User did not provide an output path")
-        sys.exit(1)
+        # Check if exactly two models were supplied
+        if args.output is None:
+            print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
+            logger.error("User did not provide an output path")
+            sys.exit(1)
     
-    # Load the model
-    model1 = MeMoModel.fromPath(Path(args.model1))
-    model2 = MeMoModel.fromPath(Path(args.model2))
-    # bulk annotate the model
-    model1.annotate()
-    model2.annotate()
+        # Load the model
+        model1 = MeMoModel.fromPath(Path(args.model1))
+        model2 = MeMoModel.fromPath(Path(args.model2))
+        # bulk annotate the model
+        model1.annotate()
+        model2.annotate()
 
-    matched_model = model1.match(model2)
-    matched_model.to_csv(args.output, index = False)
+        matched_model = model1.match(model2)
+        matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
