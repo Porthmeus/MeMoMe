@@ -5,11 +5,15 @@ import unittest
 from pathlib import Path
 import cobra as cb
 import pandas as pd
+import warnings
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotateBulkRoutines import *
+from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateChEBI import annotateChEBI
+from src.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotateAux import AnnotationResult
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
@@ -34,6 +38,13 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod.annotate()
         post_inchis = [x._inchi_string for x in mod.metabolites]
         self.assertTrue(any([x != y for x,y in zip(pre_inchis, post_inchis)]))
+        # check if it also works if we remove the annotations
+        mod = MeMoModel.fromPath(mod_path)
+        # ignore the warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            [x.set_annotations({}) for x in mod.metabolites]
+        mod.annotate()
 
     def test_annotateChEBI(self):
         # test the matchInchi algorithm and find expected matches
@@ -44,11 +55,47 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         for chebi in test_dat:
             met = MeMoMetabolite()
             dic = {"chebi":[chebi]}
+#            with warnings.catch_warnings(action = "ignore"):
+                # TODO figure out why this is throwing an error!
             met.set_annotations(dic)
             metabolites.append(met)
         
-        annotateChEBI(metabolites)
+        anno_res = annotateChEBI(metabolites)
+        self.assertTrue(anno_res == AnnotationResult(3,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
+
+    def test_annotateBiGG(self):
+        # create a small test for the annotateBigg functions
+        # create a mock list of metabolites
+        m1 = MeMoMetabolite(_id = "glc__D")
+        m2 = MeMoMetabolite(_id = "mock_id",annotations = {"bigg.metabolite":["glc__D"]})
+        mets = [m1,m2]
+        anno_res = annotateBiGG(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,1,1))
+        anno_res = annotateBiGG_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,1,1))
+        # redo to test for correct counting
+        anno_res = annotateBiGG(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        anno_res = annotateBiGG_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+
+    def test_annotateModelSEED(self):
+        # create a small test for the annotateBigg functions
+        # create a mock list of metabolites
+        m1 = MeMoMetabolite(_id = "cpd00027")
+        m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
+        mets = [m1,m2]
+        anno_res = annotateModelSEED(mets)
+        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        anno_res = annotateModelSEED_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        # redo the test and check that nothing is added
+        anno_res = annotateModelSEED_id(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        anno_res = annotateModelSEED(mets)
+        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching
         mod_path = self.dat.joinpath("e_coli_core.xml")
@@ -57,9 +104,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         res = mod.match(mod)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
-
-
-
 
 if __name__ == '__main__':
     unittest.main()

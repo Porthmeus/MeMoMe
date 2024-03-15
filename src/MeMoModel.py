@@ -12,10 +12,16 @@ import cobra as cb
 import libsbml as sbml
 import pandas as pd
 import logging
-from src.annotateBulkRoutines import *
+from src.annotateChEBI import annotateChEBI
+from src.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
+from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
+
+from rdkit import Chem
 
 logger = logging.getLogger('logger')
 
@@ -64,11 +70,21 @@ class MeMoModel:
     def annotate(self) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+        # count the number of newly annotated metabolites
+        anno_result= AnnotationResult(0,0,0)
+        # BiGG
+        temp_result = annotateBiGG(self.metabolites)
+        print("BiGG:",temp_result)
+        anno_result = anno_result + temp_result
         # Use ChEBI
-        unannoted, annoted_by_chebi = annotateChEBI(self.metabolites)
-        print(f'Out of {unannoted} metabolites that don\'t have an INCHI string, {annoted_by_chebi} were annotated by chebi')
+        temp = annotateChEBI(self.metabolites)
+        print("ChEBI:",temp_result)
+        anno_result = anno_result + temp_result
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        annotateLove(self.metabolites)
+        temp_result = annotateModelSEED(self.metabolites)
+        print("ModelSEED:", temp_result)
+        anno_result = anno_result + temp_result
+        print("Total:", anno_result)
 
 
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
@@ -94,15 +110,34 @@ class MeMoModel:
                 "inchi_score":[],
                 "inchi_string":[],
                 "charge_diff" : []}
+
+
+        
+        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
+        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
+
+
+        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
+        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
+
+        mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
+        mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
+
         for i in range(len(mod1_inchis)):
             inchi1 = mod1_inchis.loc[i, "inchis"]
+            mol1   = mod1_inchis.loc[i, "Mol"]
+            fp1 = mod1_inchis.loc[i, "fingerprint"]
+            nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
             if inchi1 != None:
                 id1 = mod1_inchis.loc[i,"met_id"]
                 for j in range(len(mod2_inchis)):
                     inchi2 = mod2_inchis.loc[j, "inchis"]
+                    mol2   = mod2_inchis.loc[i, "Mol"]
+                    fp2 = mod2_inchis.loc[i, "fingerprint"]
+                    nminchi2 = mod1_inchis.loc[i, "normalized_inchi"]
                     if inchi2 != None:
                         id2 = mod2_inchis.loc[j,"met_id"]
-                        res = matchMetsByInchi(inchi1, inchi2)
+                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2)
                         if res[0] == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)

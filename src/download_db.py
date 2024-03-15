@@ -64,24 +64,9 @@ def download() -> bool:
     # path where we want to save the downloaded files
     create_folder(database_path)
 
-    for i in config["databases"]:
-        db_path = database_path.joinpath(config["databases"][i]["file"])
-        _download(db_path, config["databases"][i]["URL"])
+    status = update_database()
 
-    if "VMH" in config["databases"].keys():
-        # handle special case for vmh
-        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
-            content: str = f.read()
-            # This will break if the link changes
-            content = content.removeprefix("Ext.data.JsonP.callback19(")
-            content = content.removesuffix(");")
-            # Go to the beginning of the file
-            f.seek(0)
-            # Write the new content
-            f.write(content)
-            # Truncate to the new contents length(because the old content of the file was longer)
-            f.truncate()
-    return True
+    return status
 
 def databases_available() -> bool:
     """
@@ -101,4 +86,29 @@ def databases_available() -> bool:
                 break
     return is_there
 
+def update_database() -> bool:
+    '''Remove the databases and download them again with possible new updates'''
+    # load the config yaml
+    config = get_config()
+    database_path = get_database_path()
 
+    for i in config["databases"]:
+        db_path = database_path.joinpath(config["databases"][i]["file"])
+        if os.path.exists(db_path):
+            os.remove(db_path)
+        _download(db_path, config["databases"][i]["URL"])
+
+    if "VMH" in config["databases"].keys():
+        # handle special case for vmh
+        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
+            content: str = f.read()
+            # This will break if the link changes
+            content = content.removeprefix("Ext.data.JsonP.callback19(")
+            content = content.removesuffix(");")
+            # Go to the beginning of the file
+            f.seek(0)
+            # Write the new content
+            f.write(content)
+            # Truncate to the new contents length(because the old content of the file was longer)
+            f.truncate()
+    return True

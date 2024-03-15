@@ -11,7 +11,7 @@ import cobra
 
 import src.MeMoModel
 from src.MeMoModel import *
-from src.download_db import download
+from src.download_db import download, databases_available, update_database
 
 # Configure the logger
 logging.basicConfig(
@@ -31,8 +31,20 @@ logger.addHandler(file_handler)
 def main(args: argparse.Namespace):
     if args.download:
         logger.debug("Starting to download databases")
-        download()
+        # check if the path database folder exists
+        if not databases_available():
+            download()
+        else:
+            update_database()
         logger.debug("Finished downloading databases")
+    else:
+        # Check if exactly two models were supplied
+        if args.model1 is None:
+            print("Please supply a second model with the --model1 parameter")
+            sys.exit(1)
+        if args.model2 is None:
+            print("Please supply a second model with the --model2 parameter")
+            sys.exit(1)
 
     # Check if exactly two models were supplied
     if args.model1 is None:
@@ -56,7 +68,6 @@ def main(args: argparse.Namespace):
     model2.annotate()
 
     matched_model = model1.match(model2)
-
     matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
