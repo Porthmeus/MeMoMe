@@ -15,6 +15,7 @@ import logging
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateVMH import annotateVMH, annotateVMH_id
 from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
@@ -78,7 +79,7 @@ class MeMoModel:
         print(self._id)
         
         #TEMP FIX
-        annotationDict = {"VMH" : annotateBiGG_id,
+        annotationDict = {"VMH" : annotateVMH_id,
                           "ModelSEED": annotateModelSEED_id,
                           "BiGG": annotateBiGG_id
                           }
@@ -102,6 +103,8 @@ class MeMoModel:
           anno_result = anno_result + temp_result
           # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
           temp_result = annotateModelSEED(self.metabolites)
+          #print("ModelSEED:", temp_result)
+          temp_result = annotateVMH(self.metabolites)
           #print("ModelSEED:", temp_result)
           anno_result = anno_result + temp_result
           #print("Total:", anno_result, "\n")
