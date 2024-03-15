@@ -62,9 +62,9 @@ def _download(path: Path, URL: str):
     param db: which db to download
     return:
     """
-    print("Downloading " + URL + " to " + str(path))
     try:
         urllib.request.urlretrieve(URL, path)
+        print("Downloading " + URL + " to " + str(path))
     except URLError:
         print("WARNING: Could not download " + str(path))
 
