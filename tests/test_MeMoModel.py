@@ -105,5 +105,26 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
 
+class Test_MiscStuff(unittest.TestCase):
+
+    def test_MeMoModelOutPutNames(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_names(["Glucose"])
+      metaboliteB.set_names(["Glukose"])
+
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteB])
+      res = model.match(model2, output_names = False)
+      self.assertFalse("name_id1" in res.columns)
+      self.assertFalse("name_id2" in res.columns)
+      
+      res = model.match(model2, output_names = True)
+      self.assertTrue("name_id1" in res.columns)
+      self.assertTrue("name_id2" in res.columns)
+
+      self.assertEqual(res["name_id1"][0], "Glucose")
+      self.assertEqual(res["name_id2"][0], "Glukose")
+
 if __name__ == '__main__':
     unittest.main()

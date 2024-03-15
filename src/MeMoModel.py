@@ -93,7 +93,7 @@ class MeMoModel:
         """
         res_inchi = self.matchOnInchi(model2)
         res_db = self.matchOnDB(model2)
-        res_name = self.matchOnName(model2, output_names)
+        res_name = self.matchOnName(model2, output_names = output_names)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         # TODO add comparison on the base of names
@@ -113,11 +113,8 @@ class MeMoModel:
                 "inchi_string":[],
                 "charge_diff" : []}
 
-
-        
         mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
         mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
-
 
         mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
         mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
@@ -192,6 +189,7 @@ class MeMoModel:
         return(results)
 
     def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
+        print(f"Output_names set to {output_names}")
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -207,7 +205,6 @@ class MeMoModel:
         if not output_names:
           results.pop("name_id1")
           results.pop("name_id2")
-
         for met1 in mets1:
             for met2 in mets2:
                 levenshtein = matchMetsByName(met1,met2)
