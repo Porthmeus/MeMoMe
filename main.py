@@ -58,13 +58,14 @@ def main(args: argparse.Namespace):
         model1.annotate()
         model2.annotate()
 
-        matched_model = model1.match(model2)
+        matched_model = model1.match(model2, keep1ToMany = True, output_names = args.output_names)
         matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
     parser = argparse.ArgumentParser(description='MeMoMe - Cool stuff.')
     # Specifying this tells the program to download all the databases
+    parser.add_argument('--output-names', action='store_true', help='If two metabolites got matched on a name basis, output the names that lead to this match')
     parser.add_argument('--download', action='store_true', help='Download all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
