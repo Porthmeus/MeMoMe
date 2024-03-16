@@ -147,6 +147,27 @@ class Test_MiscStuff(unittest.TestCase):
     self.assertEqual(res.shape[0], 1)
     self.assertEqual(res["DB_score"][0], 1.0000)
 
+  def test_1toManyMatchingOnInchi(self):
+    metaboliteA: MeMoMetabolite = MeMoMetabolite()
+    metaboliteB: MeMoMetabolite = MeMoMetabolite()
+    metaboliteA.set_id("A")
+    metaboliteB.set_id("B")
+    metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
+    metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
+
+    model = MeMoModel([metaboliteA])
+    model2 = MeMoModel([metaboliteA, metaboliteB])
+    res = model.match(model2, keep1ToMany = True)
+    print(res)
+    self.assertEqual(res.shape[0], 2)
+    self.assertEqual(res["inchi_score"][0], 1.0000)
+    val = res["inchi_score"][1]
+    self.assertTrue(1==0)
+    self.assertTrue(math.isclose(val, 1, rel_tol=1e-2))
+
+    #res = model.match(model2, keep1ToMany = False)
+    #self.assertEqual(res.shape[0], 1)
+    #self.assertEqual(res["DB_score"][0], 1.0000)
 
 if __name__ == '__main__':
     unittest.main()
