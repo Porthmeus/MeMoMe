@@ -90,8 +90,8 @@ class MeMoModel:
     def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
         res_inchi = self.matchOnInchi(model2)
-        res_db = self.matchOnDB(model2)
-        res_name = self.matchOnName(model2)
+        res_db = self.matchOnDB(model2, keep1ToMany = keep1ToMany)
+        res_name = self.matchOnName(model2, keep1ToMany = keep1ToMany)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         # TODO add comparison on the base of names

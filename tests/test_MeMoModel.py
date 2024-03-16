@@ -6,7 +6,7 @@ from pathlib import Path
 import cobra as cb
 import pandas as pd
 import warnings
-
+import math
 #from src.MeMoModel import MeMoModel
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
@@ -104,6 +104,49 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         res = mod.match(mod)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
+
+
+class Test_MiscStuff(unittest.TestCase):
+
+  def test_1toManyMatchingOnName(self):
+    metaboliteA: MeMoMetabolite = MeMoMetabolite()
+    metaboliteB: MeMoMetabolite = MeMoMetabolite()
+    metaboliteA.set_names(["Glucose"])
+    metaboliteB.set_names(["Glukose"])
+
+    model = MeMoModel([metaboliteA])
+    model2 = MeMoModel([metaboliteA, metaboliteB])
+    res = model.match(model2, keep1ToMany = True)
+
+    self.assertEqual(res.shape[0], 2)
+    self.assertEqual(res["Name_score"][0], 1.0000)
+    val = res["Name_score"][1]
+    self.assertTrue(math.isclose(val, 0.857143, rel_tol=1e-2))
+
+    
+    res = model.match(model2, keep1ToMany = False)
+    self.assertEqual(res.shape[0], 1)
+    self.assertEqual(res["Name_score"][0], 1.0000)
+
+
+  def test_1toManyMatchingOnDB(self):
+    metaboliteA: MeMoMetabolite = MeMoMetabolite()
+    metaboliteB: MeMoMetabolite = MeMoMetabolite()
+    metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
+    metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+
+    model = MeMoModel([metaboliteA])
+    model2 = MeMoModel([metaboliteA, metaboliteB])
+    res = model.match(model2, keep1ToMany = True)
+    self.assertEqual(res.shape[0], 2)
+    self.assertEqual(res["DB_score"][0], 1.0000)
+    val = res["DB_score"][1]
+    self.assertTrue(math.isclose(val, 0.5, rel_tol=1e-2))
+
+    res = model.match(model2, keep1ToMany = False)
+    self.assertEqual(res.shape[0], 1)
+    self.assertEqual(res["DB_score"][0], 1.0000)
+
 
 if __name__ == '__main__':
     unittest.main()
