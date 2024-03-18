@@ -87,7 +87,7 @@ class MeMoModel:
         print("Total:", anno_result)
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True, keepUnmatched = False) -> pd.DataFrame:
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, keepUnmatched: bool = False) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
         res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
         res_db = self.matchOnDB(model2, keep1ToMany = keep1ToMany)
