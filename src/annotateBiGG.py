@@ -6,6 +6,7 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 '''
 
 import os
+import warnings
 import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
@@ -29,8 +30,9 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
           bigg = pd.read_table(db_path)
         except FileNotFoundError as e:
           print(f"File could not be found {e}")
-          # TODO What do we return 
-          raise NotImplementedError()
+          warnings.warn(e)
+          return dict(), list()
+          
     else:
         bigg = database
 

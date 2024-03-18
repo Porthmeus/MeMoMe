@@ -152,9 +152,9 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) 
         try:
           mseed = pd.read_table(db_path, low_memory= False)
         except FileNotFoundError as e:
-          print(f"No such file {e}")
-          raise NotImplementedError()
-          # TODO What should we return here
+          warnings.warn(e)
+          return dict(), list(), dict(), dict()
+
     else:
         mseed = database
 
