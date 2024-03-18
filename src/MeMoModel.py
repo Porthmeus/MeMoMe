@@ -99,7 +99,7 @@ class MeMoModel:
         if keepUnmatched == True:
             miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
             missing_df1 = pd.DataFrame({"met_id1":miss_mets1})
-            miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id1"]))
+            miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
             missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
             res = pd.concat([res,missing_df1, missing_df2])
 
