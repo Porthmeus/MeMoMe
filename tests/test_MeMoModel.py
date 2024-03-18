@@ -158,16 +158,31 @@ class Test_MiscStuff(unittest.TestCase):
     model = MeMoModel([metaboliteA])
     model2 = MeMoModel([metaboliteA, metaboliteB])
     res = model.match(model2, keep1ToMany = True)
-    print(res)
     self.assertEqual(res.shape[0], 2)
     self.assertEqual(res["inchi_score"][0], 1.0000)
+    val = res["inchi_score"][0]
+    self.assertTrue(val==1)
     val = res["inchi_score"][1]
     self.assertTrue(val==0)
-    self.assertTrue(math.isclose(val, 0, rel_tol=1e-2))
 
-    #res = model.match(model2, keep1ToMany = False)
-    #self.assertEqual(res.shape[0], 1)
-    #self.assertEqual(res["DB_score"][0], 1.0000)
+  def test_keepUnmatched(self):
+
+    metaboliteA: MeMoMetabolite = MeMoMetabolite()
+    metaboliteB: MeMoMetabolite = MeMoMetabolite()
+    metaboliteC: MeMoMetabolite = MeMoMetabolite()
+    metaboliteA.set_id("A")
+    metaboliteB.set_id("B")
+    metaboliteC.set_id("C")
+    metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
+    metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
+    metaboliteC.set_inchi_string(None)
+
+    model = MeMoModel([metaboliteA, metaboliteC])
+    model2 = MeMoModel([metaboliteA, metaboliteB])
+    res = model.match(model2, keep1ToMany = False, keepUnmatched=True)
+    self.assertEqual(res.shape[0], 3)
+    self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
+    self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
 
 if __name__ == '__main__':
     unittest.main()
