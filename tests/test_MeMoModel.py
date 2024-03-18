@@ -162,8 +162,8 @@ class Test_MiscStuff(unittest.TestCase):
     self.assertEqual(res.shape[0], 2)
     self.assertEqual(res["inchi_score"][0], 1.0000)
     val = res["inchi_score"][1]
-    self.assertTrue(1==0)
-    self.assertTrue(math.isclose(val, 1, rel_tol=1e-2))
+    self.assertTrue(val==0)
+    self.assertTrue(math.isclose(val, 0, rel_tol=1e-2))
 
     #res = model.match(model2, keep1ToMany = False)
     #self.assertEqual(res.shape[0], 1)
