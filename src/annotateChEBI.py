@@ -7,6 +7,7 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 
 import numpy as np
 import pandas as pd
+import warnings
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateInchiRoutines import findOptimalInchi
 from src.download_db import databases_available, get_config, get_database_path
@@ -29,7 +30,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
         try:
           chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
         except FileNotFoundError as e:
-          print(f"Could not find file {e}")
+          warnings.warn(e)
           return AnnotationResult(0, 0, 0)
         chebi_db.index = chebi_db['CHEBI_ID']
 

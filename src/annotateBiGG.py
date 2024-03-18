@@ -29,7 +29,6 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
           db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
           bigg = pd.read_table(db_path)
         except FileNotFoundError as e:
-          print(f"File could not be found {e}")
           warnings.warn(e)
           return dict(), list()
           
@@ -72,7 +71,7 @@ def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
       db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
       bigg = pd.read_table(db_path)
     except FileNotFoundError as e:
-      print(f"File not found {e}")
+      warnings.warn(e)
       return AnnotationResult(0, 0,0 )
     
     new_annos_added = 0
@@ -117,7 +116,11 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-    bigg = pd.read_table(db_path)
+    try:
+        bigg = pd.read_table(db_path)
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        return(AnnotationResult(0,0,0))
     
     new_annos = 0
     new_names = 0

@@ -62,8 +62,13 @@ def correctAnnotationKeys(anno:dict) -> dict:
     identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
 
     # TODO 
-    with open(identifiers_file, "r") as json_file:
-        identifiers = json.load(json_file)
+    try: 
+        with open(identifiers_file, "r") as json_file: 
+            identifiers = json.load(json_file)
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        return dict()
+
     prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
     prefixes = pd.read_json(StringIO(prefixes))
     prefixes = list(prefixes["prefix"])
@@ -226,7 +231,7 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     try:
       mseed = pd.read_table(db_path, low_memory= False)
     except FileNotFoundError as e:
-      print(f"No such file {e}")
+      warnings.warn(e)
       return AnnotationResult(0 ,0, 0)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
@@ -293,7 +298,7 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite]) ->AnnotationResult:
     try:
       mseed = pd.read_table(db_path, low_memory= False)
     except FileNotFoundError as e:
-      print(f"No such file {e}")
+      warnings.warn(e)
       return AnnotationResult(0, 0, 0)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
