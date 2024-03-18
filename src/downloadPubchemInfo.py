@@ -26,7 +26,7 @@ def downloadElements() -> pd.DataFrame:
     # download the element list from pubchem
     try:
         elements = pd.read_csv("https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV?response_type=save&response_basename=PubChemElements_all")
-    except FileNotFoundError e:
+    except FileNotFoundError as e:
         warnings.warn(e)
         elements = pd.DataFrame()
     return(elements)
