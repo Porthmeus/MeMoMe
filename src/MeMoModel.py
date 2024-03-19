@@ -67,21 +67,21 @@ class MeMoModel:
         _id = model.getId()
         return MeMoModel(metabolites=metabolites, _id=_id)
 
-    def annotate(self) -> None:
+    def annotate(self, allow_missing_dbs: bool = False) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
         # count the number of newly annotated metabolites
         anno_result= AnnotationResult(0,0,0)
         # BiGG
-        temp_result = annotateBiGG(self.metabolites)
+        temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
         print("BiGG:",temp_result)
         anno_result = anno_result + temp_result
         # Use ChEBI
-        temp = annotateChEBI(self.metabolites)
+        temp = annotateChEBI(self.metabolites, allow_missing_dbs)
         print("ChEBI:",temp_result)
         anno_result = anno_result + temp_result
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        temp_result = annotateModelSEED(self.metabolites)
+        temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
         print("ModelSEED:", temp_result)
         anno_result = anno_result + temp_result
         print("Total:", anno_result)
