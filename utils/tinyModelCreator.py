@@ -190,15 +190,15 @@ def main():
                         help="ID of the biomass reaction in the model.")
 
     parser.add_argument("--desired_biomass_components_file", type=str,
-                        default="../tests/dat/script_accessories/desired_biomass_components.txt",
+                        default="script_accessories/desired_biomass_components.txt",
                         help="File containing desired biomass components.")
 
     parser.add_argument("--required_excretions_file", type=str,
-                        default="../tests/dat/script_accessories/required_excretions.txt",
+                        default="script_accessories/required_excretions.txt",
                         help="File containing required excretions.")
 
     parser.add_argument("--desired_medium_file", type=str,
-                        default="../tests/dat/script_accessories/desired_medium.csv",
+                        default="script_accessories/desired_medium.csv",
                         help="CSV file containing desired medium components and constraints.")
 
     # New argument for specifying identifier types to keep
