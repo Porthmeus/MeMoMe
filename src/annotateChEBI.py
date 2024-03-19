@@ -13,11 +13,22 @@ from src.annotateInchiRoutines import findOptimalInchi
 from src.download_db import databases_available, get_config, get_database_path
 from src.annotateAux import AnnotationResult
 
-def annotateChEBI(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
+def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """ Annotate the metaboltes with Inchis from ChEBI """
 
     config = get_config()
     db_path = get_database_path()
+
+
+    chebi_db = None
+    try:
+      chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
+    except FileNotFoundError as e:
+      warnings.warn(str(e))
+      # Rethrow exception because we want don't allow missing dbs
+      if allow_missing_dbs == False:
+        raise e
+      return AnnotationResult(0, 0, 0)
 
     # check if any unannotated metabolites exist and whether these have a ChEBI entry
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None and "chebi" in y.annotations.keys()]
@@ -26,12 +37,6 @@ def annotateChEBI(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     # check if chebis ids are actually present in the annotation slot
     annos = any(["chebi" in x.annotations.keys() for i, x in enumerate(metabolites) if i in ids])
     if annos:
-        chebi_db = None
-        try:
-          chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
-        except FileNotFoundError as e:
-          warnings.warn(e)
-          return AnnotationResult(0, 0, 0)
         chebi_db.index = chebi_db['CHEBI_ID']
 
         # annotate the metabolites with the inchi_string
