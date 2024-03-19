@@ -160,10 +160,12 @@ class Test_MiscStuff(unittest.TestCase):
     res = model.match(model2, keep1ToMany = True)
     self.assertEqual(res.shape[0], 2)
     self.assertEqual(res["inchi_score"][0], 1.0000)
-    val = res["inchi_score"][0]
-    self.assertTrue(val==1)
     val = res["inchi_score"][1]
     self.assertTrue(val==0)
+
+    res = model.match(model2, keep1ToMany = False)
+    self.assertEqual(res.shape[0], 1)
+    self.assertEqual(res["inchi_score"][0], 1.0000)
 
   def test_keepUnmatched(self):
 
