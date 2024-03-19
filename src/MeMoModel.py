@@ -87,18 +87,26 @@ class MeMoModel:
         print("Total:", anno_result)
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, keepUnmatched: bool = False) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information """
-        res_inchi = self.matchOnInchi(model2)
-        res_db = self.matchOnDB(model2)
-        res_name = self.matchOnName(model2)
+        res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
+        res_db = self.matchOnDB(model2, keep1ToMany = keep1ToMany)
+        res_name = self.matchOnName(model2, keep1ToMany = keep1ToMany)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
-        # TODO add comparison on the base of names
+
+        # add the unmatched metabolites
+        if keepUnmatched == True:
+            miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
+            missing_df1 = pd.DataFrame({"met_id1":miss_mets1})
+            miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
+            missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
+            res = pd.concat([res,missing_df1, missing_df2])
+
         return(res)
 
     
-    def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
+    def matchOnInchi(self, model2: MeMoModel, keep1ToMany:bool = False) -> pd.DataFrame:
         # start with the comparison of inchi strings
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in self.metabolites]]})
@@ -132,18 +140,18 @@ class MeMoModel:
                 id1 = mod1_inchis.loc[i,"met_id"]
                 for j in range(len(mod2_inchis)):
                     inchi2 = mod2_inchis.loc[j, "inchis"]
-                    mol2   = mod2_inchis.loc[i, "Mol"]
-                    fp2 = mod2_inchis.loc[i, "fingerprint"]
-                    nminchi2 = mod1_inchis.loc[i, "normalized_inchi"]
+                    mol2   = mod2_inchis.loc[j, "Mol"]
+                    fp2 = mod2_inchis.loc[j, "fingerprint"]
+                    nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
                     if inchi2 != None:
                         id2 = mod2_inchis.loc[j,"met_id"]
                         res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2)
-                        if res[0] == True:
+                        if res[0] == True or keep1ToMany == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
                             matches["inchi_string"].append(inchi1)
                             matches["charge_diff"].append(res[1])
-                            matches["inchi_score"].append(1)
+                            matches["inchi_score"].append(int(res[0]))
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
