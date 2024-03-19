@@ -45,18 +45,21 @@ def main(args: argparse.Namespace):
         if args.model2 is None:
             print("Please supply a second model with the --model2 parameter")
             sys.exit(1)
-
-        v = cobra.io.sbml.validate_sbml_model(args.model2)
-        print(v)
-        # model1 = MeMoModel.fromPath(Path(args.model1))
+        # Check if exactly two models were supplied
+        if args.output is None:
+            print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
+            logger.error("User did not provide an output path")
+            sys.exit(1)
+    
+        # Load the model
+        model1 = MeMoModel.fromPath(Path(args.model1))
         model2 = MeMoModel.fromPath(Path(args.model2))
+        # bulk annotate the model
+        model1.annotate(args.allow_missing_dbs)
+        model2.annotate(args.allow_missing_dbs)
 
-        #t = model1.annotate()
-        t = model2.annotate()
-        print("T")
-
-
-
+        matched_model = model1.match(model2)
+        matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
@@ -65,6 +68,8 @@ if __name__ == '__main__':
     parser.add_argument('--download', action='store_true', help='Download all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
+    parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')
+    parser.add_argument('--allow_missing_dbs', action='store_true', help='If set to true program does not abort if a databse is missing')
     args = parser.parse_args()
     # Log arguments
     logger.debug(args)

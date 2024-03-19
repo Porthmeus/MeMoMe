@@ -11,6 +11,7 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
+import logging
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
@@ -18,10 +19,11 @@ from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
-
 from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
 
 from rdkit import Chem
+
+logger = logging.getLogger('logger')
 
 class MeMoModel:
     """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
@@ -36,12 +38,16 @@ class MeMoModel:
         self.cobra_model = cobra_model
         self._id = _id
 
+
+
     @classmethod
-    def fromPath(cls, sbmlfile: Path) -> MeMoModel:
+    def fromPath(cls, sbmlfile: Path) -> MeMoModel :
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
-        cobra_model = cb.io.read_sbml_model(str(sbmlfile))
-        # TODO CATCH ERROR FROM COBRA
+        cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
+        if any([len(x) > 0 for x in errors.values() ]):
+          logger.error(f"There were problems with the sbml model {sbmlfile}")
+          logger.error(f"{errors}")
         _id = cobra_model.id
         return MeMoModel(metabolites=metabolites, cobra_model=cobra_model, _id=_id)
 
@@ -61,21 +67,21 @@ class MeMoModel:
         _id = model.getId()
         return MeMoModel(metabolites=metabolites, _id=_id)
 
-    def annotate(self) -> None:
+    def annotate(self, allow_missing_dbs: bool = False) -> None:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
         # count the number of newly annotated metabolites
         anno_result= AnnotationResult(0,0,0)
         # BiGG
-        temp_result = annotateBiGG(self.metabolites)
+        temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
         print("BiGG:",temp_result)
         anno_result = anno_result + temp_result
         # Use ChEBI
-        temp = annotateChEBI(self.metabolites)
+        temp = annotateChEBI(self.metabolites, allow_missing_dbs)
         print("ChEBI:",temp_result)
         anno_result = anno_result + temp_result
         # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        temp_result = annotateModelSEED(self.metabolites)
+        temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
         print("ModelSEED:", temp_result)
         anno_result = anno_result + temp_result
         print("Total:", anno_result)

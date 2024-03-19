@@ -14,7 +14,7 @@ from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 from src.annotateAux import AnnotationResult
 
 
-def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tuple[dict, list]:
+def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
     """
     A small helper function to avoid redundant code
     Uses a BiGG identifiers and annotates it with the identifiers.org entries.
@@ -29,7 +29,10 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
           db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
           bigg = pd.read_table(db_path)
         except FileNotFoundError as e:
-          warnings.warn(e)
+          warnings.warn(str(e))
+          # Rethrow exception because we want don't allow missing dbs
+          if allow_missing_dbs == False:
+            raise e
           return dict(), list()
           
     else:
@@ -57,7 +60,7 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame()) -> tu
     
     
 
-def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
+def annotateBiGG(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from BiGG. Look for BiGG ids in the annotation slot of the metabolites and if one is found use these. Since BiGG does not provide any InChI strings, this will not results in any new annotated Inchi strings, but it will increase the number of entries in the metabolite annotation.
     The function will directly add the annotation and names to the MeMoMetabolite object.
@@ -71,7 +74,10 @@ def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
       db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
       bigg = pd.read_table(db_path)
     except FileNotFoundError as e:
-      warnings.warn(e)
+      warnings.warn(str(e))
+      # Rethrow exception because we want don't allow missing dbs
+      if allow_missing_dbs == False:
+        raise e
       return AnnotationResult(0, 0,0 )
     
     new_annos_added = 0
@@ -108,7 +114,7 @@ def annotateBiGG(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     return anno_result
 
 
-def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
+def annotateBiGG_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from BiGG. Look for BiGG ids in the metabolite._id slot and if one is found use these. Since BiGG does not provide any InChI strings, this will not results in any new annotated Inchi strings, but it will increase the number of entries in the metabolite annotation.
     """
@@ -119,9 +125,11 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     try:
         bigg = pd.read_table(db_path)
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
+        # Rethrow exception because we want don't allow missing dbs
+        if allow_missing_dbs == False:
+          raise e
         return(AnnotationResult(0,0,0))
-    
     new_annos = 0
     new_names = 0
     for met in metabolites:
