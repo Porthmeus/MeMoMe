@@ -7,6 +7,9 @@ from urllib.error import URLError
 import yaml
 import requests
 import sys
+import logging
+import time
+from concurrent.futures import ThreadPoolExecutor
 def is_inet_available() -> bool:
     try:
         response = requests.get("http://www.google.com", timeout=5)
@@ -95,7 +98,7 @@ def databases_available() -> bool:
     database_path = get_database_path()
     # check if all database files exists if not try to download
     if not os.path.exists(database_path):
-        is_there = download()
+        is_there = False
     else:
         for db in config["databases"]:
             if not os.path.exists(Path(database_path, config["databases"][db]["file"])):
@@ -109,15 +112,24 @@ def update_database() -> bool:
     config = get_config()
     database_path = get_database_path()
 
-    for i in config["databases"]:
-        db_path = database_path.joinpath(config["databases"][i]["file"])
-        if os.path.exists(db_path):
-            os.remove(db_path)
-        _download(db_path, config["databases"][i]["URL"])
+    start_time =  time.time()
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+      for i in config["databases"]:
+          db_path = database_path.joinpath(config["databases"][i]["file"])
+          if os.path.exists(db_path):
+              os.remove(db_path)
+          executor.submit(_download, db_path, config["databases"][i]["URL"])
+
+    # Wait until all downloads are finished
+    executor.shutdown(wait=True)
+    end_time =  time.time()
+    logging.debug(f"Downloading databases took: {end_time - start_time}")
+
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
-        try:
-          with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+') as f:
+      try:
+        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
             content: str = f.read()
             # This will break if the link changes
             content = content.removeprefix("Ext.data.JsonP.callback19(")
@@ -128,6 +140,6 @@ def update_database() -> bool:
             f.write(content)
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
-        except FileNotFoundError: 
+      except FileNotFoundError: 
           print("VMH could not be found, not tryting to reformat it")
     return True
