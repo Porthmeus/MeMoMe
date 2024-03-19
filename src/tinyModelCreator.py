@@ -183,7 +183,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Modify a metabolic model based on specified parameters.")
 
-    parser.add_argument("--model_file_path", type=str, default="../tests/dat/script_accessories/e_coli_vmh.xml",
+    parser.add_argument("--model_file_path", type=str, default="../tests/dat/e_coli_vmh.xml",
                         help="Path to the model file.")
 
     parser.add_argument("--biomass_id", type=str, default="biomass525",
