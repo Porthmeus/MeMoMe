@@ -5,7 +5,20 @@ from urllib.error import URLError
 
 #from src.config import *
 import yaml
+import requests
+import sys
 import logging
+import time
+from concurrent.futures import ThreadPoolExecutor
+def is_inet_available() -> bool:
+    try:
+        response = requests.get("http://www.google.com", timeout=5)
+        response.raise_for_status()  # Raises an exception for 4xx and 5xx status codes
+        print("Internet is available.")
+        return True
+    except requests.RequestException:
+        print("Internet is not available.")
+        return False
 
 def get_config() -> dict:
     """ load the config file and return the dictionary"""
@@ -27,17 +40,23 @@ def get_database_path() -> Path:
     database_path:Path = this_path.parent.parent.joinpath(config["DB_location"])
     return(database_path.absolute())
 
-def create_folder(path: Path) -> Path:
+def create_folder(path: Path) -> Path | None:
     """
     param path: Folder where we want to create the new Database folder.
     """
-    print("Creating database folder in " + str(path))
     try:
+        dbfolder_there  = path.exists()
+        inet_there = is_inet_available()
+        if (not dbfolder_there ) and (not inet_there):
+          print("No databases were found but no internet connection is available, aborting program")
+          sys.exit(1)
+        # TODO This code is not testable
+        print("Creating database folder in " + str(path))
         path.mkdir(parents = True)
     except FileExistsError:
         # if it is an empty directory, that is fine, if not return nothing
         if not len(os.listdir(path)) == 0:
-            raise FileExistsError(str(path) +" already exists and is not empty. Please check your database configuration")
+            raise FileExistsError(str(path) + f" already exists and is not empty. Please check your database configuration or delete content in {str(path)})")
 
 
 def _download(path: Path, URL: str):
@@ -46,11 +65,11 @@ def _download(path: Path, URL: str):
     param db: which db to download
     return:
     """
-    print("Downloading " + URL + " to " + str(path))
     try:
         urllib.request.urlretrieve(URL, path)
+        print("Downloading " + URL + " to " + str(path))
     except URLError:
-        print("WARNING: Could not download " + path)
+        print("WARNING: Could not download " + str(path))
 
 
 def download() -> bool:
@@ -93,8 +112,6 @@ def update_database() -> bool:
     config = get_config()
     database_path = get_database_path()
 
-    import time
-    from concurrent.futures import ThreadPoolExecutor
     start_time =  time.time()
 
     with ThreadPoolExecutor(max_workers=8) as executor:
@@ -111,6 +128,7 @@ def update_database() -> bool:
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
+      try:
         with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
             content: str = f.read()
             # This will break if the link changes
@@ -122,4 +140,6 @@ def update_database() -> bool:
             f.write(content)
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
+      except FileNotFoundError: 
+          print("VMH could not be found, not tryting to reformat it")
     return True

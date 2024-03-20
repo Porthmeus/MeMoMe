@@ -5,13 +5,14 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 import os
 import json
 import pandas as pd
+import warnings
 from io import StringIO
 from src.download_db import get_config, get_database_path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotateAux import AnnotationResult
 
 
-def annotateVMH_entry(entry:str,  database:dict = dict()) -> tuple[dict, list]:
+def annotateVMH_entry(entry:str,  database:dict = dict(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
     """
     A small helper function to avoid redundant code.
     Uses a VMH identifier and annotates it with the identifiers.org entries.
@@ -24,8 +25,15 @@ def annotateVMH_entry(entry:str,  database:dict = dict()) -> tuple[dict, list]:
         # load the database
         config = get_config()
         db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
-        with open(db_path) as f:
-            vmh_json = json.load(f)
+        try:
+          f = open(db_path) 
+          vmh_json = json.load(f)
+        except FileNotFoundError as e:
+          warnings.warn(str(e))
+          # Rethrow exception because we want don't allow missing dbs
+          if allow_missing_dbs == False:
+            raise e
+          return ({}, [])
         vmh = vmh_json['results']
     else:
         vmh_json = database
@@ -56,7 +64,7 @@ def annotateVMH_entry(entry:str,  database:dict = dict()) -> tuple[dict, list]:
 
 
 
-def annotateVMH(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
+def annotateVMH(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from VMH. Look for VMH ids in the annotation slot of the metabolites and if one is found use these.
     The function will directly add the annotation and names to the MeMoMetabolite object.
@@ -66,8 +74,16 @@ def annotateVMH(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
-    with open(db_path) as f:
-        vmh_json = json.load(f)
+    try:
+      f = open(db_path) 
+      vmh_json = json.load(f)
+    except FileNotFoundError as e:
+      warnings.warn(str(e))
+      # Rethrow exception because we want don't allow missing dbs
+      if allow_missing_dbs == False:
+        raise e
+      return AnnotationResult(0, 0, 0,)
+
     vmh = json.dumps(vmh_json['results'])
     vmh = pd.read_json(StringIO(vmh))
     
@@ -105,7 +121,7 @@ def annotateVMH(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     return anno_result
 
 
-def annotateVMH_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
+def annotateVMH_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """
     Annotate a list of metabolites with the entries from VMH. Look for VMH ids in the metabolite._id slot and if one is found use these.
     """
@@ -113,8 +129,16 @@ def annotateVMH_id(metabolites: list[MeMoMetabolite]) -> AnnotationResult:
     # load the database
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
-    with open(db_path) as f:
-        vmh_json = json.load(f)
+    try:
+      f = open(db_path)
+      vmh_json = json.load(f)
+    except FileNotFoundError as e:
+      warnings.warn(str(e))
+      # Rethrow exception because we want don't allow missing dbs
+      if allow_missing_dbs == False:
+        raise e
+      return AnnotationResult(0, 0, 0)
+
     vmh = json.dumps(vmh_json['results'])
     vmh = pd.read_json(StringIO(vmh))
     
