@@ -26,8 +26,8 @@ def annotateVMH_entry(entry:str,  database:dict = dict(), allow_missing_dbs: boo
         config = get_config()
         db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
         try:
-          f = open(db_path) 
-          vmh_json = json.load(f)
+          with open(db_path, "r") as f: 
+            vmh_json = json.load(f)
         except FileNotFoundError as e:
           warnings.warn(str(e))
           # Rethrow exception because we want don't allow missing dbs
@@ -75,8 +75,8 @@ def annotateVMH(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = Fal
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
     try:
-      f = open(db_path) 
-      vmh_json = json.load(f)
+      with open(db_path, "r") as f: 
+         vmh_json = json.load(f)
     except FileNotFoundError as e:
       warnings.warn(str(e))
       # Rethrow exception because we want don't allow missing dbs
@@ -130,8 +130,8 @@ def annotateVMH_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = 
     config = get_config()
     db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
     try:
-      f = open(db_path)
-      vmh_json = json.load(f)
+      with open(db_path, "r") as f: 
+        vmh_json = json.load(f)
     except FileNotFoundError as e:
       warnings.warn(str(e))
       # Rethrow exception because we want don't allow missing dbs
