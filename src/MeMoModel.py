@@ -88,7 +88,7 @@ class MeMoModel:
 
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False) -> pd.DataFrame:
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched = False) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information 
         output_names: If true, output the names of the metabolites that led to match based on levenshtein
         """

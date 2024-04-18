@@ -198,17 +198,17 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
       metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
 
-    model = MeMoModel([metaboliteA])
-    model2 = MeMoModel([metaboliteA, metaboliteB])
-    res = model.match(model2, keep1ToMany = True)
-    self.assertEqual(res.shape[0], 2)
-    self.assertEqual(res["inchi_score"][0], 1.0000)
-    val = res["inchi_score"][1]
-    self.assertTrue(val==0)
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keep1ToMany = True)
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["inchi_score"][0], 1.0000)
+      val = res["inchi_score"][1]
+      self.assertTrue(val==0)
 
-    res = model.match(model2, keep1ToMany = False)
-    self.assertEqual(res.shape[0], 1)
-    self.assertEqual(res["inchi_score"][0], 1.0000)
+      res = model.match(model2, keep1ToMany = False)
+      self.assertEqual(res.shape[0], 1)
+      self.assertEqual(res["inchi_score"][0], 1.0000)
 
     def test_keepUnmatched(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
