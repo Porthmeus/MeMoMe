@@ -88,13 +88,13 @@ class MeMoModel:
 
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched = False) -> pd.DataFrame:
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched: bool = False) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame with additional information 
         output_names: If true, output the names of the metabolites that led to match based on levenshtein
         """
-        res_inchi = self.matchOnInchi(model2)
-        res_db = self.matchOnDB(model2, output_dbs = output_dbs)
-        res_name = self.matchOnName(model2, output_names = output_names)
+        res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
+        res_db = self.matchOnDB(model2, output_dbs = output_dbs, keep1ToMany= keep1ToMany)
+        res_name = self.matchOnName(model2, output_names = output_names, keep1ToMany= keep1ToMany)
 
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
