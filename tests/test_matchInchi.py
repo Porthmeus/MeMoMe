@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.matchMets import matchMetsByInchi
-from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
+from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi, NeutraliseCharges
 
 
 class TestMatchInchit(unittest.TestCase):
@@ -24,13 +24,18 @@ class TestMatchInchit(unittest.TestCase):
                 inchi2 = test_dat.loc[i,"Inchi2"]
                 m1 = inchiToMol(inchi1)
                 m2 = inchiToMol(inchi2)
-
                 nminchi1 = molToNormalizedInchi(m1)
                 nminchi2 = molToNormalizedInchi(m2)
+                ntmol1 = NeutraliseCharges(m1)
+                ntmol2 = NeutraliseCharges(m2)
 
-                res.append(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2))[0])
+
+                res.append(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), ntmol1, ntmol2)[0])
         expected_res = [bool(x) for x in test_dat.loc[:,"Result"]]
         self.assertTrue(all([x==y for x,y in zip(expected_res,res)]))
+
+#    def test_matchMetsByInchi(self):
+
 
 if __name__ == '__main__':
     unittest.main()

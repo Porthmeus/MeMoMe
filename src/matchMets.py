@@ -10,14 +10,22 @@ from Levenshtein import ratio
 from warnings import warn
 from collections import namedtuple
 
-def matchMetsByInchi(nminchi1: str, nminchi2: str, mol1: Chem.rdchem.Mol, mol2: Chem.rdchem.Mol, fp1, fp2, verbose:bool = False) -> tuple:
+def matchMetsByInchi(nminchi1: str,
+        nminchi2: str,
+        mol1: Chem.rdchem.Mol,
+        mol2: Chem.rdchem.Mol,
+        fp1,
+        fp2,
+        charge_neutralized_mol1,
+        charge_neutralized_mol2,
+        verbose:bool = False) -> tuple:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
 
+    # rdkit is somewhat chatty. To supress the warning:
     # turn off chattiness of rdkit
     if verbose == False:
         RDLogger.DisableLog("rdApp.*")
 
-    # rdkit is somewhat chatty. To supress the warning:
     # check whether the molecules are differently charged, if so neutralize the charges
 #try:
     m1 = mol1
@@ -26,19 +34,23 @@ def matchMetsByInchi(nminchi1: str, nminchi2: str, mol1: Chem.rdchem.Mol, mol2: 
     charge2 = Chem.GetFormalCharge(m2)
     chargeDiff = charge1 - charge2
     if charge1 != charge2:
-        m1 = NeutraliseCharges(m1)
-        m2 = NeutraliseCharges(m2)
+        m1 = charge_neutralized_mol1
+        m2 = charge_neutralized_mol2
+ #       m1 = NeutraliseCharges(m1)
+ #       m2 = NeutraliseCharges(m2)
     
     same = False
+    # check the fingerprint
     if compareInchiByFingerprint0(fp1, fp2, verbose = verbose) == 1.0 or m1.GetNumAtoms() == m2.GetNumAtoms() == 1:
         same = nminchi1 == nminchi2
         if same == False:
-
             # if that is false check if there is one of the stereoisomers the
             # same
             same = compareInchiByStereoIsomer0(m1,m2, verbose = verbose)
 # finally:
     return(same, chargeDiff)
+
+
 
 DBResult = namedtuple("DBResult", ["commonDBs", "commonIds", "allIds", "score"])
 

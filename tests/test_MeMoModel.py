@@ -104,10 +104,12 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         # test the comparison for metabolite matching
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
+        mod.annotate()
         # self comparison
-        res = mod.match(mod)
+        res = mod.match(mod,keep1ToMany = False)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
+        self.assertTrue(all([x==y  for x,y in zip(res.met_id1,res.met_id2)]))
 
 
 class Test_MiscStuff(unittest.TestCase):

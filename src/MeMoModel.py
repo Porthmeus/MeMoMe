@@ -16,7 +16,7 @@ from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateAux import AnnotationResult
-from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
+from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName, NeutraliseCharges
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
@@ -131,6 +131,19 @@ class MeMoModel:
         mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
         mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
 
+        # remove charges
+        mask1 = ~pd.isna(mod1_inchis.Mol)
+        if sum(mask1) > 0:
+            mod1_inchis.loc[mask1,'neutralized_charge_mol'] = mod1_inchis.loc[mask1,'Mol'].apply(NeutraliseCharges)
+        else:
+            mod1_inchis["neutralized_charge_mol"] = None
+
+        mask2 = ~pd.isna(mod2_inchis.Mol)
+        if sum(mask2) > 0:
+            mod2_inchis.loc[mask2,'neutralized_charge_mol'] = mod2_inchis.loc[mask2,'Mol'].apply(NeutraliseCharges)
+        else:
+            mod2_inchis["neutralized_charge_mol"] = None
+
         # go through the inchis of the second model and find the corresponding inchi in self
         matches = {"met_id1" : [],
                 "met_id2" : [],
@@ -148,6 +161,7 @@ class MeMoModel:
                 mol1   = mod1_inchis.loc[i, "Mol"]
                 fp1 = mod1_inchis.loc[i, "fingerprint"]
                 nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
+                ntchrmol1 = mod1_inchis.loc[i, "neutralized_charge_mol"]
                 id1 = mod1_inchis.loc[i,"met_id"]
 
                 # loop through the metabolites of the second model
@@ -159,11 +173,13 @@ class MeMoModel:
                         mol2   = mod2_inchis.loc[j, "Mol"]
                         fp2 = mod2_inchis.loc[j, "fingerprint"]
                         nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
+                        ntchrmol2 = mod2_inchis.loc[j, "neutralized_charge_mol"]
                         id2 = mod2_inchis.loc[j,"met_id"]
                         
                         # do the actual matching
-                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2)
+                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2, ntchrmol1, ntchrmol2)
                         
+                        # write the results into the data frame
                         if res[0] == True or keep1ToMany == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
@@ -176,6 +192,8 @@ class MeMoModel:
     def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False, output_dbs: bool = False ) -> pd.DataFrame:
         print(f"Output_dbs set to {output_dbs}")
         # compare two models by the entries in the databases
+
+        # get the metabolites and set up a results data frame
         mets1 = self.metabolites
         mets2 = model2.metabolites
         results = {"met_id1":[],
@@ -187,13 +205,14 @@ class MeMoModel:
                 "commonIds": [],
                 "allIds": []}
         
-
+        # if output_dbs should not be reported, remove the entries here from the results data frame
         if not output_dbs:
           results.pop("commonDBs")
           results.pop("commonIds")
           results.pop("allIds")
 
-
+        
+        # loop through all metabolites
         for met1 in mets1:
             for met2 in mets2:
                 jaccard = matchMetsByDB(met1,met2)
