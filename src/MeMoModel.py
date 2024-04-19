@@ -55,9 +55,9 @@ class MeMoModel:
     def fromModel(cls, model: cb.Model) -> MeMoModel:
         """ Read the model from the cobra model """
         cobra_model = model
-        id = model.id
+        _id = model.id
         metabolites = parseMetaboliteInfoFromCobra(model)
-        return MeMoModel(metabolites=metabolites, _id=id)
+        return MeMoModel(metabolites=metabolites,cobra_model=cobra_model, _id=_id)
 
     @classmethod
     def fromSBML(cls, model: sbml.Model) -> MeMoModel:
@@ -111,11 +111,26 @@ class MeMoModel:
 
     
     def matchOnInchi(self, model2: MeMoModel, keep1ToMany:bool = False) -> pd.DataFrame:
-        # start with the comparison of inchi strings
+
+        # create data frames containing the information for comparison 
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in self.metabolites]]})
         mod2_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in model2.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in model2.metabolites]]})
+
+        # do some precalculations for speed up
+        # precalculate the mol representation for the inchi in rdkit
+        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
+        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
+        
+        # precalculate the fingerprints
+        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
+        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
+        
+        # normalize the inchi strings
+        mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
+        mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
+
         # go through the inchis of the second model and find the corresponding inchi in self
         matches = {"met_id1" : [],
                 "met_id2" : [],
@@ -123,30 +138,32 @@ class MeMoModel:
                 "inchi_string":[],
                 "charge_diff" : []}
 
-        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
-        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
-
-        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
-        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
-
-        mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
-        mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
-
+        # loop over the first models metabolites
         for i in range(len(mod1_inchis)):
+            # get the first inchi
             inchi1 = mod1_inchis.loc[i, "inchis"]
-            mol1   = mod1_inchis.loc[i, "Mol"]
-            fp1 = mod1_inchis.loc[i, "fingerprint"]
-            nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
+            # check if there is acutally an inchi, or whether the metabolite has none
             if inchi1 != None:
+                # assign the precalculated values for the inchi
+                mol1   = mod1_inchis.loc[i, "Mol"]
+                fp1 = mod1_inchis.loc[i, "fingerprint"]
+                nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
                 id1 = mod1_inchis.loc[i,"met_id"]
+
+                # loop through the metabolites of the second model
                 for j in range(len(mod2_inchis)):
                     inchi2 = mod2_inchis.loc[j, "inchis"]
-                    mol2   = mod2_inchis.loc[j, "Mol"]
-                    fp2 = mod2_inchis.loc[j, "fingerprint"]
-                    nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
+                    # check if there is acutally an inchi, or whether the metabolite has none
                     if inchi2 != None:
+                        # assign the precalculated values for the inchi
+                        mol2   = mod2_inchis.loc[j, "Mol"]
+                        fp2 = mod2_inchis.loc[j, "fingerprint"]
+                        nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
                         id2 = mod2_inchis.loc[j,"met_id"]
+                        
+                        # do the actual matching
                         res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2)
+                        
                         if res[0] == True or keep1ToMany == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)

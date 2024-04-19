@@ -28,9 +28,11 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         self.assertIsInstance(mod, MeMoModel)
+        self.assertIsInstance(mod.cobra_model, cb.Model)
         cb_mod = cb.io.read_sbml_model(str(mod_path))
         mod = MeMoModel.fromModel(cb_mod)
         self.assertIsInstance(mod, MeMoModel)
+        self.assertIsInstance(mod.cobra_model, cb.Model)
 
     def test_MeMoModelAnnotation(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
