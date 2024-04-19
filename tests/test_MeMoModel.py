@@ -2,18 +2,20 @@
 # 02.08.23
 
 import unittest
-from pathlib import Path
 import cobra as cb
 import pandas as pd
 import warnings
 import math
-#from src.MeMoModel import MeMoModel
+import sys
+from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateAux import AnnotationResult
+
+print(sys.version)
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
@@ -108,83 +110,126 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
 class Test_MiscStuff(unittest.TestCase):
 
-  def test_1toManyMatchingOnName(self):
-    metaboliteA: MeMoMetabolite = MeMoMetabolite()
-    metaboliteB: MeMoMetabolite = MeMoMetabolite()
-    metaboliteA.set_names(["Glucose"])
-    metaboliteB.set_names(["Glukose"])
+    def test_MeMoModelOutPutNames(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_names(["Glucose"])
+      metaboliteB.set_names(["Glukose"])
 
-    model = MeMoModel([metaboliteA])
-    model2 = MeMoModel([metaboliteA, metaboliteB])
-    res = model.match(model2, keep1ToMany = True)
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteB])
+      res = model.match(model2, output_names = False)
+      self.assertFalse("name_id1" in res.columns)
+      self.assertFalse("name_id2" in res.columns)
+      
+      res = model.match(model2, output_names = True)
+      self.assertTrue("name_id1" in res.columns)
+      self.assertTrue("name_id2" in res.columns)
 
-    self.assertEqual(res.shape[0], 2)
-    self.assertEqual(res["Name_score"][0], 1.0000)
-    val = res["Name_score"][1]
-    self.assertTrue(math.isclose(val, 0.857143, rel_tol=1e-2))
+      self.assertEqual(res["name_id1"][0], "Glucose")
+      self.assertEqual(res["name_id2"][0], "Glukose")
+
+
+    def test_MeMoModelOutputDBs(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      # TODO: How does a sensible annoation example look like 
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
+      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteB])
+      res = model.match(model2, output_names = False, output_dbs = False)
+      self.assertFalse("commonDBs" in res.columns)
+      self.assertFalse("commonIds" in res.columns)
+      self.assertFalse("distinctIds" in res.columns)
+
+      res = model.match(model2, output_names = False, output_dbs = True)
+      self.assertTrue("commonDBs" in res.columns)
+      self.assertTrue("commonIds" in res.columns)
+      self.assertTrue("allIds" in res.columns)
+      
+      self.assertEqual(res["commonDBs"][0], "DatabaseA")
+      self.assertEqual(res["commonIds"][0], "['DatabaseA.stuff']")
+      self.assertEqual(res["allIds"][0], "['DatabaseA.stuff', 'DatabaseA.stuff3']")
+
+    def test_1toManyMatchingOnName(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_names(["Glucose"])
+      metaboliteB.set_names(["Glukose"])
+
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keep1ToMany = True)
+
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["Name_score"][0], 1.0000)
+      val = res["Name_score"][1]
+      self.assertTrue(math.isclose(val, 0.857143, rel_tol=1e-2))
 
     
-    res = model.match(model2, keep1ToMany = False)
-    self.assertEqual(res.shape[0], 1)
-    self.assertEqual(res["Name_score"][0], 1.0000)
+      res = model.match(model2, keep1ToMany = False)
+      self.assertEqual(res.shape[0], 1)
+      self.assertEqual(res["Name_score"][0], 1.0000)
 
 
-  def test_1toManyMatchingOnDB(self):
-    metaboliteA: MeMoMetabolite = MeMoMetabolite()
-    metaboliteB: MeMoMetabolite = MeMoMetabolite()
-    metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
-    metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+    def test_1toManyMatchingOnDB(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
+      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
 
-    model = MeMoModel([metaboliteA])
-    model2 = MeMoModel([metaboliteA, metaboliteB])
-    res = model.match(model2, keep1ToMany = True)
-    self.assertEqual(res.shape[0], 2)
-    self.assertEqual(res["DB_score"][0], 1.0000)
-    val = res["DB_score"][1]
-    self.assertTrue(math.isclose(val, 0.5, rel_tol=1e-2))
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keep1ToMany = True)
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["DB_score"][0], 1.0000)
+      val = res["DB_score"][1]
+      self.assertTrue(math.isclose(val, 0.5, rel_tol=1e-2))
 
-    res = model.match(model2, keep1ToMany = False)
-    self.assertEqual(res.shape[0], 1)
-    self.assertEqual(res["DB_score"][0], 1.0000)
+      res = model.match(model2, keep1ToMany = False)
+      self.assertEqual(res.shape[0], 1)
+      self.assertEqual(res["DB_score"][0], 1.0000)
 
-  def test_1toManyMatchingOnInchi(self):
-    metaboliteA: MeMoMetabolite = MeMoMetabolite()
-    metaboliteB: MeMoMetabolite = MeMoMetabolite()
-    metaboliteA.set_id("A")
-    metaboliteB.set_id("B")
-    metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
-    metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
+    def test_1toManyMatchingOnInchi(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("A")
+      metaboliteB.set_id("B")
+      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
+      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
 
-    model = MeMoModel([metaboliteA])
-    model2 = MeMoModel([metaboliteA, metaboliteB])
-    res = model.match(model2, keep1ToMany = True)
-    self.assertEqual(res.shape[0], 2)
-    self.assertEqual(res["inchi_score"][0], 1.0000)
-    val = res["inchi_score"][1]
-    self.assertTrue(val==0)
+      model = MeMoModel([metaboliteA])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keep1ToMany = True)
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["inchi_score"][0], 1.0000)
+      val = res["inchi_score"][1]
+      self.assertTrue(val==0)
 
-    res = model.match(model2, keep1ToMany = False)
-    self.assertEqual(res.shape[0], 1)
-    self.assertEqual(res["inchi_score"][0], 1.0000)
+      res = model.match(model2, keep1ToMany = False)
+      self.assertEqual(res.shape[0], 1)
+      self.assertEqual(res["inchi_score"][0], 1.0000)
 
-  def test_keepUnmatched(self):
+    def test_keepUnmatched(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("A")
+      metaboliteB.set_id("B")
+      metaboliteC.set_id("C")
+      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
+      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
+      metaboliteC.set_inchi_string(None)
 
-    metaboliteA: MeMoMetabolite = MeMoMetabolite()
-    metaboliteB: MeMoMetabolite = MeMoMetabolite()
-    metaboliteC: MeMoMetabolite = MeMoMetabolite()
-    metaboliteA.set_id("A")
-    metaboliteB.set_id("B")
-    metaboliteC.set_id("C")
-    metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
-    metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
-    metaboliteC.set_inchi_string(None)
+      model = MeMoModel([metaboliteA, metaboliteC])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keep1ToMany = False, keepUnmatched=True)
+      self.assertEqual(res.shape[0], 3)
+      self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
+      self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
 
-    model = MeMoModel([metaboliteA, metaboliteC])
-    model2 = MeMoModel([metaboliteA, metaboliteB])
-    res = model.match(model2, keep1ToMany = False, keepUnmatched=True)
-    self.assertEqual(res.shape[0], 3)
-    self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
-    self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
 
 if __name__ == '__main__':
     unittest.main()

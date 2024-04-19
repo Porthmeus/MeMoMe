@@ -87,11 +87,15 @@ class MeMoModel:
         print("Total:", anno_result)
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True, keepUnmatched: bool = False) -> pd.DataFrame:
-        """ compares the metabolites of two models and returns a data frame with additional information """
+
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched: bool = False) -> pd.DataFrame:
+        """ compares the metabolites of two models and returns a data frame with additional information 
+        output_names: If true, output the names of the metabolites that led to match based on levenshtein
+        """
         res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
-        res_db = self.matchOnDB(model2, keep1ToMany = keep1ToMany)
-        res_name = self.matchOnName(model2, keep1ToMany = keep1ToMany)
+        res_db = self.matchOnDB(model2, output_dbs = output_dbs, keep1ToMany= keep1ToMany)
+        res_name = self.matchOnName(model2, output_names = output_names, keep1ToMany= keep1ToMany)
+
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
 
@@ -119,11 +123,8 @@ class MeMoModel:
                 "inchi_string":[],
                 "charge_diff" : []}
 
-
-        
         mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
         mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
-
 
         mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
         mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
@@ -155,7 +156,8 @@ class MeMoModel:
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
-    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False, output_dbs: bool = False ) -> pd.DataFrame:
+        print(f"Output_dbs set to {output_dbs}")
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -163,14 +165,29 @@ class MeMoModel:
                 "met_id2":[],
                 "DB_score":[],
                 "charge_diff":[],
-                "inchi_string":[]}
+                "inchi_string":[],
+                "commonDBs" : [],
+                "commonIds": [],
+                "allIds": []}
+        
+
+        if not output_dbs:
+          results.pop("commonDBs")
+          results.pop("commonIds")
+          results.pop("allIds")
+
+
         for met1 in mets1:
             for met2 in mets2:
                 jaccard = matchMetsByDB(met1,met2)
-                if jaccard > threshold:
+                if jaccard.score > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
-                    results["DB_score"].append(jaccard)
+                    results["DB_score"].append(jaccard.score)
+                    if output_dbs:
+                        results["commonDBs"] = jaccard.commonDBs
+                        results["commonIds"] = jaccard.commonIds
+                        results["allIds"] = jaccard.allIds
                     # try to calculate charge differences and add them as information
                     try:
                         charge_diff = met1._charge - met2._charge
@@ -197,7 +214,8 @@ class MeMoModel:
             results = results.drop_duplicates("met_id2")
         return(results)
 
-    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
+        print(f"Output_names set to {output_names}")
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -205,14 +223,24 @@ class MeMoModel:
                 "met_id2":[],
                 "Name_score":[],
                 "charge_diff":[],
-                "inchi_string":[]}
+                "inchi_string":[],
+                   "name_id1" : [],
+                   "name_id2": []}
+        
+
+        if not output_names:
+          results.pop("name_id1")
+          results.pop("name_id2")
         for met1 in mets1:
             for met2 in mets2:
                 levenshtein = matchMetsByName(met1,met2)
-                if levenshtein > threshold:
+                if levenshtein.score > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
-                    results["Name_score"].append(levenshtein)
+                    if output_names:
+                      results["name_id1"].append(levenshtein.name_id1)
+                      results["name_id2"].append(levenshtein.name_id2)
+                    results["Name_score"].append(levenshtein.score)
                     # try to calculate charge differences and add them as information
                     try:
                         charge_diff = met1._charge - met2._charge
