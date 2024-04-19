@@ -2,18 +2,20 @@
 # 02.08.23
 
 import unittest
-from pathlib import Path
 import cobra as cb
 import pandas as pd
 import warnings
 import math
-#from src.MeMoModel import MeMoModel
+import sys
+from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateAux import AnnotationResult
+
+print(sys.version)
 
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
