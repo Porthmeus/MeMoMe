@@ -101,11 +101,11 @@ class MeMoModel:
           temp_result = annotateChEBI(self.metabolites)
           #print("ChEBI:",temp_result)
           anno_result = anno_result + temp_result
-          # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
           temp_result = annotateModelSEED(self.metabolites)
+          anno_result = anno_result + temp_result
           #print("ModelSEED:", temp_result)
           temp_result = annotateVMH(self.metabolites)
-          #print("ModelSEED:", temp_result)
+          #print("VMH:", temp_result)
           anno_result = anno_result + temp_result
           #print("Total:", anno_result, "\n")
           if anno_result == old_res:
