@@ -95,19 +95,20 @@ class MeMoModel:
           old_res = AnnotationResult.fromAnnotation(anno_result)
           # BiGG
           temp_result = annotateBiGG(self.metabolites)
-          #print("BiGG:",temp_result)
+          print("BiGG:",temp_result)
           anno_result = anno_result + temp_result
           # Use ChEBI
           temp_result = annotateChEBI(self.metabolites)
-          #print("ChEBI:",temp_result)
+          print("ChEBI:",temp_result)
           anno_result = anno_result + temp_result
           temp_result = annotateModelSEED(self.metabolites)
           anno_result = anno_result + temp_result
-          #print("ModelSEED:", temp_result)
+          print("ModelSEED:", temp_result)
           temp_result = annotateVMH(self.metabolites)
-          #print("VMH:", temp_result)
+          print("VMH:", temp_result)
           anno_result = anno_result + temp_result
-          #print("Total:", anno_result, "\n")
+          print("Total:", anno_result, "\n")
+          print("\n\n\n\n\n\n\n\n\n")
           if anno_result == old_res:
             break
           

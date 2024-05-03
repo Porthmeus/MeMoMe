@@ -217,6 +217,10 @@ class MeMoMetabolite():
             if new is None:
                 raise NotImplementedError()
             if new != old:
+                print(self.id)
+                print("OLD", self._inchi_string)
+                print("NEW", new_inchi_string)
+                print("\n\n")
                 self._inchi_string = new
                 changed =  1
         else:
