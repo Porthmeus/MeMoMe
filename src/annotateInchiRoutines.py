@@ -2,10 +2,11 @@
 # 16.06.23
 from typing import Optional
 
-from src.matchMets import matchMetsByInchi
+from src.matchMets import matchMetsByInchi, NeutraliseCharges
 from rdkit import Chem, RDLogger
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import warnings
+
 
 from rdkit import Chem, RDLogger
 
@@ -97,7 +98,9 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
 
                 nminchi1 = molToNormalizedInchi(m1)
                 nminchi2 = molToNormalizedInchi(m2)
-                k = k + int(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), verbose = verbose)[0])
+                nt_m1 = NeutraliseCharges(m1)
+                nt_m2 = NeutraliseCharges(m2)
+                k = k + int(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), nt_m1, nt_m2, verbose = verbose)[0])
         matches.append(k)
     if len(matches) == 0:
         return None

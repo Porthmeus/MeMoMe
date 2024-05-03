@@ -4,6 +4,7 @@
 # Some functions to compare InChi keys/strings and tell if it is the same chemical structure
 
 import rdkit
+import warnings
 from rdkit import Chem, DataStructs, RDLogger
 from rdkit.Chem import AllChem
 from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers, StereoEnumerationOptions
@@ -161,8 +162,20 @@ def compareInchiByStereoIsomer0(m1:rdkit.Chem.rdchem.Mol, m2:rdkit.Chem.rdchem.M
      
     # find also stereoisomers in defined InChI
     opts = StereoEnumerationOptions(onlyUnassigned=False)
-    stereo1 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m1, options=opts)]
-    stereo2 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m2, options=opts)]
+    try:
+        stereo1 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m1, options=opts)]
+    except RuntimeError as e:
+ #       warnings.warn(str(e))
+        stereo1 = [Chem.MolToInchi(m1)]
+        warnings.warn("Failed to enumerate steroisomers for "+stereo1[0]+ ". Will fallback to original structure without possible steroisomers")
+        warnings.warn("Will fallback to original structure without possible steroisomers")
+
+    try:
+        stereo2 = [Chem.MolToInchi(x) for x in EnumerateStereoisomers(m2, options=opts)]
+    except RuntimeError as e:
+        #warnings.warn(str(e)) 
+        stereo2 = [Chem.MolToInchi(m2)]
+        warnings.warn("Failed to enumerate steroisomers for " + stereo2[0] + ". Will fallback to original structure without possible steroisomers")
     intersect = list(set(stereo1).intersection(stereo2))
     return len(intersect) > 0
 

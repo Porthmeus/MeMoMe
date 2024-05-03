@@ -28,9 +28,11 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         self.assertIsInstance(mod, MeMoModel)
+        self.assertIsInstance(mod.cobra_model, cb.Model)
         cb_mod = cb.io.read_sbml_model(str(mod_path))
         mod = MeMoModel.fromModel(cb_mod)
         self.assertIsInstance(mod, MeMoModel)
+        self.assertIsInstance(mod.cobra_model, cb.Model)
 
     def test_MeMoModelAnnotation(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
@@ -102,10 +104,12 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         # test the comparison for metabolite matching
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
+        mod.annotate()
         # self comparison
-        res = mod.match(mod)
+        res = mod.match(mod,keep1ToMany = False)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
+        self.assertTrue(all([x==y  for x,y in zip(res.met_id1,res.met_id2)]))
 
 
 class Test_MiscStuff(unittest.TestCase):
