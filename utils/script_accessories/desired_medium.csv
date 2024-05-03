@@ -1,0 +1,9 @@
+Component,Constraint
+EX_adn(e),1.0
+EX_gsn(e),1.0
+EX_nmn(e),100.0
+EX_glc_D(e),1.0
+EX_h(e),10.0
+EX_pi(e),10.0
+EX_h2o(e),1000.0
+EX_o2(e),10.0
