@@ -8,7 +8,8 @@ import yaml
 import requests
 import sys
 import logging
-
+import time
+from concurrent.futures import ThreadPoolExecutor
 def is_inet_available() -> bool:
     try:
         response = requests.get("http://www.google.com", timeout=5)
@@ -111,8 +112,6 @@ def update_database() -> bool:
     config = get_config()
     database_path = get_database_path()
 
-    import time
-    from concurrent.futures import ThreadPoolExecutor
     start_time =  time.time()
 
     with ThreadPoolExecutor(max_workers=8) as executor:
@@ -129,6 +128,7 @@ def update_database() -> bool:
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
+      try:
         with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
             content: str = f.read()
             # This will break if the link changes
@@ -140,4 +140,6 @@ def update_database() -> bool:
             f.write(content)
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
+      except FileNotFoundError: 
+          print("VMH could not be found, not tryting to reformat it")
     return True
