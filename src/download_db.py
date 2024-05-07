@@ -7,6 +7,9 @@ from urllib.error import URLError
 import yaml
 import logging
 
+import time
+from concurrent.futures import ThreadPoolExecutor
+
 def get_config() -> dict:
     """ load the config file and return the dictionary"""
     this_path: Path = Path(__file__)
@@ -93,8 +96,6 @@ def update_database() -> bool:
     config = get_config()
     database_path = get_database_path()
 
-    import time
-    from concurrent.futures import ThreadPoolExecutor
     start_time =  time.time()
 
     with ThreadPoolExecutor(max_workers=8) as executor:
