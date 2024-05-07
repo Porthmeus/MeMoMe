@@ -17,7 +17,7 @@ from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateVMH import annotateVMH, annotateVMH_id
 from src.annotateAux import AnnotationResult
-from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
+from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName, NeutraliseCharges
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 from src.MeMoMetabolite import MeMoMetabolite
@@ -61,9 +61,9 @@ class MeMoModel:
     def fromModel(cls, model: cb.Model) -> MeMoModel:
         """ Read the model from the cobra model """
         cobra_model = model
-        id = model.id
+        _id = model.id
         metabolites = parseMetaboliteInfoFromCobra(model)
-        return MeMoModel(metabolites=metabolites, _id=id)
+        return MeMoModel(metabolites=metabolites,cobra_model=cobra_model, _id=_id)
 
     @classmethod
     def fromSBML(cls, model: sbml.Model) -> MeMoModel:
@@ -115,23 +115,63 @@ class MeMoModel:
         return anno_result
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True) -> pd.DataFrame:
-        """ compares the metabolites of two models and returns a data frame with additional information """
-        res_inchi = self.matchOnInchi(model2)
-        res_db = self.matchOnDB(model2)
-        res_name = self.matchOnName(model2)
+
+    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched: bool = False) -> pd.DataFrame:
+        """ compares the metabolites of two models and returns a data frame with additional information 
+        output_names: If true, output the names of the metabolites that led to match based on levenshtein
+        """
+        res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
+        res_db = self.matchOnDB(model2, output_dbs = output_dbs, keep1ToMany= keep1ToMany)
+        res_name = self.matchOnName(model2, output_names = output_names, keep1ToMany= keep1ToMany)
+
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
-        # TODO add comparison on the base of names
+
+        # add the unmatched metabolites
+        if keepUnmatched == True:
+            miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
+            missing_df1 = pd.DataFrame({"met_id1":miss_mets1})
+            miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
+            missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
+            res = pd.concat([res,missing_df1, missing_df2])
+
         return(res)
 
     
-    def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
-        # start with the comparison of inchi strings
+    def matchOnInchi(self, model2: MeMoModel, keep1ToMany:bool = False) -> pd.DataFrame:
+
+        # create data frames containing the information for comparison 
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in self.metabolites]]})
         mod2_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in model2.metabolites]],
                 "inchis" : [x._inchi_string for x in [y for y in model2.metabolites]]})
+
+        # do some precalculations for speed up
+        # precalculate the mol representation for the inchi in rdkit
+        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
+        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
+        
+        # precalculate the fingerprints
+        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
+        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
+        
+        # normalize the inchi strings
+        mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
+        mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
+
+        # remove charges
+        mask1 = ~pd.isna(mod1_inchis.Mol)
+        if sum(mask1) > 0:
+            mod1_inchis.loc[mask1,'neutralized_charge_mol'] = mod1_inchis.loc[mask1,'Mol'].apply(NeutraliseCharges)
+        else:
+            mod1_inchis["neutralized_charge_mol"] = None
+
+        mask2 = ~pd.isna(mod2_inchis.Mol)
+        if sum(mask2) > 0:
+            mod2_inchis.loc[mask2,'neutralized_charge_mol'] = mod2_inchis.loc[mask2,'Mol'].apply(NeutraliseCharges)
+        else:
+            mod2_inchis["neutralized_charge_mol"] = None
+
         # go through the inchis of the second model and find the corresponding inchi in self
         matches = {"met_id1" : [],
                 "met_id2" : [],
@@ -139,58 +179,79 @@ class MeMoModel:
                 "inchi_string":[],
                 "charge_diff" : []}
 
-
-        
-        mod1_inchis['Mol'] = mod1_inchis['inchis'].apply(inchiToMol)
-        mod2_inchis['Mol'] = mod2_inchis['inchis'].apply(inchiToMol)
-
-
-        mod1_inchis['fingerprint'] = mod1_inchis['Mol'].apply(molToRDK)
-        mod2_inchis['fingerprint'] = mod2_inchis['Mol'].apply(molToRDK)
-
-        mod1_inchis['normalized_inchi'] = mod1_inchis['Mol'].apply(molToNormalizedInchi)
-        mod2_inchis['normalized_inchi'] = mod2_inchis['Mol'].apply(molToNormalizedInchi)
-
+        # loop over the first models metabolites
         for i in range(len(mod1_inchis)):
+            # get the first inchi
             inchi1 = mod1_inchis.loc[i, "inchis"]
-            mol1   = mod1_inchis.loc[i, "Mol"]
-            fp1 = mod1_inchis.loc[i, "fingerprint"]
-            nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
+            # check if there is acutally an inchi, or whether the metabolite has none
             if inchi1 != None:
+                # assign the precalculated values for the inchi
+                mol1   = mod1_inchis.loc[i, "Mol"]
+                fp1 = mod1_inchis.loc[i, "fingerprint"]
+                nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
+                ntchrmol1 = mod1_inchis.loc[i, "neutralized_charge_mol"]
                 id1 = mod1_inchis.loc[i,"met_id"]
+
+                # loop through the metabolites of the second model
                 for j in range(len(mod2_inchis)):
                     inchi2 = mod2_inchis.loc[j, "inchis"]
-                    mol2   = mod2_inchis.loc[i, "Mol"]
-                    fp2 = mod2_inchis.loc[i, "fingerprint"]
-                    nminchi2 = mod1_inchis.loc[i, "normalized_inchi"]
+                    # check if there is acutally an inchi, or whether the metabolite has none
                     if inchi2 != None:
+                        # assign the precalculated values for the inchi
+                        mol2   = mod2_inchis.loc[j, "Mol"]
+                        fp2 = mod2_inchis.loc[j, "fingerprint"]
+                        nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
+                        ntchrmol2 = mod2_inchis.loc[j, "neutralized_charge_mol"]
                         id2 = mod2_inchis.loc[j,"met_id"]
-                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2)
-                        if res[0] == True:
+                        
+                        # do the actual matching
+                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2, ntchrmol1, ntchrmol2)
+                        
+                        # write the results into the data frame
+                        if res[0] == True or keep1ToMany == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
                             matches["inchi_string"].append(inchi1)
                             matches["charge_diff"].append(res[1])
-                            matches["inchi_score"].append(1)
+                            matches["inchi_score"].append(int(res[0]))
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
-    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False, output_dbs: bool = False ) -> pd.DataFrame:
+        print(f"Output_dbs set to {output_dbs}")
         # compare two models by the entries in the databases
+
+        # get the metabolites and set up a results data frame
         mets1 = self.metabolites
         mets2 = model2.metabolites
         results = {"met_id1":[],
                 "met_id2":[],
                 "DB_score":[],
                 "charge_diff":[],
-                "inchi_string":[]}
+                "inchi_string":[],
+                "commonDBs" : [],
+                "commonIds": [],
+                "allIds": []}
+        
+        # if output_dbs should not be reported, remove the entries here from the results data frame
+        if not output_dbs:
+          results.pop("commonDBs")
+          results.pop("commonIds")
+          results.pop("allIds")
+
+        
+        # loop through all metabolites
         for met1 in mets1:
             for met2 in mets2:
                 jaccard = matchMetsByDB(met1,met2)
-                if jaccard > threshold:
+                if jaccard.score > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
-                    results["DB_score"].append(jaccard)
+                    results["DB_score"].append(jaccard.score)
+                    if output_dbs:
+                        results["commonDBs"] = jaccard.commonDBs
+                        results["commonIds"] = jaccard.commonIds
+                        results["allIds"] = jaccard.allIds
                     # try to calculate charge differences and add them as information
                     try:
                         charge_diff = met1._charge - met2._charge
@@ -217,7 +278,8 @@ class MeMoModel:
             results = results.drop_duplicates("met_id2")
         return(results)
 
-    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False) -> pd.DataFrame:
+    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
+        print(f"Output_names set to {output_names}")
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -225,14 +287,24 @@ class MeMoModel:
                 "met_id2":[],
                 "Name_score":[],
                 "charge_diff":[],
-                "inchi_string":[]}
+                "inchi_string":[],
+                   "name_id1" : [],
+                   "name_id2": []}
+        
+
+        if not output_names:
+          results.pop("name_id1")
+          results.pop("name_id2")
         for met1 in mets1:
             for met2 in mets2:
                 levenshtein = matchMetsByName(met1,met2)
-                if levenshtein > threshold:
+                if levenshtein.score > threshold:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
-                    results["Name_score"].append(levenshtein)
+                    if output_names:
+                      results["name_id1"].append(levenshtein.name_id1)
+                      results["name_id2"].append(levenshtein.name_id2)
+                    results["Name_score"].append(levenshtein.score)
                     # try to calculate charge differences and add them as information
                     try:
                         charge_diff = met1._charge - met2._charge
