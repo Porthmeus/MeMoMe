@@ -190,7 +190,6 @@ class MeMoModel:
         return(inchiRes)
 
     def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False, output_dbs: bool = False ) -> pd.DataFrame:
-        print(f"Output_dbs set to {output_dbs}")
         # compare two models by the entries in the databases
 
         # get the metabolites and set up a results data frame
@@ -251,7 +250,6 @@ class MeMoModel:
         return(results)
 
     def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
-        print(f"Output_names set to {output_names}")
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
