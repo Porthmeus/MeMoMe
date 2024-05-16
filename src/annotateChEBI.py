@@ -47,7 +47,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = F
             chebis = [x for x in chebis if x in chebi_db.index]
             inchis = np.unique(chebi_db.loc[chebis, "InChI"])
             if len(inchis) > 0:
-                inchi = findOptimalInchi(inchis)
+                inchi = findOptimalInchi(inchis, charge = metabolites[i]._charge)
                 if inchi is None:
                     continue
             annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)

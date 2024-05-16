@@ -159,7 +159,7 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
             # check whether there is more than one inchi in the annotations
 
             if len(inchi) > 1:
-                inchi = findOptimalInchi(inchi)
+                inchi = findOptimalInchi(inchi, charge = met.charge)
                 if inchi is None:
                     raise NotImplementedError()
             elif validateInchi(inchi[0]):
