@@ -112,8 +112,8 @@ def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = 
         k = 0
         for j in range(len(inchis)):
             if j != i:
-                m1 = inchiToMol(inchis[i])
-                m2 = inchiToMol(inchis[j])
+                m1 = mols[i]
+                m2 = mols[j]
 
                 nminchi1 = molToNormalizedInchi(m1)
                 nminchi2 = molToNormalizedInchi(m2)
