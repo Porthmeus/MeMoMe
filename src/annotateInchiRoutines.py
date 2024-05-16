@@ -8,7 +8,6 @@ from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import warnings
 
 
-from rdkit import Chem, RDLogger
 
 # Define your function
 def inchiToMol(inchi:str)->Chem.rdchem.Mol|None:
@@ -69,15 +68,21 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
     inchi = Chem.MolToInchi(m)
     return(inchi)
 
-def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
+def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = False) -> Optional[str]:
     """
     Find the "best" inchi string of equivalently annotated inchi strings.
 
     Sometimes it happens that the same molecule gets annotated with more than one inchi string. We need to handle this in some way. Usually it is just some form of isomer, which is not a big deal to take care of, but in case the Inchis are fundamentally different here we set following rules.
-    1. Use the inchi which has most trues after src.matchInchi.matchInchi()
-    2. If there are equals - use the most complex InChI string, that is the one with the most "/" in the string
-    3. If this number is also equal, simply use the longest inchi string
-    4. If this is also equal, use the first entry by chance
+    1. Check which inchis match the charge of the molecule
+    2. Use the inchi which has most trues after src.matchInchi.matchInchi() (this is the one which is most congruent with any other inchis in the list)
+    3. If there are equals - use the most complex InChI string, that is the one with the most "/" in the string
+    4. If this number is also equal, simply use the longest inchi string
+    5. If this is also equal, use the first entry by chance
+
+    Variables
+    ---------
+    inchis - list of inchi strings
+    charge - integer denoting the charge of the metabolite as given by the model (!)
     """
     
 
@@ -87,7 +92,21 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     if len(inchis) == 1:
         return(inchis[0])
 
-    # rule 1
+    # create a list of rdkit mol from inchis
+    mols = [inchiToMol(x) for x in inchis]
+    
+    # rule1: check the charges
+    if charge != None:
+        inchis_correct_charge = [x for x,y in zip(inchis,mols) if Chem.GetFormalCharge(y) == charge]
+        # if none of the inchis have the correct charge, keep them all and proceed
+        if len(inchis_correct_charge) > 0:
+            inchis = inchis_correct_charge
+    
+    # return the inchi if there is only one left
+    if len(inchis) == 1:
+        return(inchis[0])
+
+    # rule 2
     matches = []
     for i in range(len(inchis)):
         k = 0
@@ -107,7 +126,11 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     max_match = max(matches)
     inchis = [x for x, y in zip(inchis, matches) if y == max_match]
 
-    # rule 2
+    # return the inchi if there is only one left
+    if len(inchis) == 1:
+        return(inchis[0])
+
+    # rule 3
     counts = []
     for inchi in inchis:
         counts.append(inchi.count("/"))
@@ -116,7 +139,11 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     max_count = max(counts)
     inchis = [x for x, y in zip(inchis, counts) if y == max_count]
 
-    # rule 3
+    # return the inchi if there is only one left
+    if len(inchis) == 1:
+        return(inchis[0])
+
+    # rule 4
     counts = []
     for inchi in inchis:
         counts.append(len(inchi))
@@ -127,7 +154,11 @@ def findOptimalInchi(inchis_: list[str], verbose:bool = False) -> Optional[str]:
     if len(inchis) == 0:
         return None
 
-    # rule 4. For determinism, we sort them first so we always get the same result
+    # return the inchi if there is only one left
+    if len(inchis) == 1:
+        return(inchis[0])
+
+    # rule 5. For determinism, we sort them first so we always get the same result
     inchis.sort()
     return inchis[0]
 
