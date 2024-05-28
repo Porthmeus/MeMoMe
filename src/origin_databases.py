@@ -57,7 +57,7 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
     # get metabolite info from ModelSEED
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
     try:
-        df_ModelSEED = pd.read_table(db_path)
+        df_ModelSEED = pd.read_table(db_path, low_memory=False)
     except FileNotFoundError as e:
         warnings.warn(e)
         df_ModelSEED = pd.DataFrame()
