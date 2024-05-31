@@ -130,7 +130,7 @@ class MeMoModel:
         # remove pairs with score < threshold (default = 0)
         res = res.loc[res["total_score"]>threshold_total]
         
-        # if not keep1ToMany, keep only the maximum score pair for each metabolite of both models
+        # if not keepAllMany, keep only the maximum score pair for each metabolite of both models
         if keepAllMatches == False:
             met1_max = res[["met_id1","total_score"]].groupby(['met_id1']).max()
             met2_max = res[["met_id2","total_score"]].groupby(['met_id2']).max()
