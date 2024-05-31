@@ -213,10 +213,13 @@ class MeMoMetabolite():
         changed = 0
         if self._inchi_string != None:
             old = self._inchi_string
-            new = findOptimalInchi([self._inchi_string, new_inchi_string])
+            new = findOptimalInchi([self._inchi_string, new_inchi_string], charge = self._charge)
             if new is None:
                 raise NotImplementedError()
             if new != old:
+                #print(self.id) # nice feature for debugging
+                #print("OLD:",old)
+                #print("NEW:",new)
                 self._inchi_string = new
                 changed =  1
         else:

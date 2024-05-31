@@ -263,7 +263,7 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
                     warnings.warn("Could not convert smile to inchi for metabolite {met} and {smile}\n". format(met = met._id, smile = smile) + str(e))
             # get the correct inchi_string, if there was more than one
             if len(inchi_strings) > 1:
-                inchi_string = findOptimalInchi(inchi_strings)
+                inchi_string = findOptimalInchi(inchi_strings, charge = met._charge)
                 if inchi_string is None:
                     raise NotImplementedError()
 
@@ -338,7 +338,7 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
                             warnings.warn("Could not convert smile to inchi for metabolite {met} and {smile}\n". format(met = met._id, smile = smile) + str(e))
                     # get the correct inchi_string, if there was more than one
                     if len(inchi_strings) > 1:
-                        inchi_string = findOptimalInchi(inchi_strings)
+                        inchi_string = findOptimalInchi(inchi_strings, charge = met._charge)
                     elif len(inchi_strings) == 1:
                         inchi_string = inchi_strings[0]
                     else:

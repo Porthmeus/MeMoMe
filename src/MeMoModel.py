@@ -11,6 +11,7 @@ from warnings import warn
 import cobra as cb
 import libsbml as sbml
 import pandas as pd
+import numpy as np
 import logging
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
@@ -88,17 +89,60 @@ class MeMoModel:
 
 
 
-    def match(self, model2: MeMoModel, keep1ToMany:bool = True, output_names: bool = False, output_dbs: bool = False, keepUnmatched: bool = False) -> pd.DataFrame:
-        """ compares the metabolites of two models and returns a data frame with additional information 
+    def match(self,
+            model2: MeMoModel,
+            threshold_DB:float = 0,
+            threshold_name:float = 0.6,
+            threshold_total:float = 0,
+            keepAllMatches:bool = True,
+            output_names: bool = False,
+            output_dbs: bool = False,
+            keepUnmatched: bool = False) -> pd.DataFrame:
+        """ compares the metabolites of two models and returns a data frame
+        with additional information 
+        threshold_DB, threshold_name, threshold_total: value between 0 and 1. Defines a threshold on which a results should be kept
+        keepAllMatches: boolean, if true keeps all matches which survive the different thresholds, if false only top hits are being kept.
         output_names: If true, output the names of the metabolites that led to match based on levenshtein
+        output_dbs: If true, output the names of the database entries which have been matched on
+        keepUnmatched: returns also unmatched metabolites
         """
-        res_inchi = self.matchOnInchi(model2, keep1ToMany = keep1ToMany)
-        res_db = self.matchOnDB(model2, output_dbs = output_dbs, keep1ToMany= keep1ToMany)
-        res_name = self.matchOnName(model2, output_names = output_names, keep1ToMany= keep1ToMany)
+        res_inchi = self.matchOnInchi(model2)
+        res_db = self.matchOnDB(model2,
+                threshold = threshold_DB,
+                output_dbs = output_dbs)
+        res_name = self.matchOnName(model2,
+                threshold = threshold_name,
+                output_names = output_names)
 
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
+        res = res.rename(columns = {"charge_diff":"charge_diff_name", "inchi_string":"inchi_string_name"})
 
+        # calculate overall score in the result and remove NA
+        res.loc[pd.isna(res["inchi_score"]),res.columns =="inchi_score"] = 0
+        res.loc[pd.isna(res["DB_score"]),res.columns =="DB_score"] = 0
+        res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
+
+        ##### this is the place where we could change the weighting of the scoring ####
+        res["total_score"] = (res["inchi_score"]*3 + res["DB_score"]*2+res["Name_score"])/6
+        ###############################################################################
+
+        # remove pairs with score < threshold (default = 0)
+        res = res.loc[res["total_score"]>threshold_total]
+        
+        # if not keepAllMany, keep only the maximum score pair for each metabolite of both models
+        if keepAllMatches == False:
+            met1_max = res[["met_id1","total_score"]].groupby(['met_id1']).max()
+            met2_max = res[["met_id2","total_score"]].groupby(['met_id2']).max()
+            # get the index
+            keep_index = np.where([
+                all(res.iloc[i]["total_score"] == met1_max.loc[res.iloc[i]["met_id1"]]) or
+                all(res.iloc[i]["total_score"] == met2_max.loc[res.iloc[i]["met_id2"]]) for
+                i in range(len(res))
+                ])
+            res = res.iloc[keep_index]
+            res = res.reset_index(drop = True)
+                
         # add the unmatched metabolites
         if keepUnmatched == True:
             miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
@@ -107,10 +151,11 @@ class MeMoModel:
             missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
             res = pd.concat([res,missing_df1, missing_df2])
 
+
         return(res)
 
     
-    def matchOnInchi(self, model2: MeMoModel, keep1ToMany:bool = False) -> pd.DataFrame:
+    def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
 
         # create data frames containing the information for comparison 
         mod1_inchis = pd.DataFrame({"met_id" : [x.id for x in [y for y in self.metabolites]],
@@ -180,7 +225,7 @@ class MeMoModel:
                         res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, fp1, fp2, ntchrmol1, ntchrmol2)
                         
                         # write the results into the data frame
-                        if res[0] == True or keep1ToMany == True:
+                        if res[0] == True:
                             matches["met_id1"].append(id1)
                             matches["met_id2"].append(id2)
                             matches["inchi_string"].append(inchi1)
@@ -189,7 +234,10 @@ class MeMoModel:
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
-    def matchOnDB(self, model2: MeMoModel, threshold = 0, keep1ToMany = False, output_dbs: bool = False ) -> pd.DataFrame:
+    def matchOnDB(self,
+            model2: MeMoModel,
+            threshold = 0,
+            output_dbs: bool = False ) -> pd.DataFrame:
         # compare two models by the entries in the databases
 
         # get the metabolites and set up a results data frame
@@ -224,9 +272,9 @@ class MeMoModel:
                         results["commonIds"] = jaccard.commonIds
                         results["allIds"] = jaccard.allIds
                     # try to calculate charge differences and add them as information
-                    try:
+                    if met1._charge != None and met2._charge != None:
                         charge_diff = met1._charge - met2._charge
-                    except:
+                    else:
                         charge_diff = None
                     results["charge_diff"].append(charge_diff)
                     # try to find an inchi string for the pair and keep only the reference inchi
@@ -239,17 +287,13 @@ class MeMoModel:
                     else:
                         results["inchi_string"].append(None)
 
-
-        # remove one to many matches
         results = pd.DataFrame(results)
-        if keep1ToMany== False : 
-            results = results.sort_values(by = "DB_score", ascending = False)
-            results = results.drop_duplicates("met_id1")
-            results = results.sort_values(by = "DB_score", ascending = False)
-            results = results.drop_duplicates("met_id2")
         return(results)
 
-    def matchOnName(self, model2: MeMoModel, threshold = 0.6, keep1ToMany = False, output_names: bool = False) -> pd.DataFrame:
+    def matchOnName(self, 
+            model2: MeMoModel,
+            threshold = 0.6,
+            output_names: bool = False) -> pd.DataFrame:
         # compare two models by the entries in the databases
         mets1 = self.metabolites
         mets2 = model2.metabolites
@@ -276,9 +320,9 @@ class MeMoModel:
                       results["name_id2"].append(levenshtein.name_id2)
                     results["Name_score"].append(levenshtein.score)
                     # try to calculate charge differences and add them as information
-                    try:
+                    if met1._charge != None and met2._charge != None:
                         charge_diff = met1._charge - met2._charge
-                    except:
+                    else:
                         charge_diff = None
                     results["charge_diff"].append(charge_diff)
                     # try to find an inchi string for the pair and keep only the reference inchi
@@ -292,13 +336,7 @@ class MeMoModel:
                         results["inchi_string"].append(None)
 
 
-        # remove one to many matches
         results = pd.DataFrame(results)
-        if keep1ToMany== False : 
-            results = results.sort_values(by = "Name_score", ascending = False)
-            results = results.drop_duplicates("met_id1")
-            results = results.sort_values(by = "Name_score", ascending = False)
-            results = results.drop_duplicates("met_id2")
         return(results)
 
 
