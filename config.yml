@@ -7,6 +7,9 @@ databases:
   ModelSeed:
     URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
     file: "modelSeed.tsv"
+  gapsec:
+    URL: "https://raw.githubusercontent.com/jotech/gapseq/master/dat/seed_metabolites_edited.tsv"
+    file: "gapsec.tsv"
   BiGG:
     URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
     file: "BiGG.tsv"

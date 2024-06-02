@@ -2,7 +2,7 @@
 # 07.07.23
 
 '''
-This file contains function to annotated MeMoMetabolites in a bulk manner. This means a list of MeMoMetabolites is parsed and the annotation takes place on the metabolites in that list. This is mainly to use within the MeMoModel.annotate() function
+This file contains function to annotated MeMoMetabolites in a bulk manner. This means a list of MeMoMetabolites is parsed and the annotation takes place on the metabolites in that list. This is mainly to use within the MeMoModel.annotate() function.
 '''
 
 import os
@@ -21,7 +21,7 @@ from src.annotateAux import AnnotationResult
 
 
 def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
-    """ Annotate the metaboltes with Inchis from ChEBI """
+    """ Annotate the metaboltes with Inchis from ChEBI. """
 
     # check if any unannotated metabolites exist
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
@@ -32,9 +32,9 @@ def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
 
 
 def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
-    '''
-    Takes an entry from the model seed database ("https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv") and retrieves the crosslinked databases into the annotation dictionary
-    '''
+    """
+    Takes an entry from the ModelSEED database ("https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv") and retrieves the crosslinked databases into the annotation dictionary.
+    """
 
     # the string is basically already a dictionary, it just needs to be passed back to it
     new_alias = '''{"'''+alias.replace(''': ''','''":["''').replace('''|''','''"],"''').replace('''; ''','''","''')+'''"]}''' # the ''' are awkward, but necessary, because of ' sometimes denotes something like 3'-triphosphate, which makes ' as delimiter unusable
@@ -51,8 +51,11 @@ def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
     new_anno = correctAnnotationKeys(new_anno)
     return(new_anno, names)
 
+
 def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
-    "Takes an annotation dictionary and tries to correct the keys in the dictionary to conform with the identifiers.org prefixes"
+    """
+    Takes an annotation dictionary and tries to correct the keys in the dictionary to conform with the identifiers.org prefixes.
+    """
 
     ## TODO: currently the data base is read everytime we run this function (which could be several k times) - find a better solution for that
     # try to find the correct identifiers from identifiers.org
@@ -67,7 +70,7 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
             identifiers = json.load(json_file)
     except FileNotFoundError as e:
         warnings.warn(str(e))
-        # Rethrow exception because we want don't allow missing dbs
+        # Rethrow exception because we don't want to allow missing dbs
         if allow_missing_dbs == False:
           raise e
         return dict()
@@ -122,14 +125,17 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
         
     return(new_anno_corrected)
 
+
 def extractModelSEEDpKapKb(pkab:str) -> dict:
-    """Auxiliary function to reformat the values in the modelseed database for pKa and pKb into dictionaries"""
+    """
+    Auxiliary function to reformat the values in the ModelSEED database for pKa and pKb into dictionaries.
+    """
+
     # make sure there is an actual value for the entry
     if not pd.isna(pkab):
-        # split the string into individual pkA/Bs
+        # split the string into individual pka and pkb
         pkab_split = pkab.split(";")
-
-        # sort the coordinates and the pkA/B value into a dictonary
+        # sort the coordinates and the pka and pkb values into a dictonary
         pkab_dict = {}
         for entry in pkab_split:
             coord = re.sub(r"^(.*):(.*):(.*)$", r"\g<1>:\g<2>",entry)
@@ -144,13 +150,13 @@ def extractModelSEEDpKapKb(pkab:str) -> dict:
 def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> list[dict, list, dict, dict]:
     """
     A small helper function to avoid redundant code
-    Uses a ModelSEED identifiers and annotates it with the identifiers.org entries.
+    Uses a ModelSEED identifier and annotates it with the identifiers.org entries.
     The results are stored in the annotations dictionary. This is empty by
     default, but if it exists, the entries will be simply added (duplicates are
-    allowed here). Further it will return a list of alternative names, and pKa/pKb values
-    database - is either empty (default) or a pandas data.frame with the data from the modelseed homepage for the metabolites. If it is empty, the function will try to load the database from the config file
+    allowed here). Further it will return a list of alternative names, and pKa and pKb values.
+    database - is either empty (default) or a pandas data.frame with the data from the ModelSEED homepage for the metabolites. If it is empty, the function will try to load the database from the config file.
     """
-    
+
     # check if the database was given, if not, try to load it
     mseed = None
     if len(database) == 0:
@@ -161,11 +167,10 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
           mseed = pd.read_table(db_path, low_memory= False)
         except FileNotFoundError as e:
           warnings.warn(e)
-          # Rethrow exception because we want don't allow missing dbs
+          # Rethrow exception because we don't want to allow missing dbs
           if allow_missing_dbs == False:
             raise e
           return dict(), list(), dict(), dict()
-
     else:
         mseed = database
 
@@ -187,7 +192,6 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
                     new_anno[key] = value
             # combine names
             new_names.extend(names)
-        
         # remove duplicates
         for key in new_anno.keys():
             new_anno[key] = list(set(new_anno[key]))
@@ -226,9 +230,11 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
 
     return(new_anno, new_names, pka_vals, pkb_vals)
 
+
 def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
-    Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite._id slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
+    Annotate a list of metabolites with the entries from ModelSEED. Look for ModelSEED ids in the metabolite._id slot and if one is found use these. Since ModelSEED does provide any InChI strings, pKa and pkb, all these elements will be added to the MeMoMetabolites, if possible.
+    """
 
     # load the database
     config = get_config()
@@ -241,7 +247,7 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
       warnings.warn(str(e))
       if allow_missing_dbs == False:
          raise e
-      return AnnotationResult(0 ,0, 0)
+      return AnnotationResult(0, 0, 0)
     
     counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
@@ -266,7 +272,6 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
                 inchi_string = findOptimalInchi(inchi_strings)
                 if inchi_string is None:
                     raise NotImplementedError()
-
             elif len(inchi_strings) == 1:
                 inchi_string = inchi_strings[0]
             else:
@@ -279,7 +284,7 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
             # add the annotations to the slot in the metabolites
             if len(new_met_anno) > 0:
                 counter[1] = counter[1] + met.add_annotations(new_met_anno)
-            
+
             # add the inchi_string
             if inchi_string != None:
                 counter[2] = counter[2] + met.add_inchi_string(inchi_string)
@@ -291,14 +296,15 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
             # add the pkb
             if len(new_pkb) > 0:
                  counter[4] = counter[4] + met.add_pKb(new_pkb)
+
     anno_result = AnnotationResult(counter[2], counter[1], counter[0])
     return anno_result 
 
+
 def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
-    Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite.anotation slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible
+    Annotate a list of metabolites with the entries from ModelSEED. Look for ModelSEED ids in the metabolite.anotation slot and if one is found use these. Since ModelSEED does provide any InChI strings, pKa and pkb, all these elements will be added to the MeMoMetabolites, if possible.
     """
-
 
     # load the database
     config = get_config()
@@ -321,7 +327,7 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
             for seed_id in mod_mseeds:
                 if any(mseed["id"]==seed_id):
                     # get the names, annotations, pka and pkb
-                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry( entry = seed_id,
+                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry(entry = seed_id,
                             database = mseed)
 
                     # get the inchi strings
@@ -343,7 +349,6 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
                         inchi_string = inchi_strings[0]
                     else:
                         inchi_string = None
-                    
                 
                     # add new names
                     if len(new_names) > 0:
@@ -352,7 +357,7 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
                     # add the annotations to the slot in the metabolites
                     if len(new_met_anno) > 0:
                         met_counter[1] = met_counter[1] + met.add_annotations(new_met_anno)
-                    
+
                     # add the inchi_string
                     if inchi_string != None:
                         met_counter[2] = met_counter[2] + met.add_inchi_string(inchi_string)
@@ -368,5 +373,6 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
             # sum the counters
             met_counter = [int(x>0) for x in met_counter]
             counter = [x+y for x,y in zip(counter, met_counter)]
+
     anno_result = AnnotationResult(counter[2], counter[1], counter[0])
     return anno_result 
