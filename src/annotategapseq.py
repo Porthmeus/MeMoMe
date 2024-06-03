@@ -11,11 +11,11 @@ from src.annotateAux import AnnotationResult
 from src.annotateInchiRoutines import findOptimalInchi
 
 
-def annotategapsec_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> list[list, dict, list]:
+def annotategapseq_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> list[list, dict, list]:
     """
     A small helper function to avoid redundant code.
-    Uses a gapsec identifier and annotates it with the identifiers.org entries.
-    database - is either empty (default) or a pandas data.frame with the data from the gapsec homepage for the metabolites. If it is empty, the function will try to load the database from the config file.
+    Uses a gapseq identifier and annotates it with the identifiers.org entries.
+    database - is either empty (default) or a pandas data.frame with the data from the gapseq homepage for the metabolites. If it is empty, the function will try to load the database from the config file.
     Returns a tuple containing a list of inchi strings, a dictionary for the extracted annotations, and a list of new names for the metabolite.
     """
     # !!! can also extract pka and pkb !!!
@@ -24,9 +24,9 @@ def annotategapsec_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allo
     if len(database) == 0:
         # load the database
         config = get_config()
-        db_path =  os.path.join(get_database_path(), config["databases"]["gapsec"]["file"])
+        db_path =  os.path.join(get_database_path(), config["databases"]["gapseq"]["file"])
         try:
-          gapsec = pd.read_table(db_path)
+          gapseq = pd.read_table(db_path)
         except FileNotFoundError as e:
           warnings.warn(e)
           # Rethrow exception because we want don't allow missing dbs
@@ -34,13 +34,13 @@ def annotategapsec_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allo
             raise e
           return list(), dict(), list()
     else:
-        gapsec = database
+        gapseq = database
 
     # correct the relevant dataframe column names to conform with the identifiers.org prefixes
-    gapsec.rename(columns={"MNX_ID":"metanetx.chemical", "InChIKey":"inchiKey", "hmdbID":"hmdb", "chebiID":"CHEBI", "InChI":"inchi", "keggID":"kegg.compound", "biggID":"bigg.metabolite", "biocycID":"biocyc"}, inplace=True)
+    gapseq.rename(columns={"MNX_ID":"metanetx.chemical", "InChIKey":"inchiKey", "hmdbID":"hmdb", "chebiID":"CHEBI", "InChI":"inchi", "keggID":"kegg.compound", "biggID":"bigg.metabolite", "biocycID":"biocyc"}, inplace=True)
 
     # extract the inchi strings and return them (Note: "InChI" has smaller number of entries "smiles".)
-    inchi = gapsec.loc[gapsec["id"]==entry,"inchi"]
+    inchi = gapseq.loc[gapseq["id"]==entry,"inchi"]
     # check if there are entries which are not NA or empty
     inchi = inchi.loc[~pd.isna(inchi)]
     if len(inchi) >0:
@@ -59,7 +59,7 @@ def annotategapsec_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allo
     # extract the relevant annotation information and return it
     keys = ["metanetx.chemical", "inchiKey", "hmdb", "CHEBI", "kegg.compound", "bigg.metabolite", "biocyc"]
     for key in keys:
-        values = gapsec.loc[gapsec["id"]==entry,key]
+        values = gapseq.loc[gapseq["id"]==entry,key]
         # check if there are entries which are not NA or empty
         values = values.loc[~pd.isna(values)]
         if len(values) >0:
@@ -70,21 +70,21 @@ def annotategapsec_entry(entry:str, database:pd.DataFrame = pd.DataFrame(), allo
               annotations[key] = values
 
     # extract the saved name in the database and return it
-    names = list(pd.unique(gapsec.loc[gapsec["id"]==entry,"name"]))
+    names = list(pd.unique(gapseq.loc[gapseq["id"]==entry,"name"]))
 
     return inchi_string, annotations, names
 
 
-def annotategapsec_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
+def annotategapseq_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
-    Annotate a list of metabolites with the entries from gapsec. Look for gapsec ids in the metabolite._id slot and if one is found use these.
+    Annotate a list of metabolites with the entries from gapseq. Look for gapseq ids in the metabolite._id slot and if one is found use these.
     """
 
     # load the database
     config = get_config()
-    db_path =  os.path.join(get_database_path(), config["databases"]["gapsec"]["file"])
+    db_path =  os.path.join(get_database_path(), config["databases"]["gapseq"]["file"])
     try:
-      gapsec = pd.read_table(db_path)
+      gapseq = pd.read_table(db_path)
     except FileNotFoundError as e:
       # Rethrow exception because we want don't allow missing dbs
       warnings.warn(str(e))
@@ -94,10 +94,10 @@ def annotategapsec_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
     
     counter = [0,0,0] # counter for names, annotations, inchi_strings
     for met in metabolites:
-        if any(gapsec["id"]==met._id):
+        if any(gapseq["id"]==met._id):
             # get the names, annotations, inchi_strings
-            new_inchi_string,new_met_annos,new_names = annotategapsec_entry(entry = met._id, 
-                                                                            database = gapsec)
+            new_inchi_string,new_met_annos,new_names = annotategapseq_entry(entry = met._id, 
+                                                                            database = gapseq)
 
             # add the names
             if len(new_names) > 0:
@@ -115,18 +115,18 @@ def annotategapsec_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
     return anno_result 
 
 
-def annotategapsec(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
+def annotategapseq(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
-    Annotate a list of metabolites with the entries from gapsec. Look for gapsec ids in the annotation slot of the metabolites and if one is found use these.
+    Annotate a list of metabolites with the entries from gapseq. Look for gapseq ids in the annotation slot of the metabolites and if one is found use these.
     The function will directly add the inchi string, annotations and names to the MeMoMetabolite object.
     Return value: a tuple of 3 denoting the number of changes metabolites for the following values: [inchi string, annotations, names]
      """
 
     # load the database
     config = get_config()
-    db_path =  os.path.join(get_database_path(), config["databases"]["gapsec"]["file"])
+    db_path =  os.path.join(get_database_path(), config["databases"]["gapseq"]["file"])
     try:
-      gapsec = pd.read_table(db_path)
+      gapseq = pd.read_table(db_path)
     except FileNotFoundError as e:
       warnings.warn(str(e))
       # Rethrow exception because we want don't allow missing dbs
@@ -140,10 +140,10 @@ def annotategapsec(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = 
         if "seed.compound" in met.annotations.keys():
             met_counter = [0,0,0]
             for entry in met.annotations["seed.compound"]:
-                if any(gapsec["id"]==entry):
+                if any(gapseq["id"]==entry):
                    # get the names, annotations, inchi_strings
-                   new_inchi_string,new_met_annos,new_names = annotategapsec_entry(entry = entry, 
-                                                                             database = gapsec)
+                   new_inchi_string,new_met_annos,new_names = annotategapseq_entry(entry = entry, 
+                                                                             database = gapseq)
 
                    # add the names
                    if len(new_names) > 0:
