@@ -34,10 +34,8 @@ class ModelMerger:
 
         return merged_model
 
-    def prepend_ids(model: cobra.Model, prefix: str) -> cobra.Model:
+    def adapt_ids(model: cobra.Model, prefix: str) -> cobra.Model:
         """
-        This function takes a COBRApy model and a string prefix and prepends the prefix
-        to all metabolite IDs, reaction IDs, gene IDs, and group IDs in the model.
 
         Parameters:
         model (cobra.Model): The COBRApy model object.
@@ -49,12 +47,23 @@ class ModelMerger:
         # Create a copy of the model to modify and return
         model_copy = model.copy()
 
-        # Update metabolite IDs
+        # rename the external compartment to internal
+        model_copy.compartments.pop("e")
+        model_copy.compartments["i"] = "internal_exchange"
+
+        # Update metabolite IDs adding prefix and modifying compartment
         for metabolite in model_copy.metabolites:
             metabolite.id = prefix + metabolite.id
+            if metabolite.id.endswith("_e"):
+                if metabolite.compartment == "e":
+                    metabolite.id = metabolite.id[:-2] + "_i"
+                else:
+                    raise ValueError("The compartment specified in the metabolite id suffix does not correspond to the "
+                                     "one specified in the compartment field for metabolite: " + metabolite.id)
 
-        # Update reaction IDs
+        # replace the EX_ prefix with IEX and replace the compartment suffix
         for reaction in model_copy.reactions:
+            reaction.id = reaction.id.replace("EX_")
             reaction.id = prefix + reaction.id
 
         # Update gene IDs
@@ -70,11 +79,13 @@ class ModelMerger:
         return model_copy
 
     def step1(self, model: MeMoModel, prefix: str) -> MeMoModel:
-        # ensure that the model doesn't already have a
-        if len([reac.id for reac in model.cobra_model.reactions if reac.id.startswith("FEEDING_")]) == 0:
+        # ensure that the model doesn't already have a common compartment
+        if (len([reac.id for reac in model.cobra_model.reactions if reac.id.startswith("EX_COMMON_")]) +
+                len([met.id for met in model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
             # add prefix to reactions, metabolites and groups
-            model.cobra_model = self.prepend_ids(model.cobra_model, prefix)
+            model.cobra_model = self.adapt_ids(model.cobra_model, prefix)
             # add the feeding compartment
+
             # add reaction to move from the external to the feeding compartment
             # "move" the lower bounds from the external to the feeding compartments
 
