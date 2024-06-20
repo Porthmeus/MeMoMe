@@ -30,6 +30,8 @@ class ModelMerger:
             print(self.model2.cobra_model.compartments)
             print()
 
+            model1_preprocessed = self.step1(self.model1, prefix="M1")
+            model2_preprocessed = self.step1(self.model2, prefix="M2")
             # create an empty model
             merged_model = MeMoModel(cobra_model=cobra.Model(id_or_model="merged_model", name="merged_model"))
 
@@ -37,6 +39,22 @@ class ModelMerger:
             raise NotImplemented()
 
         return merged_model
+
+    def step1(self, model: MeMoModel, prefix: str) -> MeMoModel:
+        if "_" in prefix:
+            raise ValueError("underscores are not allowed in prefix: " + prefix)
+        # ensure that the model doesn't already have a common compartment
+        if (len([reac.id for reac in model.cobra_model.reactions if reac.id.startswith("EX_COMMON_")]) +
+                len([met.id for met in model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
+            # add prefix to reactions, metabolites and groups
+            model.cobra_model = self.adapt_ids(model.cobra_model, prefix)
+            # creates the common external metabolites and reactions and sets their upper and lower bounds
+            model.cobra_model = self.add_common(model.cobra_model, prefix)
+
+        else:
+            raise NotImplemented()
+
+        return model
 
     def adapt_ids(self, model: cobra.Model, prefix: str) -> cobra.Model:
         """
@@ -56,12 +74,13 @@ class ModelMerger:
 
         # Update metabolite IDs adding prefix and modifying compartment
         for metabolite in model_copy.metabolites:
-            metabolite.id = prefix + metabolite.id
+            metabolite.id = prefix + "_" + metabolite.id
             if metabolite.compartment == "e":
                 if metabolite.id.endswith("_e"):
                     metabolite.id = metabolite.id[:-2] + "_i"
                     metabolite.compartment = "i"
-                elif metabolite.id.endswith("(e)"): # I change the compartment notation so from here on I can assume it is of this form
+                # I change the compartment notation so from here on I can assume it is of this form
+                elif metabolite.id.endswith("(e)"):
                     metabolite.id = metabolite.id[:-3] + "_i"
                 elif metabolite.id.endswith("[e]"):
                     metabolite.id = metabolite.id[:-3] + "_i"
@@ -70,40 +89,64 @@ class ModelMerger:
                                      "one specified in the compartment field for metabolite: " + metabolite.id)
 
         # replace the EX_ prefix with IEX and replace the compartment suffix
-        for reaction in model_copy.reactions:
-            if reaction.id.startswith('EX_'):
+        for exch in model_copy.exchanges:
+            if exch.id.startswith("EX_"):
                 # Replace 'EX_' with the new prefix
-                reaction.id = "IEX_" + prefix + reaction.id[3:]
-            if reaction.id.endswith("_e"):
-                reaction.id = reaction.id[:-2] + "_i"
-            elif reaction.id.endswith("(e)"):   # I change the compartment notation so from here on I can assume it is of this form
-                reaction.id = reaction.id[:-3] + "_i"
-            elif reaction.id.endswith("[e]"):
-                reaction.id = reaction.id[:-3] + "_i"
+                exch.id = "IEX_" + prefix + "_" + exch.id[3:]
+                if exch.id.endswith("_e"):
+                    exch.id = exch.id[:-2] + "_i"
+                # if the compartment's notation is not _e, I change it so from here on I can assume it is of this form
+                elif exch.id.endswith("(e)"):
+                    exch.id = exch.id[:-3] + "_i"
+                elif exch.id.endswith("[e]"):
+                    exch.id = exch.id[:-3] + "_i"
+            else:
+                raise ValueError("The exchange reaction's id: " + exch.id + "should start with the prefix 'EX_'")
 
         # Update gene IDs
         for gene in model_copy.genes:
-            gene.id = prefix + gene.id
+            gene.id = prefix + "_" + gene.id
 
         # Update group IDs
         if hasattr(model_copy, 'groups'):
             for group in model_copy.groups:
-                group.id = prefix + group.id
+                group.id = prefix + "_" + group.id
 
         # Return the modified model
         return model_copy
 
-    def step1(self, model: MeMoModel, prefix: str) -> MeMoModel:
-        # ensure that the model doesn't already have a common compartment
-        if (len([reac.id for reac in model.cobra_model.reactions if reac.id.startswith("EX_COMMON_")]) +
-                len([met.id for met in model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
-            # add prefix to reactions, metabolites and groups
-            model.cobra_model = self.adapt_ids(model.cobra_model, prefix)
-            # creates the common external metabolites and reactions and sets their upper and lower bounds
-            model.cobra_model = self.add_common(model.cobra_model)
+    def add_common(self, model: cobra.Model) -> cobra.Model:
+        for r in [reac for reac in model.reactions if reac.id.startswith("IEX_")]:
+            # Check if the reaction is an exchange reaction (only one metabolite)
+            if len(r.metabolites) != 1:
+                raise ValueError(f"The reaction {r.id} is not a valid exchange reaction.")
 
-        else:
-            raise NotImplemented()
+            # Get the original metabolite
+            original_metabolite = list(r.metabolites.keys())[0]
+
+            # Create a new metabolite with the same properties but different compartment
+            # replace prefix and substitute the suffix to indicate the exchange compartment
+            new_id = "COMMON_" + original_metabolite.id.split('_')[1:-1] + "_e"
+            new_metabolite = cobra.Metabolite(
+                id=new_id,
+                formula=original_metabolite.formula,
+                name=original_metabolite.name,
+                charge=original_metabolite.charge,
+                compartment="e"
+            )
+
+            # Add the new metabolite to the model
+            model.add_metabolites([new_metabolite])
+            # modify the IEX exchange reaction's stoichiometry in order to allow export to the COMMON compartment
+            r.add_metabolites({new_metabolite: 1.0})
+            # save lower and upper bound and make them unconstrained
+            exch_lb = r.lower_bound
+            exch_ub = r.upper_bound
+            r.lower_bound = -1000
+            r.upper_bound = 1000
+
+        # Creates an exchange reaction for the new metabolite and adds it to the model
+        model.add_boundary(new_metabolite, type="exchange", lb=exch_lb, ub=exch_ub)
 
         return model
 
