@@ -1,6 +1,9 @@
 import cobra
+import sys
 import pandas as pd
 from src.MeMoModel import *
+sys.path.append('../')
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 
 
 class ModelMerger:
@@ -11,10 +14,11 @@ class ModelMerger:
     def __init__(self,
                  model1: MeMoModel,
                  model2: MeMoModel,
-                 matches: pd.DataFrame):
+                 matches: pd.DataFrame
+                 ):
         self.model1: MeMoModel = model1
         self.model2: MeMoModel = model2
-        self.matches: pd.DataFrame = matches
+        self.matches = matches
 
     def merge_models(self, debug=False):
         if debug:
@@ -25,7 +29,7 @@ class ModelMerger:
             print()
             print(self.model2.cobra_model.compartments)
             print()
-            self.model1 = self.step1(self.model1, prefix="M1_")
+
             # create an empty model
             merged_model = MeMoModel(cobra_model=cobra.Model(id_or_model="merged_model", name="merged_model"))
 
@@ -34,7 +38,7 @@ class ModelMerger:
 
         return merged_model
 
-    def adapt_ids(model: cobra.Model, prefix: str) -> cobra.Model:
+    def adapt_ids(self, model: cobra.Model, prefix: str) -> cobra.Model:
         """
 
         Parameters:
@@ -47,24 +51,35 @@ class ModelMerger:
         # Create a copy of the model to modify and return
         model_copy = model.copy()
 
-        # rename the external compartment to internal
-        model_copy.compartments.pop("e")
+        # create a new compartment for the internal exchange
         model_copy.compartments["i"] = "internal_exchange"
 
         # Update metabolite IDs adding prefix and modifying compartment
         for metabolite in model_copy.metabolites:
             metabolite.id = prefix + metabolite.id
-            if metabolite.id.endswith("_e"):
-                if metabolite.compartment == "e":
+            if metabolite.compartment == "e":
+                if metabolite.id.endswith("_e"):
                     metabolite.id = metabolite.id[:-2] + "_i"
+                    metabolite.compartment = "i"
+                elif metabolite.id.endswith("(e)"): # I change the compartment notation so from here on I can assume it is of this form
+                    metabolite.id = metabolite.id[:-3] + "_i"
+                elif metabolite.id.endswith("[e]"):
+                    metabolite.id = metabolite.id[:-3] + "_i"
                 else:
                     raise ValueError("The compartment specified in the metabolite id suffix does not correspond to the "
                                      "one specified in the compartment field for metabolite: " + metabolite.id)
 
         # replace the EX_ prefix with IEX and replace the compartment suffix
         for reaction in model_copy.reactions:
-            reaction.id = reaction.id.replace("EX_")
-            reaction.id = prefix + reaction.id
+            if reaction.id.startswith('EX_'):
+                # Replace 'EX_' with the new prefix
+                reaction.id = "IEX_" + prefix + reaction.id[3:]
+            if reaction.id.endswith("_e"):
+                reaction.id = reaction.id[:-2] + "_i"
+            elif reaction.id.endswith("(e)"):   # I change the compartment notation so from here on I can assume it is of this form
+                reaction.id = reaction.id[:-3] + "_i"
+            elif reaction.id.endswith("[e]"):
+                reaction.id = reaction.id[:-3] + "_i"
 
         # Update gene IDs
         for gene in model_copy.genes:
@@ -84,15 +99,14 @@ class ModelMerger:
                 len([met.id for met in model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
             # add prefix to reactions, metabolites and groups
             model.cobra_model = self.adapt_ids(model.cobra_model, prefix)
-            # add the feeding compartment
-
-            # add reaction to move from the external to the feeding compartment
-            # "move" the lower bounds from the external to the feeding compartments
+            # creates the common external metabolites and reactions and sets their upper and lower bounds
+            model.cobra_model = self.add_common(model.cobra_model)
 
         else:
             raise NotImplemented()
 
         return model
+
 
 if __name__ == '__main__':
     tinyModel1 = "../tests/dat/my_model_with_annotations.xml"
@@ -101,5 +115,6 @@ if __name__ == '__main__':
     model1 = MeMoModel.fromPath(Path(tinyModel1))
     model2 = MeMoModel.fromPath(Path(tinyModel2))
     matches = model1.match(model2)
+    print(matches)
     mo_me = ModelMerger(model1, model2, matches)
     new_model = mo_me.merge_models(debug=True)

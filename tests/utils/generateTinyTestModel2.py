@@ -1,4 +1,3 @@
-import cobra
 from cobra import Model, Metabolite, Reaction, io
 
 # Create a new COBRApy model
@@ -60,6 +59,34 @@ rxn3.add_metabolites({
     pyr_e: 1.0    # External pyruvate production
 })
 
+# Define exchange reactions for external metabolites
+# ATP exchange
+atp_exchange = Reaction('EX_atp_e')
+atp_exchange.name = 'ATP exchange'
+atp_exchange.lower_bound = -10  # Arbitrary lower bound for uptake
+atp_exchange.upper_bound = 1000
+atp_exchange.add_metabolites({
+    atp_e: -1.0  # ATP uptake from the extracellular space
+})
+
+# ADP exchange
+adp_exchange = Reaction('EX_adp_e')
+adp_exchange.name = 'ADP exchange'
+adp_exchange.lower_bound = -10  # Arbitrary lower bound for uptake
+adp_exchange.upper_bound = 1000
+adp_exchange.add_metabolites({
+    adp_e: -1.0  # ADP uptake from the extracellular space
+})
+
+# Pyruvate exchange
+pyr_exchange = Reaction('EX_pyr_e')
+pyr_exchange.name = 'Pyruvate exchange'
+pyr_exchange.lower_bound = -10  # Arbitrary lower bound for uptake
+pyr_exchange.upper_bound = 1000
+pyr_exchange.add_metabolites({
+    pyr_e: -1.0  # Pyruvate uptake from the extracellular space
+})
+
 # Define reactions within the model
 # Reaction 1: Hexokinase (glucose to glucose-6-phosphate)
 glucose = Metabolite('glc__D_c', formula='C6H12O6', name='D-Glucose', compartment='c')
@@ -90,7 +117,7 @@ glycolysis.add_metabolites({
 
 # Add all metabolites and reactions to the model
 model.add_metabolites([atp_c, atp_e, adp_c, adp_e, pyr_c, pyr_e, glucose, g6p_c])
-model.add_reactions([rxn1, rxn2, rxn3, hexokinase, glycolysis])
+model.add_reactions([rxn1, rxn2, rxn3, hexokinase, glycolysis, atp_exchange, adp_exchange, pyr_exchange])
 
 # Print model summary
 print(model.summary())
