@@ -18,7 +18,11 @@ class ModelMerger:
                  ):
         self.model1: MeMoModel = model1
         self.model2: MeMoModel = model2
+
         self.matches = matches
+
+        self.model1 = self.step1(model1, "M1")
+        self.model2.cobra_model = self.step1(model2, "M2")
 
     def merge_models(self, debug=False):
         if debug:
@@ -30,31 +34,29 @@ class ModelMerger:
             print(self.model2.cobra_model.compartments)
             print()
 
-            model1_preprocessed = self.step1(self.model1, prefix="M1")
-            model2_preprocessed = self.step1(self.model2, prefix="M2")
-            # create an empty model
+            # TODO: complete model merging logic (define step2 and call it)
+            # step2 will include the creation of an empty model (as in following line) and subsequent filling
             merged_model = MeMoModel(cobra_model=cobra.Model(id_or_model="merged_model", name="merged_model"))
-
         else:
             raise NotImplemented()
 
         return merged_model
 
-    def step1(self, model: MeMoModel, prefix: str) -> MeMoModel:
+    def step1(self, me_mo_model: MeMoModel, prefix: str) -> MeMoModel:
         if "_" in prefix:
             raise ValueError("underscores are not allowed in prefix: " + prefix)
         # ensure that the model doesn't already have a common compartment
-        if (len([reac.id for reac in model.cobra_model.reactions if reac.id.startswith("EX_COMMON_")]) +
-                len([met.id for met in model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
+        if (len([reac.id for reac in me_mo_model.cobra_model.reactions if reac.id.startswith("EX_COMMON_")]) +
+                len([met.id for met in me_mo_model.cobra_model.metabolites if met.id.startswith("COMMON_")]) == 0):
             # add prefix to reactions, metabolites and groups
-            model.cobra_model = self.adapt_ids(model.cobra_model, prefix)
+            me_mo_model.cobra_model = self.adapt_ids(me_mo_model.cobra_model, prefix)
             # creates the common external metabolites and reactions and sets their upper and lower bounds
-            model.cobra_model = self.add_common(model.cobra_model, prefix)
+            me_mo_model.cobra_model = self.add_common(me_mo_model.cobra_model)
 
         else:
             raise NotImplemented()
 
-        return model
+        return me_mo_model
 
     def adapt_ids(self, model: cobra.Model, prefix: str) -> cobra.Model:
         """
@@ -66,14 +68,14 @@ class ModelMerger:
         Returns:
         cobra.Model: The modified model with updated IDs.
         """
-        # Create a copy of the model to modify and return
-        model_copy = model.copy()
+        ## Create a copy of the model to modify and return
+        #model_copy = model.copy()
 
         # create a new compartment for the internal exchange
-        model_copy.compartments["i"] = "internal_exchange"
+        model.compartments["i"] = "internal_exchange"
 
         # Update metabolite IDs adding prefix and modifying compartment
-        for metabolite in model_copy.metabolites:
+        for metabolite in model.metabolites:
             metabolite.id = prefix + "_" + metabolite.id
             if metabolite.compartment == "e":
                 if metabolite.id.endswith("_e"):
@@ -89,7 +91,7 @@ class ModelMerger:
                                      "one specified in the compartment field for metabolite: " + metabolite.id)
 
         # replace the EX_ prefix with IEX and replace the compartment suffix
-        for exch in model_copy.exchanges:
+        for exch in model.exchanges:
             if exch.id.startswith("EX_"):
                 # Replace 'EX_' with the new prefix
                 exch.id = "IEX_" + prefix + "_" + exch.id[3:]
@@ -104,16 +106,16 @@ class ModelMerger:
                 raise ValueError("The exchange reaction's id: " + exch.id + "should start with the prefix 'EX_'")
 
         # Update gene IDs
-        for gene in model_copy.genes:
+        for gene in model.genes:
             gene.id = prefix + "_" + gene.id
 
         # Update group IDs
-        if hasattr(model_copy, 'groups'):
-            for group in model_copy.groups:
+        if hasattr(model, 'groups'):
+            for group in model.groups:
                 group.id = prefix + "_" + group.id
 
         # Return the modified model
-        return model_copy
+        return model
 
     def add_common(self, model: cobra.Model) -> cobra.Model:
         for r in [reac for reac in model.reactions if reac.id.startswith("IEX_")]:
@@ -126,14 +128,20 @@ class ModelMerger:
 
             # Create a new metabolite with the same properties but different compartment
             # replace prefix and substitute the suffix to indicate the exchange compartment
-            new_id = "COMMON_" + original_metabolite.id.split('_')[1:-1] + "_e"
-            new_metabolite = cobra.Metabolite(
-                id=new_id,
-                formula=original_metabolite.formula,
-                name=original_metabolite.name,
-                charge=original_metabolite.charge,
-                compartment="e"
-            )
+            new_id = "COMMON"
+            for el in original_metabolite.id.split('_')[1:-1]:
+                new_id = new_id + "_" + el
+            new_id = new_id + "_e"
+            new_metabolite = original_metabolite.copy()
+            new_metabolite.id = new_id
+            new_metabolite.compartment = "e"
+            #new_metabolite = cobra.Metabolite(
+            ##    id=new_id,
+            ##    formula=original_metabolite.formula,
+            #    name=original_metabolite.name,
+            #    charge=original_metabolite.charge,
+            #    compartment="e"
+            #)
 
             # Add the new metabolite to the model
             model.add_metabolites([new_metabolite])

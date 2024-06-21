@@ -122,5 +122,5 @@ model.add_reactions([rxn1, rxn2, rxn3, hexokinase, glycolysis, atp_exchange, adp
 # Print model summary
 print(model.summary())
 
-# Save the model to a JSON file
+# Save the model as XML
 io.write_sbml_model(model, "tests/dat/my_model_with_annotations.xml")

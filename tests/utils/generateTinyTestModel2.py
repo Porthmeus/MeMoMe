@@ -122,5 +122,5 @@ model.add_reactions([rxn1, rxn2, rxn3, hexokinase, glycolysis, atp_exchange, adp
 # Print model summary
 print(model.summary())
 
-# Save the model to a xml file
+# Save the model as XML
 io.write_sbml_model(model,"tests/dat/contiguous_pathway_model.xml")
