@@ -4,6 +4,7 @@
 import re
 import cobra as cb
 import copy
+import pandas as pd
 
 def printModelStats(model:cb.Model):
     print(f'{len(model.reactions)} reactions')
@@ -17,7 +18,7 @@ def findCommonReactions(met1:cb.Metabolite, met2:cb.Metabolite, reversible_is_sa
 
     # check if the metabolites originate from the same model
     if met1.model != met2.model:
-        raise ValueError("Metabolites do not origin from the same model! Aborted.")
+        raise ValueError("Metabolites do not originate from the same model! Aborted.")
     
     # get the essential data
     reactions1 = [x for x in met1.reactions]
@@ -37,9 +38,10 @@ def findCommonReactions(met1:cb.Metabolite, met2:cb.Metabolite, reversible_is_sa
                 if reac_rule1.find("<=>") != -1 or reac_rule2.find("<=>") != -1:
                     reac_rule1 = reac_rule1.replace("-->","<=>").replace("<--","<=>")
                     reac_rule2 = reac_rule2.replace("-->","<=>").replace("<--","<=>")
-            else:
-                print(reac_rule1)
-                print(reac_rule2)
+            #else:
+                #print(reac_rule1)
+                #print(reac_rule2)
+            # TODO: check if compartments are the same for the reactions. Kind of difficult as several compartments are allowed for one reaction - not sure how to handle that for now
             if reac_rule1 == re.sub(metId2, metId1, reac_rule2):
                 same.append((reactions1[i], reactions2[j]))
     return(same)
@@ -49,6 +51,7 @@ def mergeReactions(rxn1:cb.Reaction, rxn2:cb.Reaction, remove_orphans:bool = Tru
     
     remove_orphans = boolean, if True (default) - all orphanized metabolites and genes in the model will be deleted
     '''
+    
     
     # check if compartments are the same
     if len(rxn1.compartments) > 1:
@@ -104,12 +107,45 @@ def mergeReactions(rxn1:cb.Reaction, rxn2:cb.Reaction, remove_orphans:bool = Tru
 
 
 
-def exchangeMetabolite(met1:cb.Metabolite, met2:cb.Metabolite) -> None:
+def exchangeMetabolite(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True) -> pd.DataFrame:
     '''Find the all reactions which use the second metabolite and exchange it with the first metabolite'''
+
     rxns = met2.reactions
+    # keep the information which reactions are affected
+    rxns_ids = [x.id for x in rxns]
     for rxn in rxns:
         coef = rxn.metabolites[met2]
         sub_dic = {met2 : coef,
                 met1 : -1*coef}
         rxn.subtract_metabolites(sub_dic)
 
+    if prune == True:
+        met2.remove_from_model()
+    
+    # cast the information into a pandas data frame
+    n = len(rxns_ids)
+    res = pd.DataFrame({"new_rxn_id" : rxns_ids,
+        "old_rxn_id" : rxns_ids,
+        "new_met_id" : [met1.id]*len(rxns_ids),
+        "old_met_id" : [met2.id]*len(rxns_ids),
+        "what" : ["met_exchange"]*len(rxns_ids)})
+    return(res)
+
+    
+
+def mergeAndRemove(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True, reversible_is_same:bool = True) -> pd.DataFrame:
+    ''' Clean the model of a duplicated metabolite. Every instance of met2 will be replaced by met1. Reactions which essentia -> pd.DataFramelly have the same'''
+    # first find duplicated reactions and merge them
+    rxns = findCommonReactions(met1, met2, reversible_is_same = reversible_is_same)
+    # ceate a data frame to keep track of the changes
+    res1 = pd.DataFrame({"new_rxn_id": [x[0].id for x in rxns],
+        "old_rxn_id" : [x[1].id for x in rxns],
+        "new_met_id" : [met1.id] * len(rxns),
+        "old_met_id" : [met2.id] * len(rxns),
+        "what" : ["rxn_merge"] * len(rxns)})
+    for rxn_pair in rxns:
+        mergeReactions(rxn_pair[0], rxn_pair[1])
+    # exchange duplicated metabolite
+    res2 = exchangeMetabolite(met1, met2, prune = prune)
+    res = pd.concat([res1,res2])
+    return(res)
