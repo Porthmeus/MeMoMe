@@ -1,4 +1,5 @@
 import cobra
+import re
 import sys
 import pandas as pd
 from src.MeMoModel import *
@@ -22,25 +23,24 @@ class ModelMerger:
         self.matches = matches
 
         self.model1 = self.step1(model1, "M1")
-        self.model2.cobra_model = self.step1(model2, "M2")
+        self.model2 = self.step1(model2, "M2")
 
-    def merge_models(self, debug=False):
+    def apply_translation(self, debug=False):
         if debug:
             reliable_matches = self.matches.loc[self.matches["Name_score"] == 1.0]
             print(reliable_matches)
-            print()
-            print(self.model1.cobra_model.compartments)
-            print()
-            print(self.model2.cobra_model.compartments)
-            print()
+            # print()
+            # print(self.model1.cobra_model.compartments)
+            # print()
+            # print(self.model2.cobra_model.compartments)
+            # print()
 
-            # TODO: complete model merging logic (define step2 and call it)
-            # step2 will include the creation of an empty model (as in following line) and subsequent filling
-            merged_model = MeMoModel(cobra_model=cobra.Model(id_or_model="merged_model", name="merged_model"))
+            # TODO: rename exchange metabolites and reactions of model2 to match the namespace of model1 (define step2 and call it)
+            self.model2 = self.step2(model2, reliable_matches)
         else:
             raise NotImplemented()
 
-        return merged_model
+        return
 
     def step1(self, me_mo_model: MeMoModel, prefix: str) -> MeMoModel:
         if "_" in prefix:
@@ -158,6 +158,22 @@ class ModelMerger:
 
         return model
 
+    def step2(self, me_mo_model: MeMoModel, reliable_matches):
+        for ex in me_mo_model.cobra_model.exchanges:
+            #modify the metabolite id
+            #print(ex)
+            whole_met_id = list(ex.metabolites.keys())[0].id
+            #print(whole_met_id)
+            pattern = r"(?<=COMMON_).*?(?=_e)"
+            met_id = re.search(pattern, whole_met_id)
+            met_id = reliable_matches.loc[reliable_matches["met_id2"] == met_id]["met_id1"]
+            new_met_id = "COMMON_" + met_id + "_e"
+            list(ex.metabolites.keys())[0].id = new_met_id # update id with the translated metabolite id
+
+            #TODO:modify the reaction id
+
+        return
+
 
 if __name__ == '__main__':
     tinyModel1 = "../tests/dat/my_model_with_annotations.xml"
@@ -168,4 +184,4 @@ if __name__ == '__main__':
     matches = model1.match(model2)
     print(matches)
     mo_me = ModelMerger(model1, model2, matches)
-    new_model = mo_me.merge_models(debug=True)
+    mo_me.apply_translation(debug=True)
