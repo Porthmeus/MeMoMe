@@ -33,4 +33,6 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
         identifier = re.sub(r"^(M_)?(.*)_[a-z]\d?$",r"\g<2>", met_id)
         identifier = re.sub(r"^(M_)?(.*)__91__[a-z]\d?__93__$",r"\g<2>", identifier)
         identifier = re.sub(r"^(M_)?(.*)__40__[a-z]\d?__41__$",r"\g<2>", identifier)
+        identifier = re.sub(r"^(M_)?(.*)\[[a-z]\d?\]$",r"\g<2>", identifier)
+        identifier = re.sub(r"^(M_)?(.*)\([a-z]\d?\)$",r"\g<2>", identifier)
     return identifier

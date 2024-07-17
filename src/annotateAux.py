@@ -8,6 +8,7 @@ class AnnotationResult():
     self.annotated_inchis: int =  annotated_inchis
     self.annotated_dbs: int = annotated_dbs
     self.annotated_names: int = annotated_names
+    self.annotated_total: int = annotated_inchis + annotated_dbs + annotated_names
   
   @classmethod
   def fromTuple(cls, annotationResult: tuple[int, int, int]) -> AnnotationResult:

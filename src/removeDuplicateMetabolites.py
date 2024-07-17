@@ -5,6 +5,7 @@ import re
 import cobra as cb
 import copy
 import pandas as pd
+from src.MeMoModel import MeMoModel
 
 def printModelStats(model:cb.Model):
     print(f'{len(model.reactions)} reactions')
@@ -134,7 +135,7 @@ def exchangeMetabolite(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True
     
 
 def mergeAndRemove(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True, reversible_is_same:bool = True) -> pd.DataFrame:
-    ''' Clean the model of a duplicated metabolite. Every instance of met2 will be replaced by met1. Reactions which essentia -> pd.DataFramelly have the same'''
+    ''' Clean the model of a duplicated metabolite. Every instance of met2 will be replaced by met1. Reactions which essentilly have the same'''
     # first find duplicated reactions and merge them
     rxns = findCommonReactions(met1, met2, reversible_is_same = reversible_is_same)
     # ceate a data frame to keep track of the changes
@@ -149,3 +150,94 @@ def mergeAndRemove(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True, re
     res2 = exchangeMetabolite(met1, met2, prune = prune)
     res = pd.concat([res1,res2])
     return(res)
+
+def detectDuplicates(selfmatch:pd.DataFrame, check_charge:bool = True) -> list[tuple]:
+    '''Takes the result from selfmatch of a model and tries to detect all duplicated metabolites. Returns a list of tuples with the duplicated but not identical metabolites'''
+    # check if the MeMoModel is already annoateted, otherwise do it
+   # if model.annotated == False:
+   #     model.annotate()
+
+   # # do a self match
+   # matches = model.match(model)
+    matches = selfmatch
+
+    # get the top score for each metabolite
+    matches_max1 = pd.DataFrame(matches.groupby("met_id1")["total_score"].max())
+    matches_max2 = pd.DataFrame(matches.groupby("met_id2")["total_score"].max())
+
+    # prefilter the data - this has performance reasons, but I could not figure out how to do the actual filtering in a vectorized way
+    # check if it is not a self match
+    matches = matches.loc[matches["met_id1"] != matches["met_id2"]]
+    # check whether the first metabolite has a match on the highest total score
+    matches.index = matches["met_id1"]
+    keep_max1 = matches.eq(matches_max1)["total_score"]
+    # check if the second metabolite has reached the maximum score
+    matches.index = matches["met_id2"]
+    keep_max2 = matches.eq(matches_max2)["total_score"]
+    keep = [x for x,y in enumerate(keep_max1) if y == True and keep_max2.iloc[x] == True]
+    met_id1 = keep_max1.iloc[keep].index
+    met_id2 = keep_max2.iloc[keep].index
+    matches = matches.loc[matches["met_id1"].isin(met_id1)]
+    matches = matches.loc[matches["met_id2"].isin(met_id2)]
+    
+    # do the actual filtering iteratively
+    matches = matches.reset_index(drop=True) # reset index
+    keep = []
+    for i,row in matches.iterrows():
+        if all([
+            # check whether the first metabolite has a match on the highest total score
+            matches_max1["total_score"][row["met_id1"]] == row["total_score"],
+            # check if the second metabolite has reached the maximum score
+            matches_max2["total_score"][row["met_id2"]] == row["total_score"],
+            # check if it is not a self match
+            row["met_id1"] != row["met_id2"]]):
+            keep.append(i)
+    matches = matches.iloc[keep,:]
+    
+    if check_charge == True:
+        # check whether charge differences have been considered
+        keep2 = matches[["charge_diff_inchi","charge_diff_db","charge_diff_name"]].sum(axis = 1)==0
+        matches = matches.loc[keep2,:]
+
+    # get the pairs and remove the backward matches
+    pairs = []
+    for i, row in matches.iterrows():
+        tpl = (row["met_id1"], row["met_id2"])
+        if tpl not in pairs and (tpl[1],tpl[0]) not in pairs:
+            pairs.append(tpl)
+
+    return(pairs)
+
+def removeDuplicateMetabolitesAndMergeReactions(model:MeMoModel) -> MeMoModel:
+    ''' Takes a MeMoModel and will remove all the metabolites which are duplicates. Returns the cleaned MeMoModel object'''
+
+    # create a deep copy of the original MeMoMod
+    #model = copy.deepcopy(model) # this takes a lot of time and I guess it is not worth it
+
+    # check if the MeMoModel is already annoateted, otherwise do it
+    if model.annotated == False:
+        model.annotate()
+
+    # do a self match
+    matches = model.match(model)
+    
+    # get duplicated metabolites
+    dups = detectDuplicates(matches)
+
+    # iterate through the metabolites and remove duplicates
+    change_all = pd.DataFrame()
+    for met_id1, met_id2 in dups:
+        ori_metids1 = [x.orig_ids for x in model.metabolites if x.id == met_id1][0]
+        ori_metids2 = [x.orig_ids for x in model.metabolites if x.id == met_id2][0]
+        for ori_metid1 in ori_metids1:
+            cobra_met1 = model.cobra_model.metabolites.get_by_id(ori_metid1)
+            for ori_metid2 in ori_metids2:
+                cobra_met2 = model.cobra_model.metabolites.get_by_id(ori_metid2)
+                if cobra_met2.compartment == cobra_met1.compartment:
+                    changes_current = mergeAndRemove(cobra_met1,cobra_met2)
+                    change_all = pd.DataFrame.concat([change_all, changes_current])
+
+    memomod = MeMoModel.fromModel(model.cobra_model)
+
+    return(memomod, change_all)
+

@@ -38,6 +38,7 @@ class MeMoModel:
         self.metabolites = metabolites
         self.cobra_model = cobra_model
         self._id = _id
+        self.annotated = False
 
 
 
@@ -68,26 +69,56 @@ class MeMoModel:
         _id = model.getId()
         return MeMoModel(metabolites=metabolites, _id=_id)
 
-    def annotate(self, allow_missing_dbs: bool = False) -> None:
+    def annotate(self, allow_missing_dbs: bool = False) -> AnnotationResult:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
-        # count the number of newly annotated metabolites
-        anno_result= AnnotationResult(0,0,0)
-        # BiGG
-        temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
-        print("BiGG:",temp_result)
-        anno_result = anno_result + temp_result
-        # Use ChEBI
-        temp = annotateChEBI(self.metabolites, allow_missing_dbs)
-        print("ChEBI:",temp_result)
-        anno_result = anno_result + temp_result
-        # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-        temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
-        print("ModelSEED:", temp_result)
-        anno_result = anno_result + temp_result
-        print("Total:", anno_result)
+        final_numbers = AnnotationResult(0,0,0)
 
+        total = 1
+        while total != 0:
+            # count the number of newly annotated metabolites
+            anno_result= AnnotationResult(0,0,0)
+            # BiGG
+            temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
+            print("BiGG:",temp_result)
+            anno_result = anno_result + temp_result
+            # Use ChEBI
+            temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
+            print("ChEBI:",temp_result)
+            anno_result = anno_result + temp_result
+            # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+            temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
+            print("ModelSEED:", temp_result)
+            anno_result = anno_result + temp_result
+            #print("Total:", anno_result)
+            final_numbers = final_numbers + anno_result
+            total = anno_result.annotated_total
+        self.annotated = True
+        print(final_numbers)
+        return(final_numbers)
 
+    def writeAnnotationToCobraModel(self) -> None:
+        ''' At some point this is advisable to do, otherwise we will loose all the information we have newly annotated. So here is a function to do just that. It will go through the metabolite annotations which have been stored in the MeMoModel object and writes it to the cobra model annotation slot '''
+        
+        # simply go through the metabolites and add the annotation to the cobra model
+        for met in self.metabolites:
+            for met_id in met.orig_ids:
+                mod_met = self.cobra_model.metabolites.get_by_id(met_id)
+                for x in met.annotations.keys():
+                    if x in mod_met.annotation.keys():
+                        mod_met.annotation[x].extend(met.annotations[x])
+                        # remove duplicates and sort list
+                        new_annolst = list(set(mod_met.annotation[x]))
+                        new_annolst.sort()
+                        mod_met.annotation[x] = new_annolst
+                    else:
+                        mod_met.annotation[x] = met.annotations[x]
+                # add the inchi string if possible
+                if met._inchi_string != None:
+                    if "inchi" not in mod_met.annotation.keys():
+                        mod_met.annotation["inchi"] = [met._inchi_string]
+                # sort the final dictionary
+                mod_met.annotation = dict(sorted(mod_met.annotation.items()))
 
     def match(self,
             model2: MeMoModel,
@@ -338,7 +369,6 @@ class MeMoModel:
 
         results = pd.DataFrame(results)
         return(results)
-
 
 
 
