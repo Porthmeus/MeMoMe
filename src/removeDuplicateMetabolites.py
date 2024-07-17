@@ -208,7 +208,8 @@ def detectDuplicates(selfmatch:pd.DataFrame, check_charge:bool = True) -> list[t
 
     return(pairs)
 
-def removeDuplicateMetabolitesAndMergeReactions(model:MeMoModel) -> MeMoModel:
+def removeDuplicateMetabolites(model:MeMoModel) ->  tuple[MeMoModel, pd.DataFrame]:
+
     ''' Takes a MeMoModel and will remove all the metabolites which are duplicates. Returns the cleaned MeMoModel object'''
 
     # create a deep copy of the original MeMoMod
@@ -225,17 +226,25 @@ def removeDuplicateMetabolitesAndMergeReactions(model:MeMoModel) -> MeMoModel:
     dups = detectDuplicates(matches)
 
     # iterate through the metabolites and remove duplicates
+    # get all metabolites in the original model - that serves as a check,
+    # whether the metabolites have been removed already in a previous iteration
+    mets_all_cobra = [x.id for x in model.cobra_model.metabolites]
     change_all = pd.DataFrame()
     for met_id1, met_id2 in dups:
+        # get the original ids
         ori_metids1 = [x.orig_ids for x in model.metabolites if x.id == met_id1][0]
         ori_metids2 = [x.orig_ids for x in model.metabolites if x.id == met_id2][0]
         for ori_metid1 in ori_metids1:
             cobra_met1 = model.cobra_model.metabolites.get_by_id(ori_metid1)
             for ori_metid2 in ori_metids2:
-                cobra_met2 = model.cobra_model.metabolites.get_by_id(ori_metid2)
-                if cobra_met2.compartment == cobra_met1.compartment:
-                    changes_current = mergeAndRemove(cobra_met1,cobra_met2)
-                    change_all = pd.DataFrame.concat([change_all, changes_current])
+                # check if the metabolite is still in the model
+                if ori_metid2 in mets_all_cobra:
+                    cobra_met2 = model.cobra_model.metabolites.get_by_id(ori_metid2)
+                    if cobra_met2.compartment == cobra_met1.compartment:
+                        changes_current = mergeAndRemove(cobra_met1,cobra_met2)
+                        change_all = pd.concat([change_all, changes_current])
+                        # remove the metabolite from the control list
+                        mets_all_cobra.remove(ori_metid2)
 
     memomod = MeMoModel.fromModel(model.cobra_model)
 
