@@ -20,7 +20,7 @@ from json import load
 from copy import deepcopy
 
 import pandas as pd
-from numpy import NaN as npNaN
+from numpy import nan as npNaN
 
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 from src.annotateInchiRoutines import findOptimalInchi
