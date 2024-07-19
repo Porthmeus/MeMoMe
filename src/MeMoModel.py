@@ -16,11 +16,13 @@ import logging
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotateVMH import annotateVMH, annotateVMH_id
 from src.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
 from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi,NeutraliseCharges2Inchi
+from src.origin_databases import origin_databases
 
 
 from rdkit import Chem
@@ -33,8 +35,8 @@ class MeMoModel:
 
     def __init__(self,
                  metabolites: list[MeMoMetabolite] = [],
-                 cobra_model: cb.Model = None,
-                 _id: str = None) -> None:
+                 cobra_model: cb.Model|None = None,
+                 _id: str|None = None) -> None:
         ''' Stump for construction '''
         self.metabolites = metabolites
         self.cobra_model = cobra_model
@@ -73,6 +75,21 @@ class MeMoModel:
     def annotate(self, allow_missing_dbs: bool = False) -> AnnotationResult:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
+
+        print(self._id)
+
+        #TEMP FIX
+        annotationDict = {"VMH" : annotateVMH_id,
+                          "ModelSEED": annotateModelSEED_id,
+                          "BiGG": annotateBiGG_id
+                          }
+
+        origin_dbs = origin_databases(self.metabolites)
+        origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
+        print(f"ORIG DB {origin_db}")
+
+        logger.debug(origin_db)
+
         final_numbers = AnnotationResult(0,0,0)
 
         total = 1
@@ -94,8 +111,9 @@ class MeMoModel:
             #print("Total:", anno_result)
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
+
         self.annotated = True
-        print(final_numbers)
+        print("TOTAL:", final_numbers)
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
