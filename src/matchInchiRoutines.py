@@ -6,7 +6,6 @@
 import rdkit
 import warnings
 from rdkit import Chem, DataStructs, RDLogger
-from rdkit.Chem import AllChem
 from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers, StereoEnumerationOptions
 from rdkit.Chem.rdchem import Mol
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
@@ -180,39 +179,4 @@ def compareInchiByStereoIsomer0(m1:rdkit.Chem.rdchem.Mol, m2:rdkit.Chem.rdchem.M
     return len(intersect) > 0
 
 
-def NeutraliseCharges(mol: rdkit.Chem.rdchem.Mol, verbose = False) -> rdkit.Chem.rdchem.Mol:
-    """ Takes a molecule and returns the neutralized version of it + an indicator, what the charge difference was."""
-    
-    # turn off chattiness of rdkit
-    if verbose == False:
-        RDLogger.DisableLog("rdApp.*")
 
-    # """ adapted from Hans de Winter - https://rdkit.readthedocs.io/en/latest/Cookbook.html """
-    # initialize the patterns
-    patts = (
-        # Imidazoles
-        ('[n+;H]', 'n'),
-        # Amines
-        ('[N+;!H0]', 'N'),
-        # Carboxylic acids and alcohols
-        ('[$([O-]);!$([O-][#7])]', 'O'),
-        # Thiols
-        ('[S-;X1]', 'S'),
-        # Sulfonamides
-        ('[$([N-;X2]S(=O)=O)]', 'N'),
-        # Enamines
-        ('[$([N-;X2][C,N]=C)]', 'N'),
-        # Tetrazoles
-        ('[n-]', '[nH]'),
-        # Sulfoxides
-        ('[$([S-]=O)]', 'S'),
-        # Amides
-        ('[$([N-]C=O)]', 'N'),
-    )
-    reactions = [(Chem.MolFromSmarts(x), Chem.MolFromSmiles(y, False)) for x, y in patts]
-
-    for i, (reactant, product) in enumerate(reactions):
-        while mol.HasSubstructMatch(reactant):
-            rms = AllChem.ReplaceSubstructs(mol, reactant, product)
-            mol = rms[0]
-    return (mol)
