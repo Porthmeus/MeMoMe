@@ -218,6 +218,8 @@ def removeDuplicateMetabolites(model:MeMoModel) ->  tuple[MeMoModel, pd.DataFram
     # check if the MeMoModel is already annoateted, otherwise do it
     if model.annotated == False:
         model.annotate()
+    # write the annotation to the internal cobra model to not loose them
+    model.writeAnnotationToCobraModel()
 
     # do a self match
     matches = model.match(model)

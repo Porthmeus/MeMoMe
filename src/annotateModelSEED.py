@@ -19,6 +19,24 @@ from src.download_db import databases_available, get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 from src.annotateAux import AnnotationResult
 
+# load the prefixes for the identifies.org list that is needed for the correction of the key in the annotation dictionary
+config = get_config()
+identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
+
+# TODO 
+try: 
+    with open(identifiers_file, "r") as json_file: 
+        identifiers = json.load(json_file)
+except FileNotFoundError as e:
+    warnings.warn(str(e))
+    # Rethrow exception because we want don't allow missing dbs
+    if allow_missing_dbs == False:
+      raise e
+
+identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
+identifier_prefixes = pd.read_json(StringIO(identifier_prefixes))
+identifier_prefixes = list(identifier_prefixes["prefix"])
+
 
 def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
     """ Annotate the metaboltes with Inchis from ChEBI """
@@ -37,6 +55,8 @@ def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
     '''
 
     # the string is basically already a dictionary, it just needs to be passed back to it
+    # first we need to replace all possible quotation marks
+    alias = alias.replace('"',"''")
     new_alias = '''{"'''+alias.replace(''': ''','''":["''').replace('''|''','''"],"''').replace('''; ''','''","''')+'''"]}''' # the ''' are awkward, but necessary, because of ' sometimes denotes something like 3'-triphosphate, which makes ' as delimiter unusable
     new_anno = eval(new_alias)
 
@@ -57,24 +77,7 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
     ## TODO: currently the data base is read everytime we run this function (which could be several k times) - find a better solution for that
     # try to find the correct identifiers from identifiers.org
     ## first get possible prefixes
-
-    config = get_config()
-    identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
-
-    # TODO 
-    try: 
-        with open(identifiers_file, "r") as json_file: 
-            identifiers = json.load(json_file)
-    except FileNotFoundError as e:
-        warnings.warn(str(e))
-        # Rethrow exception because we want don't allow missing dbs
-        if allow_missing_dbs == False:
-          raise e
-        return dict()
-
-    prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
-    prefixes = pd.read_json(StringIO(prefixes))
-    prefixes = list(prefixes["prefix"])
+    prefixes = identifier_prefixes
 
     ## now check if the keys of the annos can be found in the prefixes
     new_anno_corrected = dict()
