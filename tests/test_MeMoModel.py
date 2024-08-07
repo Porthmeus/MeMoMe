@@ -247,6 +247,17 @@ class Test_MiscStuff(unittest.TestCase):
       self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
       self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
 
+    def test_annotationCount(self):
+      #this_directory = Path(__file__).parent
+      #dat = this_directory.joinpath("../manually_merged_models")
+      mod = cb.io.load_model("textbook")
+      mod = MeMoModel.fromModel(mod)
+      le = len(mod.metabolites)
+      print(f"Amount of metabs {le}")
+      print(f"Amount of unannotated inchis {sum([x._inchi_string == None for x in mod.metabolites])}")
+      print(f"Annoatted {mod.annotate()}")
+      print(f"Amount of unannotated inchis after Annotation {sum([x._inchi_string == None for x in mod.metabolites])}")
+
 
 if __name__ == '__main__':
     unittest.main()

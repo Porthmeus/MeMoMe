@@ -2,8 +2,10 @@
 # 16.06.23
 from typing import Optional
 
-from src.matchMets import matchMetsByInchi, NeutraliseCharges
+from src.matchMets import matchMetsByInchi
 from rdkit import Chem, RDLogger
+from rdkit.Chem import AllChem
+from rdkit.Chem.rdmolops import GetFormalCharge
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import warnings
 
@@ -114,12 +116,13 @@ def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = 
             if j != i:
                 m1 = mols[i]
                 m2 = mols[j]
-
                 nminchi1 = molToNormalizedInchi(m1)
                 nminchi2 = molToNormalizedInchi(m2)
-                nt_m1 = NeutraliseCharges(m1)
-                nt_m2 = NeutraliseCharges(m2)
-                k = k + int(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), nt_m1, nt_m2, verbose = verbose)[0])
+                nt_m1 = NeutraliseCharges2Inchi(m1)
+                nt_m2 = NeutraliseCharges2Inchi(m2)
+                charge1 = GetFormalCharge(m1)
+                charge2 = GetFormalCharge(m2)
+                k = k + int(matchMetsByInchi(nminchi1, nminchi2, m1, m2, nt_m1, nt_m2, charge1, charge2, verbose = verbose)[0])
         matches.append(k)
     if len(matches) == 0:
         return None
@@ -163,4 +166,46 @@ def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = 
     return inchis[0]
 
 
+def NeutraliseCharges(mol: Chem.rdchem.Mol, verbose = False) -> Chem.rdchem.Mol:
+    """ Takes a molecule and returns the neutralized version of it."""
+    
+    # turn off chattiness of rdkit
+    if verbose == False:
+        RDLogger.DisableLog("rdApp.*")
+
+    # """ adapted from Hans de Winter - https://rdkit.readthedocs.io/en/latest/Cookbook.html """
+    # initialize the patterns
+    patts = (
+        # Imidazoles
+        ('[n+;H]', 'n'),
+        # Amines
+        ('[N+;!H0]', 'N'),
+        # Carboxylic acids and alcohols
+        ('[$([O-]);!$([O-][#7])]', 'O'),
+        # Thiols
+        ('[S-;X1]', 'S'),
+        # Sulfonamides
+        ('[$([N-;X2]S(=O)=O)]', 'N'),
+        # Enamines
+        ('[$([N-;X2][C,N]=C)]', 'N'),
+        # Tetrazoles
+        ('[n-]', '[nH]'),
+        # Sulfoxides
+        ('[$([S-]=O)]', 'S'),
+        # Amides
+        ('[$([N-]C=O)]', 'N'),
+    )
+    reactions = [(Chem.MolFromSmarts(x), Chem.MolFromSmiles(y, False)) for x, y in patts]
+
+    for i, (reactant, product) in enumerate(reactions):
+        while mol.HasSubstructMatch(reactant):
+            rms = AllChem.ReplaceSubstructs(mol, reactant, product)
+            mol = rms[0]
+    return (mol)
+
+def NeutraliseCharges2Inchi(mol:Chem.rdchem.Mol, verbose = False) -> str:
+    ''' just a small helper to directly get a charge neutralized inchi'''
+    mol = NeutraliseCharges(mol)
+    inchi = molToNormalizedInchi(mol)
+    return(inchi)
 
