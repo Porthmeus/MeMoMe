@@ -29,13 +29,16 @@ try:
         identifiers = json.load(json_file)
 except FileNotFoundError as e:
     warnings.warn(str(e))
+    identifiers = None
     # Rethrow exception because we want don't allow missing dbs
-    if allow_missing_dbs == False:
-      raise e
+    # not working here, but there will be check further down again
+    #if allow_missing_dbs == False:
+    #  raise e
 
-identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
-identifier_prefixes = pd.read_json(StringIO(identifier_prefixes))
-identifier_prefixes = list(identifier_prefixes["prefix"])
+if identifiers != None:
+    identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
+    identifier_prefixes = pd.read_json(StringIO(identifier_prefixes))
+    identifier_prefixes = list(identifier_prefixes["prefix"])
 
 
 def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
