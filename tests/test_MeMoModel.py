@@ -14,6 +14,7 @@ from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateAux import AnnotationResult
+from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
 
 print(sys.version)
 
@@ -258,6 +259,30 @@ class Test_MiscStuff(unittest.TestCase):
       print(f"Annoatted {mod.annotate()}")
       print(f"Amount of unannotated inchis after Annotation {sum([x._inchi_string == None for x in mod.metabolites])}")
 
+class Test_removeDuplicates(unittest.TestCase):
+    this_directory = Path(__file__).parent
+    dat = this_directory.joinpath("dat")
+    
+    def test_detectDuplicates(self):
+        # load data
+        mod_ori = cb.io.read_sbml_model(self.dat.joinpath("tiny_ecoli_keep_inchi.xml"))
+        mmm_ori = MeMoModel.fromModel(mod_ori)
+        mod_dup = cb.io.read_sbml_model(self.dat.joinpath("tiny_ecoli_keep_inchi_withduplicates.xml"))
+        mmm_dup = MeMoModel.fromModel(mod_dup)
+        mmm_dup_copy = mmm_dup.copy()
+        # first make sure that the testcase model is different to the model with the duplicated 
+        self.assertFalse(mmm_dup == mmm_ori)
+        self.assertTrue(mmm_dup == mmm_dup_copy)
+
+        # find duplicates
+        dups = mmm_dup.match(mmm_dup)
+        dups = detectDuplicates(dups)
+        self.assertTrue(dups == [('pyr','pyruv')])
+
+        # remove duplicates
+        mmm_dup,rm_results = removeDuplicateMetabolites(mmm_dup)
+        self.assertFalse(mmm_dup == mmm_dup_copy)
+        self.assertTrue(mmm_dup == mmm_ori)
 
 if __name__ == '__main__':
     unittest.main()

@@ -5,7 +5,6 @@
 Store relevant information of a SBML file in a MeMoModel
 '''
 from __future__ import annotations
-
 from pathlib import Path
 from warnings import warn
 import cobra as cb
@@ -13,6 +12,10 @@ import libsbml as sbml
 import pandas as pd
 import numpy as np
 import logging
+from deepdiff import DeepDiff
+from rdkit import Chem
+from copy import deepcopy
+
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
@@ -25,13 +28,13 @@ from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi
 from src.origin_databases import origin_databases
 
 
-from rdkit import Chem
 
 logger = logging.getLogger('logger')
 
 class MeMoModel:
-    """ The model class of MeMoMe. Core (for now) is a list of metabolites storing the relevant information. Further
-    it will store the cobra representation for the model"""
+    """ The model class of MeMoMe. Core (for now) is a list of metabolites
+    storing the relevant information. Further it will store the cobra
+    representation for the model"""
 
     def __init__(self,
                  metabolites: list[MeMoMetabolite] = [],
@@ -392,5 +395,14 @@ class MeMoModel:
         results = pd.DataFrame(results)
         return(results)
 
+    def __eq__(self, other):
+        # simple check for equality of two models
+        if isinstance(other, self.__class__):
+            same = DeepDiff(self, other, exclude_paths = "root.cobra_model") == dict()
+        else:
+            same = False
+        return same
 
-
+    def copy(self):
+        ''' return a deepcopy of the same object '''
+        return(deepcopy(self))
