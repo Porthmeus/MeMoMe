@@ -135,13 +135,7 @@ class ModelMerger:
             new_metabolite = original_metabolite.copy()
             new_metabolite.id = new_id
             new_metabolite.compartment = "e"
-            #new_metabolite = cobra.Metabolite(
-            ##    id=new_id,
-            ##    formula=original_metabolite.formula,
-            #    name=original_metabolite.name,
-            #    charge=original_metabolite.charge,
-            #    compartment="e"
-            #)
+
 
             # Add the new metabolite to the model
             model.add_metabolites([new_metabolite])
