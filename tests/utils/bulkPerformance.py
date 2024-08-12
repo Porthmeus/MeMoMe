@@ -20,7 +20,8 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
     this_directory = Path(__file__).parent
-    dat = this_directory.joinpath("dat")
+    dat = this_directory.joinpath("../dat")
+    manual = this_directory.joinpath("../manually_merged_models/")
 
 
     def test_ecoli_core_seed(self):
@@ -209,6 +210,30 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
+    #def test_stefano_recon(self):
+    #    mod_path = self.manual.joinpath("gapseq_recon3D/M1_recon3D_301_modified.xml")
+    #    mod = MeMoModel.fromPath(mod_path)
+    #    exp = AnnotationResult(0,0,0)
+    #    res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
+    #    add_test_case_to_table(self.test_stefano_recon.__name__, res, exp)   
+    #    self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_stefano_bacs_seed_id(self):
+        mod_path = self.manual.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
+        add_test_case_to_table(self.test_stefano_bacs_seed_id.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_stefano_bacs_general(self):
+        mod_path = self.manual.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = AnnotationResult.fromAnnotation(mod.annotate())
+        add_test_case_to_table(self.test_stefano_bacs_general.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
 def generate_html_table(data):
     """
     Generate HTML table from a list of lists (2D array) representing the table data.
@@ -292,11 +317,18 @@ def add_test_case_to_table( name: str, res, exp):
 if __name__ == '__main__':
     # Create a test suite
     suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
+    filtered = [test for test in suite if 'stefano' in str(test)]
+
     # Create a test runner
     runner = unittest.TextTestRunner()
+
+
+    suite2 = unittest.TestSuite()
+    suite2.addTests(filtered)
+    
     
     # Run the tests and get the result
-    result = runner.run(suite)
+    result = runner.run(suite2)
 
 
   
