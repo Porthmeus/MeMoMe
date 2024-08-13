@@ -230,7 +230,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod_path = self.manual.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(mod.annotate())
+        res = mod.annotate()
         add_test_case_to_table(self.test_stefano_bacs_general.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
