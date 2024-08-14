@@ -234,6 +234,15 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         add_test_case_to_table(self.test_stefano_bacs_general.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
+
+    def test_stefano_recon_general(self):
+        mod_path = self.manual.joinpath("gapseq_recon3D/M1_recon3D_301_modified.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(0,0,0)
+        res = mod.annotate()
+        add_test_case_to_table(self.test_stefano_recon_general.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
 def generate_html_table(data):
     """
     Generate HTML table from a list of lists (2D array) representing the table data.
