@@ -262,6 +262,30 @@ class Test_MiscStuff(unittest.TestCase):
 class Test_removeDuplicates(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory.joinpath("dat")
+
+    def test_157(self):
+      b = MeMoModel()
+      
+      metabolite: MeMoMetabolite = MeMoMetabolite()
+      metabolite.set_id("A")
+      metabolite.set_inchi_string("")
+      metabolite.set_names(["Peter"])
+      
+      
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB.set_id("B")
+      metaboliteB.set_inchi_string("")
+      metaboliteB.set_names(["Peter"])
+      
+      model1 = MeMoModel([metabolite])
+      model2 = MeMoModel([metaboliteB])
+      
+      model1.annotate()
+      model2.annotate()
+      try:
+        model1.match(model2)
+      except KeyError:
+        self.fail("This call should not fail")
     
     def test_detectDuplicates(self):
         # load data
