@@ -26,7 +26,8 @@ class ModelMerger:
                     met = list(ex.metabolites.keys())[0]
                     # create the metabolite in the translation compartment and give it a +1 stoichiometry (production)
                     met_t = met.copy()
-                    #  TODO: replace regular expression with function call for the remove suffix function (need to modify the handle_metabolites_prefix_suffix_function)
+                    #  TODO: replace regular expression with function call for the remove suffix function
+                    #   (need to modify the handle_metabolites_prefix_suffix_function)
                     met_t.id = re.sub(r"[^_]+$", "t", met.id)  # substitutes the compartment suffix (all
                                                                             # that follows the last underscore) with
                                                                             # the new compartment's symbol
@@ -38,6 +39,8 @@ class ModelMerger:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
 
     def translate_reactions_and_metabolites_ids(self, score_thr, score_type="Name_score"):
+        # TODO: decide best match for each pair of metabolites from the 2 models
+        # TODO: split the function into smaller functions
         if score_type not in self.matches.columns:  # making sure that the chosen score is specified in the matches table
             raise ValueError("Specified score type: " + score_type + "doesn't exist")
         cobra_model = self.memo_model.cobra_model
@@ -52,6 +55,8 @@ class ModelMerger:
                                      + str(len(transl_mets)))
                 met = transl_mets[0]  # I select the one (and only) metabolite produced by the TR_ reaction
                 whole_met_id = met.id
+                #  TODO: replace regular expression with function call for the remove suffix function
+                #   (need to modify the handle_metabolites_prefix_suffix_function)
                 met_id = re.sub(r"_t$", "", whole_met_id)
                 new_met_id = reliable_matches.loc[reliable_matches["met_id2"] ==
                                                   met_id].sort_values(by=score_type,

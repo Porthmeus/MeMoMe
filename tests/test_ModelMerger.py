@@ -26,7 +26,5 @@ class TestModelMerging(unittest.TestCase):
         for ex in exchanges:
             print(ex.metabolites)
 
-            #self.assertEquals(re.sub(r"[^_]+$", "", pre_transl), re.sub(r"[^_]+$", "", post_transl))
-
 
 
