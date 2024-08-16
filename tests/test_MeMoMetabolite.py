@@ -43,7 +43,10 @@ class Test_MeMoMetabolite(unittest.TestCase):
         model1.annotate()
         model2.annotate()
 
-        print(model1.match(model2))
+        try:
+            model1.match(model2)
+        except KeyError:
+            self.fail("This call should not fail")
 
 if __name__ == "__main__":
     unittest.main()
