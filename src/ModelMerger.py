@@ -26,7 +26,10 @@ class ModelMerger:
                     met = list(ex.metabolites.keys())[0]
                     # create the metabolite in the translation compartment and give it a +1 stoichiometry (production)
                     met_t = met.copy()
-                    met_t.id = re.sub(r"_e0$", "_t", met.id)
+                    #  TODO: replace regular expression with function call for the remove suffix function (need to modify the handle_metabolites_prefix_suffix_function)
+                    met_t.id = re.sub(r"[^_]+$", "t", met.id)  # substitutes the compartment suffix (all
+                                                                            # that follows the last underscore) with
+                                                                            # the new compartment's symbol
                     met_t.compartment = "t"
                     ex.add_metabolites({met_t: 1.0})
                 else:
@@ -34,22 +37,29 @@ class ModelMerger:
             else:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
 
-    def translate_reactions_and_metabolites_ids(self):
+    def translate_reactions_and_metabolites_ids(self, score_thr, score_type="Name_score"):
+        if score_type not in self.matches.columns:  # making sure that the chosen score is specified in the matches table
+            raise ValueError("Specified score type: " + score_type + "doesn't exist")
         cobra_model = self.memo_model.cobra_model
-        reliable_matches = self.matches.loc[self.matches["Name_score"] > 0.8]
-        print(reliable_matches["met_id2"])
+        reliable_matches = self.matches.loc[self.matches[score_type] > score_thr]
         for rxn in cobra_model.reactions:
             if rxn.id.startswith("TR_"):
-                met = list(rxn.metabolites.keys())[1]
+                transl_mets = [k for k, v in rxn.metabolites.items()
+                               if v == 1.0]  # select the "produced" (translated) metabolites
+                if len(transl_mets) != 1:
+                    raise ValueError("Being a namespace translation reaction, " + rxn.id +
+                                     "should produce one and only one metabolite, but it produces "
+                                     + str(len(transl_mets)))
+                met = transl_mets[0]  # I select the one (and only) metabolite produced by the TR_ reaction
                 whole_met_id = met.id
-                print(whole_met_id)
                 met_id = re.sub(r"_t$", "", whole_met_id)
-                print(met_id)
-                new_met_id = reliable_matches.loc[reliable_matches["met_id2"]==met_id]["met_id1"].values
-                print(new_met_id)
-                if len(new_met_id) > 0:
+                new_met_id = reliable_matches.loc[reliable_matches["met_id2"] ==
+                                                  met_id].sort_values(by=score_type,
+                                                                      ascending=False)["met_id1"].values
+                if len(new_met_id) > 0:  # select the first (most reliable mathc) metabolite id from the matches table
                     new_met_id = new_met_id[0] + "_t"
                     met.id = new_met_id
+
     def translate_namespace(self):
         self.create_translation_compartment()
         self.convert_exchange_to_translation()
