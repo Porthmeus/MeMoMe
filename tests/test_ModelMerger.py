@@ -16,16 +16,17 @@ class TestModelMerging(unittest.TestCase):
         matches = model1.match(model2)
         merger = ModelMerger(model2, matches)
         exchanges = model2.cobra_model.exchanges
-        merger.convert_exchange_to_translation()
+        merger.convert_exchange_rxns_to_translation_rxns()
         self.assertTrue("t" in model2.cobra_model.compartments.keys())
         for ex in exchanges:
             self.assertTrue(ex.id.startswith("TR_"))
             self.assertEqual(len(list(ex.metabolites.keys())), 2)
             self.assertEqual({coef for coef in ex.metabolites.values()}, {-1.0, 1.0})
-        merger.translate_reactions_and_metabolites_ids(score_thr=0.5)
+        merger.translate_ids(score_thr=0.5)
         for ex in exchanges:
             print(ex.id)
             print(ex.metabolites)
+
 
 
 
