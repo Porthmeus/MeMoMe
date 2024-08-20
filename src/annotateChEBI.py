@@ -50,7 +50,10 @@ def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = F
                 inchi = findOptimalInchi(inchis, charge = metabolites[i]._charge)
                 if inchi is None:
                     continue
-            annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)
+                else:
+                  inchi = None
+
+                annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)
     
     anno_result = AnnotationResult(annotated_by_chebi, 0, 0)
     return anno_result 
