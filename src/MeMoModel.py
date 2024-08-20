@@ -249,42 +249,38 @@ class MeMoModel:
                 "inchi_string":[],
                 "charge_diff" : []}
 
-        # loop over the first models metabolites
-        for i in range(len(mod1_inchis)):
-            # get the first inchi
-            inchi1 = mod1_inchis.loc[i, "inchis"]
-            # check if there is acutally an inchi, or whether the metabolite has none
-            if inchi1 != None:
-                # assign the precalculated values for the inchi
-                mol1   = mod1_inchis.loc[i, "Mol"]
-                nminchi1 = mod1_inchis.loc[i, "normalized_inchi"]
-                ntchrinchi1 = mod1_inchis.loc[i, "neutralized_charge_inchi"]
-                charge1 = mod1_inchis.loc[i,"charge"]
-                id1 = mod1_inchis.loc[i,"met_id"]
-                
 
-                # loop through the metabolites of the second model
-                for j in range(len(mod2_inchis)):
-                    inchi2 = mod2_inchis.loc[j, "inchis"]
-                    # check if there is acutally an inchi, or whether the metabolite has none
-                    if inchi2 != None:
-                        # assign the precalculated values for the inchi
-                        mol2   = mod2_inchis.loc[j, "Mol"]
-                        nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
-                        ntchrinchi2 = mod2_inchis.loc[j, "neutralized_charge_inchi"]
-                        charge2 = mod2_inchis.loc[i,"charge"]
-                        id2 = mod2_inchis.loc[j,"met_id"]
-                        
-                        # do the actual matching
-                        res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, ntchrinchi1, ntchrinchi2, charge1, charge2)
-                        
-                        # write the results into the data frame
-                        if res[0] == True:
-                            matches["met_id1"].append(id1)
-                            matches["met_id2"].append(id2)
-                            matches["inchi_string"].append(inchi1)
-                            matches["charge_diff"].append(res[1])
-                            matches["inchi_score"].append(int(res[0]))
+        mod2_inchis_non_zero = mod2_inchis[~mod2_inchis["inchis"].isna()]
+        mod1_inchis_non_zero = mod1_inchis[~mod1_inchis["inchis"].isna()]
+        print("LEN", len(mod2_inchis_non_zero))
+        # loop over the first models metabolites
+        for _, row in mod1_inchis_non_zero.iterrows():
+            # get the first inchi
+            # assign the precalculated values for the inchi
+            inchi1 = row["inchis"]
+            mol1   = row["Mol"]
+            nminchi1 = row["normalized_inchi"]
+            ntchrinchi1 = row["neutralized_charge_inchi"]
+            charge1 = row["charge"]
+            id1 = row["met_id"]
+            # loop through the metabolites of the second model
+            for _, row in mod2_inchis_non_zero.iterrows():
+                mol2 = row["Mol"]
+                nminchi2 = row["normalized_inchi"]
+                ntchrinchi2 = row[ "neutralized_charge_inchi"]
+                charge2 = row["charge"]
+                id2 = row["met_id"]
+                
+                # do the actual matching
+                res = matchMetsByInchi(nminchi1, nminchi2, mol1, mol2, ntchrinchi1, ntchrinchi2, charge1, charge2)
+                
+                # write the results into the data frame
+                if res[0] == True:
+                    matches["met_id1"].append(id1)
+                    matches["met_id2"].append(id2)
+                    matches["inchi_string"].append(inchi1)
+                    matches["charge_diff"].append(res[1])
+                    matches["inchi_score"].append(int(res[0]))
         inchiRes = pd.DataFrame(matches)
         return(inchiRes)
 
