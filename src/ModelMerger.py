@@ -130,6 +130,29 @@ class ModelMerger:
                 tr_rxn = tr_rxns_for_current_met[0]
                 tr_rxn.id = "TR_" + met.id
 
+    def create_exchanges(self):
+        cobra_model = self.memo_model.cobra_model
+        for met in cobra_model.metabolites:
+            if met.compartment == "t":
+                reaction_id = "EX_" + met.id
+                rxn = cobra.Reaction(id=reaction_id, name=met.name + " exchange", lower_bound=-1000, upper_bound=1000)
+                rxn.add_metabolites({met: -1})
+                cobra_model.add_reactions([rxn])
+
+    def set_rxn_bounds(self):
+        cobra_model = self.memo_model.cobra_model
+        for met in cobra_model.metabolites:
+            if met.compartment == "t":
+                ex_rxn = cobra_model.reactions.get_by_id("EX_" + met.id)
+                tr_rxn = cobra_model.reactions.get_by_id("TR_" + met.id)
+                ex_rxn.lower_bound = tr_rxn.lower_bound
+                ex_rxn.upper_bound = tr_rxn.upper_bound
+                tr_rxn.lower_bound = -1000
+                tr_rxn.upper_bound = 1000
+
+
     def translate_namespace(self):
         self.convert_exchange_rxns_to_translation_rxns()
         self.translate_ids()
+        self.create_exchanges()
+        self.set_rxn_bounds()
