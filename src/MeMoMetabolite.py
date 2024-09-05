@@ -201,6 +201,8 @@ class MeMoMetabolite():
 
     def set_inchi_string(self, new_inchi_string: str) -> int:
         """ set function for _inchi_string """
+        if (new_inchi_string == ""):
+          return 0
         old_inchi = deepcopy(self._inchi_string)
 
         # handle empty strings

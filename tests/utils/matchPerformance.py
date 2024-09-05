@@ -21,8 +21,8 @@ def test_MeMoModelCompare2():
     # Record the start time
     start_time = time.time()
     # test the comparison for metabolite matching
-    mod_path = dat.joinpath("MYb11_iCEL1314/M1_MYb11.xml")
-    mod_path2 = dat.joinpath("MYb11_iCEL1314/M2_iCEL1314.xml")
+    mod_path = dat.joinpath("gapseq_recon3D/M1_recon3D_301_modified.xml")
+    mod_path2 = dat.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
     mod = MeMoModel.fromPath(mod_path)
     mod2 = MeMoModel.fromPath(mod_path2)
 
@@ -30,7 +30,7 @@ def test_MeMoModelCompare2():
     print(len(mod2.cobra_model.metabolites))
 
     # self comparison
-    res = mod.match(mod2)
+    res = mod.match(mod2, output_names=True)
     res.to_csv("stuff.csv")
     end_time = time.time()
     

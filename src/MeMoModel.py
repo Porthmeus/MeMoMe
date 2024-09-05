@@ -90,10 +90,8 @@ class MeMoModel:
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         print(f"ORIG DB {origin_db}")
-
+        final_numbers = annotationDict[origin_db](self.metabolites, allow_missing_dbs)
         logger.debug(origin_db)
-
-        final_numbers = AnnotationResult(0,0,0)
 
         total = 1
         while total != 0:
