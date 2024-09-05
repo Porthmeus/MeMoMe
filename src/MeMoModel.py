@@ -274,7 +274,7 @@ class MeMoModel:
                         mol2   = mod2_inchis.loc[j, "Mol"]
                         nminchi2 = mod2_inchis.loc[j, "normalized_inchi"]
                         ntchrinchi2 = mod2_inchis.loc[j, "neutralized_charge_inchi"]
-                        charge2 = mod2_inchis.loc[i,"charge"]
+                        charge2 = mod2_inchis.loc[j,"charge"]
                         id2 = mod2_inchis.loc[j,"met_id"]
                         
                         # do the actual matching
