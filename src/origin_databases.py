@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 import json
+import warnings
 from io import StringIO
 import os
 import pandas as pd
@@ -13,10 +14,14 @@ def VMH2DataFrame():
     db_path =  os.path.join(get_database_path(), config["databases"]["VMH"]["file"])
 
     # load VMH as dataframe
-    with open(db_path, "r") as json_file:
-        VMH_json = json.load(json_file)
-    VMH_json = json.dumps(VMH_json['results'])
-    VMH = pd.read_json(StringIO(VMH_json))
+    try:
+        with open(db_path, "r") as json_file:
+            VMH_json = json.load(json_file)
+            VMH_json = json.dumps(VMH_json['results'])
+            VMH = pd.read_json(StringIO(VMH_json))
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        VMH = pd.DataFrame()
 
     # return the file as dataframe
     return VMH
@@ -36,7 +41,11 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
 
     # get metabolite info from BiGG
     db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-    df_BiGG = pd.read_table(db_path)
+    try:
+        df_BiGG = pd.read_table(db_path)
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        df_Bigg = pd.DataFrame()
     # find number of model metabolites in BiGG database
     metabolitesBiGG_count = df_metabolites["model_metabolites"].isin(df_BiGG["universal_bigg_id"]).sum()
 
@@ -47,7 +56,11 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
 
     # get metabolite info from ModelSEED
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    df_ModelSEED = pd.read_table(db_path)
+    try:
+        df_ModelSEED = pd.read_table(db_path, low_memory=False)
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        df_ModelSEED = pd.DataFrame()
     # find number of model metabolites in ModelSEED database
     metabolitesModelSEED_count = df_metabolites["model_metabolites"].isin(df_ModelSEED["id"]).sum()
 

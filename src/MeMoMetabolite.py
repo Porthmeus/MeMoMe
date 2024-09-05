@@ -20,7 +20,7 @@ from json import load
 from copy import deepcopy
 
 import pandas as pd
-from numpy import NaN as npNaN
+from numpy import nan as npNaN
 
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 from src.annotateInchiRoutines import findOptimalInchi
@@ -202,6 +202,11 @@ class MeMoMetabolite():
     def set_inchi_string(self, new_inchi_string: str) -> int:
         """ set function for _inchi_string """
         old_inchi = deepcopy(self._inchi_string)
+
+        # handle empty strings
+        if new_inchi_string == "":
+            new_inchi_string = None
+
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
@@ -211,12 +216,18 @@ class MeMoMetabolite():
     def add_inchi_string(self, new_inchi_string:str) -> int:
         """ compares to inchis and takes the most appropiate one"""
         changed = 0
+        # handle empty strings
+        if new_inchi_string == "":
+            return changed
         if self._inchi_string != None:
             old = self._inchi_string
-            new = findOptimalInchi([self._inchi_string, new_inchi_string])
+            new = findOptimalInchi([self._inchi_string, new_inchi_string], charge = self._charge)
             if new is None:
                 raise NotImplementedError()
             if new != old:
+                #print(self.id) # nice feature for debugging
+                #print("OLD:",old)
+                #print("NEW:",new)
                 self._inchi_string = new
                 changed =  1
         else:

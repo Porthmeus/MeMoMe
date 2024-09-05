@@ -14,6 +14,7 @@ from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotateChEBI import annotateChEBI
 from src.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotateAux import AnnotationResult
+from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
 
 print(sys.version)
 
@@ -106,7 +107,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         mod.annotate()
         # self comparison
-        res = mod.match(mod,keep1ToMany = False)
+        res = mod.match(mod,keepAllMatches = False)
         self.assertIsInstance(res, pd.DataFrame)
         self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
         self.assertTrue(all([x==y  for x,y in zip(res.met_id1,res.met_id2)]))
@@ -162,39 +163,53 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
       metaboliteA.set_names(["Glucose"])
       metaboliteB.set_names(["Glukose"])
+      metaboliteA.set_id("A")
+      metaboliteB.set_id("B")
 
-      model = MeMoModel([metaboliteA])
+      model = MeMoModel([metaboliteA, metaboliteB])
       model2 = MeMoModel([metaboliteA, metaboliteB])
-      res = model.match(model2, keep1ToMany = True)
+      res = model.match(model2, keepAllMatches = True)
 
-      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res.shape[0], 4)
       self.assertEqual(res["Name_score"][0], 1.0000)
       val = res["Name_score"][1]
       self.assertTrue(math.isclose(val, 0.857143, rel_tol=1e-2))
 
-    
-      res = model.match(model2, keep1ToMany = False)
-      self.assertEqual(res.shape[0], 1)
+      res = model.match(model2, keepAllMatches = False)
+      self.assertEqual(res.shape[0], 2)
       self.assertEqual(res["Name_score"][0], 1.0000)
-
+      self.assertEqual(res["Name_score"][1], 1.0000)
+      
+      res = model.match(model2, keepAllMatches = True, threshold_name = 0.9)
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["Name_score"][0], 1.0000)
+      self.assertEqual(res["Name_score"][1], 1.0000)
 
     def test_1toManyMatchingOnDB(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
-      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff","stuff3"]})
       metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
-
-      model = MeMoModel([metaboliteA])
+      metaboliteA.set_id("A")
+      metaboliteB.set_id("B")
+      model = MeMoModel([metaboliteA,metaboliteB])
       model2 = MeMoModel([metaboliteA, metaboliteB])
-      res = model.match(model2, keep1ToMany = True)
-      self.assertEqual(res.shape[0], 2)
+
+      res = model.match(model2, keepAllMatches = True)
+      self.assertEqual(res.shape[0], 4)
       self.assertEqual(res["DB_score"][0], 1.0000)
       val = res["DB_score"][1]
       self.assertTrue(math.isclose(val, 0.5, rel_tol=1e-2))
 
-      res = model.match(model2, keep1ToMany = False)
-      self.assertEqual(res.shape[0], 1)
+      res = model.match(model2, keepAllMatches = False)
+      self.assertEqual(res.shape[0], 2)
       self.assertEqual(res["DB_score"][0], 1.0000)
+      self.assertEqual(res["DB_score"][1], 1.0000)
+
+      res = model.match(model2, keepAllMatches = True, threshold_DB = 0.6)
+      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res["DB_score"][0], 1.0000)
+      self.assertEqual(res["DB_score"][1], 1.0000)
 
     def test_1toManyMatchingOnInchi(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
@@ -204,17 +219,16 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
       metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
 
-      model = MeMoModel([metaboliteA])
+      model = MeMoModel([metaboliteA, metaboliteB])
       model2 = MeMoModel([metaboliteA, metaboliteB])
-      res = model.match(model2, keep1ToMany = True)
+      res = model.match(model2, keepAllMatches = True)
       self.assertEqual(res.shape[0], 2)
       self.assertEqual(res["inchi_score"][0], 1.0000)
       val = res["inchi_score"][1]
-      self.assertTrue(val==0)
+      self.assertTrue(val==1)
 
-      res = model.match(model2, keep1ToMany = False)
-      self.assertEqual(res.shape[0], 1)
-      self.assertEqual(res["inchi_score"][0], 1.0000)
+      res2 = model.match(model2, keepAllMatches = False)
+      self.assertTrue(all(res==res2)) # it does not make sense to have differences in the 1toMany cases for the inchis
 
     def test_keepUnmatched(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
@@ -229,11 +243,46 @@ class Test_MiscStuff(unittest.TestCase):
 
       model = MeMoModel([metaboliteA, metaboliteC])
       model2 = MeMoModel([metaboliteA, metaboliteB])
-      res = model.match(model2, keep1ToMany = False, keepUnmatched=True)
+      res = model.match(model2, keepAllMatches = False, keepUnmatched=True)
       self.assertEqual(res.shape[0], 3)
       self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
       self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
 
+    def test_annotationCount(self):
+      #this_directory = Path(__file__).parent
+      #dat = this_directory.joinpath("../manually_merged_models")
+      mod = cb.io.load_model("textbook")
+      mod = MeMoModel.fromModel(mod)
+      le = len(mod.metabolites)
+      print(f"Amount of metabs {le}")
+      print(f"Amount of unannotated inchis {sum([x._inchi_string == None for x in mod.metabolites])}")
+      print(f"Annoatted {mod.annotate()}")
+      print(f"Amount of unannotated inchis after Annotation {sum([x._inchi_string == None for x in mod.metabolites])}")
+
+class Test_removeDuplicates(unittest.TestCase):
+    this_directory = Path(__file__).parent
+    dat = this_directory.joinpath("dat")
+    
+    def test_detectDuplicates(self):
+        # load data
+        mod_ori = cb.io.read_sbml_model(self.dat.joinpath("tiny_ecoli_keep_inchi.xml"))
+        mmm_ori = MeMoModel.fromModel(mod_ori)
+        mod_dup = cb.io.read_sbml_model(self.dat.joinpath("tiny_ecoli_keep_inchi_withduplicates.xml"))
+        mmm_dup = MeMoModel.fromModel(mod_dup)
+        mmm_dup_copy = mmm_dup.copy()
+        # first make sure that the testcase model is different to the model with the duplicated 
+        self.assertFalse(mmm_dup == mmm_ori)
+        self.assertTrue(mmm_dup == mmm_dup_copy)
+
+        # find duplicates
+        dups = mmm_dup.match(mmm_dup)
+        dups = detectDuplicates(dups)
+        self.assertTrue(dups == [('pyr','pyruv')])
+
+        # remove duplicates
+        mmm_dup,rm_results = removeDuplicateMetabolites(mmm_dup)
+        self.assertFalse(mmm_dup == mmm_dup_copy)
+        self.assertTrue(mmm_dup == mmm_ori)
 
 if __name__ == '__main__':
     unittest.main()

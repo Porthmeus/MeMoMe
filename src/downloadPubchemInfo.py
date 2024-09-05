@@ -12,7 +12,8 @@ import pandas as pd
 import numpy as np
 import time
 import sys
-
+import warnings
+import urllib.error
 # global variable for the atoms list
 atoms_list = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og', 'R']
 
@@ -23,7 +24,11 @@ def downloadElements() -> pd.DataFrame:
     '''
 
     # download the element list from pubchem
-    elements = pd.read_csv("https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV?response_type=save&response_basename=PubChemElements_all")
+    try:
+        elements = pd.read_csv("https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV?response_type=save&response_basename=PubChemElements_all")
+    except FileNotFoundError as e:
+        warnings.warn(e)
+        elements = pd.DataFrame()
     return(elements)
 
 def looksLikeSumFormula(string:str, atoms:list[str] = atoms_list) -> bool:
@@ -100,13 +105,18 @@ def getPubchemInfo(metabolites:list[str]) -> pd.DataFrame:
     # for removing sum formulas from names load the atoms list from pubchem elements table
     comp_all = pd.DataFrame()
     n = len(metabolites)
-    for i, met_n in enumerate(metabolites):
+    try:
+      for i, met_n in enumerate(metabolites):
         comp = downloadCompInfo(met_n)
         comp = comp.assign(Name = met_n)
         comp_all = pd.concat([comp_all, comp])
         time.sleep(1)
         sys.stdout.write("\r"+str(round(((i+1)/n)*100, ndigits = 2)) + "% done" + " "*80)
         sys.stdout.flush()
+    except urllib.error.URLError as e:
+      print("Could not establish connection to PubMed")
+      return pd.DataFrame()
+
     return(comp_all)
 
 
