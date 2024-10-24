@@ -177,7 +177,7 @@ class MeMoModel:
         res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
 
         ##### this is the place where we could change the weighting of the scoring ####
-        res["total_score"] = (res["inchi_score"]*3 + res["DB_score"]*2+res["Name_score"])/6
+        res["total_score"] = (res["inchi_score"]*1 + res["DB_score"]*1+res["Name_score"])/3
         ###############################################################################
 
         # remove pairs with score < threshold (default = 0)
