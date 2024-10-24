@@ -88,7 +88,7 @@ def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> NamedResult:
     temp_name_2 = ""
     for name1 in met1.names:
         for name2 in met2.names:
-            tmp_score = ratio(name1,name2)
+            tmp_score = ratio(name1.lower,name2.lower)
             if tmp_score > score:
                 temp_name_1 = name1
                 temp_name_2 = name2
