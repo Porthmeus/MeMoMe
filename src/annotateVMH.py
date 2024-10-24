@@ -57,7 +57,8 @@ def annotateVMH_entry(entry:str,  database:dict = dict(), allow_missing_dbs: boo
                 annotations[key] = [value]
 
     # extract the saved name in the database and return it
-    names = list(set(data["fullName"].split()))
+    names = [data["fullName"]]
+    #names = list(set(data["fullName"]))
 
     return annotations, names
 
