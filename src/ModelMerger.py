@@ -169,23 +169,20 @@ class ModelMerger:
                         if met_t_id in cobra_model.metabolites:
                             met_t = cobra_model.metabolites.get_by_id(met_t_id)
                         else:
-                            met_t = met.copy()
-                            met_t.id = met_t_id
-                            met_t.compartment = "t"
-                            # Remove model prefix from metabolite name if needed
-                            if met_t.name.startswith(model_prefix):
-                                met_t.name = met_t.name[len(model_prefix):]
+                            met_t = cobra.Metabolite(
+                                id=met_t_id,
+                                formula=met.formula,
+                                name=met.name[len(model_prefix):] if met.name.startswith(model_prefix) else met.name,
+                                compartment='t'
+                            )
                             cobra_model.add_metabolites([met_t])
-                        # Add the metabolite to the translation reaction
-                        ex_copy.add_metabolites({met_t: 1.0})
-                        # Remove the model prefix from metabolite IDs in the reaction
-                        # (Adjust metabolites in ex_copy)
-                        new_metabolites = {}
-                        for m, stoich in ex_copy.metabolites.items():
-                            if m.id.startswith(model_prefix):
-                                m.id = m.id.replace(model_prefix, '', 1)
-                            new_metabolites[m] = stoich
-                        ex_copy.metabolites = new_metabolites
+                        # Adjust the reaction metabolites
+                        # Remove the original metabolite from the reaction
+                        stoich = ex_copy.metabolites[met]
+                        ex_copy.subtract_metabolites({met: stoich})
+                        # Add the new metabolite to the reaction with the same stoichiometry
+                        ex_copy.add_metabolites({met_t: stoich})
+                        # Add the updated reaction to the merged model
                         cobra_model.add_reactions([ex_copy])
                     else:
                         raise ValueError(f"{ex_copy.id} should contain only one metabolite")
@@ -242,7 +239,8 @@ class ModelMerger:
                 existing_met = self.merged_model.metabolites.get_by_id(new_id)
                 # Replace metabolite in reactions
                 for rxn in list(met.reactions):
-                    stoich = rxn.metabolites.pop(met)
+                    stoich = rxn.metabolites[met]
+                    rxn.subtract_metabolites({met: stoich})
                     rxn.add_metabolites({existing_met: stoich})
                 # Remove old metabolite
                 self.merged_model.metabolites.remove(met)
