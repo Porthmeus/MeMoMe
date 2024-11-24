@@ -12,17 +12,20 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 
 this_directory = Path(__file__).parent
-dat = this_directory.joinpath("../manually_merged_models")
-
 class Test_annotateBulkRoutines(unittest.TestCase):
   def test_MeMoModelCompare2(self):
       import time
       
       # Record the start time
       start_time = time.time()
+      #dat = this_directory.joinpath("../manually_merged_models")
+
       # test the comparison for metabolite matching
-      mod_path = dat.joinpath("gapseq_recon3D/M1_recon3D_301_modified.xml")
-      mod_path2 = dat.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
+      dat = this_directory.joinpath("../dat")
+      mod_path = dat.joinpath("Curvibacter_AEP1_3.xml")
+      dat = this_directory.joinpath("../dat")
+      mod_path2 = dat.joinpath("e_coli_core.xml")
+      #mod_path2 = dat.joinpath("gapseq_recon3D/M2_bacterial_model.xml")
       mod = MeMoModel.fromPath(mod_path)
       mod2 = MeMoModel.fromPath(mod_path2)
   

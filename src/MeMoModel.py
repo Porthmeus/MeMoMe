@@ -146,7 +146,7 @@ class MeMoModel:
             threshold_name:float = 0.6,
             threshold_total:float = 0,
             keepAllMatches:bool = True,
-            output_names: bool = False,
+            output_names: bool = True,
             output_dbs: bool = False,
             keepUnmatched: bool = False) -> pd.DataFrame:
         """ compares the metabolites of two models and returns a data frame
@@ -164,7 +164,7 @@ class MeMoModel:
         res_name = self.matchOnName(model2,
                 threshold = threshold_name,
                 output_names = output_names)
-
+        print(res_name)
         res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
         res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
         res = res.rename(columns = {"charge_diff":"charge_diff_name", "inchi_string":"inchi_string_name"})
@@ -173,9 +173,13 @@ class MeMoModel:
         res.loc[pd.isna(res["inchi_score"]),res.columns =="inchi_score"] = 0
         res.loc[pd.isna(res["DB_score"]),res.columns =="DB_score"] = 0
         res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
-
+        
+        res_temp = res.copy()
+        res_temp["DB_score"] = 1.1*res_temp["DB_score"]
+        res_temp["Name_score"] = 0.8*res_temp["Name_score"]
         ##### this is the place where we could change the weighting of the scoring ####
-        res["total_score"] = (res["inchi_score"]*3 + res["DB_score"]*2+res["Name_score"])/6
+        res_temp["total_score"] =  res_temp[["inchi_score", "DB_score", "Name_score"]].max(axis = 1)
+        res["total_score"] = res_temp["total_score"].clip(lower = 0, upper = 1)
         ###############################################################################
 
         # remove pairs with score < threshold (default = 0)
@@ -366,6 +370,7 @@ class MeMoModel:
                     results["met_id1"].append(met1.id)
                     results["met_id2"].append(met2.id)
                     if output_names:
+                      print(levenshtein.name_id1)
                       results["name_id1"].append(levenshtein.name_id1)
                       results["name_id2"].append(levenshtein.name_id2)
                     results["Name_score"].append(levenshtein.score)
