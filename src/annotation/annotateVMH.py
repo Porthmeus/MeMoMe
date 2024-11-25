@@ -39,12 +39,9 @@ def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allo
     Returns a tuple containing a dictionary for the extracted annotations and a list of new names for the metabolite.
     """
     def json_to_tsv(path) -> Optional[pd.DataFrame]:
-      try:
-        with open(path, "r") as f: 
-          vmh = json.load(f)["results"]
-          return(pd.DataFrame(vmh))
-      except FileNotFoundError as e:
-        warnings.warn(str(e))
+      with open(path, "r") as f: 
+        vmh = json.load(f)["results"]
+        return(pd.DataFrame(vmh))
 
     # check if the database was given, if not, try to load it
     if len(database) == 0:
