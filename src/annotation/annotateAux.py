@@ -2,6 +2,9 @@
 # 08.03.24
 from __future__ import annotations
 import pandas as pd
+from src.download_db import get_config, get_database_path
+import warnings
+import os
 #### original code by @unaimed ####
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -41,9 +44,7 @@ class AnnotationResult():
       return self.annotated_inchis == other.annotated_inchis and self.annotated_dbs == other.annotated_dbs and self.annotated_names == other.annotated_names
 ####################################
 
-from src.download_db import get_config, get_database_path
-import warnings
-import os
+
 def load_database(database: str = "", allow_missing_dbs: bool = False, 
                   conversion_method: Callable[[str], pd.DataFrame] = id) -> pd.DataFrame:
   """
