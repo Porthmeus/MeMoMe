@@ -52,13 +52,13 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
   # lad the database
   try:
     db_path =  os.path.join(get_database_path(), database)
-    bigg = conversion_method(db_path)
-    return bigg
+    db = conversion_method(db_path)
   except FileNotFoundError as e:
     warnings.warn(str(e))
     # Rethrow exception because we want don't allow missing dbs
     if allow_missing_dbs == False:
       raise e
-    return pd.DataFrame()
+    db = pd.DataFrame()
+  return(db)
 
 
