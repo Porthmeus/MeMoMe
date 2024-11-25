@@ -237,7 +237,9 @@ class Test_annotateEntryFunctions(unittest.TestCase):
 
 
  
-  #def testVMHEntry(self):
-  #  this_directory = Path(__file__).parent
-  #  dbs_dir = this_directory.parent/Path("Databases")
-  #  ret = annotateVMH_entry("10fthf", allow_missing_dbs = False)
+  def testVMHEntry(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateVMH_entry("10fthf", allow_missing_dbs = False)
+    self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
+    self.assertFalse(len(ret[0]) == 0)
