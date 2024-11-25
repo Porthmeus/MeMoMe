@@ -16,14 +16,10 @@
 from __future__ import annotations
 
 import warnings
-from json import load
 from copy import deepcopy
 
-import pandas as pd
-from numpy import nan as npNaN
-
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
-from src.annotateInchiRoutines import findOptimalInchi
+from src.annotation.annotateInchiRoutines import findOptimalInchi
 
 
 class MeMoMetabolite():

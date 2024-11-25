@@ -11,7 +11,7 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult
 
 
 def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:

@@ -16,15 +16,15 @@ from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy
 
-from src.annotateChEBI import annotateChEBI
-from src.annotateBiGG import annotateBiGG, annotateBiGG_id
-from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
-from src.annotateVMH import annotateVMH, annotateVMH_id
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateChEBI import annotateChEBI
+from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
+from src.annotation.annotateVMH import annotateVMH_id
+from src.annotation.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
-from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi,NeutraliseCharges2Inchi
+from src.annotation.annotateInchiRoutines import inchiToMol, molToNormalizedInchi,NeutraliseCharges2Inchi
 from src.origin_databases import origin_databases
 
 

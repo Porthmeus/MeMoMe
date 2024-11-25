@@ -1,18 +1,14 @@
 import unittest
 from pathlib import Path
-import cobra as cb
 import pandas as pd
 import os
 from unittest.mock import patch
 from io import *
-import warnings
-from src.MeMoMetabolite import MeMoMetabolite
-from src.MeMoModel import MeMoModel
-from src.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, correctAnnotationKeys, annotateModelSEED_entry
-from src.annotateChEBI import annotateChEBI
-from src.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry
-from src.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, correctAnnotationKeys, annotateModelSEED_entry
+from src.annotation.annotateChEBI import annotateChEBI
+from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry
+from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
+from src.annotation.annotateAux import AnnotationResult
 
 
 # List of files to check for

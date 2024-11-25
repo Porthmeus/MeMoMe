@@ -9,7 +9,7 @@ import warnings
 from io import StringIO
 from src.download_db import get_config, get_database_path
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult
 
 
 def annotateVMH_entry(entry:str,  database:dict = dict(), allow_missing_dbs: bool = False) -> tuple[dict, list]:

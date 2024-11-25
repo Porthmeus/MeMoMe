@@ -9,9 +9,9 @@ import numpy as np
 import pandas as pd
 import warnings
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import findOptimalInchi
-from src.download_db import databases_available, get_config, get_database_path
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateInchiRoutines import findOptimalInchi
+from src.download_db import get_config, get_database_path
+from src.annotation.annotateAux import AnnotationResult
 
 def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """ Annotate the metaboltes with Inchis from ChEBI """

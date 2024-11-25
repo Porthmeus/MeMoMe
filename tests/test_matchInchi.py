@@ -7,7 +7,7 @@ import pandas as pd
 from rdkit.Chem.rdmolops import GetFormalCharge
 
 from src.matchMets import matchMetsByInchi
-from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi, NeutraliseCharges2Inchi
+from src.annotation.annotateInchiRoutines import inchiToMol, molToNormalizedInchi, NeutraliseCharges2Inchi
 
 
 class TestMatchInchit(unittest.TestCase):

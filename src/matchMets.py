@@ -3,12 +3,8 @@
 
 #from src.MeMoMetabolite import MeMoMetabolite
 from __future__ import annotations
-import pandas as pd
-from src.annotateInchiRoutines import *
 from rdkit import Chem, RDLogger
-from rdkit.Chem.MolStandardize import rdMolStandardize
 from Levenshtein import ratio
-from warnings import warn
 from collections import namedtuple
 
 def matchMetsByInchi(nminchi1: str,

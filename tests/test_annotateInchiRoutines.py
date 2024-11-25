@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.annotateInchiRoutines import findOptimalInchi
+from src.annotation.annotateInchiRoutines import findOptimalInchi
 
 
 class TestInchiRoutines(TestCase):
