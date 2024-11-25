@@ -219,6 +219,20 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     
     ret = annotateBiGG_entry("", allow_missing_dbs = False)
     self.assertEqual(ret, (dict(), list()))
+
+  def testBiggEntryToy(self):
+
+    data = {
+      'universal_bigg_id': ["1", "2", "3"],
+      'name': ["Metabolite 1", "Metabolite 2", "Metabolite 3"],
+      'database_links': ["http://identifiers.org/A/A_M1", "http://identifiers.org/A/A_M2" ,"http://identifiers.org/A/A_M3"]
+    }
+    
+    # Create DataFrame
+    df = pd.DataFrame(data)
+    ret = annotateBiGG_entry("1", df, allow_missing_dbs = False)
+    exprected = ({'A': ['A_M1']}, ['Metabolite 1'])
+    self.assertEqual(ret, exprected)
   
   def testBiggHandler(self):
     urls = pd.Series([
