@@ -263,7 +263,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
 
 
 class Test_annotateID(unittest.TestCase):
-  def testBiggEntry(self):
+  def testBiggID(self):
     this_directory = Path(__file__).parent
     dbs_dir = this_directory.parent/Path("Databases")
     metabolite: MeMoMetabolite = MeMoMetabolite()
@@ -274,4 +274,18 @@ class Test_annotateID(unittest.TestCase):
     expected_annotations = {'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate", "A"])
+    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+
+
+  def testVMH_id(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("10fthf")
+    metabolite.set_names(["A"])
+    ret = annotateVMH_id([metabolite], allow_missing_dbs = False)
+
+    expected_annotations =  {'biggId': ['10fthf'], 'keggId': ['C00234'], 'cheBlId': ['15637'], 'inchiString': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/p-2/t11?,13-/m0/s1'], 'inchiKey': ['AUFGTPPARQZWDO-YUZLPWPTSA-L'], 'smile': ['[H]OC1=NC(=NC2=C1N([H])C([H])(C([H])([H])N(C([H])=O)C1=C([H])C([H])=C(C([H])=C1[H])C(=O)N([H])[C@]([H])(C([O-])=O)C([H])([H])C([H])([H])C([O-])=O)C([H])([H])N2[H])N([H])[H]'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'seed': ['cpd00201'], 'biocyc': ['10-FORMYL-THF']}
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate', 'A'])
     self.assertEqual(ret, AnnotationResult(0, 1, 1))

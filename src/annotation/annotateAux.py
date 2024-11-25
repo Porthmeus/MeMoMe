@@ -5,6 +5,8 @@ import pandas as pd
 from src.download_db import get_config, get_database_path
 import warnings
 import os
+from typing import Callable, List
+from src.MeMoMetabolite import MeMoMetabolite
 #### original code by @unaimed ####
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -46,7 +48,7 @@ class AnnotationResult():
 
 
 def load_database(database: str = "", allow_missing_dbs: bool = False, 
-                  conversion_method: Callable[[str], pd.DataFrame] = id) -> pd.DataFrame:
+                  conversion_method: Callable[[str], pd.DataFrame] = lambda x: x) -> pd.DataFrame:
   """
   Load the given database. The file should in the projects root /Database folder.
   """
@@ -62,4 +64,21 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
     db = pd.DataFrame()
   return(db)
 
+def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
+  new_annos = 0
+  new_names = 0
+  for met in metabolites:
+    if any(db[db_key]==met._id):
+      new_met_anno_entry,new_names_entry = annotation_function(met._id, db)
+      x = met.add_names(new_names_entry)
+      new_names = new_names + x
 
+      # add the annotations to the slot in the metabolites
+      if len(new_met_anno_entry) > 0:
+          x = met.add_annotations(new_met_anno_entry)
+          new_annos = new_annos + x 
+
+  # return the number of metabolites which got newly annotated with inchis,
+  # annotations and names
+  anno_result = AnnotationResult(0, new_annos, new_names)
+  return anno_result
