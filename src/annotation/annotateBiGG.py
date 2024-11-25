@@ -71,16 +71,10 @@ def annotateBiGG(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = Fa
     """
     
     # load the database
-    config = get_config()
-    bigg = None
-    try:
-      db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-      bigg = pd.read_table(db_path)
-    except FileNotFoundError as e:
-      warnings.warn(str(e))
-      # Rethrow exception because we want don't allow missing dbs
-      if allow_missing_dbs == False:
-        raise e
+    bigg =  load_database(get_config()["databases"]["BiGG"]["file"], 
+                          allow_missing_dbs, 
+                          lambda path: pd.read_csv(path, sep="\t"))
+    if bigg.empty:
       return AnnotationResult(0, 0,0 )
     
     new_annos_added = 0
@@ -122,17 +116,12 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool =
     Annotate a list of metabolites with the entries from BiGG. Look for BiGG ids in the metabolite._id slot and if one is found use these. Since BiGG does not provide any InChI strings, this will not results in any new annotated Inchi strings, but it will increase the number of entries in the metabolite annotation.
     """
 
-    # load the database
-    config = get_config()
-    db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-    try:
-        bigg = pd.read_table(db_path)
-    except FileNotFoundError as e:
-        warnings.warn(str(e))
-        # Rethrow exception because we want don't allow missing dbs
-        if allow_missing_dbs == False:
-          raise e
-        return(AnnotationResult(0,0,0))
+    bigg =  load_database(get_config()["databases"]["BiGG"]["file"], 
+                          allow_missing_dbs, 
+                          lambda path: pd.read_csv(path, sep="\t"))
+    if bigg.empty:
+      return AnnotationResult(0, 0,0 )
+
     new_annos = 0
     new_names = 0
     for met in metabolites:
