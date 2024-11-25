@@ -9,6 +9,7 @@ from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
 from src.annotation.annotateAux import AnnotationResult
+from src.MeMoMetabolite import MeMoMetabolite
 
 
 # List of files to check for
@@ -220,6 +221,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     ret = annotateBiGG_entry("", allow_missing_dbs = False)
     self.assertEqual(ret, (dict(), list()))
 
+
   def testBiggEntryToy(self):
 
     data = {
@@ -258,3 +260,18 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     
     self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
     self.assertFalse(len(ret[0]) == 0)
+
+
+class Test_annotateID(unittest.TestCase):
+  def testBiggEntry(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("13dpg")
+    metabolite.set_names(["A"])
+    
+    ret = annotateBiGG_id([metabolite], allow_missing_dbs = False)
+    expected_annotations = {'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate", "A"])
+    self.assertEqual(ret, AnnotationResult(0, 1, 1))

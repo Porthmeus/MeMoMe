@@ -125,9 +125,8 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool =
     new_annos = 0
     new_names = 0
     for met in metabolites:
-        if any(bigg["universal_bigg_id"]==met._id):
-            new_met_anno_entry,new_names_entry = annotateBiGG_entry(entry = met._id,
-                    database = bigg)
+        if any(bigg["universal_bigg_id"] == met._id):
+            new_met_anno_entry,new_names_entry = annotateBiGG_entry(entry = met._id, database = bigg)
             # add new names
             x = met.add_names(new_names_entry)
             new_names = new_names + x
