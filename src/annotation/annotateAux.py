@@ -1,7 +1,7 @@
 # Porthmeus
 # 08.03.24
-
 from __future__ import annotations
+import pandas as pd
 #### original code by @unaimed ####
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -40,3 +40,25 @@ class AnnotationResult():
 
       return self.annotated_inchis == other.annotated_inchis and self.annotated_dbs == other.annotated_dbs and self.annotated_names == other.annotated_names
 ####################################
+
+from src.download_db import get_config, get_database_path
+import warnings
+import os
+def load_database(database: str = "", allow_missing_dbs: bool = False, 
+                  conversion_method: Callable[[str], pd.DataFrame] = id) -> pd.DataFrame:
+  """
+  Load the given database. The file should in the projects root /Database folder.
+  """
+  # lad the database
+  try:
+    db_path =  os.path.join(get_database_path(), database)
+    bigg = conversion_method(db_path)
+    return bigg
+  except FileNotFoundError as e:
+    warnings.warn(str(e))
+    # Rethrow exception because we want don't allow missing dbs
+    if allow_missing_dbs == False:
+      raise e
+    return pd.DataFrame()
+
+

@@ -6,7 +6,7 @@ from unittest.mock import patch
 from io import *
 from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, correctAnnotationKeys, annotateModelSEED_entry
 from src.annotation.annotateChEBI import annotateChEBI
-from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry
+from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
 from src.annotation.annotateAux import AnnotationResult
 
@@ -205,3 +205,39 @@ class Test_annotateMissingDbs(unittest.TestCase):
       annotateVMH_id([],  allow_missing_dbs = False)
       self.assertIn("No such file or directory", output)
     self.makeDbVis("vmh.json")
+
+
+
+class Test_annotateEntryFunctions(unittest.TestCase):
+
+  def testBiggEntry(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateBiGG_entry("13dpg", allow_missing_dbs = False)
+    self.assertTrue(len(ret[0]) > 0)
+    self.assertTrue(len(ret[1]) > 0)
+    
+    ret = annotateBiGG_entry("", allow_missing_dbs = False)
+    self.assertEqual(ret, (dict(), list()))
+  
+  def testBiggHandler(self):
+    urls = pd.Series([
+      "http://identifiers.org/hmdb/HMDB02322",
+      "http://identifiers.org/hmdb/HMDB04567",
+      "http://identifiers.org/hmdb/HMDB07890",
+      "http://identifiers.org/A/A_M1"
+    ])
+
+    res = handle_bigg_entries(urls)
+    self.assertTrue("hmdb" in res)
+    self.assertTrue("A" in res)
+
+    self.assertTrue(set(["HMDB02322", "HMDB04567", "HMDB07890"]) == set(res["hmdb"]))
+    self.assertTrue(set(["A_M1"]) == set(res["A"]))
+
+
+ 
+  #def testVMHEntry(self):
+  #  this_directory = Path(__file__).parent
+  #  dbs_dir = this_directory.parent/Path("Databases")
+  #  ret = annotateVMH_entry("10fthf", allow_missing_dbs = False)

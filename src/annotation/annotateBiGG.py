@@ -11,10 +11,31 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult, load_database
 
 
-def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def handle_bigg_entries(urls):
+  annotations = dict()
+  if len(urls) > 0:
+    # Urls is now a df that has one column and multiple rows
+    # Each row is a bag of urls
+    # TO covnert them to alist we join them by semicolon and again split them
+    # that results in alist that coontains all the urls
+    urls =";".join(list(urls))
+    urls = urls.split(";")
+    for url in urls:
+      # TODO Check that it is identifier.org URL
+      # Src is a db, e.g. hmdb or seed
+      # val is a identifier in the corresponding db
+      src,val = getAnnoFromIdentifierURL(url)
+      if src in annotations.keys():
+            annotations[src].append(val)
+      else:
+          annotations[src] = [val]
+  return annotations
+
+
+def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
     """
     A small helper function to avoid redundant code
     Uses a BiGG identifiers and annotates it with the identifiers.org entries.
@@ -23,38 +44,20 @@ def annotateBiGG_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow
     """
     # check if the database was given, if not, try to load it
     if len(database) == 0:
-        # load the database
-        config = get_config()
-        try:
-          db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
-          bigg = pd.read_table(db_path)
-        except FileNotFoundError as e:
-          warnings.warn(str(e))
-          # Rethrow exception because we want don't allow missing dbs
-          if allow_missing_dbs == False:
-            raise e
-          return dict(), list()
-          
+      bigg =  load_database(get_config()["databases"]["BiGG"]["file"], 
+                            allow_missing_dbs, 
+                            lambda path: pd.read_csv(path, sep="\t"))
     else:
-        bigg = database
+      bigg = database
 
-    annotations = dict()
-    # extract the relevant annotation information and return it
-    urls = bigg.loc[bigg["universal_bigg_id"]==entry,"database_links"]
-    # check if there are entries which are not NA
+    if bigg.empty:
+      return dict(), list()
+
+    urls = bigg.loc[bigg["universal_bigg_id"] == entry,"database_links"]
     urls = urls.loc[~pd.isna(urls)]
-    if len(urls) >0:
-        urls =";".join(list(urls))
-        urls = urls.split(";")
-        for url in urls:
-            src,val =getAnnoFromIdentifierURL(url)
-            if src in annotations.keys():
-                annotations[src].append(val)
-            else:
-                annotations[src] = [val]
-    
-    # extract the saved name in the database and return it
+
     names = list(pd.unique(bigg.loc[bigg["universal_bigg_id"]==entry,"name"]))
+    annotations = handle_bigg_entries(urls)
     return annotations, names
 
     
