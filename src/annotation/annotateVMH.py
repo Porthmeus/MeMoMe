@@ -44,10 +44,13 @@ def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allo
         return(pd.DataFrame(vmh))
 
     # check if the database was given, if not, try to load it
-    if len(database) == 0:
-      vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, json_to_tsv)
-    else:
+    if len(database) > 0:
       vmh = database
+    else:
+      vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, json_to_tsv)
+    
+    if vmh.empty:
+      return dict(), list()
 
     annotations, names = handle_vmh_entries(vmh, entry)
     return annotations, names
