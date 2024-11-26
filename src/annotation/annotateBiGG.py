@@ -11,10 +11,16 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
-from src.annotation.annotateAux import AnnotationResult, load_database
+from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs
+from typing import Dict, List
 
-
-def handle_bigg_entries(urls):
+def handle_bigg_entries(urls: pd.Series) -> Dict[str, List[str]]:
+  """
+  Internal method to handle the annotation of bigg entrires, that maps biggId to identifier.org urls.
+  This method handles the db/id extraction from those urls
+  urls: pd.Series: This should be a series with just one column and multiple rows.
+    Each cell should be a list of urls
+  """
   annotations = dict()
   if len(urls) > 0:
     # Urls is now a df that has one column and multiple rows
@@ -122,21 +128,6 @@ def annotateBiGG_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool =
     if bigg.empty:
       return AnnotationResult(0, 0,0 )
 
-    new_annos = 0
-    new_names = 0
-    for met in metabolites:
-        if any(bigg["universal_bigg_id"] == met._id):
-            new_met_anno_entry,new_names_entry = annotateBiGG_entry(entry = met._id, database = bigg)
-            # add new names
-            x = met.add_names(new_names_entry)
-            new_names = new_names + x
 
-            # add the annotations to the slot in the metabolites
-            if len(new_met_anno_entry) > 0:
-                x = met.add_annotations(new_met_anno_entry)
-                new_annos = new_annos + x 
+    return handleIDs(bigg, metabolites, "universal_bigg_id", annotateBiGG_entry)
 
-    # return the number of metabolites which got newly annotated with inchis,
-    # annotations and names
-    anno_result = AnnotationResult(0, new_annos, new_names)
-    return anno_result

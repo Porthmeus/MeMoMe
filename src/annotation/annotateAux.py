@@ -65,6 +65,13 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
   return(db)
 
 def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
+  """
+  Checks for each metabolite if the metabolite id can be found in the column `db_key` can be found in `db`. 
+  db: a dataframe with columns `db_key`. This column will be comparted to the metabolite id (met._id)
+  metabolites: A list of metabolites that will be checked
+  db_key: The column in the db dataframe
+  annotation_function: Defines how to get an entry from the db which the given met._id (Check annotateVMH/BiGG for example usages.
+  """
   new_annos = 0
   new_names = 0
   for met in metabolites:
@@ -82,3 +89,6 @@ def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, 
   # annotations and names
   anno_result = AnnotationResult(0, new_annos, new_names)
   return anno_result
+
+
+  
