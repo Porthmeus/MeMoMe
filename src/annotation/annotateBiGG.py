@@ -11,7 +11,7 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
-from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs
+from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs, handleMetabolites
 from typing import Dict, List
 
 def handle_bigg_entries(urls: pd.Series) -> Dict[str, List[str]]:
@@ -82,39 +82,10 @@ def annotateBiGG(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = Fa
                           lambda path: pd.read_csv(path, sep="\t"))
     if bigg.empty:
       return AnnotationResult(0, 0,0 )
-    
-    new_annos_added = 0
-    new_names_added = 0
-    # go through the metabolites and check if there is data which can be added
-    for met in metabolites:
-        new_met_anno = dict()
-        new_names = list() 
-        if "bigg.metabolite" in met.annotations.keys():
-            for entry in met.annotations["bigg.metabolite"]:
-                new_met_anno_entry, new_names_entry = annotateBiGG_entry(entry = entry,
-                        database = bigg)
-                # for all entries create a single dictionary
-                for key, value in new_met_anno_entry.items():
-                    if key in new_met_anno.keys():
-                        new_met_anno[key].extend(value)
-                    else:
-                        new_met_anno[key] = value
-                # combine the names for each entry
-                new_names.extend(new_names_entry)
 
-            # add new names to the MeMoMetabolite
-            x =met.add_names(new_names)
-            new_names_added = new_names_added + x
-            
-            # add the annotations to the slot in the metabolites
-            if len(new_met_anno) > 0:
-                x = met.add_annotations(new_met_anno)
-                new_annos_added = new_annos_added + x
-    
 
-    # get the tuple for returning the annotation counts - this is just done to comply to a standard (there will be no InChI annotation from this database
-    anno_result = AnnotationResult(0, new_names_added, new_names_added)
-    return anno_result
+    return handleMetabolites(bigg, metabolites, "bigg.metabolite", annotateBiGG_entry)
+    
 
 
 def annotateBiGG_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:

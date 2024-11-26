@@ -91,4 +91,32 @@ def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, 
   return anno_result
 
 
-  
+def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
+    new_annos_added = 0
+    new_names_added = 0
+    # go through the metabolites and check if there is data which can be added
+    for met in metabolites:
+        new_met_anno = dict()
+        new_names = list() 
+        if db_key in met.annotations.keys():
+            for entry in met.annotations[db_key]:
+                new_met_anno_entry, new_names_entry = annotation_function(entry, db)
+                for key, value in new_met_anno_entry.items():
+                    if key in new_met_anno.keys():
+                        new_met_anno[key].extend(value)
+                    else:
+                        new_met_anno[key] = value
+                # combine the names for each entry
+                new_names.extend(new_names_entry)
+
+            # add new names to the MeMoMetabolite
+            x =met.add_names(new_names)
+            new_names_added = new_names_added + x
+            
+            # add the annotations to the slot in the metabolites
+            if len(new_met_anno) > 0:
+                x = met.add_annotations(new_met_anno)
+                new_annos_added = new_annos_added + x
+
+    anno_result = AnnotationResult(0, new_names_added, new_names_added)
+    return anno_result
