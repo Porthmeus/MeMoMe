@@ -29,7 +29,7 @@ def handle_vmh_entries(vmh, entry):
 
   return(annotations, fullName)
 
-def __json_to_tsv(path) -> Optional[pd.DataFrame]:
+def __json_to_tsv(path) -> pd.DataFrame:
   with open(path, "r") as f: 
     vmh = json.load(f)["results"]
     return(pd.DataFrame(vmh))

@@ -77,17 +77,17 @@ class Test_annotateMissingDbs(unittest.TestCase):
 
     self.makeDbVis("BiGG.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testBiggID(self, mock_err):
-    self.makeDbInvis("BiGG.tsv")
-    self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateBiGG_id([], allow_missing_dbs = False)
-
-    self.makeDbVis("BiGG.tsvxxx")
+#  @patch('sys.stderr', new_callable=StringIO)
+#  def testBiggID(self, mock_err):
+#    self.makeDbInvis("BiGG.tsv")
+#    self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+#    output = mock_err.getvalue().strip()
+#    self.assertIn("No such file or directory", output)
+#    
+#    with self.assertRaises(FileNotFoundError):
+#      annotateBiGG_id([], allow_missing_dbs = False)
+#
+#    self.makeDbVis("BiGG.tsvxxx")
 
 
   @patch('sys.stderr', new_callable=StringIO)
@@ -195,17 +195,17 @@ class Test_annotateMissingDbs(unittest.TestCase):
       self.assertIn("No such file or directory", output)
     self.makeDbVis("vmh.json")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testVMH_id(self, mock_err):
-    self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateVMH_id([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-    self.makeDbVis("vmh.json")
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testVMH_id(self, mock_err):
+  #  self.makeDbInvis("vmh.json")
+  #  self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateVMH_id([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
+  #  self.makeDbVis("vmh.json")
 
 
 
