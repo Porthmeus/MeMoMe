@@ -314,3 +314,12 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
+
+  def testChEBIAnnotate(self):
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id('117228')
+    metabolite.annotations = {'chebi': ['117228']}
+    ret = annotateChEBI([metabolite], allow_missing_dbs = False)
+    expected_inchi = "InChI=1S/C20H27N3O2/c1-4-20(3)13-14-9-6-7-10-15(14)17-16(20)18(25)23(5-2)19(22-17)21-11-8-12-24/h6-7,9-10,24H,4-5,8,11-13H2,1-3H3,(H,21,22)"
+    self.assertEqual(ret, AnnotationResult(1, 0, 0))
+    self.assertEqual(metabolite._inchi_string, expected_inchi)
