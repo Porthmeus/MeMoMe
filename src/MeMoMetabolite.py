@@ -362,12 +362,18 @@ class MeMoMetabolite():
             self.set_id(new_metabolite._id)
             self.set_model_id(new_metabolite._model_id)
             self.set_formula(new_metabolite._formula)
-            self.set_inchi_string(new_metabolite._inchi_string)
+            self.set_inchi_string(new_metabolite._inchi_string, new_metabolite._inchi_source)
             self.set_charge(new_metabolite._charge)
 
-        # add the non-unique attrbutes
-        self.add_annotations(new_metabolite.annotations)
-        self.add_names(list(new_metabolite.names))
+        # add the non-unique attrbutes including their sources of annotation
+        for key in new_metabolite.annotations.keys():
+            for i in len(new_metabolite.annotations[key]):
+                new_anno_dic = {key : new_metabolite.annotations[key][i]}
+                new_source = {key : new_metabolite.annotations_source[key][i]}
+                self.add_annotations(new_anno_dic, source = new_source)
+
+        for i in range(list(new_metabolite.names)): # need to iterate, because source is only accepted as single string as variable of add_names(), yet it can contain several different values if derived from another model
+            self.add_names(list(new_metabolite.names)[i], list(new_metabolite.names_source)[i])
         self.add_orig_ids(list(new_metabolite.orig_ids))
 
     def annotate(self):
@@ -382,11 +388,12 @@ class MeMoMetabolite():
             # databases we have to retrieve the inchi string
             # we could define a sequence of databases/annotation from most
             # relevant to less relevant and proceed following that sequence
-
+        warnings.warn("MeMoMetabolite.annotate() is not implemented yet")
         return None
 
     def compare(self, metabolite):
 
+        warnings.warn("MeMoMetabolite.compare() is not implemented yet")
         return None
 
     @property
