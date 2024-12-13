@@ -21,6 +21,8 @@ class ModelMerger:
                  memo_model: MeMoModel = None,
                  matches: pd.DataFrame = None) -> None:
         self.memo_model = memo_model
+        if matches is None:
+            raise ValueError("A DataFrame of matches is expected. Received None as input")
         self.matches = matches.copy()
         self.matches = self.matches.rename(columns={'met_id2': 'source_namespace'})
         self.matches = self.matches.rename(columns={'met_id1': 'target_namespace'})
