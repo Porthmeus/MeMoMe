@@ -13,7 +13,7 @@ class ModelMerger:
     It doesn't perform a full merging, but creates a new "namespace translation compartment" (denoted by the "_t" suffix
     on metabolite ids) that contains all the exchange metabolites of the input model that could be translated to the
     target namespace. The "t" compartment is connected to the original exchange compartment through a set of "translation
-     reactions" (denoted by the "TR_" prefix and the "_t" suffix on reaction ids). Each "TR_" reaction connects one
+     reactions" (denoted by the "TR_" prefix on reaction ids). Each "TR_" reaction connects one
      external metabolite to its corresponding "_t" metabolite. The medium constraints are then moved from the external
      to the translation compartments
     """
@@ -28,27 +28,39 @@ class ModelMerger:
         self.matches = self.matches.rename(columns={'met_id1': 'target_namespace'})
 
     def convert_exchange_rxns_to_translation_rxns(self):
-        """converts exchange reactions to namespace translation reactions and adds their respective compartment"""
+        """
+        Converts exchange reactions to namespace translation reactions and adds their respective compartment.
+        For each exchange reaction, a new "translated version" of its metabolite will be created. It will be set
+         stoichiometrically as the product of its exchange metabolite.
+        This "t" metabolite will keep its original namespace for now, and will be truly translated at a later
+        step by a dedicated function (self.translate_ids). The only role of the "t" metabolite in this function is to
+        take part of the network structure on which the actual namespace translation will be applied
+        Replaces reaction's id prefix "EX_" with "TR_",
+        """
         cobra_model = self.memo_model.cobra_model
         for ex in cobra_model.exchanges:
             if re.match(r"^EX_", ex.id):
-                # Replace "EX_" with "TR_" at the start of the string
-                new_id = re.sub(r"^EX_", "TR_", ex.id)
-                # Update the reaction ID
-                ex.id = new_id
-                if len(ex.metabolites.keys()) == 1:
+                if len(ex.metabolites.keys()) == 1: # ensures that, as one should expect by definition, the exchange
+                                                    # reaction involves only one metabolite
                     met = list(ex.metabolites.keys())[0]
-                    # create the metabolite in the translation compartment and give it a +1 stoichiometry (production)
                     met_t = met.copy()
                     #  TODO: replace regular expression with function call for the remove suffix function
                     #   (need to modify the handle_metabolites_prefix_suffix_function)
                     met_t.id = re.sub(r"[^_]+$", "t", met.id)  # substitutes the compartment suffix (all
                                                                             # that follows the last underscore) with
                                                                             # the new compartment's symbol
+                    # assigns the new metabolite to the translation compartment
                     met_t.compartment = "t"
+                    # gives the "t" metabolite a +1 stoichiometry (production). So the final stoichiometry of the
+                    # reaction will be consumption of one external metabolite to produce one "translated version" of the
+                    # metabolite
                     ex.add_metabolites({met_t: 1.0})
                 else:
                     raise ValueError(ex.id + "should contain only one metabolite")
+                # Replace "EX_" with "TR_" at the start of the string
+                new_id = re.sub(r"^EX_", "TR_", ex.id)
+                # Update the reaction ID
+                ex.id = new_id
             else:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
 
