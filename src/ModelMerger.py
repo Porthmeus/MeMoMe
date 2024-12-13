@@ -7,7 +7,16 @@ from src.MeMoModel import MeMoModel
 
 
 class ModelMerger:
-
+    """
+    This class aims to facilitate the merging of a model to another model that is based on a different namespace.
+    It takes a model and a table of matches between the input model and the target namespace as inputs.
+    It doesn't perform a full merging, but creates a new "namespace translation compartment" (denoted by the "_t" suffix
+    on metabolite ids) that contains all the exchange metabolites of the input model that could be translated to the
+    target namespace. The "t" compartment is connected to the original exchange compartment through a set of "translation
+     reactions" (denoted by the "TR_" prefix and the "_t" suffix on reaction ids). Each "TR_" reaction connects one
+     external metabolite to its corresponding "_t" metabolite. The medium constraints are then moved from the external
+     to the translation compartments
+    """
     def __init__(self,
                  memo_model: MeMoModel = None,
                  matches: pd.DataFrame = None) -> None:
@@ -116,6 +125,9 @@ class ModelMerger:
         #  selects the metabolites to be translated
         to_translate = list()
         for met in cobra_model.metabolites:
+            # we translate only metabolites that are taking part in exchange reactions:
+            # the "t" compartment has been built by the convert_exchange_rxns_to_translation_rxns to contain all of the
+            # exchanged metabolites
             if met.compartment == "t":
                 to_translate = to_translate + [met]
         # applies the translation to the metabolites
@@ -153,6 +165,6 @@ class ModelMerger:
 
     def translate_namespace(self):
         self.convert_exchange_rxns_to_translation_rxns()
-        self.translate_ids()
+        self.translate_ids(score_thr=0.5)
         self.create_exchanges()
         self.set_rxn_bounds()
