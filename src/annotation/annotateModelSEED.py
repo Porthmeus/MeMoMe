@@ -6,18 +6,15 @@ This file contains function to annotated MeMoMetabolites in a bulk manner. This 
 '''
 
 import os
-import numpy as np
 import pandas as pd
 import json
 import warnings
 from io import StringIO
 import re
-from pathlib import Path
-from src.annotateInchiRoutines import findOptimalInchi, smile2inchi
+from src.annotation.annotateInchiRoutines import findOptimalInchi, smile2inchi
 from src.MeMoMetabolite import MeMoMetabolite
-from src.download_db import databases_available, get_config, get_database_path
-from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
-from src.annotateAux import AnnotationResult
+from src.download_db import get_config, get_database_path
+from src.annotation.annotateAux import AnnotationResult
 
 # load the prefixes for the identifies.org list that is needed for the correction of the key in the annotation dictionary
 config = get_config()

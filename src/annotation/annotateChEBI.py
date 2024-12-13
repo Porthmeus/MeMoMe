@@ -9,26 +9,18 @@ import numpy as np
 import pandas as pd
 import warnings
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import findOptimalInchi
-from src.download_db import databases_available, get_config, get_database_path
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateInchiRoutines import findOptimalInchi
+from src.download_db import get_config, get_database_path
+from src.annotation.annotateAux import AnnotationResult, load_database
 
 def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
     """ Annotate the metaboltes with Inchis from ChEBI """
 
-    config = get_config()
-    db_path = get_database_path()
-
-
-    chebi_db = None
-    try:
-      chebi_db = pd.read_table(db_path.joinpath(config["databases"]["ChEBI"]["file"]))
-    except FileNotFoundError as e:
-      warnings.warn(str(e))
-      # Rethrow exception because we want don't allow missing dbs
-      if allow_missing_dbs == False:
-        raise e
-      return AnnotationResult(0, 0, 0)
+    chebi_db =  load_database(get_config()["databases"]["ChEBI"]["file"], 
+                          allow_missing_dbs, 
+                          lambda path: pd.read_csv(path, sep="\t"))
+    if chebi_db.empty:
+      return AnnotationResult(0, 0,0 )
 
     # check if any unannotated metabolites exist and whether these have a ChEBI entry
     ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None and "chebi" in y.annotations.keys()]

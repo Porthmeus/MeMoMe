@@ -8,18 +8,13 @@ Functions to parse relevant metabolite infos into a list of MeMoMetabolites from
 
 import libsbml as sbml
 import re
-import pandas as pd
-import warnings
-import numpy as np
 import cobra as cb
-from os.path import exists
 from pathlib import Path
-from rdkit import Chem
 
 from debugpy.common.log import warning
 
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotateInchiRoutines import validateInchi, findOptimalInchi
+from src.annotation.annotateInchiRoutines import validateInchi, findOptimalInchi
 
 def getAnnoFromIdentifierURL(url:str) -> tuple[str, str]:
     """Small function to extract the db and db id from an identifier.org url"""
