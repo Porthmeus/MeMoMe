@@ -12,7 +12,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs, handleMetabolites
 from typing import Optional
 
-def handle_vmh_entries(vmh, entry):
+def handle_vmh_entries(vmh:pd.DataFrame, entry:str) -> tuple(dict,list):
   keys = ["biggId", "keggId", "cheBlId", "inchiString", "inchiKey", "smile", "hmdb", "metanetx", "seed", "biocyc"]
   vmh = vmh.loc[vmh["abbreviation"] == entry,]
   fullName = list(set(vmh["fullName"]))
@@ -35,7 +35,7 @@ def __json_to_tsv(path) -> pd.DataFrame:
     return(pd.DataFrame(vmh))
 
 
-def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
     """
     A small helper function to avoid redundant code.
     Uses a VMH identifier and annotates it with the identifiers.org entries.
@@ -53,7 +53,7 @@ def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allo
       return dict(), list()
 
     annotations, names = handle_vmh_entries(vmh, entry)
-    return annotations, names
+    return annotations, names, src
 
 
     

@@ -41,7 +41,7 @@ def handle_bigg_entries(urls: pd.Series) -> Dict[str, List[str]]:
   return annotations
 
 
-def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
     """
     A small helper function to avoid redundant code
     Uses a BiGG identifiers and annotates it with the identifiers.org entries.
@@ -57,14 +57,14 @@ def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allo
       bigg = database
 
     if bigg.empty:
-      return dict(), list()
+      return dict(), list(), ""
 
     urls = bigg.loc[bigg["universal_bigg_id"] == entry,"database_links"]
     urls = urls.loc[~pd.isna(urls)]
 
     names = list(pd.unique(bigg.loc[bigg["universal_bigg_id"]==entry,"name"]))
     annotations = handle_bigg_entries(urls)
-    return annotations, names
+    return annotations, names, "bigg"
 
     
     
