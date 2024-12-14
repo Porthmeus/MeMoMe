@@ -282,15 +282,15 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
 
             # add new names
             if len(new_names) > 0:
-                counter[0] = counter[0] + met.add_names(new_names)
+                counter[0] = counter[0] + met.add_names(new_names, source = "seed")
 
             # add the annotations to the slot in the metabolites
             if len(new_met_anno) > 0:
-                counter[1] = counter[1] + met.add_annotations(new_met_anno)
+                counter[1] = counter[1] + met.add_annotations(new_met_anno, source = "seed")
 
             # add the inchi_string
             if inchi_string != None:
-                counter[2] = counter[2] + met.add_inchi_string(inchi_string)
+                counter[2] = counter[2] + met.add_inchi_string(inchi_string, source = "seed")
 
             # add the pka
             if len(new_pka) > 0:
@@ -355,15 +355,15 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
                 
                     # add new names
                     if len(new_names) > 0:
-                        met_counter[0] = met_counter[0] + met.add_names(new_names)
+                        met_counter[0] = met_counter[0] + met.add_names(new_names, source = "seed")
 
                     # add the annotations to the slot in the metabolites
                     if len(new_met_anno) > 0:
-                        met_counter[1] = met_counter[1] + met.add_annotations(new_met_anno)
+                        met_counter[1] = met_counter[1] + met.add_annotations(new_met_anno, source = "seed")
 
                     # add the inchi_string
                     if inchi_string != None:
-                        met_counter[2] = met_counter[2] + met.add_inchi_string(inchi_string)
+                        met_counter[2] = met_counter[2] + met.add_inchi_string(inchi_string, source = "seed")
 
                     # add the pka
                     if len(new_pka) > 0:
