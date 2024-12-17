@@ -53,17 +53,15 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
   """
   Load the given database. The file should in the projects root /Database folder.
   """
-  # lad the database
+  # load the database
   try:
     db_path =  os.path.join(get_database_path(), database)
     db = conversion_method(db_path)
   except FileNotFoundError as e:
-    # Rethrow exception because we want don't allow missing dbs
-    #print(str(e), file=sys.stderr)
-    warnings.warn(str(e))
+    # Rethrow exception if we don't allow missing dbs
     if allow_missing_dbs == False:
       raise e
-
+    warnings.warn(str(e))
     db = pd.DataFrame()
   return(db)
 
