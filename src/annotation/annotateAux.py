@@ -7,6 +7,7 @@ import warnings
 import os
 from typing import Callable, List
 from src.MeMoMetabolite import MeMoMetabolite
+import sys
 
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -57,10 +58,12 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
     db_path =  os.path.join(get_database_path(), database)
     db = conversion_method(db_path)
   except FileNotFoundError as e:
-    warnings.warn(str(e))
     # Rethrow exception because we want don't allow missing dbs
+    #print(str(e), file=sys.stderr)
+    warnings.warn(str(e))
     if allow_missing_dbs == False:
       raise e
+
     db = pd.DataFrame()
   return(db)
 
