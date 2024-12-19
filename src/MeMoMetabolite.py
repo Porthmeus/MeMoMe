@@ -46,7 +46,7 @@ class MeMoMetabolite():
             _pKb: dict|None = None,
             # TODO _pKb_source: dict|None = None,
             annotations: dict|None = None,
-            annotations_source: dict|None = None,
+            annotations_source: dict|str|None = None,
     ) -> None:
         """Initialize MeMoMetaboblite
 
@@ -96,9 +96,13 @@ class MeMoMetabolite():
 
         if names is None:
             self.names = []
+            self.names_source =[]
         else:
             self.names = []
-            self.set_names(names, source = "model")
+            self.names_source =[]
+            if names_source is None:
+                names_source = "model"
+            self.set_names(names, source = names_source)
 
         if _formula is None:
             self._formula = None
@@ -108,9 +112,12 @@ class MeMoMetabolite():
 
         if _inchi_string is None:
             self._inchi_string = None
+            self._inchi_source = None
         else:
             self._inchi_string = None
-            self.set_inchi_string(_inchi_string, source = "model")
+            if _inchi_source is None:
+                _inchi_source = "model"
+            self.set_inchi_string(_inchi_string, source = _inchi_source)
 
         if _charge is None:
             self._charge = None
@@ -132,9 +139,13 @@ class MeMoMetabolite():
 
         if annotations is None:
             self.annotations = {}
+            self.annotations_source = {}
         else:
             self.annotations = {}
-            self.set_annotations(annotations)
+            self.annotations_source = {}
+            if annotations_source is None:
+                annotations_source = "model"
+            self.set_annotations(annotations, source = annotations_source)
 
 
     def set_id(self, new_id: str) -> None:
@@ -146,20 +157,28 @@ class MeMoMetabolite():
             warnings.warn("changed metbolite _id from {old} to {new}".format(old=self._id, new=new_id))
         self._id = handle_metabolites_prefix_suffix(new_id)
 
-    def set_model_id(self, new_model_id: str, source:str) -> None:
+    def set_model_id(self, new_model_id: str) -> None:
         """ set function for _model_id """
         if self._model_id is not None:
             warnings.warn(
                 "changed metbolite _model_id from {old} to {new}".format(old=self._model_id, new=new_model_id))
         self._model_id = new_model_id
 
-    def set_names(self, new_names: list[str], source:str) -> None:
+    def set_names(self, new_names: list[str], source:str|list[str]|None=None) -> None:
         """ set function for names """
+        if source == None:
+            source = self.source
+        elif type(source) == str:
+            source = [source]*len(new_names)
+
+        if len(source) != len(new_names):
+            raise ValueError("List of new names have a different length than the one for the sources. Consider providing a corresponding soure list to the new names via the source parameter.")
+
         if self.names:
             warnings.warn("changed metbolite names from {old} to {new}".format(old=str(self.names), new=str(new_names)))
-        new_names = sorted(list(dict.fromkeys(self.names))) # use dict instead of set to preserve order
-        self.names = new_names
-        self.names_source = [source]*len(new_names)
+        new_names, source = zip(*sorted(zip(new_names,source))) # sort both 
+        self.names = list(new_names)
+        self.names_source = list(source)
 
     def add_names(self, new_names: list[str], source: str) -> int:
         ''' append new names to the list of metabolite names'''
@@ -168,7 +187,9 @@ class MeMoMetabolite():
         # remove duplicates and sort lexographically
         self.names = list(dict.fromkeys(self.names)) # use dict instead of set to preserve order
         self.names_source.extend([source]*(len(self.names)-len(old_names))) # extend source list
-        self.names, self.names_source = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
+        new_names, new_sources = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
+        self.names = list(new_names)
+        self.names_source = list(new_sources)
         # return if the names have changed
         return int(old_names != self.names)
 
@@ -289,19 +310,54 @@ class MeMoMetabolite():
             warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
         self._pKb = new_pKb
     
-    def set_annotations(self, new_annotations: dict, source:str) -> None:
+    def set_annotations(self, new_annotations: dict, source:str|dict|None=None) -> None:
         """ set function for annotations """
-        if self.annotations != {} and self.annotations != None:
-            warnings.warn("changed metbolite annotations from {old} to {new}".format(
-                old=str(self.annotations),
-                new=str(new_annotations)))
-        self.annotations = new_annotations
 
-        # add sources
-        new_sources = {}
-        for key in self.annotation.keys():
-            new_sources[key] = [source]*len(self.annotation[key])
-        self.annotations_source = new_sources
+        # try to make sources if there is not much information
+        if source == None:
+            source == deepcopy(self.annotations_source)
+        elif type(source) == str:
+            val = source
+            source = dict()
+            for x,y in new_annotations.items():
+                source[x] = [val]*len(y)
+
+        # first check if the structure of annotations and sources are the same
+        if new_annotations.keys() != source.keys():
+            raise ValueError('''Keys of the new annotation dictionary differs from the keys in source. 
+            Annotation keys: {key1}
+            Source keys: {key2}'''.format(key1 = new_annotations.keys(), key2 = source.keys()))
+        elif [len(x) for x in new_annotations.values()] != [len(y) for y in source.values()]:
+            raise ValueError('''Entries length differs for new annotation and source dictionary. Consider to provide a source dictionary via the source value''')
+
+        # check if there is an old annotation which will be overwritten
+        if self.annotations != {} and self.annotations != None:
+            warntrigger = True
+            old_annotations = deepcopy(self.annotations)
+        else:
+            warntrigger = False
+        
+        # delete the old information
+        self.annotations = dict()
+        self.annotations_source = dict()
+        
+        # sort both new dictionaries and remove duplicates 
+        for x in new_annotations.keys():
+            new_annolst = []
+            new_sourcelst = []
+            for anno,src in zip(new_annotations[x], source[x]):
+                if not anno in new_annolst:
+                    new_annolst.append(anno)
+                    new_sourcelst.append(src)
+            new_annolst,new_sourcelst = zip(*sorted(zip(new_annolst,new_sourcelst)))
+            self.annotations[x] = list(new_annolst)
+            self.annotations_source[x] = list(new_sourcelst)
+        
+        # trigger the warning and give some information to the user
+        if warntrigger == True:
+            warnings.warn("changed metbolite annotations from {old} to {new}".format(
+                new=str(self.annotations),
+                old=str(old_annotations)))
 
     def add_annotations(self, new_annotations: dict, source:str) -> int:
         """ append new annotations to the dict of metabolite annotations
@@ -315,15 +371,15 @@ class MeMoMetabolite():
                 new_sources = self.annotations_source[x]
                 new_sources.extend([source]*(len(new_annolst) - len(old_annotation[x])))
                 new_annolst, new_sources = zip(*sorted(zip(new_annolst,new_sources)))
-                self.annotations[x] = new_annolst
-                self.annotations_source[x] = new_sources
+                self.annotations[x] = list(new_annolst)
+                self.annotations_source[x] = list(new_sources)
             else:
                 # remove duplicates and sort list
                 new_annolst = list(dict.fromkeys(new_annotations[x]))
                 new_sources = [source]*len(new_annolst)
                 new_annolst,new_sources = zip(*sorted(zip(new_annolst,new_sources)))
-                self.annotations[x] = new_annolst
-                self.annotation_source[x] = new_sources
+                self.annotations[x] = list(new_annolst)
+                self.annotations_source[x] = list(new_sources)
         
         # check if the annotations have been changed
         return int(old_annotation!=self.annotations)
@@ -367,13 +423,16 @@ class MeMoMetabolite():
 
         # add the non-unique attrbutes including their sources of annotation
         for key in new_metabolite.annotations.keys():
-            for i in len(new_metabolite.annotations[key]):
-                new_anno_dic = {key : new_metabolite.annotations[key][i]}
-                new_source = {key : new_metabolite.annotations_source[key][i]}
+            for i in range(len(new_metabolite.annotations[key])):
+                new_anno_dic = {key : [new_metabolite.annotations[key][i]]}
+                new_source = new_metabolite.annotations_source[key][i]
                 self.add_annotations(new_anno_dic, source = new_source)
 
-        for i in range(list(new_metabolite.names)): # need to iterate, because source is only accepted as single string as variable of add_names(), yet it can contain several different values if derived from another model
-            self.add_names(list(new_metabolite.names)[i], list(new_metabolite.names_source)[i])
+        # need to iterate, because source is only accepted as single string as
+        # variable of add_names(), yet it can contain several different values
+        # if derived from another model
+        for i in range(len(new_metabolite.names)):
+            self.add_names([new_metabolite.names[i]], new_metabolite.names_source[i])
         self.add_orig_ids(list(new_metabolite.orig_ids))
 
     def annotate(self):

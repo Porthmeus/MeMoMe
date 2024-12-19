@@ -25,19 +25,19 @@ def handle_bigg_entries(urls: pd.Series) -> Dict[str, List[str]]:
   if len(urls) > 0:
     # Urls is now a df that has one column and multiple rows
     # Each row is a bag of urls
-    # TO covnert them to alist we join them by semicolon and again split them
-    # that results in alist that coontains all the urls
+    # To convert them to a list we join them by semicolon and again split them
+    # that results is a list that contains all the urls
     urls =";".join(list(urls))
     urls = urls.split(";")
     for url in urls:
-      # TODO Check that it is identifier.org URL
       # Src is a db, e.g. hmdb or seed
       # val is a identifier in the corresponding db
       src,val = getAnnoFromIdentifierURL(url)
       if src in annotations.keys():
             annotations[src].append(val)
-      else:
+      elif src != None:
           annotations[src] = [val]
+
   return annotations
 
 

@@ -48,7 +48,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         # ignore the warnings
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            [x.set_annotations({}) for x in mod.metabolites]
+            [x.set_annotations({},source = "test") for x in mod.metabolites]
         mod.annotate()
 
     def test_annotateChEBI(self):
@@ -62,7 +62,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
             dic = {"chebi":[chebi]}
 #            with warnings.catch_warnings(action = "ignore"):
                 # TODO figure out why this is throwing an error!
-            met.set_annotations(dic)
+            met.set_annotations(dic,"test")
             metabolites.append(met)
         
         anno_res = annotateChEBI(metabolites)
@@ -118,8 +118,8 @@ class Test_MiscStuff(unittest.TestCase):
     def test_MeMoModelOutPutNames(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
-      metaboliteA.set_names(["Glucose"])
-      metaboliteB.set_names(["Glukose"])
+      metaboliteA.set_names(["Glucose"], source ="test")
+      metaboliteB.set_names(["Glukose"], source ="test")
 
       model = MeMoModel([metaboliteA])
       model2 = MeMoModel([metaboliteB])
@@ -139,8 +139,8 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
       # TODO: How does a sensible annoation example look like 
-      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]})
-      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff", "stuff3"]}, source = "test")
+      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]}, source = "test")
 
       model = MeMoModel([metaboliteA])
       model2 = MeMoModel([metaboliteB])
@@ -161,8 +161,8 @@ class Test_MiscStuff(unittest.TestCase):
     def test_1toManyMatchingOnName(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
-      metaboliteA.set_names(["Glucose"])
-      metaboliteB.set_names(["Glukose"])
+      metaboliteA.set_names(["Glucose"], source = "test")
+      metaboliteB.set_names(["Glukose"], source = "test")
       metaboliteA.set_id("A")
       metaboliteB.set_id("B")
 
@@ -188,8 +188,8 @@ class Test_MiscStuff(unittest.TestCase):
     def test_1toManyMatchingOnDB(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
-      metaboliteA.set_annotations({"DatabaseA" : ["stuff","stuff3"]})
-      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]})
+      metaboliteA.set_annotations({"DatabaseA" : ["stuff","stuff3"]}, source = "test")
+      metaboliteB.set_annotations({"DatabaseA" : ["stuff"]}, source = "test")
       metaboliteA.set_id("A")
       metaboliteB.set_id("B")
       model = MeMoModel([metaboliteA,metaboliteB])
@@ -216,8 +216,8 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteB: MeMoMetabolite = MeMoMetabolite()
       metaboliteA.set_id("A")
       metaboliteB.set_id("B")
-      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
-      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
+      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2", source = "test")
+      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4", source = "test")
 
       model = MeMoModel([metaboliteA, metaboliteB])
       model2 = MeMoModel([metaboliteA, metaboliteB])
@@ -237,9 +237,9 @@ class Test_MiscStuff(unittest.TestCase):
       metaboliteA.set_id("A")
       metaboliteB.set_id("B")
       metaboliteC.set_id("C")
-      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2")
-      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4")
-      metaboliteC.set_inchi_string(None)
+      metaboliteA.set_inchi_string("InChI=1S/H2O/h1H2", source = "test")
+      metaboliteB.set_inchi_string("InChI=1S/CH4/h1H4", source = "test")
+      metaboliteC.set_inchi_string(None, source = None)
 
       model = MeMoModel([metaboliteA, metaboliteC])
       model2 = MeMoModel([metaboliteA, metaboliteB])
@@ -276,10 +276,13 @@ class Test_removeDuplicates(unittest.TestCase):
 
         # find duplicates
         dups = mmm_dup.match(mmm_dup)
-        dups = detectDuplicates(dups)
-        self.assertTrue(dups == [('pyr','pyruv')])
+        # select duplicates
+        dups2 = detectDuplicates(dups)
+       # print(dups2)
+        self.assertTrue(dups2 == [('pyr','pyruv')])
 
         # remove duplicates
+        mmm_dup.annotated = True
         mmm_dup,rm_results = removeDuplicateMetabolites(mmm_dup)
         self.assertFalse(mmm_dup == mmm_dup_copy)
         self.assertTrue(mmm_dup == mmm_ori)
