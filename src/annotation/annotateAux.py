@@ -7,6 +7,7 @@ import warnings
 import os
 from typing import Callable, List
 from src.MeMoMetabolite import MeMoMetabolite
+import sys
 
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
