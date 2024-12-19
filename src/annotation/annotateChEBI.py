@@ -45,7 +45,7 @@ def annotateChEBI(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = F
             else :
                 inchi = None
 
-            annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi)
+            annotated_by_chebi = annotated_by_chebi + metabolites[i].set_inchi_string(inchi, source = "chebi")
     
     anno_result = AnnotationResult(annotated_by_chebi, 0, 0)
     return anno_result 
