@@ -92,7 +92,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
         mets = [m1,m2]
         anno_res = annotateModelSEED(mets)
-        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        self.assertEqual(anno_res, AnnotationResult(1,1,1))
         anno_res = annotateModelSEED_id(mets)
         self.assertTrue(anno_res == AnnotationResult(1,1,1))
         # redo the test and check that nothing is added

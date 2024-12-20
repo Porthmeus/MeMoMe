@@ -225,11 +225,8 @@ class MeMoMetabolite():
         """ set function for _inchi_string """
         old_inchi = deepcopy(self._inchi_string)
         
-        # validate inchi string
+        # validate inchi string - handles also empty strings
         new_inchi_string = validateInchi(new_inchi_string)
-        # handle empty strings
-        if new_inchi_string == "":
-            new_inchi_string = None
         
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
@@ -242,11 +239,9 @@ class MeMoMetabolite():
         """ compares to inchis and takes the most appropiate one"""
         changed = 0
         
-        # handle invalid inchi strings
+        # handle invalid inchi strings -handles also empty strings
         new_inchi_string = validateInchi(new_inchi_string)
-
-        # handle empty strings
-        if new_inchi_string == "" or new_inchi_string is None:
+        if new_inchi_string == None:
             return changed
         
         if self._inchi_string != None:

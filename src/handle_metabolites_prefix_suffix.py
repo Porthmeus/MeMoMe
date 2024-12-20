@@ -40,11 +40,13 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
 def validateInchi(inchi_string: str) -> str:
     ''' Checks if an inchi string conforms to some standards, if not, returns None '''
     correct_inchi = inchi_string
-    if not inchi_string.startswith("InChI="):
+    if inchi_string is None or inchi_string == "":
+        correct_inchi = None
+    elif not inchi_string.startswith("InChI="):
         correct_inchi = None
     elif not "/" in inchi_string:
         correct_inchi = None
-    elif len(inchi_string.split("/")) < 3 or len(inchi_string.split("/")) >5:
+    elif len(inchi_string.split("/")) < 3:
         correct_inchi = None
     return(correct_inchi)
 
