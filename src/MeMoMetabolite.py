@@ -18,9 +18,8 @@ from __future__ import annotations
 import warnings
 from copy import deepcopy
 
-from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix, validateInchi
 from src.annotation.annotateInchiRoutines import findOptimalInchi
-
 
 class MeMoMetabolite():
     """Class for "original" as well as "inferred"  information about a metabolite.
@@ -167,7 +166,7 @@ class MeMoMetabolite():
     def set_names(self, new_names: list[str], source:str|list[str]|None=None) -> None:
         """ set function for names """
         if source == None:
-            source = self.source
+            source = self.names_source
         elif type(source) == str:
             source = [source]*len(new_names)
 
@@ -225,11 +224,13 @@ class MeMoMetabolite():
     def set_inchi_string(self, new_inchi_string: str, source: str) -> int:
         """ set function for _inchi_string """
         old_inchi = deepcopy(self._inchi_string)
-
+        
+        # validate inchi string
+        new_inchi_string = validateInchi(new_inchi_string)
         # handle empty strings
         if new_inchi_string == "":
             new_inchi_string = None
-
+        
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
@@ -240,9 +241,14 @@ class MeMoMetabolite():
     def add_inchi_string(self, new_inchi_string:str, source:str) -> int:
         """ compares to inchis and takes the most appropiate one"""
         changed = 0
+        
+        # handle invalid inchi strings
+        new_inchi_string = validateInchi(new_inchi_string)
+
         # handle empty strings
-        if new_inchi_string == "":
+        if new_inchi_string == "" or new_inchi_string is None:
             return changed
+        
         if self._inchi_string != None:
             old = self._inchi_string
             new = findOptimalInchi([self._inchi_string, new_inchi_string], charge = self._charge)

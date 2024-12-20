@@ -20,7 +20,7 @@ def VMH2DataFrame():
             VMH_json = json.dumps(VMH_json['results'])
             VMH = pd.read_json(StringIO(VMH_json))
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         VMH = pd.DataFrame()
 
     # return the file as dataframe
@@ -46,7 +46,7 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
         # find number of model metabolites in BiGG database
         metabolitesBiGG_count = df_metabolites["model_metabolites"].isin(df_BiGG["universal_bigg_id"]).sum()
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         df_Bigg = pd.DataFrame()
         metabolitesBiGG_count = 0
 
@@ -65,7 +65,7 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
         # find number of model metabolites in ModelSEED database
         metabolitesModelSEED_count = df_metabolites["model_metabolites"].isin(df_ModelSEED["id"]).sum()
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         df_ModelSEED = pd.DataFrame()
         metabolitesModelSEED_count = 0
 
@@ -76,7 +76,7 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
         # find number of model metabolites in gapseq database
         metabolitesgapseq_count = df_metabolites["model_metabolites"].isin(df_gapseq["id"]).sum()
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         df_gapseq = pd.DataFrame()
         metabolitesgapseq_count = 0
 
