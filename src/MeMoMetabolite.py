@@ -175,6 +175,8 @@ class MeMoMetabolite():
 
         if self.names:
             warnings.warn("changed metbolite names from {old} to {new}".format(old=str(self.names), new=str(new_names)))
+        
+        # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
         new_names, source = zip(*sorted(zip(new_names,source))) # sort both 
         self.names = list(new_names)
         self.names_source = list(source)
@@ -185,7 +187,9 @@ class MeMoMetabolite():
         self.names.extend(new_names)
         # remove duplicates and sort lexographically
         self.names = list(dict.fromkeys(self.names)) # use dict instead of set to preserve order
+        # we allow addition of names only by one source at a time - however, if we want to add several names we need to extend the source list by the same number of elements as the name list
         self.names_source.extend([source]*(len(self.names)-len(old_names))) # extend source list
+        # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
         new_names, new_sources = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
         self.names = list(new_names)
         self.names_source = list(new_sources)
@@ -365,19 +369,32 @@ class MeMoMetabolite():
         check if there have been actually added new annotation, if so return 1,else 0"""
         old_annotation = deepcopy(self.annotations)
         for x in new_annotations.keys():
+            # check if there is already annotations with that key
             if x in self.annotations.keys():
                 self.annotations[x].extend(new_annotations[x])
                 # remove duplicates and sort list
-                new_annolst = list(dict.fromkeys(self.annotations[x]))
+                new_annolst = list(dict.fromkeys(self.annotations[x])) # hacky way to create uniques
                 new_sources = self.annotations_source[x]
+                # here we extend the list number of source by the number of new annotations
                 new_sources.extend([source]*(len(new_annolst) - len(old_annotation[x])))
+                # we want the annotations to be sorted lexographically, thus we have
+                # to sort the sources accordingly, so that the index of the
+                # anno corresponds to the index of the source. This is done
+                # with this rather complicated line below (stackoverflow for
+                # the rescue)
                 new_annolst, new_sources = zip(*sorted(zip(new_annolst,new_sources)))
                 self.annotations[x] = list(new_annolst)
                 self.annotations_source[x] = list(new_sources)
-            else:
+            else: # otherwise create a new dictionary entry
                 # remove duplicates and sort list
-                new_annolst = list(dict.fromkeys(new_annotations[x]))
+                new_annolst = list(dict.fromkeys(new_annotations[x])) # hacky way to create uniques
+                # here we extend the list number of source by the number of new annotations
                 new_sources = [source]*len(new_annolst)
+                # we want the annotations to be sorted lexographically, thus we have
+                # to sort the sources accordingly, so that the index of the
+                # anno corresponds to the index of the source. This is done
+                # with this rather complicated line below (stackoverflow for
+                # the rescue)
                 new_annolst,new_sources = zip(*sorted(zip(new_annolst,new_sources)))
                 self.annotations[x] = list(new_annolst)
                 self.annotations_source[x] = list(new_sources)
