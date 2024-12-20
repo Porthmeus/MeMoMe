@@ -1,14 +1,14 @@
 import unittest
-from test_matchInchi import *
-from test_annotate_dbs import *
-from test_annotateInchiRoutines import *
-from test_matchInchi import *
-from test_MeMoMetabolite import *
-from test_MeMoModel import *
-from test_parseMetaboliteInfoFromSBML import *
-from test_PubchemInfoNoInet import *
-from test_PubchemInfo import *
-from test_removeDuplicateMetabolites import *
+from matchInchi import *
+from annotate_dbs import *
+from annotateInchiRoutines import *
+from matchInchi import *
+from MeMoMetabolite import *
+from MeMoModel import *
+from parseMetaboliteInfoFromSBML import *
+from PubchemInfoNoInet import *
+from PubchemInfo import *
+from removeDuplicateMetabolites import *
 
 
 
