@@ -9,11 +9,14 @@ from parseMetaboliteInfoFromSBML import *
 from PubchemInfoNoInet import *
 from PubchemInfo import *
 from removeDuplicateMetabolites import *
+from bulkPerformance import *
 
 
 
 fast_tests = [Test_annotateMissingDbs,Test_annotateEntryFunctions,Test_annotateID,Test_annotateFull,TestInchiRoutines,TestMatchInchit,Test_MeMoMetabolite,Test_annotateBulkRoutines,Test_MiscStuff,Test_removeDuplicates,TestParseSBML,TestPubchemInfoNoInet,TestPubchemInfo,Test_removeDuplicateMetabolites]
 
+
+slow_tests = [Test_annotateBulkRoutines]
 
 def fast():
   suite = unittest.TestSuite()
@@ -21,17 +24,19 @@ def fast():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(x))
   return suite
 
-
-#def slow():
-#  suite = unittest.TestSuite()
-#  suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestSystemLevel))
-#  return suite
+def slow():
+  suite = unittest.TestSuite()
+  for x in slow_tests:
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(x))
+  return suite
 
 if __name__ == '__main__':
+  print(sys.argv)
   runner = unittest.TextTestRunner()
+  if sys.argv[1] == "fast":
+    print("\nRunning Unit Tests...")
+    runner.run(fast())
 
-  print("\nRunning Unit Tests...")
-  runner.run(fast())
-
-  #print("\nRunning System Tests...")
-  #runner.run(system_suite())
+  if sys.argv[1] == "slow":
+    print("\nRunning System Tests...")
+    runner.run(slow())
