@@ -36,3 +36,17 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
         identifier = re.sub(r"^(M_)?(.*)\[[a-z]\d?\]$",r"\g<2>", identifier)
         identifier = re.sub(r"^(M_)?(.*)\([a-z]\d?\)$",r"\g<2>", identifier)
     return identifier
+
+def validateInchi(inchi_string: str) -> str:
+    ''' Checks if an inchi string conforms to some standards, if not, returns None '''
+    correct_inchi = inchi_string
+    if inchi_string is None or inchi_string == "":
+        correct_inchi = None
+    elif not inchi_string.startswith("InChI="):
+        correct_inchi = None
+    elif not "/" in inchi_string:
+        correct_inchi = None
+    elif len(inchi_string.split("/")) < 3:
+        correct_inchi = None
+    return(correct_inchi)
+

@@ -25,23 +25,23 @@ def handle_bigg_entries(urls: pd.Series) -> Dict[str, List[str]]:
   if len(urls) > 0:
     # Urls is now a df that has one column and multiple rows
     # Each row is a bag of urls
-    # TO covnert them to alist we join them by semicolon and again split them
-    # that results in alist that coontains all the urls
+    # To convert them to a list we join them by semicolon and again split them
+    # that results is a list that contains all the urls
     urls =";".join(list(urls))
     urls = urls.split(";")
     for url in urls:
-      # TODO Check that it is identifier.org URL
       # Src is a db, e.g. hmdb or seed
       # val is a identifier in the corresponding db
       src,val = getAnnoFromIdentifierURL(url)
       if src in annotations.keys():
             annotations[src].append(val)
-      else:
+      elif src != None:
           annotations[src] = [val]
+
   return annotations
 
 
-def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
     """
     A small helper function to avoid redundant code
     Uses a BiGG identifiers and annotates it with the identifiers.org entries.
@@ -57,14 +57,14 @@ def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allo
       bigg = database
 
     if bigg.empty:
-      return dict(), list()
+      return dict(), list(), ""
 
     urls = bigg.loc[bigg["universal_bigg_id"] == entry,"database_links"]
     urls = urls.loc[~pd.isna(urls)]
 
     names = list(pd.unique(bigg.loc[bigg["universal_bigg_id"]==entry,"name"]))
     annotations = handle_bigg_entries(urls)
-    return annotations, names
+    return annotations, names, "bigg"
 
     
     
