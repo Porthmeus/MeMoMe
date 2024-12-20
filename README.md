@@ -32,10 +32,16 @@ should generate a table called performace_table.html in the current folder.
 # Development with docker
 * You need to have docker installed
 
-## Running the docker image
+## Running the docker image for developers
 cd into the MeMoMe folder
 ```bash
 docker compose run dev # This will start the docker container interactively
-conda activate MeMoMe # After being logged into the container, activate the conda environment
 ```
 You can now edit files locally with your favorite editor and them run MeMoMe in the container. In the container you can run all the development commands mentioned above.
+
+## Running the docker image for production
+Disclaimer: Currently the production image just runs the tets. The cli will be exposed later
+cd into the MeMoMe folder
+```bash
+docker compose run prod # This will run the tests
+```
