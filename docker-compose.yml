@@ -4,6 +4,8 @@ services:
     build:
       context: .
       target: dev  # Use the dev stage from Dockerfile
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
     volumes:
       - .:/app  # Mount current directory into the container for dev environment
     command: bash  # Open bash for dev (or any other interactive command)
@@ -12,6 +14,4 @@ services:
     build:
       context: .
       target: prod  # Use the prod stage from Dockerfile
-    ports:
-      - "80:80"  # Example port for production service (e.g., nginx)
-    command: ["nginx", "-g", "daemon off;"]  # Command to run the production server
+    command: bash

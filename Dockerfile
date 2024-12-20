@@ -1,9 +1,5 @@
-# Use a Miniconda base image
-FROM continuumio/miniconda3:24.9.2-0 as dev
+FROM continuumio/miniconda3:24.9.2-0 as conda
 
-RUN apt-get update && apt-get install vim -y    
-
-# Install Mamba
 RUN conda install -n base -c conda-forge mamba
 
 # Set working directory
@@ -13,24 +9,24 @@ WORKDIR /app
 COPY requirements.pinned.yml .
 
 RUN mamba env create --file=requirements.pinned.yml
-SHELL ["conda", "activate", "MeMoMe"]
+shell ["/bin/bash", "-c"]
+run echo "source activate MeMoMe" >> /root/.bashrc && \
+    source /root/.bashrc
 
+#___________________________________________#
 
-FROM continuumio/miniconda3:24.9.2-0 as prod
-
-RUN apt-get update && apt-get install vim -y    
+# Use a Miniconda base image
+FROM conda as dev
 
 # Install Mamba
-RUN conda install -n base -c conda-forge mamba
+RUN apt-get update && apt-get install vim -y    
 
-# Set working directory
-WORKDIR /app
+#___________________________________________#
 
-# Copy project files (optional)
+FROM conda  as prod
+
 COPY . .
-
-RUN mamba env create --file=requirements.pinned.yml
-SHELL ["conda", "activate", "MeMoMe"]
-RUN python -m unittest
+SHELL ["/bin/bash", "-c", "-l"]
+ENTRYPOINT python -m unittest
 
 
