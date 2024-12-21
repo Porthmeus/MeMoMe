@@ -13,7 +13,7 @@ from datetime import datetime
 table_data = [
 ]
 
-class Test_annotateBulkRoutines(unittest.TestCase):
+class Test_annotationPerformance(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
     this_directory = Path(__file__).parent
@@ -286,22 +286,22 @@ def add_test_case_to_table( name: str, res, exp):
 
 
 
-if __name__ == '__main__':
-    # Create a test suite
-    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
-    # Create a test runner
-    runner = unittest.TextTestRunner()
-    
-    # Run the tests and get the result
-    result = runner.run(suite)
-
-
-  
-    # Generate HTML table
-    html_table = generate_html_table(table_data)
-    save_html_table(html_table)
-    
-    # Access the test results
-    print("Number of tests run:", result.testsRun)
-    print("Number of failures:", len(result.failures))
-    print("Number of errors:", len(result.errors))
+#if __name__ == '__main__':
+#    # Create a test suite
+#    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
+#    # Create a test runner
+#    runner = unittest.TextTestRunner()
+#    
+#    # Run the tests and get the result
+#    result = runner.run(suite)
+#
+#
+#  
+#    # Generate HTML table
+#    html_table = generate_html_table(table_data)
+#    save_html_table(html_table)
+#    
+#    # Access the test results
+#    print("Number of tests run:", result.testsRun)
+#    print("Number of failures:", len(result.failures))
+#    print("Number of errors:", len(result.errors))
