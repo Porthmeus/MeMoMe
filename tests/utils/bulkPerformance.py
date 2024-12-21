@@ -1,5 +1,9 @@
 import unittest
 from pathlib import Path
+import os
+import sys
+if __name__ == '__main__':
+  sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoModel import MeMoModel
@@ -8,7 +12,6 @@ from src.annotation.annotateBiGG import *
 from src.annotation.annotateModelSEED import *
 from src.annotation.annotateAux import AnnotationResult
 from datetime import datetime
-
   # Example data for the table
 table_data = [
 ]
@@ -16,7 +19,7 @@ table_data = [
 class Test_annotateBulkRoutines(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
-    this_directory = Path(__file__).parent
+    this_directory = Path(__file__).parent.parent
     dat = this_directory.joinpath("dat")
 
 
@@ -206,6 +209,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
+    def test_ecoli_vmh_all(self):
+        mod_path = self.dat.joinpath("e_coli_vmh.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(999,999,999)
+        res = AnnotationResult.fromAnnotation(mod.annotate())
+        add_test_case_to_table(self.test_ecoli_vmh_all.__name__, res, exp)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
 def generate_html_table(data):
     """
     Generate HTML table from a list of lists (2D array) representing the table data.
@@ -289,6 +300,11 @@ def add_test_case_to_table( name: str, res, exp):
 if __name__ == '__main__':
     # Create a test suite
     suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
+    # The LSP complains but this works with id(). This is a super hacky way to just execute one single test for debugging
+    filtered_tests = unittest.TestSuite(
+            test for test in suite if test.id() in ["__main__.Test_annotateBulkRoutines.test_ecoli_vmh_all"]
+    )
+    suite = filtered_tests
     # Create a test runner
     runner = unittest.TextTestRunner()
     
