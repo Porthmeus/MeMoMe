@@ -8,6 +8,7 @@ from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEE
 from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
+from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
 from src.annotation.annotateAux import AnnotationResult
 from src.MeMoMetabolite import MeMoMetabolite
 
@@ -261,6 +262,19 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     self.assertFalse(len(ret[0]) == 0)
 
 
+  def testHMDBEntry(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateHMDB_entry("HMDB00972", allow_missing_dbs = False)
+    self.assertTrue(len(ret[0]) > 0)
+    self.assertTrue(len(ret[1]) > 0)
+    
+    ret = annotateHMDB_entry("", allow_missing_dbs = False)
+    self.assertEqual(ret, (dict(), list()))
+
+
+
+
 class Test_annotateID(unittest.TestCase):
   def testBiggID(self):
     this_directory = Path(__file__).parent
@@ -323,3 +337,12 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(ret, AnnotationResult(1, 0, 0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
 
+  def testHMDBAnnotate(self):
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("10fthf")
+    metabolite.annotations = {'HMDB': ['HMDB0000972']}
+    expected_annotations = {'HMDB': ['HMDB0000972'], 'accession': ['HMDB0000972'], 'chemical_formula': ['C20H23N7O7'], 'iupac_name': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-1,2,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'traditional_iupac': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-5,6,7,8-tetrahydro-1H-pteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'smiles': ['NC1=NC(=O)C2=C(NCC(CN(C=O)C3=CC=C(C=C3)C(=O)N[C@@H](CCC(O)=O)C(O)=O)N2)N1'], 'inchi': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/t11?,13-/m0/s1'], 'chebi_id': [15637.0], 'pubchem_compound_id': [122347.0], 'kegg_id': ['C00234'], 'bigg_id': [34337.0], 'vmh_id': ['10FTHF']}
+    ret = annotateHMDB([metabolite], allow_missing_dbs = False)
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
+    self.assertEqual(ret, AnnotationResult(0, 1, 1))
