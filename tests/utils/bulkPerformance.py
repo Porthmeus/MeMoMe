@@ -70,7 +70,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         exp = AnnotationResult(54, 0, 0)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_bigg_chebi.__name__, res1 + res2, exp)   
+        add_test_case_to_table(self.test_ecoli_core_bigg_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
     def test_ecoli_vmh_bigg(self):
