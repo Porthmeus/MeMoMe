@@ -113,10 +113,10 @@ class MeMoModel:
             print("ModelSEED:", temp_result)
             anno_result = anno_result + temp_result
             temp_result = annotateVMH(self.metabolites, allow_missing_dbs)
-            print("HMDB:", temp_result)
+            print("VMH:", temp_result)
             anno_result = anno_result + temp_result
             temp_result = annotateHMDB(self.metabolites, allow_missing_dbs)
-            print("VMH:", temp_result)
+            print("HMDB:", temp_result)
             anno_result = anno_result + temp_result
             #print("Total:", anno_result)
             final_numbers = final_numbers + anno_result
