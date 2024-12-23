@@ -230,6 +230,7 @@ def generate_html_table(data):
     """
     red_string = "style=\"color: white; background-color: red;\""
     green_string = "style=\"color: white; background-color: green;\""
+    blue_string = "style=\"color: white; background-color: blue;\""
 
     html = "<table>\n"
     for row in data:
@@ -240,6 +241,8 @@ def generate_html_table(data):
               html += f"    <td {red_string}>{cell}</td>\n"
             elif row[3] == "green" :
               html += f"    <td {green_string}>{cell}</td>\n"
+            elif row[3] == "blue" :
+              html += f"    <td {blue_string}>{cell}</td>\n"
             else:
               html += f"    <td>{cell}</td>\n"
 
@@ -286,8 +289,10 @@ def generate_value_row(res_value: int, exp_value: int) -> tuple[str, str, str]:
   """
   if res_value < exp_value:
    return (str(res_value), str(exp_value), "red")
-  else:
+  elif res_value == exp_value:
    return (str(res_value), str(exp_value), "green")
+  else:
+   return (str(res_value), str(exp_value), "blue")
 
 def bac_spec_content(mod: MeMoModel) -> str:
     html = "<table id = myTable>\n"
