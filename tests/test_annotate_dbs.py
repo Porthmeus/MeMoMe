@@ -4,11 +4,12 @@ import pandas as pd
 import os
 from unittest.mock import patch
 from io import *
-from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, correctAnnotationKeys, annotateModelSEED_entry
+from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, annotateModelSEED_entry
 from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
 from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
+from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias, extractModelSEEDAnnotationsFromAlias2
 from src.annotation.annotateAux import AnnotationResult
 from src.MeMoMetabolite import MeMoMetabolite
 
@@ -273,6 +274,22 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     self.assertEqual(ret, (dict(), list()))
 
 
+  def testSEEDEntry(self):
+    self.maxDiff = None
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateModelSEED_entry("cpd00052", allow_missing_dbs = False)
+    self.assertEqual(sorted(ret[1]), sorted(["cytidine-triphosphate",
+   "Cytidine triphosphate",
+   "Cytidine 5'-triphosphate",
+   "cytidine-5'-triphosphate",
+   "CTP"]))
+    print(ret[0])
+    self.assertFalse(len(ret[0]) == 0)
+
+    ret = annotateModelSEED_entry("", allow_missing_dbs = False)
+    self.assertEqual(ret, (dict(), list()))
+
 
 
 class Test_annotateID(unittest.TestCase):
@@ -346,3 +363,31 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
+
+
+class Test_annotateAuxiliares(unittest.TestCase):
+
+  this_directory = Path(__file__).parent
+  dbs_dir = this_directory.parent/Path("Databases")
+
+  def test_extractModelSEEDAnnotationsFromAlias(self):
+    # Aliases of cpd00001
+    aliases1 = "Name: H20; H2O; H3O+; HO-; Hydroxide ion; OH; OH-; Water; hydrogen oxide; hydroxide; hydroxide ion; hydroxyl; hydroxyl ion; oxonium; water|AraCyc: OH; WATER|BiGG: h2o; oh1|BrachyCyc: WATER|KEGG: C00001; C01328|MetaCyc: OH; OXONIUM; WATER"
+
+    aliases2 = "Name: NADP(H); NADP-red; NADP-reduced; NADPH; NADPH+H+; NADPH2; Nicotinamide adenine dinucleotide phosphate - reduced; Nicotinamide adenine dinucleotide phosphate-reduced; Nicotinamideadeninedinucleotidephosphate-reduced; Reduced nicotinamide adenine dinucleotide phosphate; TPNH; beta-NADPH; dihydronicotinamide adenine dinucleotide phosphate; dihydronicotinamide adenine dinucleotide phosphate reduced; dihydronicotinamide adenine dinucleotide-P; dihydrotriphosphopyridine nucleotide; dihydrotriphosphopyridine nucleotide reduced; reduced NADP; reduced dihydrotriphosphopyridine nucleotide; reduced nicotinamide adenine dinucleotide phosphate|AraCyc: NADPH|BiGG: nadph|BrachyCyc: NADPH|KEGG: C00005|MetaCyc: NADPH"
+
+    # Aliases of cpd00002
+    aliases3 = "Name: ATP; Adenosine 5'-triphosphate; adenosine-5'-triphosphate; adenosine-triphosphate; adenylpyrophosphate|AraCyc: ATP|BiGG: atp|BrachyCyc: ATP|KEGG: C00002|MetaCyc: ATP"
+
+    expected1 = ({'AraCyc': ['OH', 'WATER'], 'BiGG': ['h2o', 'oh1'], 'BrachyCyc': ['WATER'], 'KEGG': ['C00001', 'C01328'], 'MetaCyc': ['OH', 'OXONIUM', 'WATER']}, ['H20', 'H2O', 'H3O+', 'HO-', 'Hydroxide ion', 'OH', 'OH-', 'Water', 'hydrogen oxide', 'hydroxide', 'hydroxide ion', 'hydroxyl', 'hydroxyl ion', 'oxonium', 'water'])
+    extracted1 = extractModelSEEDAnnotationsFromAlias(aliases1)
+    extracted11 = extractModelSEEDAnnotationsFromAlias2(aliases1)
+    print(extracted1)
+    print(extracted11)
+    #self.assertEqual(extracted1, expected1)
+
+    #extracted35 = extractModelSEEDAnnotationsFromAlias2(aliases3)
+    #expected3 = ({'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}, ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate'])
+    #print(extracted3)
+    #print(extracted35)
+    ##self.assertEqual(extracted3, expected3)

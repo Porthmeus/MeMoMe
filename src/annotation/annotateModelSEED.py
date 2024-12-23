@@ -14,40 +14,37 @@ import re
 from src.annotation.annotateInchiRoutines import findOptimalInchi, smile2inchi
 from src.MeMoMetabolite import MeMoMetabolite
 from src.download_db import get_config, get_database_path
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs, handleMetabolites
+import ast
+import re
 
 # load the prefixes for the identifies.org list that is needed for the correction of the key in the annotation dictionary
 config = get_config()
 identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
 
-# TODO 
-try: 
-    with open(identifiers_file, "r") as json_file: 
-        identifiers = json.load(json_file)
-except FileNotFoundError as e:
-    warnings.warn(str(e))
-    identifiers = None
-    # Rethrow exception because we want don't allow missing dbs
-    # not working here, but there will be check further down again
-    #if allow_missing_dbs == False:
-    #  raise e
 
-if identifiers != None:
-    identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
-    identifier_prefixes = pd.read_json(StringIO(identifier_prefixes))
-    identifier_prefixes = list(identifier_prefixes["prefix"])
+def extractModelSEEDAnnotationsFromAlias2(alias:str):
+  alias = alias.replace('"',"''")
+  # Each type of identifier is separated by | i.e. we have Name: .... | BiGG: ... |
+  # Now each list entry is corresponds to one db 
+  ret1 = alias.split("|")
 
+  result = {}
+  # A entry looks like this DB: name1; name2; .... name_n 
+  for entry in ret1:
+    # Thus we get the part before the : and use it as a dict key
+    key, value = entry.split(':')  
+    # The part after the : contains the spafe to the right from the : and the ;.
+    # Thus we remov all " " aka whitespace 
+    # Thus name1; name2; .... name_n turns into name1;name2;name3; ...;name_n
+    # Then split by ; to get all the names
+    value = value.strip()
+    t = re.sub(r";\s", ";", value)
+    print(t)
+    result[key.strip()] = t
 
-def annotateLove(metabolites: list[MeMoMetabolite]) -> tuple[int, int]:
-    """ Annotate the metaboltes with Inchis from ChEBI """
-
-    # check if any unannotated metabolites exist
-    ids = [x for x, y in enumerate(metabolites) if y._inchi_string == None]
-    not_annotated_metabolites = len(ids)
-    print("NOT ANNO", not_annotated_metabolites)
-
-    return 0, 0
-
+  names = result.pop("Name", [])
+  return result, names
 
 def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
     '''
@@ -68,83 +65,65 @@ def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
         names = list()
 
     # correct the keys to conform to the identifiers.org 
-    new_anno = correctAnnotationKeys(new_anno)
+    #new_anno = correctAnnotationKeys(new_anno)
     return(new_anno, names)
 
-def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
-    "Takes an annotation dictionary and tries to correct the keys in the dictionary to conform with the identifiers.org prefixes"
-
-    ## TODO: currently the data base is read everytime we run this function (which could be several k times) - find a better solution for that
-    # try to find the correct identifiers from identifiers.org
-    ## first get possible prefixes
-    prefixes = identifier_prefixes
-
-    ## now check if the keys of the annos can be found in the prefixes
-    new_anno_corrected = dict()
-    for key, value in anno.items():
-        if key.lower() in prefixes:
-            new_anno_corrected[key.lower()] = value
-        # handle kegg drug vs. compound
-        elif key.lower() == "kegg":
-            # sort the values into compounds and drugs
-            drugs = []
-            compounds = []
-            for val in value:
-                if val.startswith("D"):
-                    drugs.append[val]
-                elif val.startswith("C"):
-                    compounds.append[val]
-            if len(drugs) >0:
-                new_anno_corrected["kegg.drug"] = drugs
-            if len(compounds) >0:
-                new_anno_corrected["kegg.compound"] = compounds
-        # remove undefined pubchem entries - compounds and substances can have the same ID, but are usually different metabolites 
-        elif key.lower() == "pubchem":
-            warnings.warn("Removing pubchem entries because of missing information about compound or substance:" + str(value))
-        # handle database specific stuff like the .compound suffix
-        elif key.lower()+".compound" in prefixes:
-            new_anno_corrected[key.lower() + ".compound"] = value
-        elif key.lower()+".metabolite" in prefixes:
-            new_anno_corrected[key.lower() + ".metabolite"] = value
-        elif key.lower()+".cpd" in prefixes:
-            new_anno_corrected[key.lower() + ".cpd"] = value
-        elif key.lower()+".chemical" in prefixes:
-            new_anno_corrected[key.lower() + ".substance"] = value
-        elif key.lower()+".substance" in prefixes:
-            new_anno_corrected[key.lower() + ".chemical"] = value
-        elif key.lower()+".entity" in prefixes:
-            new_anno_corrected[key.lower() + ".entity"] = value
-        elif key.lower()+".ligand" in prefixes:
-            new_anno_corrected[key.lower() + ".ligand"] = value
-        elif key.lower()+".smallmolecule" in prefixes:
-            new_anno_corrected[key.lower() + ".ligand"] = value
-        elif key.lower()+".inhibitor" in prefixes:
-            new_anno_corrected[key.lower() + ".inhibitor"] = value
-        elif key.lower()+".pthcmp" in prefixes:
-            new_anno_corrected[key.lower() + ".pthcmp"] = value
-        
-    return(new_anno_corrected)
-
-def extractModelSEEDpKapKb(pkab:str) -> dict:
-    """Auxiliary function to reformat the values in the modelseed database for pKa and pKb into dictionaries"""
-    # make sure there is an actual value for the entry
-    if not pd.isna(pkab):
-        # split the string into individual pkA/Bs
-        pkab_split = pkab.split(";")
-
-        # sort the coordinates and the pkA/B value into a dictonary
-        pkab_dict = {}
-        for entry in pkab_split:
-            coord = re.sub(r"^(.*):(.*):(.*)$", r"\g<1>:\g<2>",entry)
-            pkab_val = float(re.sub(r"^(.*):(.*):(.*)$", r"\g<3>",entry))
-            pkab_dict[coord] = pkab_val
-    else:
-        pkab_dict={"0:0",float("nan")}
-
-    return(pkab_dict)
+#def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
+#    "Takes an annotation dictionary and tries to correct the keys in the dictionary to conform with the identifiers.org prefixes"
+#
+#    ## TODO: currently the data base is read everytime we run this function (which could be several k times) - find a better solution for that
+#    # try to find the correct identifiers from identifiers.org
+#    ## first get possible prefixes
+#    prefixes = identifier_prefixes
+#
+#    ## now check if the keys of the annos can be found in the prefixes
+#    new_anno_corrected = dict()
+#    for key, value in anno.items():
+#        if key.lower() in prefixes:
+#            new_anno_corrected[key.lower()] = value
+#        # handle kegg drug vs. compound
+#        elif key.lower() == "kegg":
+#            # sort the values into compounds and drugs
+#            drugs = []
+#            compounds = []
+#            for val in value:
+#                if val.startswith("D"):
+#                    drugs.append[val]
+#                elif val.startswith("C"):
+#                    compounds.append[val]
+#            if len(drugs) >0:
+#                new_anno_corrected["kegg.drug"] = drugs
+#            if len(compounds) >0:
+#                new_anno_corrected["kegg.compound"] = compounds
+#        # remove undefined pubchem entries - compounds and substances can have the same ID, but are usually different metabolites 
+#        elif key.lower() == "pubchem":
+#            warnings.warn("Removing pubchem entries because of missing information about compound or substance:" + str(value))
+#        # handle database specific stuff like the .compound suffix
+#        elif key.lower()+".compound" in prefixes:
+#            new_anno_corrected[key.lower() + ".compound"] = value
+#        elif key.lower()+".metabolite" in prefixes:
+#            new_anno_corrected[key.lower() + ".metabolite"] = value
+#        elif key.lower()+".cpd" in prefixes:
+#            new_anno_corrected[key.lower() + ".cpd"] = value
+#        elif key.lower()+".chemical" in prefixes:
+#            new_anno_corrected[key.lower() + ".substance"] = value
+#        elif key.lower()+".substance" in prefixes:
+#            new_anno_corrected[key.lower() + ".chemical"] = value
+#        elif key.lower()+".entity" in prefixes:
+#            new_anno_corrected[key.lower() + ".entity"] = value
+#        elif key.lower()+".ligand" in prefixes:
+#            new_anno_corrected[key.lower() + ".ligand"] = value
+#        elif key.lower()+".smallmolecule" in prefixes:
+#            new_anno_corrected[key.lower() + ".ligand"] = value
+#        elif key.lower()+".inhibitor" in prefixes:
+#            new_anno_corrected[key.lower() + ".inhibitor"] = value
+#        elif key.lower()+".pthcmp" in prefixes:
+#            new_anno_corrected[key.lower() + ".pthcmp"] = value
+#        
+#    return(new_anno_corrected)
 
 
-def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> list[dict, list, dict, dict]:
+def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
     """
     A small helper function to avoid redundant code
     Uses a ModelSEED identifiers and annotates it with the identifiers.org entries.
@@ -154,24 +133,19 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
     database - is either empty (default) or a pandas data.frame with the data from the modelseed homepage for the metabolites. If it is empty, the function will try to load the database from the config file
     """
     
-    # check if the database was given, if not, try to load it
-    mseed = None
     if len(database) == 0:
-        # load the database
-        config = get_config()
-        db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-        try:
-          mseed = pd.read_table(db_path, low_memory= False)
-        except FileNotFoundError as e:
-          warnings.warn(e)
-          # Rethrow exception because we want don't allow missing dbs
-          if allow_missing_dbs == False:
-            raise e
-          return dict(), list(), dict(), dict()
-
+      mseed =  load_database(get_config()["databases"]["ModelSeed"]["file"], 
+                            allow_missing_dbs, 
+                            lambda path: pd.read_csv(path, sep="\t"))
     else:
-        mseed = database
+      mseed = database
 
+    if mseed.empty:
+      return dict(), list()
+    pd.set_option('display.max_colwidth', None)  # Don't truncate long strings
+    pd.set_option('display.width', 1000)        # Set a wide output width
+
+    print(mseed[["id","aliases"]])
     # extract the relevant annotation information and return it
     aliases = mseed.loc[mseed["id"]==entry,"aliases"]
     # check if there are entries which are not NA
@@ -196,38 +170,8 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
             new_anno[key] = list(set(new_anno[key]))
         new_names = list(set(new_names))
     
-    # additionally extract the pKa and pKb values
-    pka = mseed.loc[mseed["id"]==entry,"pka"]
-    pkb = mseed.loc[mseed["id"]==entry,"pkb"]
-    # check if there are entries which are not NA
-    pka = pka.loc[~pd.isna(pka)]
-    pkb = pkb.loc[~pd.isna(pkb)]
-    # get the pka values
-    if len(pka) > 0:
-        pka_vals = dict()
-        for val in pka:
-            pka_temp = extractModelSEEDpKapKb(val)
-            for key,value in pka_temp.items():
-                if key in pka_vals.keys():
-                    pka_vals[key] = (pka_vals[key] + value)/2
-                else:
-                    pka_vals[key] = value
-    else:
-        pka_vals = {}
-    # do the same for pkb
-    if len(pkb) > 0:
-        pkb_vals = dict()
-        for val in pkb:
-            pkb_temp = extractModelSEEDpKapKb(val)
-            for key,value in pkb_temp.items():
-                if key in pkb_vals.keys():
-                    pkb_vals[key] = (pkb_vals[key] + value)/2
-                else:
-                    pkb_vals[key] = value
-    else:
-        pkb_vals = {}
 
-    return(new_anno, new_names, pka_vals, pkb_vals)
+    return(new_anno, new_names)
 
 def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
@@ -246,12 +190,12 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
          raise e
       return AnnotationResult(0 ,0, 0)
     
-    counter = [0,0,0,0,0] # counter for names, annotation, inchi_string, pka, pkb
+    counter = [0,0,0] # counter for names, annotation, inchi_string, pka, pkb
     for met in metabolites:
         if any(mseed["id"]==met._id):
             
             # get the names, annotations, pka and pkb
-            new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry(entry = met._id,
+            new_met_anno,new_names = annotateModelSEED_entry(entry = met._id,
                     database = mseed)
 
             # get the inchi strings
@@ -287,13 +231,6 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
             if inchi_string != None:
                 counter[2] = counter[2] + met.add_inchi_string(inchi_string)
 
-            # add the pka
-            if len(new_pka) > 0:
-                 counter[3] = counter[3] + met.add_pKa(new_pka)
-
-            # add the pkb
-            if len(new_pkb) > 0:
-                 counter[4] = counter[4] + met.add_pKb(new_pkb)
     anno_result = AnnotationResult(counter[2], counter[1], counter[0])
     return anno_result 
 
@@ -359,14 +296,6 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
                     # add the inchi_string
                     if inchi_string != None:
                         met_counter[2] = met_counter[2] + met.add_inchi_string(inchi_string)
-
-                    # add the pka
-                    if len(new_pka) > 0:
-                         met_counter[3] = met_counter[3] + met.add_pKa(new_pka)
-
-                    # add the pkb
-                    if len(new_pkb) > 0:
-                         met_counter[4] = met_counter[4] + met.add_pKb(new_pkb)
 
             # sum the counters
             met_counter = [int(x>0) for x in met_counter]
