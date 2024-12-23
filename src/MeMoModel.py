@@ -19,7 +19,8 @@ from copy import deepcopy
 from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
-from src.annotation.annotateVMH import annotateVMH_id
+from src.annotation.annotateVMH import annotateVMH_id, annotateVMH
+from src.annotation.annotateHmdb import annotateHMDB
 from src.annotation.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
@@ -110,6 +111,12 @@ class MeMoModel:
             # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
             temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
             print("ModelSEED:", temp_result)
+            anno_result = anno_result + temp_result
+            temp_result = annotateVMH(self.metabolites, allow_missing_dbs)
+            print("HMDB:", temp_result)
+            anno_result = anno_result + temp_result
+            temp_result = annotateHMDB(self.metabolites, allow_missing_dbs)
+            print("VMH:", temp_result)
             anno_result = anno_result + temp_result
             #print("Total:", anno_result)
             final_numbers = final_numbers + anno_result
