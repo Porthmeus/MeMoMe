@@ -71,5 +71,5 @@ def annotateHMDB(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = Fa
     if hmdb.empty:
       return AnnotationResult(0, 0, 0)
 
-    return handleMetabolites(hmdb, metabolites, "HMDB", annotateHMDB_entry)
+    return handleMetabolites(hmdb, metabolites, "hmdb", annotateHMDB_entry)
 
