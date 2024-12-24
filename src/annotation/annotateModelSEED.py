@@ -103,6 +103,29 @@ def extractModelSEEDAnnotationsFromAlias(alias:str):
 #        
 #    return(new_anno_corrected)
 
+def handle_seed_id(aliases: pd.DataFrame) -> tuple[dict, list]:
+# get the information from the database
+  new_anno = dict()
+  new_names = list()
+  if len(aliases) >0:
+      for alias in aliases:
+          annos, names = extractModelSEEDAnnotationsFromAlias(alias)
+          # combine annos for the entry
+          for key,value in annos.items():
+              if key in new_anno.keys():
+                  new_anno[key].extend(value)
+              else:
+                  new_anno[key] = value
+          # combine names
+          new_names.extend(names)
+      
+      # remove duplicates
+      for key in new_anno.keys():
+          new_anno[key] = list(set(new_anno[key]))
+      new_names = list(set(new_names))
+
+  return(new_anno, new_names)
+
 
 def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
     """
@@ -128,28 +151,9 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
     aliases = mseed.loc[mseed["id"]==entry,"aliases"]
     # check if there are entries which are not NA
     aliases = aliases.loc[~pd.isna(aliases)]
-    # get the information from the database
-    new_anno = dict()
-    new_names = list()
-    if len(aliases) >0:
-        for alias in aliases:
-            annos, names = extractModelSEEDAnnotationsFromAlias(alias)
-            # combine annos for the entry
-            for key,value in annos.items():
-                if key in new_anno.keys():
-                    new_anno[key].extend(value)
-                else:
-                    new_anno[key] = value
-            # combine names
-            new_names.extend(names)
-        
-        # remove duplicates
-        for key in new_anno.keys():
-            new_anno[key] = list(set(new_anno[key]))
-        new_names = list(set(new_names))
+    return handle_seed_id(aliases)
     
 
-    return(new_anno, new_names)
 
 def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
