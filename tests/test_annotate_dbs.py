@@ -9,8 +9,8 @@ from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
 from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
-from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias, extractModelSEEDAnnotationsFromAlias2
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias
+from src.annotation.annotateAux import AnnotationResult, AnnotationKey
 from src.MeMoMetabolite import MeMoMetabolite
 
 
@@ -146,7 +146,7 @@ class Test_annotateMissingDbs(unittest.TestCase):
   @patch('sys.stderr', new_callable=StringIO)
   def testSEED_entry(self, mock_err):
     self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], {}, {}))
+    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
@@ -156,29 +156,29 @@ class Test_annotateMissingDbs(unittest.TestCase):
 
     self.makeDbVis("modelSeed.tsvxxx")
   
-  @patch('sys.stderr', new_callable=StringIO)
-  def correctAnnotationKeys(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(correctAnnotationKeys({}, allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      correctAnnotationKeys({},  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-
-    self.makeDbVis("modelSeed.tsvxxx")
+#  @patch('sys.stderr', new_callable=StringIO)
+#  def correctAnnotationKeys(self, mock_err):
+#    self.makeDbInvis("modelSeed.tsv")
+#    self.assertEqual(correctAnnotationKeys({}, allow_missing_dbs = True), AnnotationResult(0,0,0))
+#    output = mock_err.getvalue().strip()
+#    self.assertIn("No such file or directory", output)
+#    
+#    with self.assertRaises(FileNotFoundError):
+#      correctAnnotationKeys({},  allow_missing_dbs = False)
+#      self.assertIn("No such file or directory", output)
+#
+#    self.makeDbVis("modelSeed.tsvxxx")
 
 
   @patch('sys.stderr', new_callable=StringIO)
   def testVMH_entry(self, mock_err):
     self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
+    self.assertEqual(annotateVMH_entry(AnnotationKey(""), pd.DataFrame(), allow_missing_dbs = True), ({}, []))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
     with self.assertRaises(FileNotFoundError):
-      annotateVMH_entry("", pd.DataFrame(),  allow_missing_dbs = False)
+      annotateVMH_entry(AnnotationKey(""), pd.DataFrame(),  allow_missing_dbs = False)
       self.assertIn("No such file or directory", output)
     self.makeDbVis("vmh.json")
 
@@ -257,7 +257,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testVMHEntry(self):
     this_directory = Path(__file__).parent
     dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateVMH_entry("10fthf", allow_missing_dbs = False)
+    ret = annotateVMH_entry(AnnotationKey("10fthf"), allow_missing_dbs = False)
     
     self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
     self.assertFalse(len(ret[0]) == 0)
@@ -266,11 +266,11 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testHMDBEntry(self):
     this_directory = Path(__file__).parent
     dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateHMDB_entry("HMDB00972", allow_missing_dbs = False)
+    ret = annotateHMDB_entry(AnnotationKey("HMDB00972"), allow_missing_dbs = False)
     self.assertTrue(len(ret[0]) > 0)
     self.assertTrue(len(ret[1]) > 0)
     
-    ret = annotateHMDB_entry("", allow_missing_dbs = False)
+    ret = annotateHMDB_entry(AnnotationKey(""), allow_missing_dbs = False)
     self.assertEqual(ret, (dict(), list()))
 
 
@@ -284,7 +284,6 @@ class Test_annotateEntryFunctions(unittest.TestCase):
    "Cytidine 5'-triphosphate",
    "cytidine-5'-triphosphate",
    "CTP"]))
-    print(ret[0])
     self.assertFalse(len(ret[0]) == 0)
 
     ret = annotateModelSEED_entry("", allow_missing_dbs = False)
@@ -381,13 +380,8 @@ class Test_annotateAuxiliares(unittest.TestCase):
 
     expected1 = ({'AraCyc': ['OH', 'WATER'], 'BiGG': ['h2o', 'oh1'], 'BrachyCyc': ['WATER'], 'KEGG': ['C00001', 'C01328'], 'MetaCyc': ['OH', 'OXONIUM', 'WATER']}, ['H20', 'H2O', 'H3O+', 'HO-', 'Hydroxide ion', 'OH', 'OH-', 'Water', 'hydrogen oxide', 'hydroxide', 'hydroxide ion', 'hydroxyl', 'hydroxyl ion', 'oxonium', 'water'])
     extracted1 = extractModelSEEDAnnotationsFromAlias(aliases1)
-    extracted11 = extractModelSEEDAnnotationsFromAlias2(aliases1)
-    print(extracted1)
-    print(extracted11)
-    #self.assertEqual(extracted1, expected1)
+    self.assertEqual(extracted1, expected1)
 
-    #extracted35 = extractModelSEEDAnnotationsFromAlias2(aliases3)
-    #expected3 = ({'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}, ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate'])
-    #print(extracted3)
-    #print(extracted35)
-    ##self.assertEqual(extracted3, expected3)
+    expected3 = ({'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}, ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate'])
+    extracted3 = extractModelSEEDAnnotationsFromAlias(aliases3)
+    self.assertEqual(extracted3, expected3)

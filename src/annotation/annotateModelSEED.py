@@ -23,7 +23,10 @@ config = get_config()
 identifiers_file = os.path.join(get_database_path(), config["databases"]["Identifiers"]["file"])
 
 
-def extractModelSEEDAnnotationsFromAlias2(alias:str):
+def extractModelSEEDAnnotationsFromAlias(alias:str):
+  '''
+  Takes an entry from the model seed database ("https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv") and retrieves the crosslinked databases into the annotation dictionary
+  '''
   alias = alias.replace('"',"''")
   # Each type of identifier is separated by | i.e. we have Name: .... | BiGG: ... |
   # Now each list entry is corresponds to one db 
@@ -38,35 +41,13 @@ def extractModelSEEDAnnotationsFromAlias2(alias:str):
     # Thus we remov all " " aka whitespace 
     # Thus name1; name2; .... name_n turns into name1;name2;name3; ...;name_n
     # Then split by ; to get all the names
+    # This line removes the whitespace after the :
     value = value.strip()
-    t = re.sub(r";\s", ";", value)
-    print(t)
-    result[key.strip()] = t
+    # This line removes the whitespace after the ;
+    result[key.strip()] = re.sub(r";\s", ";", value).split(";")
 
   names = result.pop("Name", [])
   return result, names
-
-def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
-    '''
-    Takes an entry from the model seed database ("https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv") and retrieves the crosslinked databases into the annotation dictionary
-    '''
-
-    # the string is basically already a dictionary, it just needs to be passed back to it
-    # first we need to replace all possible quotation marks
-    alias = alias.replace('"',"''")
-    new_alias = '''{"'''+alias.replace(''': ''','''":["''').replace('''|''','''"],"''').replace('''; ''','''","''')+'''"]}''' # the ''' are awkward, but necessary, because of ' sometimes denotes something like 3'-triphosphate, which makes ' as delimiter unusable
-    new_anno = eval(new_alias)
-
-    # get the alias names and remove them from the dictionary
-    if "Name" in new_anno.keys():
-        names = new_anno["Name"]
-        del new_anno["Name"]
-    else:
-        names = list()
-
-    # correct the keys to conform to the identifiers.org 
-    #new_anno = correctAnnotationKeys(new_anno)
-    return(new_anno, names)
 
 #def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
 #    "Takes an annotation dictionary and tries to correct the keys in the dictionary to conform with the identifiers.org prefixes"
@@ -136,16 +117,13 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
     if len(database) == 0:
       mseed =  load_database(get_config()["databases"]["ModelSeed"]["file"], 
                             allow_missing_dbs, 
-                            lambda path: pd.read_csv(path, sep="\t"))
+                            lambda path: pd.read_csv(path, sep="\t", low_memory=False))
     else:
       mseed = database
 
     if mseed.empty:
       return dict(), list()
-    pd.set_option('display.max_colwidth', None)  # Don't truncate long strings
-    pd.set_option('display.width', 1000)        # Set a wide output width
 
-    print(mseed[["id","aliases"]])
     # extract the relevant annotation information and return it
     aliases = mseed.loc[mseed["id"]==entry,"aliases"]
     # check if there are entries which are not NA
@@ -261,7 +239,7 @@ def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool
             for seed_id in mod_mseeds:
                 if any(mseed["id"]==seed_id):
                     # get the names, annotations, pka and pkb
-                    new_met_anno,new_names,new_pka,new_pkb = annotateModelSEED_entry( entry = seed_id,
+                    new_met_anno,new_names = annotateModelSEED_entry( entry = seed_id,
                             database = mseed)
 
                     # get the inchi strings
