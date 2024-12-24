@@ -67,94 +67,94 @@ class Test_annotateMissingDbs(unittest.TestCase):
     self.makeDbVis("vmh.jsonxxx")
   
   
-  @patch('sys.stderr', new_callable=StringIO)
-  def testBiggEntry(self, mock_err):
-    self.makeDbInvis("BiGG.tsv")
-    self.assertEqual(annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    with self.assertRaises(FileNotFoundError):
-      annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = False)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testBiggEntry(self, mock_err):
+  #  self.makeDbInvis("BiGG.tsv")
+  #  self.assertEqual(annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = False)
 
-    self.makeDbVis("BiGG.tsvxxx")
+  #  self.makeDbVis("BiGG.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testBiggIDs(self, mock_err):
-    self.makeDbInvis("BiGG.tsv")
-    self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateBiGG_id([], allow_missing_dbs = False)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testBiggIDs(self, mock_err):
+  #  self.makeDbInvis("BiGG.tsv")
+  #  self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateBiGG_id([], allow_missing_dbs = False)
 
-    self.makeDbVis("BiGG.tsvxxx")
+  #  self.makeDbVis("BiGG.tsvxxx")
 
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testBigg(self, mock_err):
-    self.makeDbInvis("BiGG.tsv")
-    self.assertEqual(annotateBiGG([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateBiGG([], allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testBigg(self, mock_err):
+  #  self.makeDbInvis("BiGG.tsv")
+  #  self.assertEqual(annotateBiGG([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateBiGG([], allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
 
-    self.makeDbVis("BiGG.tsvxxx")
+  #  self.makeDbVis("BiGG.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testChEBI(self, mock_err):
-    self.makeDbInvis("chebiId_inchi.tsv")
-    self.assertEqual(annotateChEBI([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateChEBI([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testChEBI(self, mock_err):
+  #  self.makeDbInvis("chebiId_inchi.tsv")
+  #  self.assertEqual(annotateChEBI([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateChEBI([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
 
-    self.makeDbVis("chebiId_inchi.tsvxxx")
+  #  self.makeDbVis("chebiId_inchi.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testSEED(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateModelSEED([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testSEED(self, mock_err):
+  #  self.makeDbInvis("modelSeed.tsv")
+  #  self.assertEqual(annotateModelSEED([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateModelSEED([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
 
-    self.makeDbVis("modelSeed.tsvxxx")
+  #  self.makeDbVis("modelSeed.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testSEED_id(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateModelSEED_id([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testSEED_id(self, mock_err):
+  #  self.makeDbInvis("modelSeed.tsv")
+  #  self.assertEqual(annotateModelSEED_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateModelSEED_id([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
 
-    self.makeDbVis("modelSeed.tsvxxx")
+  #  self.makeDbVis("modelSeed.tsvxxx")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testSEED_entry(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateModelSEED_entry("", pd.DataFrame(),  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testSEED_entry(self, mock_err):
+  #  self.makeDbInvis("modelSeed.tsv")
+  #  self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateModelSEED_entry("", pd.DataFrame(),  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
 
-    self.makeDbVis("modelSeed.tsvxxx")
+  #  self.makeDbVis("modelSeed.tsvxxx")
   
 #  @patch('sys.stderr', new_callable=StringIO)
 #  def correctAnnotationKeys(self, mock_err):

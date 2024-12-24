@@ -8,8 +8,8 @@ databases:
     URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
     file: "modelSeed.tsv"
   BiGG:
-    URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
-    file: "BiGG.tsv"
+    URL: "Databases/bigg_formatted.csv"
+    file: "bigg_formatted.csv"
   VMH:
     URL: "Databases/vmh_formatted.csv"
     file: "vmh_formatted.csv"
