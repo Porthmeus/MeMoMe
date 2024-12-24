@@ -320,6 +320,20 @@ class Test_annotateID(unittest.TestCase):
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
 
 
+  def testSEED_id(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("cpd00002")
+    ret = annotateModelSEED_id([metabolite], allow_missing_dbs = False)
+    expected_annotations = {'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}
+    expected_names = ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate']
+
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, expected_names)
+    self.assertEqual(metabolite._inchi_string, "InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/p-3/t4-,6-,7-,10-/m1/s1")
+
+
 class Test_annotateFull(unittest.TestCase):
   def testBiggAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()

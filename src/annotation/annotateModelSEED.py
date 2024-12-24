@@ -103,7 +103,7 @@ def extractModelSEEDAnnotationsFromAlias(alias:str):
 #        
 #    return(new_anno_corrected)
 
-def handle_seed_id(aliases: pd.DataFrame) -> tuple[dict, list]:
+def handle_seed_entry(aliases: pd.DataFrame) -> tuple[dict, list]:
 # get the information from the database
   new_anno = dict()
   new_names = list()
@@ -151,7 +151,7 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
     aliases = mseed.loc[mseed["id"]==entry,"aliases"]
     # check if there are entries which are not NA
     aliases = aliases.loc[~pd.isna(aliases)]
-    return handle_seed_id(aliases)
+    return handle_seed_entry(aliases)
     
 
 
@@ -159,62 +159,14 @@ def annotateModelSEED_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: b
     """
     Annotate a list of metabolites with the entries from ModelSeed. Look for ModelSeed ids in the metabolite._id slot and if one is found use these. Since ModelSeed does provide any InChI strings, pKs and pkB, all these elements will be added to the MeMoMetabolites, if possible"""
 
-    # load the database
-    config = get_config()
-    db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
-    mseed = None
-    try:
-      mseed = pd.read_table(db_path, low_memory= False)
-    except FileNotFoundError as e:
-      # Rethrow exception because we want don't allow missing dbs
-      warnings.warn(str(e))
-      if allow_missing_dbs == False:
-         raise e
-      return AnnotationResult(0 ,0, 0)
     
-    counter = [0,0,0] # counter for names, annotation, inchi_string, pka, pkb
-    for met in metabolites:
-        if any(mseed["id"]==met._id):
-            
-            # get the names, annotations, pka and pkb
-            new_met_anno,new_names = annotateModelSEED_entry(entry = met._id,
-                    database = mseed)
-
-            # get the inchi strings
-            smiles = mseed.loc[mseed["id"] == met._id, "smiles"]
-            smiles = smiles.loc[~pd.isna(smiles)]
-            inchi_strings = []
-            # there are only smiles in modelseed and rdkit sometimes fails to convert them - report here if that happens
-            for smile in smiles:
-                try:
-                    inchi_strings.append(smile2inchi(smile))
-                except Exception as e:
-                    warnings.warn("Could not convert smile to inchi for metabolite {met} and {smile}\n". format(met = met._id, smile = smile) + str(e))
-            # get the correct inchi_string, if there was more than one
-            if len(inchi_strings) > 1:
-                inchi_string = findOptimalInchi(inchi_strings, charge = met._charge)
-                if inchi_string is None:
-                    raise NotImplementedError()
-
-            elif len(inchi_strings) == 1:
-                inchi_string = inchi_strings[0]
-            else:
-                inchi_string = None
-
-            # add new names
-            if len(new_names) > 0:
-                counter[0] = counter[0] + met.add_names(new_names)
-
-            # add the annotations to the slot in the metabolites
-            if len(new_met_anno) > 0:
-                counter[1] = counter[1] + met.add_annotations(new_met_anno)
-            
-            # add the inchi_string
-            if inchi_string != None:
-                counter[2] = counter[2] + met.add_inchi_string(inchi_string)
-
-    anno_result = AnnotationResult(counter[2], counter[1], counter[0])
-    return anno_result 
+    mseed =  load_database(get_config()["databases"]["ModelSeed"]["file"], 
+                          allow_missing_dbs, 
+                          lambda path: pd.read_csv(path, sep="\t", low_memory=False))
+    if mseed.empty:
+      return AnnotationResult(0, 0,0 )
+    
+    return handleIDs(mseed, metabolites, "id", annotateModelSEED_entry)
 
 def annotateModelSEED(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) ->AnnotationResult:
     """
