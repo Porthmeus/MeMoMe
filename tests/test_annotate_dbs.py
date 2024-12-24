@@ -358,6 +358,19 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
 
+
+  def testSEEDAnnotate(self):
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id('cpd00052')
+    metabolite.annotations = {'seed.compound': ['cpd00052']}
+    ret = annotateModelSEED([metabolite], allow_missing_dbs = False)
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+
+    self.assertEqual(metabolite.names, ['CTP', "Cytidine 5'-triphosphate", 'Cytidine triphosphate', "cytidine-5'-triphosphate", 'cytidine-triphosphate'])
+    self.assertEqual(metabolite.annotations, {'seed.compound': ['cpd00052'], 'AraCyc': ['CTP'], 'BiGG': ['ctp'], 'BrachyCyc': ['CTP'], 'KEGG': ['C00063'], 'MetaCyc': ['CTP']})
+    self.assertEqual(metabolite._inchi_string, "InChI=1S/C9H16N3O14P3/c10-5-1-2-12(9(15)11-5)8-7(14)6(13)4(24-8)3-23-28(19,20)26-29(21,22)25-27(16,17)18/h1-2,4,6-8,13-14H,3H2,(H,19,20)(H,21,22)(H2,10,11,15)(H2,16,17,18)/p-3/t4-,6-,7-,8-/m1/s1")
+
+
   def testChEBIAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id('117228')
