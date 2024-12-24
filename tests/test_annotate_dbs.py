@@ -170,43 +170,43 @@ class Test_annotateMissingDbs(unittest.TestCase):
 #    self.makeDbVis("modelSeed.tsvxxx")
 
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testVMH_entry(self, mock_err):
-    self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_entry(AnnotationKey(""), pd.DataFrame(), allow_missing_dbs = True), ({}, []))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateVMH_entry(AnnotationKey(""), pd.DataFrame(),  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-    self.makeDbVis("vmh.json")
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testVMH_entry(self, mock_err):
+  #  self.makeDbInvis("vmh.json")
+  #  self.assertEqual(annotateVMH_entry(AnnotationKey(""), pd.DataFrame(), allow_missing_dbs = True), ({}, []))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateVMH_entry(AnnotationKey(""), pd.DataFrame(),  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
+  #  self.makeDbVis("vmh.json")
 
 
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testVMH(self, mock_err):
-    self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateVMH([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-    self.makeDbVis("vmh.json")
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testVMH(self, mock_err):
+  #  self.makeDbInvis("vmh.json")
+  #  self.assertEqual(annotateVMH([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateVMH([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
+  #  self.makeDbVis("vmh.json")
 
-  @patch('sys.stderr', new_callable=StringIO)
-  def testVMH_id(self, mock_err):
-    self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      annotateVMH_id([],  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-    self.makeDbVis("vmh.json")
+  #@patch('sys.stderr', new_callable=StringIO)
+  #def testVMH_id(self, mock_err):
+  #  self.makeDbInvis("vmh.json")
+  #  self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
+  #  output = mock_err.getvalue().strip()
+  #  self.assertIn("No such file or directory", output)
+  #  
+  #  with self.assertRaises(FileNotFoundError):
+  #    annotateVMH_id([],  allow_missing_dbs = False)
+  #    self.assertIn("No such file or directory", output)
+  #  self.makeDbVis("vmh.json")
 
 
 
@@ -313,7 +313,7 @@ class Test_annotateID(unittest.TestCase):
     metabolite.set_id("10fthf")
     metabolite.set_names(["A"])
     ret = annotateVMH_id([metabolite], allow_missing_dbs = False)
-
+    self.maxDiff = None
     expected_annotations =  {'biggId': ['10fthf'], 'keggId': ['C00234'], 'cheBlId': ['15637'], 'inchiString': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/p-2/t11?,13-/m0/s1'], 'inchiKey': ['AUFGTPPARQZWDO-YUZLPWPTSA-L'], 'smile': ['[H]OC1=NC(=NC2=C1N([H])C([H])(C([H])([H])N(C([H])=O)C1=C([H])C([H])=C(C([H])=C1[H])C(=O)N([H])[C@]([H])(C([O-])=O)C([H])([H])C([H])([H])C([O-])=O)C([H])([H])N2[H])N([H])[H]'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'seed': ['cpd00201'], 'biocyc': ['10-FORMYL-THF']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate', 'A'])

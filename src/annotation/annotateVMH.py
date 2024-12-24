@@ -31,9 +31,7 @@ def handle_vmh_entries(vmh: pd.DataFrame, entry: str) -> Tuple[dict, list[str]]:
   return(annotations, fullName)
 
 def __json_to_tsv(path: str) -> pd.DataFrame:
-  with open(path, "r") as f: 
-    vmh = json.load(f)["results"]
-    return(pd.DataFrame(vmh))
+    return(pd.read_csv(path,  dtype = str))
                                       
 
 def annotateVMH_entry(entry: AnnotationKey ,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
