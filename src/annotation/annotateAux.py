@@ -38,6 +38,9 @@ class AnnotationResult():
   def __str__(self) -> str:
     return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
 
+  def __repr__(self) -> str:
+    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+
   def __le__(self, other) -> bool:
     return self.annotated_inchis <= other.annotated_inchis and self.annotated_dbs <= other.annotated_dbs and self.annotated_names <= other.annotated_names
 
