@@ -16,7 +16,7 @@ class TestModelMerger(unittest.TestCase):
         # Replace these paths with the actual paths to your test models
         cls.this_directory = Path(__file__).parent
         cls.model1_path = cls.this_directory / 'dat/tiny_ecoli_keep_inchi_withduplicates.xml'
-        cls.model2_path = cls.this_directory / 'dat/Recon3DModel_301.xml'
+        cls.model2_path = cls.this_directory / 'dat/concoct_1.xml'
 
         # Load the models
         cls.model1 = cobra.io.read_sbml_model(cls.model1_path)
@@ -50,25 +50,21 @@ class TestModelMerger(unittest.TestCase):
         for met in merger.model2.metabolites:
             self.assertTrue(met.id.startswith('model2_'))
         for rxn in merger.model1.reactions:
-            if rxn.id.startswith('EX_'):
-                self.assertTrue('model1_' in rxn.id)
-            elif rxn.id.startswith(('DM_', 'SK_', 'sink_')):
+            if rxn.id.startswith(('EX_','DM_', 'SK_', 'sink_')):
                 self.assertTrue('model1_' in rxn.id)
             else:
                 self.assertTrue(rxn.id.startswith('model1_'))
         for rxn in merger.model2.reactions:
-            if rxn.id.startswith('EX_'):
-                self.assertTrue('model2_' in rxn.id)
-            elif rxn.id.startswith(('DM_', 'SK_', 'sink_')):
+            if rxn.id.startswith(('EX_','DM_', 'SK_', 'sink_')):
                 self.assertTrue('model2_' in rxn.id)
             else:
                 self.assertTrue(rxn.id.startswith('model2_'))
 
-    def test_duplicate_removal(self):
-        """
-        Test that duplicates are removed during preprocessing.
-        """
-        return
+    #def test_duplicate_removal(self):
+    #    """
+    #    Test that duplicates are removed during preprocessing.
+    #    """
+    #    return
 
     def test_translate_namespace(self):
         """
