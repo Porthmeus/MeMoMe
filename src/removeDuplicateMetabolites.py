@@ -153,12 +153,7 @@ def mergeAndRemove(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True, re
 
 def detectDuplicates(selfmatch:pd.DataFrame, check_charge:bool = True) -> list[tuple]:
     '''Takes the result from selfmatch of a model and tries to detect all duplicated metabolites. Returns a list of tuples with the duplicated but not identical metabolites'''
-    # check if the MeMoModel is already annoateted, otherwise do it
-   # if model.annotated == False:
-   #     model.annotate()
-
-   # # do a self match
-   # matches = model.match(model)
+    # some renaming
     matches = selfmatch
 
     # get the top score for each metabolite
