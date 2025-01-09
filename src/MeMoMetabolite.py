@@ -287,7 +287,7 @@ class MeMoMetabolite():
         return int(old_pKa != self._pKa)
 
 
-    def set_pKa(self, new_pKa:dict) -> None:
+    def set_pKa(self, new_pKa:dict[str,float]) -> None:
         """ set function for _pKa """
         if self._pKa is not None and self._pKa != {}:
             old = ";".join([x+":"+str(y) for x,y in self._pKa.items()])
@@ -307,7 +307,7 @@ class MeMoMetabolite():
                     self._pKb[key] = value
         return int(old_pKb != self._pKb)
 
-    def set_pKb(self, new_pKb:dict) -> None:
+    def set_pKb(self, new_pKb:dict[str,float]) -> None:
         """ set function for _pKb """
         if self._pKb is not None and self._pKb != {}:
             old = ";".join([x+":"+str(y) for x,y in self._pKb.items()])
@@ -315,7 +315,7 @@ class MeMoMetabolite():
             warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
         self._pKb = new_pKb
     
-    def set_annotations(self, new_annotations: dict, source:str|dict|None=None) -> None:
+    def set_annotations(self, new_annotations: dict[str,list[str]], source:str|dict[str,list[str]]|None=None) -> None:
         """ set function for annotations """
 
         # try to make sources if there is not much information
@@ -364,7 +364,7 @@ class MeMoMetabolite():
                 new=str(self.annotations),
                 old=str(old_annotations)))
 
-    def add_annotations(self, new_annotations: dict, source:str) -> int:
+    def add_annotations(self, new_annotations: dict[str,list[str]], source:str) -> int:
         """ append new annotations to the dict of metabolite annotations
         check if there have been actually added new annotation, if so return 1,else 0"""
         old_annotation = deepcopy(self.annotations)
