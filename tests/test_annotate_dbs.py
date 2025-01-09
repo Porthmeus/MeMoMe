@@ -71,23 +71,22 @@ class Test_annotateMissingDbs(unittest.TestCase):
     self.assertEqual(annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], ""))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
-    
     with self.assertRaises(FileNotFoundError):
       annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = False)
 
     self.makeDbVis("BiGG.tsvxxx")
 
-#  @patch('sys.stderr', new_callable=StringIO)
-#  def testBiggID(self, mock_err):
-#    self.makeDbInvis("BiGG.tsv")
-#    self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
-#    output = mock_err.getvalue().strip()
-#    self.assertIn("No such file or directory", output)
-#    
-#    with self.assertRaises(FileNotFoundError):
-#      annotateBiGG_id([], allow_missing_dbs = False)
-#
-#    self.makeDbVis("BiGG.tsvxxx")
+  @patch('sys.stderr', new_callable=StringIO)
+  def testBiggIDs(self, mock_err):
+    self.makeDbInvis("BiGG.tsv")
+    self.assertEqual(annotateBiGG_id([], allow_missing_dbs = True), AnnotationResult(0,0,0))
+    output = mock_err.getvalue().strip()
+    self.assertIn("No such file or directory", output)
+    
+    with self.assertRaises(FileNotFoundError):
+      annotateBiGG_id([], allow_missing_dbs = False)
+
+    self.makeDbVis("BiGG.tsvxxx")
 
 
   @patch('sys.stderr', new_callable=StringIO)
@@ -195,17 +194,17 @@ class Test_annotateMissingDbs(unittest.TestCase):
       self.assertIn("No such file or directory", output)
     self.makeDbVis("vmh.json")
 
-  #@patch('sys.stderr', new_callable=StringIO)
-  #def testVMH_id(self, mock_err):
-  #  self.makeDbInvis("vmh.json")
-  #  self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
-  #  output = mock_err.getvalue().strip()
-  #  self.assertIn("No such file or directory", output)
-  #  
-  #  with self.assertRaises(FileNotFoundError):
-  #    annotateVMH_id([],  allow_missing_dbs = False)
-  #    self.assertIn("No such file or directory", output)
-  #  self.makeDbVis("vmh.json")
+  @patch('sys.stderr', new_callable=StringIO)
+  def testVMH_id(self, mock_err):
+    self.makeDbInvis("vmh.json")
+    self.assertEqual(annotateVMH_id([], allow_missing_dbs = True),AnnotationResult(0, 0, 0))
+    output = mock_err.getvalue().strip()
+    self.assertIn("No such file or directory", output)
+    
+    with self.assertRaises(FileNotFoundError):
+      annotateVMH_id([],  allow_missing_dbs = False)
+      self.assertIn("No such file or directory", output)
+    self.makeDbVis("vmh.json")
 
 
 
@@ -323,3 +322,4 @@ class Test_annotateFull(unittest.TestCase):
     expected_inchi = "InChI=1S/C20H27N3O2/c1-4-20(3)13-14-9-6-7-10-15(14)17-16(20)18(25)23(5-2)19(22-17)21-11-8-12-24/h6-7,9-10,24H,4-5,8,11-13H2,1-3H3,(H,21,22)"
     self.assertEqual(ret, AnnotationResult(1, 0, 0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
+
