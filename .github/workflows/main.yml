@@ -33,7 +33,7 @@ jobs:
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            miniforge-variant: Miniforge
+            miniforge-variant: Miniforge3
             miniforge-version: 24.11.2-1
             activate-environment: env
             # The env should be cached so we should no try to 
