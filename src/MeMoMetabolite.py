@@ -40,12 +40,12 @@ class MeMoMetabolite():
             _formula: str|None = None,
             _charge: int|None = None,
             # TODO _charge_source: str|None = None,
-            _pKa: dict|None= None,
+            _pKa: dict[str,float]|None= None,
             # TODO  _pKa_source: dict|None = None,
-            _pKb: dict|None = None,
+            _pKb: dict[str,float]|None = None,
             # TODO _pKb_source: dict|None = None,
-            annotations: dict|None = None,
-            annotations_source: dict|str|None = None,
+            annotations: dict[str,list[str]]|None = None,
+            annotations_source: dict[str,list[str]]|str|None = None,
     ) -> None:
         """Initialize MeMoMetaboblite
 
