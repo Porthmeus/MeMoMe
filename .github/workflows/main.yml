@@ -61,4 +61,4 @@ jobs:
           conda activate env
           # conda list
           python main.py --download
-          python -m unittest
+          python  tests/test_suite.py fast
