@@ -1,15 +1,12 @@
 import unittest
 from pathlib import Path
-import cobra as cb
-import pandas as pd
 
 #from src.MeMoModel import MeMoModel
-from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotateChEBI import *
-from src.annotateBiGG import *
-from src.annotateModelSEED import *
-from src.annotateAux import AnnotationResult
+from src.annotation.annotateChEBI import *
+from src.annotation.annotateBiGG import *
+from src.annotation.annotateModelSEED import *
+from src.annotation.annotateAux import AnnotationResult
 from datetime import datetime
 
   # Example data for the table

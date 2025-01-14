@@ -4,9 +4,10 @@
 import unittest
 from pathlib import Path
 import pandas as pd
+from rdkit.Chem.rdmolops import GetFormalCharge
 
 from src.matchMets import matchMetsByInchi
-from src.annotateInchiRoutines import inchiToMol, molToRDK, molToNormalizedInchi, NeutraliseCharges
+from src.annotation.annotateInchiRoutines import inchiToMol, molToNormalizedInchi, NeutraliseCharges2Inchi
 
 
 class TestMatchInchit(unittest.TestCase):
@@ -26,11 +27,12 @@ class TestMatchInchit(unittest.TestCase):
                 m2 = inchiToMol(inchi2)
                 nminchi1 = molToNormalizedInchi(m1)
                 nminchi2 = molToNormalizedInchi(m2)
-                ntmol1 = NeutraliseCharges(m1)
-                ntmol2 = NeutraliseCharges(m2)
-
-
-                res.append(matchMetsByInchi(nminchi1, nminchi2, m1, m2, molToRDK(m1), molToRDK(m2), ntmol1, ntmol2)[0])
+                ntmol1 = NeutraliseCharges2Inchi(m1)
+                ntmol2 = NeutraliseCharges2Inchi(m2)
+                charge1 = GetFormalCharge(m1)
+                charge2 = GetFormalCharge(m2)
+                res.append(matchMetsByInchi(nminchi1, nminchi2, m1, m2, ntmol1, ntmol2, charge1, charge2)[0])
+                
         expected_res = [bool(x) for x in test_dat.loc[:,"Result"]]
         self.assertTrue(all([x==y for x,y in zip(expected_res,res)]))
 

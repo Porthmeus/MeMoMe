@@ -7,3 +7,5 @@ D-Alanine,L-Alanine,"InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1
 Propan-1-ol,propan-2-ol,"InChI=1S/C3H7OH/c1-2-3-4/h4H,2-3H2,1H3","InChI=1S/C3H7OH/c1-3(2)4/h3-4H,1-2H3",0,Structural isomers
 cis-But-2-en,trans-But-2-en,"InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-","InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",1,Cis-Trans-isomers
 Bu-2-en,trans-But-2-en,"InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3","InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",1,general form vs. Trans isomer
+Maleic acid,Fumaric acid,"InChI=1S/C4H4O4/c5-3(6)1-2-4(7)8/h1-2H,(H,5,6)(H,7,8)/b2-1-","InChI=1S/C4H4O4/c5-3(6)1-2-4(7)8/h1-2H,(H,5,6)(H,7,8)/p-2/b2-1+",1,Cis-Trans-isomers and different charge (-2 Protons)
+D-Alanine,L-Alanine,"InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1","InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/p-1/t2-/m0/s1",0,Enantiomers and charge difference (-1 Proton)
