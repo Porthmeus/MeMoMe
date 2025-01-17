@@ -82,11 +82,11 @@ class ModelMerger:
 
     def translate_metabolites(self, to_translate: list, matches_df: pd.DataFrame, score_type: str):
         """
-        Translates a list of metabolites from namespace 2 to the best matching metabolite in namespace 1.
-
-        This function takes a list of metabolite IDs from namespace 2 and attempts to translate each
-        to the best matching metabolite ID in namespace 1 based on a matching score. The function ensures
-        that no two metabolites from the to_translate list are translated to the same ID in namespace 1.
+        Translates the ids of the metabolites present in the to_translate list from the "source_namespace" to the
+        "target_namespace" according to the best match specified in matches_df. "source_namespace" and "target_namespace"
+        are columns in matches_df. The best match is decided based on a matching score. matches_df contains multiple
+        scoring columns, and the string "score_type" indicates which column should be used. The function ensures that no
+         two metabolites from the to_translate list are translated to the same ID in the target_namespace.
         If two or more metabolites have the same best match, only the one with the highest score
         (or the first alphanumerically in case of a tie) is assigned. Unassigned metabolites will retain
         their original IDs.
