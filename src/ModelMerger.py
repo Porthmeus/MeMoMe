@@ -1,6 +1,9 @@
 import cobra
 import pandas as pd
 import re
+
+from pandas.core.interchange.dataframe_protocol import DataFrame
+
 from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 #from cobra.core import DictList
