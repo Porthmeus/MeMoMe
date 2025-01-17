@@ -98,8 +98,6 @@ class ModelMerger:
             score_type (string): A string indicating which column from matches_df contains the matching
                                  score that will be used to rank the metabolite matches.
         """
-        # # Sort the metabolites list alphanumerically by their ID
-        # to_translate = sorted(to_translate, key=lambda metabolite: metabolite.id)
 
         # Remove "_t" suffix from the metabolite IDs
         for met in to_translate:
@@ -108,25 +106,29 @@ class ModelMerger:
         sorted_matches = matches_df.sort_values(by=[score_type, 'source_namespace', 'target_namespace'],
                                                 ascending=[False, True, True])
 
+        # keys will contain to the ids of the metabolites that have a translation from source_namespace to
+        # target_namespace, and values will contain their best possible translation to target_namespace, according to
+        # the values in the "score_type" column
         best_matches = dict()
 
-        # Iterate over the to_translate list
+        # Iterate over the met_ids after they have been sorted. The sorting allows to pick the matches with higher
+        # scores first, and to solve any score tie, by prioritizing ids based on alphanumerical sorting
         for met_id in sorted_matches["source_namespace"]:
+            # if a met_id corresponds to one of the ids that need to be translated (are in the to_translate list), all
+            # rows whose "source_namespace" corresponds to that id will be selected as candidate matches (matches_for_met)
             if met_id in [m.id for m in to_translate]:
-                #print([m.id for m in to_translate])
-                #print(met_id)
                 # Filter the matches for the current metabolite
                 matches_for_met = sorted_matches[sorted_matches['source_namespace'] == met_id]
                 # Assign the best available match
                 for _, row in matches_for_met.iterrows():
+                    # Select a candidate match of the current met_id (obtained iterating over the matches_for_met
+                    # dataframe slice) to the target namespace(match_id is the id of the current candidate match)
                     match_id = row['target_namespace']
+                    # Check if neither match_id nor met_id already have a translation in the best_matches dictionary,
+                    # because we want the matching to be 1:1. If the condition is satisfied, we can proceed saving the
+                    # match between met_id and match_id in the best_matches dictionary
                     if (met_id not in best_matches.keys()) and (match_id not in best_matches.values()):
                         best_matches[met_id] = match_id
-                        #print(met_id + ": " + match_id + ", " + str(row[score_type]))
-                #else:
-                #    # If no match is found, keep the original ID
-                #    best_matches[met_id] = met_id
-                #    print(met_id + ": " + met_id)
 
         # apply the id translation to the metabolite and re-appends the translation compartment suffix
         for met in to_translate:
