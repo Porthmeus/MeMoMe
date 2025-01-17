@@ -2,6 +2,7 @@ import cobra
 import pandas as pd
 import re
 from src.MeMoModel import MeMoModel
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 #from cobra.core import DictList
 
 
@@ -60,15 +61,12 @@ class ModelMerger:
                     met_t = met.copy()
                     #  TODO: replace regular expression with function call for the remove suffix function
                     #   (need to modify the handle_metabolites_prefix_suffix_function)
-                    met_t.id = re.sub(r"[^_]+$", "t", met.id)  # substitutes the compartment suffix (all
-                                                                            # that follows the last underscore) with
-                                                                            # the new compartment's symbol
-                    # assigns the new metabolite to the translation compartment
-                    met_t.compartment = "t"
-                    # gives the "t" metabolite a +1 stoichiometry (production). So the final stoichiometry of the
-                    # reaction will be consumption of one external metabolite to produce one "translated version" of the
-                    # metabolite
-                    ex.add_metabolites({met_t: 1.0})
+                    met_t.id = handle_metabolites_prefix_suffix(met_t.id) # removes prefix and suffix from the met id
+                    met_t.id = met_t.id + "_t" # adds tha translation compartment's suffix to the met id
+                    met_t.compartment = "t" # assigns the new metabolite to the translation compartment
+                    ex.add_metabolites({met_t: 1.0}) # gives the "t" metabolite a +1 stoichiometry (production). So the
+                                                    # stoichiometry of the reaction will be consumption of one external
+                                                    # metabolite to produce one "translated version" of it
                 else:
                     raise ValueError(ex.id + "should contain only one metabolite")
                 # Replace "EX_" with "TR_" at the start of the string
