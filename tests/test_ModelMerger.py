@@ -15,14 +15,14 @@ class TestModelMerging(unittest.TestCase):
         model_path = self.dat.joinpath("dat/tiny_ecoli_keep_inchi.xml")
         model = MeMoModel.fromPath(model_path)
         cobra_model = model.cobra_model
-        assert "t" not in cobra_model.compartments.keys() # ensure that the model that I am using to test
-                                                        # this cobrapy functionality doesn't already have a translation
-                                                        # compartment
-        # assign a metabolite to the translation compartment. This compartment still doesn't exist, but it should be
+        # ensure that the model that I am using to test this cobrapy functionality doesn't already have a "t" compartment
+        assert "t" not in cobra_model.compartments.keys()
+        # assign a metabolite to the translation compartment. This compartment still does not exist, but it will be
         # created automatically by assigning a metabolite to it
         met = cobra_model.metabolites[0]
         met.compartment = "t"
-        assert "t" in cobra_model.compartments.keys() #ensure that the translation compartment has been added
+        # ensure that the translation compartment has been added
+        assert "t" in cobra_model.compartments.keys()
 
 
     def test_translate_namespace(self):

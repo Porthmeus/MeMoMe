@@ -65,9 +65,9 @@ class ModelMerger:
                     # test_automatic_compartment_creation() test function, if the compartment did not exist yet, the
                     # execution of this command results in the creation of the compartment
                     met_t.compartment = "t"
-                    ex.add_metabolites({met_t: 1.0}) # gives the "t" metabolite a +1 stoichiometry (production). So the
-                                                    # stoichiometry of the reaction will be consumption of one external
-                                                    # metabolite to produce one "translated version" of it
+                    # gives the "t" metabolite a +1 stoichiometry (production). So the stoichiometry of the reaction
+                    # will be consumption of one external metabolite to produce one "translated version" of it
+                    ex.add_metabolites({met_t: 1.0})
                 else:
                     raise ValueError(ex.id + "should contain only one metabolite")
                 # Replace "EX_" with "TR_" at the start of the string
