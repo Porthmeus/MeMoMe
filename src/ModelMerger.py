@@ -92,7 +92,7 @@ class ModelMerger:
         their original IDs.
 
         Parameters:
-            to_translate (list): A list of metabolites that need to be translated.
+            to_translate (list): A list of cobra.Metabolite objects whose id needs to be translated.
             matches_df (DataFrame): A DataFrame containing the potential matches between namespaces,
                                     with columns ['source_namespace', 'target_namespace', score_type].
             score_type (string): A string indicating which column from matches_df contains the matching
