@@ -8,6 +8,23 @@ class TestModelMerging(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory
 
+    def test_automatic_compartment_creation(self):
+        """
+        Makes sure that the assignment of a non-existing compartment to a metabolite results in the creation of the compartment
+        """
+        model_path = self.dat.joinpath("dat/tiny_ecoli_keep_inchi.xml")
+        model = MeMoModel.fromPath(model_path)
+        cobra_model = model.cobra_model
+        assert "t" not in cobra_model.compartments.keys() # ensure that the model that I am using to test
+                                                        # this cobrapy functionality doesn't already have a translation
+                                                        # compartment
+        # assign a metabolite to the translation compartment. This compartment still doesn't exist, but it should be
+        # created automatically by assigning a metabolite to it
+        met = cobra_model.metabolites[0]
+        met.compartment = "t"
+        assert "t" in cobra_model.compartments.keys() #ensure that the translation compartment has been added
+
+
     def test_translate_namespace(self):
         model1_path = self.dat.joinpath("dat/tiny_ecoli_keep_inchi.xml")
         model2_path = self.dat.joinpath("manually_merged_models/gapseq_recon3D/M2_bacterial_model.xml")
@@ -41,6 +58,7 @@ class TestModelMerging(unittest.TestCase):
             self.assertEqual(rxn.upper_bound, 1000)
             new_ex = model2.cobra_model.reactions.get_by_id(rxn.id.replace("TR_", "EX_"))
             self.assertEqual(bounds[rxn], (new_ex.lower_bound, new_ex.upper_bound))
+
 
 
 

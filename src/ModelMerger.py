@@ -5,8 +5,6 @@ from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 #from cobra.core import DictList
 
-
-
 class ModelMerger:
     """
     This class aims to facilitate the merging of a model to another model that is based on a different namespace.
@@ -55,15 +53,18 @@ class ModelMerger:
         cobra_model = self.memo_model.cobra_model
         for ex in cobra_model.exchanges:
             if re.match(r"^EX_", ex.id):
-                if len(ex.metabolites.keys()) == 1: # ensures that, as one should expect by definition, the exchange
-                                                    # reaction involves only one metabolite
+                # ensures that, as one should expect by definition, the exchange reaction involves only one metabolite
+                if len(ex.metabolites.keys()) == 1:
                     met = list(ex.metabolites.keys())[0]
                     met_t = met.copy()
-                    #  TODO: replace regular expression with function call for the remove suffix function
-                    #   (need to modify the handle_metabolites_prefix_suffix_function)
-                    met_t.id = handle_metabolites_prefix_suffix(met_t.id) # removes prefix and suffix from the met id
-                    met_t.id = met_t.id + "_t" # adds tha translation compartment's suffix to the met id
-                    met_t.compartment = "t" # assigns the new metabolite to the translation compartment
+                    # removes prefix and suffix from the met id
+                    met_t.id = handle_metabolites_prefix_suffix(met_t.id)
+                    # adds the translation compartment's suffix to the met id
+                    met_t.id = met_t.id + "_t"
+                    # assigns the new metabolite to the translation ("t") compartment. As verified in the
+                    # test_automatic_compartment_creation() test function, if the compartment did not exist yet, the
+                    # execution of this command results in the creation of the compartment
+                    met_t.compartment = "t"
                     ex.add_metabolites({met_t: 1.0}) # gives the "t" metabolite a +1 stoichiometry (production). So the
                                                     # stoichiometry of the reaction will be consumption of one external
                                                     # metabolite to produce one "translated version" of it
