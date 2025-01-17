@@ -30,13 +30,27 @@ class ModelMerger:
     def convert_exchange_rxns_to_translation_rxns(self):
         """
         Converts exchange reactions to namespace translation reactions and adds their respective compartment.
-        For each exchange reaction, a new "translated version" of its metabolite will be created. It will be set
-         stoichiometrically as the product of its exchange metabolite.
-        This "t" metabolite will keep its original namespace for now, and will be truly translated at a later
-        step by a dedicated function (self.translate_ids). The only role of the "t" metabolite in this function is to
-        take part of the network structure on which the actual namespace translation will be applied
-        Replaces reaction's id prefix "EX_" with "TR_",
+        For each exchange reaction, the prefix "EX_" gets replaced with "TR_". A new "translated version" of its
+        exchanged metabolite will be created. This will be set stoichiometrically as the product of its exchange
+        metabolite. This means that the reaction "consumes" an "exchange" metabolite to produce a "translated" one.
+        This "translated" metabolite will keep its original namespace for now, and will be truly translated to the
+        target namespace at a later step by a dedicated function (self.translate_ids).  The only role of the "translated"
+        metabolite in this function is to take part of the network structure on which the actual namespace translation
+        will be applied, converting glc__D_t to the target namespace.
+
+        Example:
+        The reaction
+            ID: EX_glc__D_e
+            Reaction: -1 glc__D_e <--> (exchange with the environment)
+        gets converted into
+            ID: TR_glc__D_e
+            Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+
+        Raises:
+        -------
+        ValueError: If the exchange reaction does not start with the 'EX_' prefix or contains more than one metabolite.
         """
+
         cobra_model = self.memo_model.cobra_model
         for ex in cobra_model.exchanges:
             if re.match(r"^EX_", ex.id):
