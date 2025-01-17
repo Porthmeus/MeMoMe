@@ -77,7 +77,7 @@ class ModelMerger:
             else:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
 
-    def translate_metabolites(self, to_translate, matches_df, score_type):
+    def translate_metabolites(self, to_translate: list, matches_df: pd.DataFrame, score_type: str):
         """
         Translates a list of metabolites from namespace 2 to the best matching metabolite in namespace 1.
 
