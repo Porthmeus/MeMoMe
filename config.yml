@@ -7,6 +7,7 @@ databases:
   ModelSeed:
     URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
     file: "modelSeed.tsv"
+    reformat: "modelSeed_MMM.csv"
   BiGG:
     URL: "Databases/bigg_formatted.csv"
     file: "bigg_formatted.csv"

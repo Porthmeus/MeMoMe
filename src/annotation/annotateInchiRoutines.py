@@ -7,7 +7,9 @@ from rdkit import Chem, RDLogger
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdmolops import GetFormalCharge
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
+import pubchempy as pcp
 import warnings
+from time import sleep
 
 
 
@@ -62,12 +64,36 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
         RDLogger.DisableLog("rdApp.*")
 
     # load smiles and convert to inchi
+    try:
         m = Chem.MolFromSmiles(smile)
+    except:
+        warnings.warn("Could not read {mol} to rdkit molecule".format(mol = smile))
+        return(None)
+
     try:
         log = Chem.SanitizeMol(m)
     except:
         warnings.warn("Could not sanitize {mol}".format(mol = smile))
-    inchi = Chem.MolToInchi(m)
+    try:
+        inchi = Chem.MolToInchi(m)
+    except:
+        # try to find a pubchem entry with the smile
+        try:
+            compounds = pcp.get_compounds(smile, "smiles")
+            sleep(0.1)
+            if len(compounds) ==0:
+                warnings.warn("Could not translate {mol} to inchi".format(mol = smile))
+                inchi = None
+            elif len(compounds) >1:
+                inchi = compounds[0].inchi
+                for i in range(len(compounds)-1):
+                    inchi = findOptimalInchi(inchi, compounds[i+1])
+            else:
+                inchi = compounds[0].inchi
+        except:
+                warnings.warn("Could not translate {mol} to inchi".format(mol = smile))
+                inchi = None
+
     return(inchi)
 
 def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = False) -> Optional[str]:
