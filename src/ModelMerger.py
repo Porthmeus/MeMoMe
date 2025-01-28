@@ -139,7 +139,7 @@ class ModelMerger:
             except KeyError:
                 met.id = met.id + "_t"
 
-    def translate_ids(self, score_thr, score_type="Name_score"):
+    def translate_ids(self, score_thr:float, score_type:str="Name_score"):
         """
         Translates metabolite IDs in self.cobra_model based on a score threshold and updates corresponding
         translation reaction IDs.
