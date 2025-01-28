@@ -134,10 +134,7 @@ class ModelMerger:
 
         # apply the id translation to the metabolite and re-appends the translation compartment suffix
         for met in to_translate:
-            try:
-                met.id = best_matches[met.id] + "_t"
-            except KeyError:
-                met.id = met.id + "_t"
+            met.id = best_matches.get(met.id, met.id) + "_t"
 
     def translate_ids(self, score_thr:float, score_type:str="total_score"):
         """
