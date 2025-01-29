@@ -169,13 +169,14 @@ class ModelMerger:
         self.translate_metabolites(to_translate, reliable_matches, score_type)
         #  translate the ids of the respective TR_ reactions
         for met in cobra_model.metabolites:
-            # Let's assume that we have an example metabolite "glucose__D_t" that have been translated by the translate_metabolites
+            # Let's assume that we have an example metabolite "glucose__D_t" that has been translated by the translate_metabolites
             # function. Because of the convert_exchange_rxns_to_translation_rxns function, which gets called just before
             # the current function, we can assume this metabolite to take part in a Translation (TR_) reaction (e.g.
-            # TR_glc__D_t: glc__D_e <--> glucose__D_t) which replaces its original Exchange (EX_) reaction. Here we check if
-            # this assumption holds. In addition to that, we make sure that there is only one transport reaction associated
-            # to that metabolite, in order to avoid id conflicts when modifying the id of the TR_ reaction, since its new
-            # id will be based on the metabolite's id in the target namespace
+            # TR_glc__D_t: glc__D_e <--> glucose__D_t) which replaces its original Exchange (EX_) reaction. By verifying
+            # that there is only one reaction that involves "glucose__D_t" and is prefixed with "TR_", we both know that a
+            # "TR_" reaction have been properly generated and that there is only one transport reaction associated
+            # to that metabolite. This makes sure that we avoid id conflicts when modifying the id of the TR_ reaction,
+            # since its new id will be based on the metabolite's id in the target namespace
             if met.compartment == "t":
                 tr_rxns_for_current_met = [rxn for rxn in met.reactions if rxn.id.startswith("TR_")]
                 if len(tr_rxns_for_current_met) != 1:
