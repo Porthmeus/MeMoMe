@@ -35,10 +35,10 @@ class ModelMerger:
         For each exchange reaction, the prefix "EX_" gets replaced with "TR_". A new "translated version" of its
         exchanged metabolite will be created. This will be set stoichiometrically as the product of its exchange
         metabolite. This means that the reaction "consumes" an "exchange" metabolite to produce a "translated" one.
-        This "translated" metabolite will keep its original namespace for now, and will be truly translated to the
+        This "translated" metabolite will keep its source namespace for now, and will be truly translated to the
         target namespace at a later step by a dedicated function (self.translate_ids).  The only role of the "translated"
-        metabolite in this function is to take part of the network structure on which the actual namespace translation
-        will be applied, converting glc__D_t to the target namespace.
+        metabolite in this function is to take part in the network structure on which the actual namespace translation
+        will be applied only at a later step
 
         Example:
         The reaction
@@ -90,6 +90,10 @@ class ModelMerger:
         If two or more metabolites have the same best match, only the one with the highest score
         (or the first alphanumerically in case of a tie) is assigned. Unassigned metabolites will retain
         their original IDs.
+
+        Example:
+        Assuming that the id corresponding to the source namespace id "glc__D" is "glucose__D" in the target namespace,
+        the metabolite id "glc__D_t" will be renamed to "glucose__D_t"
 
         Parameters:
             to_translate (list): A list of cobra.Metabolite objects whose id needs to be translated.
@@ -165,11 +169,22 @@ class ModelMerger:
         self.translate_metabolites(to_translate, reliable_matches, score_type)
         #  translate the ids of the respective TR_ reactions
         for met in cobra_model.metabolites:
+            # Let's assume that we have an example metabolite "glucose__D_t" that have been translated by the translate_metabolites
+            # function. Because of the convert_exchange_rxns_to_translation_rxns function, which gets called just before
+            # the current function, we can assume this metabolite to take part in a Translation (TR_) reaction (e.g.
+            # TR_glc__D_t: glc__D_e <--> glucose__D_t) which replaces its original Exchange (EX_) reaction. Here we check if
+            # this assumption holds. In addition to that, we make sure that there is only one transport reaction associated
+            # to that metabolite, in order to avoid id conflicts when modifying the id of the TR_ reaction, since its new
+            # id will be based on the metabolite's id in the target namespace
             if met.compartment == "t":
                 tr_rxns_for_current_met = [rxn for rxn in met.reactions if rxn.id.startswith("TR_")]
                 if len(tr_rxns_for_current_met) != 1:
                     raise ValueError(met.id + " should have one and only one TR_ reaction, it has " +
                                      str(len(tr_rxns_for_current_met)) + " instead")
+                #  the id of the TR_ reaction gets modified to match the target namespace
+                #  with the target one in the reaction's id. So the example reaction's id "TR_glc__D_t" will become
+                #  "TR_glucose__D_t". Because of the assumption we checked in the previous if, we can be sure that this
+                #  cannot result in an id collision
                 tr_rxn = tr_rxns_for_current_met[0]
                 tr_rxn.id = "TR_" + met.id
 
