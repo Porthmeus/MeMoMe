@@ -44,9 +44,13 @@ class ModelMerger:
         The reaction
             ID: EX_glc__D_e
             Reaction: -1 glc__D_e <--> (exchange with the environment)
+            Lower bound: -10
+            Upper bound: 1000
         gets converted into
             ID: TR_glc__D_e
             Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+            Lower bound: -10
+            Upper bound: 1000
 
         Raises:
         -------
@@ -149,9 +153,13 @@ class ModelMerger:
         The reaction
             ID: TR_glc__D_e
             Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+            Lower bound: -10
+            Upper bound: 1000
         whose matches[score_type] is higher than score_thr, gets its reaction and metabolite ids translated to the target namespace
             ID: TR_glucose__D_t
             Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+            Lower bound: -10
+            Upper bound: 1000
         along with all other translation reactions that satisfy the matching scores thresholding
 
         Parameters:
@@ -211,9 +219,13 @@ class ModelMerger:
         Let's assume that the metabolite glucose__D_t is involved in the reaction
             ID: TR_glucose__D_t
             Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+            Lower bound: -10
+            Upper bound: 1000
         A new reaction
             ID: EX_glucose__D_t
             Reaction: - 1 glucose__D_t <--> (exchange with the environment)
+            Lower bound: -1000
+            Upper bound: 1000
         will be added to the model
         """
         cobra_model = self.memo_model.cobra_model
@@ -228,15 +240,27 @@ class ModelMerger:
                 cobra_model.add_reactions([rxn])
 
     def set_rxn_bounds(self):
+        """
+        This function swaps the flux bounds of the EX and TR reactions. This happens because the medium constraints, which
+        are normally set on the exchange reaction of the original model, must be applied on the boundary with the environment.
+        The boundary with the environment is now (after execution of convert_exchange_rxns_to_translation_rxns(),
+        translate_rxn_and_met_ids(), and create_exchanges()) represented by the translation compartment, whose outermost
+        reactions are the current EX_ reactions. The original model's medium constraints were in its EX_ reactions, which
+        have been converted by convert_exchange_rxns_to_translation_rxns() to the current TR_ reactions. For this reason,
+        the reaction bounds need to be swapped between the current EX_ and TR_ reactions so that medium constraints are
+        exerting their effect on the boundary between the model and the environment.
+        """
         cobra_model = self.memo_model.cobra_model
         for met in cobra_model.metabolites:
             if met.compartment == "t":
                 ex_rxn = cobra_model.reactions.get_by_id("EX_" + met.id)
                 tr_rxn = cobra_model.reactions.get_by_id("TR_" + met.id)
+                tmp_lower_bound = ex_rxn.lower_bound
+                tmp_upper_bound = ex_rxn.upper_bound
                 ex_rxn.lower_bound = tr_rxn.lower_bound
                 ex_rxn.upper_bound = tr_rxn.upper_bound
-                tr_rxn.lower_bound = -1000
-                tr_rxn.upper_bound = 1000
+                tr_rxn.lower_bound = tmp_lower_bound
+                tr_rxn.upper_bound = tmp_upper_bound
 
 
     def translate_namespace(self):
