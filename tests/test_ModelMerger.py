@@ -39,7 +39,7 @@ class TestModelMerging(unittest.TestCase):
             self.assertTrue(ex.id.startswith("TR_"))
             self.assertEqual(len(list(ex.metabolites.keys())), 2)
             self.assertEqual({coef for coef in ex.metabolites.values()}, {-1.0, 1.0})
-        merger.translate_ids(score_thr=0.5)
+        merger.translate_rxn_and_met_ids(score_thr=0.5)
         # TODO: manually create a complete list of "correct matches" between the 2 tested models, and test if they are assigned correctly
         merger.create_exchanges()
         for pre_ex in pre_translation_exchanges:

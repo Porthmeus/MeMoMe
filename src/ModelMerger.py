@@ -140,10 +140,19 @@ class ModelMerger:
         for met in to_translate:
             met.id = best_matches.get(met.id, met.id) + "_t"
 
-    def translate_ids(self, score_thr:float, score_type:str="total_score"):
+    def translate_rxn_and_met_ids(self, score_thr:float, score_type:str="total_score"):
         """
         Translates metabolite IDs in self.cobra_model based on a score threshold and updates corresponding
         translation reaction IDs.
+
+        Example:
+        The reaction
+            ID: TR_glc__D_e
+            Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+        whose matches[score_type] is higher than score_thr, gets its reaction and metabolite ids translated to the target namespace
+            ID: TR_glucose__D_t
+            Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+        along with all other translation reactions that satisfy the matching scores thresholding
 
         Parameters:
             score_thr (float): Minimum score required for ID translation.
@@ -166,16 +175,18 @@ class ModelMerger:
             if met.compartment == "t":
                 to_translate = to_translate + [met]
         # applies the translation to the metabolites
+        # Example: the metabolite ID "glc__D_t" becomes "glucose__D_t"
         self.translate_metabolites(to_translate, reliable_matches, score_type)
         #  translate the ids of the respective TR_ reactions
         for met in cobra_model.metabolites:
             # Let's assume that we have an example metabolite "glucose__D_t" that has been translated by the translate_metabolites
             # function. Because of the convert_exchange_rxns_to_translation_rxns function, which gets called just before
             # the current function, we can assume this metabolite to take part in a Translation (TR_) reaction (e.g.
-            # TR_glc__D_t: glc__D_e <--> glucose__D_t) which replaces its original Exchange (EX_) reaction. By verifying
-            # that there is only one reaction that involves "glucose__D_t" and is prefixed with "TR_", we both know that a
-            # "TR_" reaction have been properly generated and that there is only one transport reaction associated
-            # to that metabolite. This makes sure that we avoid id conflicts when modifying the id of the TR_ reaction,
+            # TR_glc__D_e: glc__D_e <--> glucose__D_t) which replaces its original Exchange (EX_) reaction. By verifying
+            # that there is only one reaction that involves "glucose__D_t" and is prefixed with "TR_", we know:
+            # 1. that a "TR_" reaction have been properly generated
+            # 2. that there is only one transport reaction associated with the current metabolite
+            # This makes sure that we avoid id conflicts when modifying the id of the TR_ reaction,
             # since its new id will be based on the metabolite's id in the target namespace
             if met.compartment == "t":
                 tr_rxns_for_current_met = [rxn for rxn in met.reactions if rxn.id.startswith("TR_")]
@@ -190,11 +201,29 @@ class ModelMerger:
                 tr_rxn.id = "TR_" + met.id
 
     def create_exchanges(self):
+        """
+        Creates an exchange reaction for each translated metabolite.
+        This is necessary because at the beginning of the namespace translation, convert_exchange_rxns_to_translation_rxns()
+        overwrote all the exchange reactions to make them behave as a translation reaction. Therefore, there is the need
+        to create a new exchange reaction for each metabolite present in the translation compartment.
+
+        Example:
+        Let's assume that the metabolite glucose__D_t is involved in the reaction
+            ID: TR_glucose__D_t
+            Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+        A new reaction
+            ID: EX_glucose__D_t
+            Reaction: - 1 glucose__D_t <--> (exchange with the environment)
+        will be added to the model
+        """
         cobra_model = self.memo_model.cobra_model
         for met in cobra_model.metabolites:
             if met.compartment == "t":
                 reaction_id = "EX_" + met.id
                 rxn = cobra.Reaction(id=reaction_id, name=met.name + " exchange", lower_bound=-1000, upper_bound=1000)
+                # the stoichiometry is -1 so that a positive flux in the exchange reaction will correspond to an excretion
+                # from the translation compartment to the environment, while a negative flux value will correspond to an
+                # uptake from the environment to the translation compartment
                 rxn.add_metabolites({met: -1})
                 cobra_model.add_reactions([rxn])
 
@@ -212,6 +241,6 @@ class ModelMerger:
 
     def translate_namespace(self):
         self.convert_exchange_rxns_to_translation_rxns()
-        self.translate_ids(score_thr=0.5)
+        self.translate_rxn_and_met_ids(score_thr=0.5)
         self.create_exchanges()
         self.set_rxn_bounds()
