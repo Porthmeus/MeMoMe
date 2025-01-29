@@ -11,6 +11,7 @@ import cobra
 
 import src.MeMoModel
 from src.MeMoModel import *
+from src.ModelMerger import ModelMerger
 from src.download_db import download, databases_available, update_database
 
 # Configure the logger
@@ -60,6 +61,9 @@ def main(args: argparse.Namespace):
 
         matched_model = model1.match(model2, keep1ToMany = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
+        merger = ModelMerger(model2, matched_model)
+        # add translation compartment to model2, so that its namespace fits the namespace of model1
+        merger.translate_namespace()
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
