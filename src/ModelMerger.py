@@ -264,7 +264,78 @@ class ModelMerger:
 
 
     def translate_namespace(self):
+        """
+            Calls each function to set up the translation compartment step by step
+        """
+        # the translation compartment is created by the conversion of exchange reactions into translation reactions. This conversion
+        # consists in the addition of a metabolite identical to the one consumed in the exchange reaction, with the only
+        # difference of being located in the translation compartment.
+        # Example:
+        # The reaction
+        #   ID: EX_glc__D_e
+        #   Reaction: -1 glc__D_e <--> (exchange with the environment)
+        #    Lower bound: -10
+        #    Upper bound: 1000
+        # becomes
+        #    ID: TR_glc__D_e
+        #    Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+        #    Lower bound: -10
+        #    Upper bound: 1000
         self.convert_exchange_rxns_to_translation_rxns()
+
+        # Based on the matches dataframe, a best match is selected for each translation metabolite. If the matching score
+        # is higher than the threshold, the id of each translation reaction and of its respective translation metabolite
+        # are replaced with the matching id
+        # Example:
+        # Assuming the metabolite id glc__D has a match with glucose__D, with a matching score higher than score_thr
+        # The reaction
+        #     ID: TR_glc__D_e
+        #     Reaction: - 1 glc__D_e <--> + 1 glc__D_t
+        #     Lower bound: -10
+        #     Upper bound: 1000
+        # becomes
+        #     ID: TR_glucose__D_t
+        #     Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+        #     Lower bound: -10
+        #     Upper bound: 1000
         self.translate_rxn_and_met_ids(score_thr=0.5)
+
+        # Exchange reactions have been modified to perform the namespace translation, so now we need to reintroduce exchange
+        # reactions that allow for the translated metabolites to be exchanged with the external environment and with a model
+        # based on the target namespace
+        #Example:
+        # glucose__D_t, which we obtained in the previous step will now be exchanged with the external environment thorug
+        # the EX_ reaction:
+        #     ID: EX_glucose__D_t
+        #     Reaction: - 1 glucose__D_t <--> (exchange with the environment)
+        #     Lower bound: -1000 (unconstrained for now)
+        #     Upper bound: 1000
         self.create_exchanges()
+
+        # The newly created EX_ reactions are now at the boundary of the model, so the medium constraints should be set
+        # on them. Since the  TR_ reactions (which were obtained by modifying the EX_ reactions of the starting model)
+        # are the ones that contain the medium constraints, and our newly created exchange reactions are for now
+        # unconstrained (-1000 and 1000 are the minimum and maximum values settable on lower and upper bounds respectively),
+        # it is sufficient to switch the bounds of TR_ reactions and their respective EX_ reactions
+        # Example:
+        # Let's assume that we have
+        #     ID: TR_glucose__D_t
+        #     Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+        #     Lower bound: -10 (note that -10 represented the medium constraint for glucose uptake on the reaction EX_glc__D_e)
+        #     Upper bound: 1000
+        # And
+        #     ID: EX_glucose__D_t
+        #     Reaction: - 1 glucose__D_t <--> (exchange with the environment)
+        #     Lower bound: -1000
+        #     Upper bound: 1000
+        # their lower and upper bounds will be switched so that we obtain
+        #     ID: TR_glucose__D_t
+        #     Reaction: - 1 glc__D_e <--> + 1 glucose__D_t
+        #     Lower bound: -1000 (unconstrained)
+        #     Upper bound: 1000
+        # And
+        #     ID: EX_glucose__D_t
+        #     Reaction: - 1 glucose__D_t <--> (exchange with the environment)
+        #     Lower bound: -10 (now the medium constraint is set on the current reaction)
+        #     Upper bound: 1000
         self.set_rxn_bounds()
