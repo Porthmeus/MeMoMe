@@ -64,6 +64,7 @@ def main(args: argparse.Namespace):
         merger = ModelMerger(model2, matched_model)
         # add translation compartment to model2, so that its namespace fits the namespace of model1
         merger.translate_namespace()
+        cobra.io.write_sbml_model(model2.cobra_model, args.output_translated_model)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program
@@ -77,6 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
     parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')
+    parser.add_argument('--output_translated_model', action='store', help='Path where model2 with the newly-added translation compartment should be stored (as an SBML file)')
     parser.add_argument('--allow_missing_dbs', action='store_true', help='If set to true program does not abort if a databse is missing')
     args = parser.parse_args()
     # Log arguments
