@@ -17,7 +17,15 @@ if you just want to update a the environment use
 
 
 ## Run Tests
-python -m unittest
+
+For the general tests of the code base perform
+`python3 tests/tests/test_suite.py fast`
+
+For benchmarking tests run:
+`python3 tests/test_suite.py slow`
+
+Please do not use
+~~`python3 -m unittest`~~
 
 
 
