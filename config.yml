@@ -9,8 +9,8 @@ databases:
     file: "modelSeed.tsv"
     reformat: "modelSeed_MMM.csv"
   BiGG:
-    URL: "Databases/bigg_formatted.csv"
-    file: "bigg_formatted.csv"
+    URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt" 
+    file: "BiGG.tsv"
   VMH:
     URL: "Databases/vmh_formatted.csv"
     file: "vmh_formatted.csv"
@@ -24,3 +24,7 @@ databases:
     URL: "https://registry.api.identifiers.org/restApi/namespaces?page=0&size=999999&sort=name%2Casc"
     file: "identifiers.org_registry.json"
 
+PubChem:
+  inchi2inchikey:
+    URL: "https://ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/CID-InChI-Key.gz"
+    file: "PBC_inchi2inchikey.tsv.gz"

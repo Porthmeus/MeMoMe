@@ -11,6 +11,23 @@ import pubchempy as pcp
 import warnings
 from time import sleep
 
+def inchikeyToInchi(inchikey:str) -> str|None:
+    # use pubchem to convert inchiKeys to inchi strings
+    compounds = pcp.get_compounds(inchikey, "inchikey")
+    sleep(0.1)
+    if compounds == None:
+        warnings.warn("Could not translate {mol} to inchi".format(mol = inchikey))
+        inchi = None
+    elif len(compounds) == 0:
+        warnings.warn("Could not translate {mol} to inchi".format(mol = inchikey))
+        inchi = None
+    elif len(compounds) >1:
+        inchis = [x.inchi for x in compounds] 
+        inchi = findOptimalInchi(inchis)
+    else:
+        inchi = compounds[0].inchi
+    return(inchi)
+
 
 
 # Define your function
@@ -85,9 +102,8 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
                 warnings.warn("Could not translate {mol} to inchi".format(mol = smile))
                 inchi = None
             elif len(compounds) >1:
-                inchi = compounds[0].inchi
-                for i in range(len(compounds)-1):
-                    inchi = findOptimalInchi(inchi, compounds[i+1])
+                inchis = [x.inchi for x in compounds]
+                inchi = findOptimalInchi(inchis) 
             else:
                 inchi = compounds[0].inchi
         except:
