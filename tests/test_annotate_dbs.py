@@ -4,11 +4,13 @@ import pandas as pd
 import os
 from unittest.mock import patch
 from io import *
-from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, correctAnnotationKeys, annotateModelSEED_entry
+from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, annotateModelSEED_entry
 from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
+from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias
+from src.annotation.annotateAux import AnnotationResult, AnnotationKey
 from src.MeMoMetabolite import MeMoMetabolite
 
 
@@ -144,7 +146,7 @@ class Test_annotateMissingDbs(unittest.TestCase):
   @patch('sys.stderr', new_callable=StringIO)
   def testSEED_entry(self, mock_err):
     self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], {}, {}))
+    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
@@ -154,29 +156,29 @@ class Test_annotateMissingDbs(unittest.TestCase):
 
     self.makeDbVis("modelSeed.tsvxxx")
   
-  @patch('sys.stderr', new_callable=StringIO)
-  def correctAnnotationKeys(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(correctAnnotationKeys({}, allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      correctAnnotationKeys({},  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-
-    self.makeDbVis("modelSeed.tsvxxx")
+#  @patch('sys.stderr', new_callable=StringIO)
+#  def correctAnnotationKeys(self, mock_err):
+#    self.makeDbInvis("modelSeed.tsv")
+#    self.assertEqual(correctAnnotationKeys({}, allow_missing_dbs = True), AnnotationResult(0,0,0))
+#    output = mock_err.getvalue().strip()
+#    self.assertIn("No such file or directory", output)
+#    
+#    with self.assertRaises(FileNotFoundError):
+#      correctAnnotationKeys({},  allow_missing_dbs = False)
+#      self.assertIn("No such file or directory", output)
+#
+#    self.makeDbVis("modelSeed.tsvxxx")
 
 
   @patch('sys.stderr', new_callable=StringIO)
   def testVMH_entry(self, mock_err):
     self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, []))
+    self.assertEqual(annotateVMH_entry(AnnotationKey(""), pd.DataFrame(), allow_missing_dbs = True), ({}, []))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
     with self.assertRaises(FileNotFoundError):
-      annotateVMH_entry("", pd.DataFrame(),  allow_missing_dbs = False)
+      annotateVMH_entry(AnnotationKey(""), pd.DataFrame(),  allow_missing_dbs = False)
       self.assertIn("No such file or directory", output)
     self.makeDbVis("vmh.json")
 
@@ -255,10 +257,38 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testVMHEntry(self):
     this_directory = Path(__file__).parent
     dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateVMH_entry("10fthf", allow_missing_dbs = False)
+    ret = annotateVMH_entry(AnnotationKey("10fthf"), allow_missing_dbs = False)
     
     self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
     self.assertFalse(len(ret[0]) == 0)
+
+
+  def testHMDBEntry(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateHMDB_entry(AnnotationKey("HMDB00972"), allow_missing_dbs = False)
+    self.assertTrue(len(ret[0]) > 0)
+    self.assertTrue(len(ret[1]) > 0)
+    
+    ret = annotateHMDB_entry(AnnotationKey(""), allow_missing_dbs = False)
+    self.assertEqual(ret, (dict(), list()))
+
+
+  def testSEEDEntry(self):
+    self.maxDiff = None
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    ret = annotateModelSEED_entry("cpd00052", allow_missing_dbs = False)
+    self.assertEqual(sorted(ret[1]), sorted(["cytidine-triphosphate",
+   "Cytidine triphosphate",
+   "Cytidine 5'-triphosphate",
+   "cytidine-5'-triphosphate",
+   "CTP"]))
+    self.assertFalse(len(ret[0]) == 0)
+
+    ret = annotateModelSEED_entry("", allow_missing_dbs = False)
+    self.assertEqual(ret, (dict(), list()))
+
 
 
 class Test_annotateID(unittest.TestCase):
@@ -290,6 +320,20 @@ class Test_annotateID(unittest.TestCase):
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
 
 
+  def testSEED_id(self):
+    this_directory = Path(__file__).parent
+    dbs_dir = this_directory.parent/Path("Databases")
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("cpd00002")
+    ret = annotateModelSEED_id([metabolite], allow_missing_dbs = False)
+    expected_annotations = {'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}
+    expected_names = ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate']
+
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, expected_names)
+    self.assertEqual(metabolite._inchi_string, "InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/p-3/t4-,6-,7-,10-/m1/s1")
+
+
 class Test_annotateFull(unittest.TestCase):
   def testBiggAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
@@ -314,6 +358,19 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
     self.assertEqual(ret, AnnotationResult(0, 1, 1))
 
+
+  def testSEEDAnnotate(self):
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id('cpd00052')
+    metabolite.annotations = {'seed.compound': ['cpd00052']}
+    ret = annotateModelSEED([metabolite], allow_missing_dbs = False)
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+
+    self.assertEqual(metabolite.names, ['CTP', "Cytidine 5'-triphosphate", 'Cytidine triphosphate', "cytidine-5'-triphosphate", 'cytidine-triphosphate'])
+    self.assertEqual(metabolite.annotations, {'seed.compound': ['cpd00052'], 'AraCyc': ['CTP'], 'BiGG': ['ctp'], 'BrachyCyc': ['CTP'], 'KEGG': ['C00063'], 'MetaCyc': ['CTP']})
+    self.assertEqual(metabolite._inchi_string, "InChI=1S/C9H16N3O14P3/c10-5-1-2-12(9(15)11-5)8-7(14)6(13)4(24-8)3-23-28(19,20)26-29(21,22)25-27(16,17)18/h1-2,4,6-8,13-14H,3H2,(H,19,20)(H,21,22)(H2,10,11,15)(H2,16,17,18)/p-3/t4-,6-,7-,8-/m1/s1")
+
+
   def testChEBIAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id('117228')
@@ -323,3 +380,35 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(ret, AnnotationResult(1, 0, 0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
 
+  def testHMDBAnnotate(self):
+    metabolite: MeMoMetabolite = MeMoMetabolite()
+    metabolite.set_id("10fthf")
+    metabolite.annotations = {'HMDB': ['HMDB0000972']}
+    expected_annotations = {'HMDB': ['HMDB0000972'], 'accession': ['HMDB0000972'], 'chemical_formula': ['C20H23N7O7'], 'iupac_name': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-1,2,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'traditional_iupac': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-5,6,7,8-tetrahydro-1H-pteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'smiles': ['NC1=NC(=O)C2=C(NCC(CN(C=O)C3=CC=C(C=C3)C(=O)N[C@@H](CCC(O)=O)C(O)=O)N2)N1'], 'inchi': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/t11?,13-/m0/s1'], 'chebi_id': [15637.0], 'pubchem_compound_id': [122347.0], 'kegg_id': ['C00234'], 'bigg_id': [34337.0], 'vmh_id': ['10FTHF']}
+    ret = annotateHMDB([metabolite], allow_missing_dbs = False)
+    self.assertEqual(metabolite.annotations, expected_annotations)
+    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
+    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+
+
+class Test_annotateAuxiliares(unittest.TestCase):
+
+  this_directory = Path(__file__).parent
+  dbs_dir = this_directory.parent/Path("Databases")
+
+  def test_extractModelSEEDAnnotationsFromAlias(self):
+    # Aliases of cpd00001
+    aliases1 = "Name: H20; H2O; H3O+; HO-; Hydroxide ion; OH; OH-; Water; hydrogen oxide; hydroxide; hydroxide ion; hydroxyl; hydroxyl ion; oxonium; water|AraCyc: OH; WATER|BiGG: h2o; oh1|BrachyCyc: WATER|KEGG: C00001; C01328|MetaCyc: OH; OXONIUM; WATER"
+
+    aliases2 = "Name: NADP(H); NADP-red; NADP-reduced; NADPH; NADPH+H+; NADPH2; Nicotinamide adenine dinucleotide phosphate - reduced; Nicotinamide adenine dinucleotide phosphate-reduced; Nicotinamideadeninedinucleotidephosphate-reduced; Reduced nicotinamide adenine dinucleotide phosphate; TPNH; beta-NADPH; dihydronicotinamide adenine dinucleotide phosphate; dihydronicotinamide adenine dinucleotide phosphate reduced; dihydronicotinamide adenine dinucleotide-P; dihydrotriphosphopyridine nucleotide; dihydrotriphosphopyridine nucleotide reduced; reduced NADP; reduced dihydrotriphosphopyridine nucleotide; reduced nicotinamide adenine dinucleotide phosphate|AraCyc: NADPH|BiGG: nadph|BrachyCyc: NADPH|KEGG: C00005|MetaCyc: NADPH"
+
+    # Aliases of cpd00002
+    aliases3 = "Name: ATP; Adenosine 5'-triphosphate; adenosine-5'-triphosphate; adenosine-triphosphate; adenylpyrophosphate|AraCyc: ATP|BiGG: atp|BrachyCyc: ATP|KEGG: C00002|MetaCyc: ATP"
+
+    expected1 = ({'AraCyc': ['OH', 'WATER'], 'BiGG': ['h2o', 'oh1'], 'BrachyCyc': ['WATER'], 'KEGG': ['C00001', 'C01328'], 'MetaCyc': ['OH', 'OXONIUM', 'WATER']}, ['H20', 'H2O', 'H3O+', 'HO-', 'Hydroxide ion', 'OH', 'OH-', 'Water', 'hydrogen oxide', 'hydroxide', 'hydroxide ion', 'hydroxyl', 'hydroxyl ion', 'oxonium', 'water'])
+    extracted1 = extractModelSEEDAnnotationsFromAlias(aliases1)
+    self.assertEqual(extracted1, expected1)
+
+    expected3 = ({'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}, ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate'])
+    extracted3 = extractModelSEEDAnnotationsFromAlias(aliases3)
+    self.assertEqual(extracted3, expected3)
