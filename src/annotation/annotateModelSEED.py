@@ -173,6 +173,7 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
           # Rethrow exception because we don't want to allow missing dbs
           if allow_missing_dbs == False:
             raise e
+          warnings.warn(str(e))
           return dict(), list(), dict(), dict()
     else:
         mseed = database
