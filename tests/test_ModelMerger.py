@@ -2,11 +2,68 @@ import unittest
 from src.MeMoModel import MeMoModel
 from src.ModelMerger import ModelMerger
 from pathlib import Path
+import pandas as pd
+import cobra
 import re
+
+
+def create_minimal_model(model_id: str, id_met1: str, id_met2: str):
+    """
+    Create a minimal COBRA model with two metabolites and basic transport/exchange reactions.
+
+    Parameters:
+        model_id (str): Identifier for the COBRA model.
+        id_met1 (str): Identifier for the first metabolite.
+        id_met2 (str): Identifier for the second metabolite.
+
+    Returns:
+        cobra.Model: A COBRA model with minimal reactions.
+    """
+    model = cobra.Model(model_id)
+
+    # Define metabolites
+    # Cytosolic metabolites
+    met1_c = cobra.Metabolite(id_met1 + "_c", compartment="c")
+    met2_c = cobra.Metabolite(id_met2 + "_c", compartment="c")
+    # External metabolite
+    met1_e = cobra.Metabolite(id_met1 + "_e", compartment="e")
+
+    # Define reactions
+    # Conversion reaction: Converts metabolite 1 to metabolite 2 in the cytosol
+    r1 = cobra.Reaction("R1")
+    r1.name = "Conversion of " + id_met1 + " to " + id_met2
+    r1.add_metabolites({met1_c: -1, met2_c: 1})
+    r1.bounds = (-1000, 1000)  # Allow bidirectional reaction
+
+    # Transport reaction: Moves metabolite 1 from cytosol to external compartment
+    r2 = cobra.Reaction("R2")
+    r2.name = "Transport of " + id_met1 + " from cytosol to external"
+    r2.add_metabolites({met1_c: -1, met1_e: 1})
+    r2.bounds = (-1000, 1000)  # Allow bidirectional transport
+
+    # Exchange reaction: Represents uptake/secretion of metabolite 1 in the external medium
+    ex = cobra.Reaction("EX_" + id_met1 + "_e")
+    ex.name = id_met1 + " exchange"
+    ex.add_metabolites({met1_e: -1})  # Consumption of the external metabolite
+
+    # Add reactions to the model
+    model.add_reactions([r1, r2, ex])
+
+    return model
+
 
 class TestModelMerging(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory
+
+    # create model1 using cobrapy
+    model1 = create_minimal_model("model1","a","b")
+    model2 = create_minimal_model("model2","c","d")
+
+    # save models as temporary xml files
+    cobra.io.write_sbml_model(model1, "utils/tmp/model1.xml")
+    cobra.io.write_sbml_model(model2, "utils/tmp/model2.xml")
+
 
     def test_automatic_compartment_creation(self):
         """
@@ -60,6 +117,25 @@ class TestModelMerging(unittest.TestCase):
             new_ex = model2.cobra_model.reactions.get_by_id(rxn.id.replace("TR_", "EX_"))
             self.assertEqual(bounds[rxn], (new_ex.lower_bound, new_ex.upper_bound))
 
+
+    def test_case_1(self):
+
+        # load each of them into a MeMoModel with MeMoModel.fromPath(model_path)
+        model_path1 = self.this_directory.joinpath("tmp/model1.xml")
+        model_path2 = self.this_directory.joinpath("tmp/model2.xml")
+        meMoModel1 = MeMoModel.fromPath(model_path1)
+        meMoModel2 = MeMoModel.fromPath(model_path2)
+
+        #define an empty matching table
+        matches = pd.DataFrame()
+        # function call
+        merge(meMoModel1, meMoModel2, 1, 2, matches)
+
+        # check if the set of reaction ids of the merged model correspond to what expected in the test
+        expected_rxn_ids = set()
+
+        # check if the set of metabolite ids of the merged model correspond to what expected in the test
+        expected_met_ids = set()
 
 
 
