@@ -57,13 +57,6 @@ class TestModelMerging(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory
 
-    # create model1 using cobrapy
-    model1 = create_minimal_model("model1","a","b")
-    model2 = create_minimal_model("model2","c","d")
-
-    # save models as temporary xml files
-    cobra.io.write_sbml_model(model1, "utils/tmp/model1.xml")
-    cobra.io.write_sbml_model(model2, "utils/tmp/model2.xml")
 
 
     def test_automatic_compartment_creation(self):
@@ -121,13 +114,20 @@ class TestModelMerging(unittest.TestCase):
 
     def test_minimal_models(self):
 
-        # load each of them into a MeMoModel with MeMoModel.fromPath(model_path)
-        model_path1 = self.this_directory.joinpath("tmp/model1.xml")
-        model_path2 = self.this_directory.joinpath("tmp/model2.xml")
-        meMoModel1 = MeMoModel.fromPath(model_path1)
-        meMoModel2 = MeMoModel.fromPath(model_path2)
+        model1 = create_minimal_model("model1", "a", "b")
+        model2 = create_minimal_model("model2", "c", "d")
 
-        test_case_1 = {"inputs":{"id1":1,"id2":2, "matches":pd.DataFrame() },
+        # load each of them into a MeMoModel with MeMoModel.fromModel)
+        meMoModel1 = MeMoModel.fromModel(model1)
+        meMoModel2 = MeMoModel.fromModel(model2)
+
+        # test case in which no metabolites are matching
+        test_case_1 = {"inputs": {
+                            "source_model": meMoModel1,
+                            "target_model": meMoModel2,
+                            "id_prefix_1":"M1",
+                            "id_prefix_2":"M2",
+                            "matches":pd.DataFrame() },
                        "expected_result": {
                             "met_ids": {"M1_a_c","M1_b_c","M1_a_e","a_t","M2_c_c","M2_d_c","M2_c_e","c_t"},
                             "stoich": {"M1_R1": {"M1_a_c":-1,"M1_b_c":1},
@@ -149,34 +149,113 @@ class TestModelMerging(unittest.TestCase):
                             }
                        }
 
+        # test case in which only 2 metabolite ids ("a" and "c") are matching
+        test_case_2 = {"inputs":
+                           {"source_model": meMoModel1,
+                            "target_model": meMoModel2,
+                            "id_prefix_1":"M1",
+                            "id_prefix_2":"M2",
+                            "matches": pd.DataFrame({'met_id1': ['a'], 'met_id2': ['c']}) },
+                       "expected_result": {
+                           # since metabolites "a" and "c" correspond to the same metabolite, the translation compartment
+                           # will contain only the metabolite id according to the namespace of the target model
+                            "met_ids": {"M1_a_c","M1_b_c","M1_a_e","M2_c_c","M2_d_c","M2_c_e","c_t"},
+                           # since metabolites "a" and "c" correspond to the same metabolite, the translation reaction
+                           # of the source model will transform a_e to c_t, while the one for the target model will
+                            "stoich": {"M1_R1": {"M1_a_c":-1,"M1_b_c":1},
+                                    "M1_R2": {"M1_a_c":-1,"M1_a_e":1},
+                                    "M1_TR_c_t": {"M1_a_e":-1, "c_t":1},
+                                    "M2_R1": {"M2_c_c":-1, "M2_d_c":1},
+                                    "M2_R2": {"M2_c_c":-1, "M2_c_e":1},
+                                    "M2_TR_c_t": {"M2_c_e":-1, "c_t":1},
+                                    "EX_c_t": {"c_t":-1}},
+                            "bounds": {"M1_R1": (-1000, 1000),
+                                    "M1_R2": (-1000, 1000),
+                                    "M1_TR_c_t": (-1000, 1000),
+                                    "M2_R1": (-1000, 1000),
+                                    "M2_R2": (-1000, 1000),
+                                    "M2_TR_c_t": (-1000, 1000),
+                                    "EX_c_t":(-1000, 1000)}
+                            }
+                       }
 
-        #retrieve input
-        id1 = test_case_1["inputs"]["id1"]
-        id2 = test_case_1["inputs"]["id2"]
-        matches = test_case_1["inputs"]["matches"]
+        # test case in which a metabolite in the source model is matching with more than one metabolite of the target model
+        # it is expected to throw an error
+        test_case_3 = {"inputs":
+                           {"source_model": meMoModel1,
+                            "target_model": meMoModel2,
+                            "id_prefix_1":"M1",
+                            "id_prefix_2":"M2",
+                            "matches": pd.DataFrame({'met_id1': ['a','a'], 'met_id2': ['c','d']}) },
+                       "expected_exception": {
+                           "type": ValueError,
+                           "message": "The matching table provided is not 1 to 1."}
+                       }
 
-        # function call
-        merged_MeMoMe_model = merge(meMoModel1, meMoModel2, id1, id2, matches)
-        #extract cobra model from MeMoModel
-        merged_cobra_model = merged_MeMoMe_model.cobra_model
+        # test case in which a metabolite in the target model is matching with more than one metabolite of the source model
+        # it is expected to throw an error
+        test_case_4 = {"inputs":
+                           {"source_model": meMoModel1,
+                            "target_model": meMoModel2,
+                            "id_prefix_1":"M1",
+                            "id_prefix_2":"M2",
+                            "matches": pd.DataFrame({'met_id1': ['a','b'], 'met_id2': ['c','c']}) },
+                       "expected_exception": {
+                           "type": ValueError,
+                           "message": "The matching table provided is not 1 to 1."}
+                       }
 
-        # check if the set of reaction ids of the merged model correspond to what expected in the test
-        merged_model_rxn_ids = {r.id for r in merged_cobra_model.reactions}
-        assert set(merged_model_rxn_ids) == set(test_case_1["expected_result"]["stoich"].keys())
 
-        # check if the set of metabolite ids of the merged model correspond to what expected in the test
-        merged_model_met_ids = {m.id for m in merged_cobra_model.metabolites}
-        assert set(merged_model_met_ids) == test_case_1["expected_result"]["met_ids"]
+        test_cases = [test_case_1, test_case_2, test_case_3, test_case_4]
 
-        #check if reactions reversibility and stoichiometry constraints are set correctly
-        for r_id in merged_model_rxn_ids:
-            # get reaction from merged model
-            r = merged_cobra_model.reactions.get_by_id(r_id)
-            # check reversibility constraints
-            assert r.bounds == test_case_1["expected_result"]["bounds"][r_id]
-            r_met_ids = {m.id for m in r.metabolites.keys()}
-            assert r_met_ids == set(test_case_1["expected_result"]["stoich"][r_id].keys())
-            for m_id in r_met_ids:
-                m_stoich =  r.metabolites[m_id]
-                assert m_stoich == test_case_1["expected_result"]["stoich"][r_id][m_id]
+        for test in test_cases:
+
+            #retrieve input
+            model1 = test["inputs"]["source_model"]
+            model2 = test["inputs"]["target_model"]
+            prefix1 = test["inputs"]["id_prefix_1"]
+            prefix2 = test["inputs"]["id_prefix_2"]
+            matches = test["inputs"]["matches"]
+
+            # If the test dictionary contains an "expected_exception" key,
+            # we expect the function call to raise an exception.
+            if "expected_exception" in test:
+                # Use assertRaises to ensure the correct exception type is raised.
+                with self.assertRaises(test["expected_exception"]["type"]) as context:
+                    merge(model1, model2, prefix1, prefix2, matches)
+
+                # If an error message is specified, check that it matches the expected message.
+                expected_message = test["expected_exception"].get("message")
+                if expected_message:
+                    self.assertEqual(str(context.exception), expected_message)
+            else:
+                # Otherwise, we expect the function to run normally and return a valid output.
+                # If any exception occurs, it is unexpected, so we fail the test with an informative message.
+                try:
+                    merged_MeMoMe_model = merge(model1, model2, prefix1, prefix2, matches)
+                except Exception as e:
+                    self.fail(f"Unexpected exception {type(e).__name__} raised: {e}")
+
+                #extract cobra model from MeMoModel
+                merged_cobra_model = merged_MeMoMe_model.cobra_model
+
+                # check if the set of reaction ids of the merged model correspond to what expected in the test
+                merged_model_rxn_ids = {r.id for r in merged_cobra_model.reactions}
+                assert set(merged_model_rxn_ids) == set(test["expected_result"]["stoich"].keys())
+
+                # check if the set of metabolite ids of the merged model correspond to what expected in the test
+                merged_model_met_ids = {m.id for m in merged_cobra_model.metabolites}
+                assert set(merged_model_met_ids) == test["expected_result"]["met_ids"]
+
+                #check if reactions reversibility and stoichiometry constraints are set correctly
+                for r_id in merged_model_rxn_ids:
+                    # get reaction from merged model
+                    r = merged_cobra_model.reactions.get_by_id(r_id)
+                    # check reversibility constraints
+                    assert r.bounds == test["expected_result"]["bounds"][r_id]
+                    r_met_ids = {m.id for m in r.metabolites.keys()}
+                    assert r_met_ids == set(test["expected_result"]["stoich"][r_id].keys())
+                    for m_id in r_met_ids:
+                        m_stoich =  r.metabolites[m_id]
+                        assert m_stoich == test["expected_result"]["stoich"][r_id][m_id]
 
