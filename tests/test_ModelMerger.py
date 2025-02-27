@@ -33,18 +33,19 @@ def create_minimal_model(model_id: str, id_met1: str, id_met2: str):
     r1 = cobra.Reaction("R1")
     r1.name = "Conversion of " + id_met1 + " to " + id_met2
     r1.add_metabolites({met1_c: -1, met2_c: 1})
-    r1.bounds = (-1000, 1000)  # Allow bidirectional reaction
+    r1.bounds = (-1000, 1000)  # Unconstrained bidirectional reaction
 
     # Transport reaction: Moves metabolite 1 from cytosol to external compartment
     r2 = cobra.Reaction("R2")
     r2.name = "Transport of " + id_met1 + " from cytosol to external"
     r2.add_metabolites({met1_c: -1, met1_e: 1})
-    r2.bounds = (-1000, 1000)  # Allow bidirectional transport
+    r2.bounds = (-1000, 1000)  # Unconstrained bidirectional transport
 
     # Exchange reaction: Represents uptake/secretion of metabolite 1 in the external medium
     ex = cobra.Reaction("EX_" + id_met1 + "_e")
     ex.name = id_met1 + " exchange"
     ex.add_metabolites({met1_e: -1})  # Consumption of the external metabolite
+    ex.bounds = (-1000, 1000)  # Unconstrained excretion/uptake
 
     # Add reactions to the model
     model.add_reactions([r1, r2, ex])
@@ -118,7 +119,7 @@ class TestModelMerging(unittest.TestCase):
             self.assertEqual(bounds[rxn], (new_ex.lower_bound, new_ex.upper_bound))
 
 
-    def test_case_1(self):
+    def test_minimal_models(self):
 
         # load each of them into a MeMoModel with MeMoModel.fromPath(model_path)
         model_path1 = self.this_directory.joinpath("tmp/model1.xml")
@@ -126,16 +127,56 @@ class TestModelMerging(unittest.TestCase):
         meMoModel1 = MeMoModel.fromPath(model_path1)
         meMoModel2 = MeMoModel.fromPath(model_path2)
 
-        #define an empty matching table
-        matches = pd.DataFrame()
+        test_case_1 = {"inputs":{"id1":1,"id2":2, "matches":pd.DataFrame() },
+                       "expected_result": {
+                            "met_ids": {"M1_a_c","M1_b_c","M1_a_e","a_t","M2_c_c","M2_d_c","M2_c_e","c_t"},
+                            "stoich": {"M1_R1": {"M1_a_c":-1,"M1_b_c":1},
+                                    "M1_R2": {"M1_a_c":-1,"M1_a_e":1},
+                                    "M1_TR_a_t": {"M1_a_e":-1, "a_t":1},
+                                    "EX_a_t": {"a_t":-1},
+                                    "M2_R1": {"M2_c_c":-1, "M2_d_c":1},
+                                    "M2_R2": {"M2_c_c":-1, "M2_c_e":1},
+                                    "M2_TR_c_t": {"M2_c_e":-1, "c_t":1},
+                                    "EX_c_t": {"c_t":-1}},
+                            "bounds": {"M1_R1": (-1000, 1000),
+                                    "M1_R2": (-1000, 1000),
+                                    "M1_TR_a_t": (-1000, 1000),
+                                    "EX_a_t": (-1000, 1000),
+                                    "M2_R1": (-1000, 1000),
+                                    "M2_R2": (-1000, 1000),
+                                    "M2_TR_c_t": (-1000, 1000),
+                                    "EX_c_t":(-1000, 1000)}
+                            }
+                       }
+
+
+        #retrieve input
+        id1 = test_case_1["inputs"]["id1"]
+        id2 = test_case_1["inputs"]["id2"]
+        matches = test_case_1["inputs"]["matches"]
+
         # function call
-        merge(meMoModel1, meMoModel2, 1, 2, matches)
+        merged_MeMoMe_model = merge(meMoModel1, meMoModel2, id1, id2, matches)
+        #extract cobra model from MeMoModel
+        merged_cobra_model = merged_MeMoMe_model.cobra_model
 
         # check if the set of reaction ids of the merged model correspond to what expected in the test
-        expected_rxn_ids = set()
+        merged_model_rxn_ids = {r.id for r in merged_cobra_model.reactions}
+        assert set(merged_model_rxn_ids) == set(test_case_1["expected_result"]["stoich"].keys())
 
         # check if the set of metabolite ids of the merged model correspond to what expected in the test
-        expected_met_ids = set()
+        merged_model_met_ids = {m.id for m in merged_cobra_model.metabolites}
+        assert set(merged_model_met_ids) == test_case_1["expected_result"]["met_ids"]
 
-
+        #check if reactions reversibility and stoichiometry constraints are set correctly
+        for r_id in merged_model_rxn_ids:
+            # get reaction from merged model
+            r = merged_cobra_model.reactions.get_by_id(r_id)
+            # check reversibility constraints
+            assert r.bounds == test_case_1["expected_result"]["bounds"][r_id]
+            r_met_ids = {m.id for m in r.metabolites.keys()}
+            assert r_met_ids == set(test_case_1["expected_result"]["stoich"][r_id].keys())
+            for m_id in r_met_ids:
+                m_stoich =  r.metabolites[m_id]
+                assert m_stoich == test_case_1["expected_result"]["stoich"][r_id][m_id]
 
