@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  dev:
+    build:
+      context: .
+      target: dev  # Use the dev stage from Dockerfile
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - .:/app  # Mount current directory into the container for dev environment
+    command: bash  # Open bash for dev (or any other interactive command)
+
+  prod:
+    build:
+      context: .
+      target: prod  # Use the prod stage from Dockerfile
+    command: bash

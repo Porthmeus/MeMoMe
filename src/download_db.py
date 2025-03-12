@@ -10,6 +10,7 @@ import sys
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
+
 def is_inet_available() -> bool:
     try:
         response = requests.get("http://www.google.com", timeout=5)
@@ -141,5 +142,5 @@ def update_database() -> bool:
             # Truncate to the new contents length(because the old content of the file was longer)
             f.truncate()
       except FileNotFoundError: 
-          print("VMH could not be found, not tryting to reformat it")
+          print("VMH could not be found, not trying to reformat it")
     return True

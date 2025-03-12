@@ -18,9 +18,13 @@ from src.annotation.annotateInchiRoutines import validateInchi, findOptimalInchi
 
 def getAnnoFromIdentifierURL(url:str) -> tuple[str, str]:
     """Small function to extract the db and db id from an identifier.org url"""
-    db = url.split("/")[3].strip('"')
-    db_id = "/".join(url.split("/")[4:]).replace('"/>', "")
-    return db, db_id
+    # check if it is indeed a identifier.org url
+    if "identifiers.org" in url:
+        db = url.split("/")[3].strip('"')
+        db_id = "/".join(url.split("/")[4:]).replace('"/>', "")
+        return db, db_id
+    else:
+        return None,None
 
 def getAnnotationFromMet(met: sbml.Species) -> dict:
     ''' extract a dictionary containing additional annotations'''
