@@ -1,5 +1,10 @@
 import unittest
 from pathlib import Path
+import os
+import shutil
+import sys
+if __name__ == '__main__':
+  sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoModel import MeMoModel
@@ -8,7 +13,6 @@ from src.annotation.annotateBiGG import *
 from src.annotation.annotateModelSEED import *
 from src.annotation.annotateAux import AnnotationResult
 from datetime import datetime
-
   # Example data for the table
 table_data = [
 ]
@@ -16,7 +20,7 @@ table_data = [
 class Test_annotationPerformance(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
-    this_directory = Path(__file__).parent
+    this_directory = Path(__file__).parent.parent
     dat = this_directory.joinpath("dat")
 
 
@@ -25,7 +29,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(54, 54, 54)
         res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_seed.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_core_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_seed_id(self):
@@ -33,7 +37,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 0,0 )
         res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_seed_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_core_seed_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_bigg(self):
@@ -41,7 +45,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 0, 0)
         res = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_bigg.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_core_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_bigg_id(self):
@@ -49,7 +53,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 54, 0)
         res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_bigg_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_core_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_chebi(self):
@@ -57,7 +61,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(54, 0, 0)
         res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_core_chebi.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_core_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_bigg_chebi(self):
@@ -74,7 +78,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
         res = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_bigg.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
 
@@ -83,7 +87,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,866,358)
         res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_bigg_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_vmh_bigg_id_chebi(self):
@@ -92,7 +96,7 @@ class Test_annotationPerformance(unittest.TestCase):
         exp = AnnotationResult(0,866,358)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_bigg_id_chebi.__name__, res1 + res2, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_bigg_id_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
 
@@ -101,7 +105,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
         res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_chebi.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
     
     def test_ecoli_vmh_seed(self):
@@ -109,7 +113,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_seed.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_vmh_seed_id(self):
@@ -117,7 +121,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
-        add_test_case_to_table(self.test_ecoli_vmh_seed_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_ecoli_vmh_seed_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     # ############################ AT THE MOMENT NOTHING GETS ANNOTATED FOR RECON ANYWAY SO WE IGNORE IT FOR NOW ####################################33
@@ -153,7 +157,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_chebi.__name__, res, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg(self):
@@ -161,7 +165,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(999,999,999)
         res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg.__name__, res, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id(self):
@@ -169,7 +173,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,577,196)
         res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id_chebi(self):
@@ -178,7 +182,7 @@ class Test_annotationPerformance(unittest.TestCase):
         exp = AnnotationResult(0,577,196)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_chebi.__name__, res1 + res2, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id_seed(self):
@@ -187,7 +191,7 @@ class Test_annotationPerformance(unittest.TestCase):
         exp = AnnotationResult(0,577,196)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_seed.__name__, res1 + res2, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_seed.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_seed(self):
@@ -195,7 +199,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed.__name__, res, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_seed_id(self):
@@ -203,7 +207,15 @@ class Test_annotationPerformance(unittest.TestCase):
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
         res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
-        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp)   
+        add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp, mod)   
+        self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
+
+    def test_ecoli_vmh_all(self):
+        mod_path = self.dat.joinpath("e_coli_vmh.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        exp = AnnotationResult(999,999,999)
+        res = AnnotationResult.fromAnnotation(mod.annotate())
+        add_test_case_to_table(self.test_ecoli_vmh_all.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
 def generate_html_table(data):
@@ -277,8 +289,174 @@ def generate_value_row(res_value: int, exp_value: int) -> tuple[str, str, str]:
   else:
    return (str(res_value), str(exp_value), "green")
 
-def add_test_case_to_table( name: str, res, exp):
-  table_data.append([f"<b>{name}</b>", "Annotated", "Expected", ""])
+def bac_spec_content(mod: MeMoModel) -> str:
+    html = "<table id = myTable>\n"
+    html += """ 
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Names</th>
+        <th>Annotations</th>
+      </tr>
+    </thead>
+    <tbody>
+    """
+    for metabolite in mod.metabolites:
+        html += f"<tr><td>{metabolite.id}</td><td>{metabolite.names}</td><td>{metabolite.annotations}</td></tr>"
+    html += "</tbody></table>"
+    return html
+
+def generate_css():
+    return """<style>
+    #searchInput {
+      margin: 12px;
+      padding: 8px;
+      width: 250px;  
+    }
+    canvas{
+    
+      width: 45% !important;
+      height: 500px !important;
+    
+    }
+    .container {
+      display: flex;
+      gap: 10px;
+    }
+
+    table {
+      width: 45%;
+      height: 500px;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow-y: auto;  /* Enable vertical scrolling */
+      display: grid;
+      grid-auto-flow: column; /* make the items fill up the grid container by column and not row */
+      grid-template-rows: repeat(10, 1fr); /* have a max number of 3 rows and make them all the same height */
+      gap: 0.125rem; /*put a small gap between each element */
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    /* Constrain the table height and make it scrollable */
+    #tableContainer {
+      max-height: 200px; /* Set the height limit */
+      overflow-y: auto;  /* Add vertical scroll if content exceeds max-height */
+    }
+  </style>"""
+
+def generate_js_for_search(): 
+    return """
+    function searchTable() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toUpperCase();
+      const table = document.getElementById('myTable');
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td');
+        let found = false;
+
+        for (let j = 0; j < td.length; j++) {
+          if (td[j]) {
+            let txtValue = td[j].textContent || td[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              found = true;
+              break;
+            }
+          }
+        }
+
+        tr[i].style.display = found ? '' : 'none';
+      }
+    }
+    """
+
+
+def generate_bar_chart(mod: MeMoModel):
+  metabs = mod.metabolites
+  keys = dict()
+  for m in metabs:
+      for annotation in m.annotations.keys():
+          keys[annotation] = keys.get(annotation, 0) + 1
+  # Check if order is presercerd in keys/values
+  a = keys.keys()
+  b = keys.values()
+  # TODO CHECK MATH (is the missing calculation correct)
+  # THE MATH IS BS
+  s = """
+       // Get the context of the canvas element
+   var ctx = document.getElementById('myBarChart').getContext('2d');
+    
+   // Create the bar chart
+   var myBarChart = new Chart(ctx, {
+     type: 'bar', // Bar chart type
+     data: {
+         labels: """ + str(list(a)) +  """, // Labels for the bars
+       datasets: [{
+         label: 'Values', // Label for the dataset
+         data: """ + str(list(b)) + """,// Data for the bars
+         backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A1'], // Bar colors
+         borderColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A1'], // Border colors
+         borderWidth: 1
+       }]
+     },
+     options: {
+       scales: {
+         y: {
+           beginAtZero: true, // Ensure the Y-axis starts at zero
+         }
+       },
+       responsive: true // Make the chart responsive
+     }
+     });"""
+  return s
+
+        
+def generate_bac_specs( name: str,  mod: MeMoModel):
+    file_path = os.path.join("bac_specs", f'{name}.html')
+
+    
+    body = """<input type="text" id="searchInput"  onkeyup="searchTable()" placeholder="Search for names..">\n"""
+    body += """<div class="container">\n"""
+    body += bac_spec_content(mod)
+    body += """<canvas id="myBarChart" class = "box" width="200px" height="100px"></canvas>\n"""
+    body += "</div>"
+    body +=  """<script>"""
+    body += generate_js_for_search()
+    body += generate_bar_chart(mod)
+    body +=  """</script>"""
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      {}
+      <title>{}</title>
+    </head>
+    <body>
+      {}
+    </body>
+    </html>
+    """.format(generate_css(), name, body )
+    
+    # Write the content to the HTML file
+    with open(file_path, 'w') as file:
+        file.write(html_content)
+    print(f'HTML file created at: {file_path}')
+
+
+def add_test_case_to_table( name: str, res, exp, mod: MeMoModel):
+  link  =  f"""<a href="bac_specs/{name}.html" target="_blank">{name}</a>"""
+  table_data.append([f"<b>{link}</b>", "Annotated", "Expected", ""])
+  generate_bac_specs(name, mod)
   table_data.append([f"Inchis", *generate_value_row(res.annotated_inchis, exp.annotated_inchis )])
   table_data.append([f"DBs", *generate_value_row(res.annotated_dbs, exp.annotated_dbs)])
   table_data.append([f"Names", *generate_value_row(res.annotated_names, exp.annotated_names)])
@@ -286,22 +464,35 @@ def add_test_case_to_table( name: str, res, exp):
 
 
 
-#if __name__ == '__main__':
-#    # Create a test suite
-#    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
-#    # Create a test runner
-#    runner = unittest.TextTestRunner()
-#    
-#    # Run the tests and get the result
-#    result = runner.run(suite)
-#
-#
-#  
-#    # Generate HTML table
-#    html_table = generate_html_table(table_data)
-#    save_html_table(html_table)
-#    
-#    # Access the test results
-#    print("Number of tests run:", result.testsRun)
-#    print("Number of failures:", len(result.failures))
-#    print("Number of errors:", len(result.errors))
+if __name__ == '__main__':
+
+    # Create folder for html files 
+    folder_name = "bac_specs"   
+    if os.path.exists(folder_name):
+      shutil.rmtree(folder_name)
+      print(f"Existing folder '{folder_name}' deleted.")
+    os.makedirs(folder_name)
+
+    # Create a test suite
+    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
+    # The LSP complains but this works with id(). This is a super hacky way to just execute one single test for debugging
+    #filtered_tests = unittest.TestSuite(
+    #        test for test in suite if test.id() in ["__main__.Test_annotateBulkRoutines.test_ecoli_vmh_all"]
+    #)
+    #suite = filtered_tests
+    # Create a test runner
+    runner = unittest.TextTestRunner()
+    
+    # Run the tests and get the result
+    result = runner.run(suite)
+
+
+  
+    # Generate HTML table
+    html_table = generate_html_table(table_data)
+    save_html_table(html_table)
+    
+    # Access the test results
+    print("Number of tests run:", result.testsRun)
+    print("Number of failures:", len(result.failures))
+    print("Number of errors:", len(result.errors))
