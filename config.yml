@@ -11,6 +11,7 @@ databases:
   BiGG:
     URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt" 
     file: "BiGG.tsv"
+    reformat: "BiGG_MMM.csv"
   VMH:
     URL: "Databases/vmh_formatted.csv"
     file: "vmh_formatted.csv"
