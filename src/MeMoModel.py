@@ -177,7 +177,8 @@ class MeMoModel:
         res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
 
         ##### this is the place where we could change the weighting of the scoring ####
-        res["total_score"] = (res["inchi_score"]*3 + res["DB_score"]*2+res["Name_score"])/6
+        scores = [res["inchi_score"], res["DB_score"], res["Name_score"]]
+        res["total_score"] = sum(scores)/len(scores)
         ###############################################################################
 
         # remove pairs with score < threshold (default = 0)
@@ -292,7 +293,7 @@ class MeMoModel:
 
     def matchOnDB(self,
             model2: MeMoModel,
-            threshold = 0,
+            threshold: float = 0,
             output_dbs: bool = False ) -> pd.DataFrame:
         # compare two models by the entries in the databases
 
