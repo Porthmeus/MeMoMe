@@ -58,7 +58,7 @@ def main(args: argparse.Namespace):
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
 
-        matched_model = model1.match(model2, keep1ToMany = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
+        matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
