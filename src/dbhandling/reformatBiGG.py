@@ -131,10 +131,9 @@ def reformatBiGG() -> None:
     convert_table = createInchiKey2String(pbc_table, inchi_keys)
     tbl_conversion = pd.read_csv(StringIO(convert_table), delimiter = "\t",usecols=[1,2], header =None)
     tbl_conversion.columns = ["inchi","inchi_key"]
-    # create a proper table and r
+    # create a proper table and merge them to the reformatted table
     inchis = pd.merge(inchis_keys, tbl_conversion,on ="inchi_key", how = "left")
     inchis.index = inchis.bigg_id
-    # 
     dat_all = pd.concat([names, dbs], axis = 1)
     dat_all = pd.merge(dat_all, inchis, left_index =True, right_index = True)
     
