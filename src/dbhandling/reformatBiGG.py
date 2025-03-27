@@ -138,7 +138,7 @@ def reformatBiGG() -> None:
     dat_all = pd.merge(dat_all, inchis, left_index =True, right_index = True)
     
     # write the database
-    writeData(inchi_keys)
+    writeData(dat_all)
 
     # remove tempfiles
-    os.remove(dat_all)
+    os.remove(pbc_table)
