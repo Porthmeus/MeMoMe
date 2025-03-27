@@ -60,7 +60,7 @@ def downloadPBCInchiKey2String() -> str:
     with tempfile.NamedTemporaryFile(delete=False, mode='wb') as temp_file:
         with requests.get(url, stream=True) as response:
             response.raise_for_status()  # Ensure request was successful
-            for chunk in tqdm(response.iter_content(chunk_size=8192), desc = "Downloading Pubchem Database"):  # Read in chunks of 8 KB
+            for chunk in tqdm(response.iter_content(chunk_size=1024*1024), desc = "Downloading Pubchem Database"):  # Read in chunks of 1 MB
                 temp_file.write(chunk)  # Write chunk to file
         
         temp_file_path = temp_file.name  # Get the file path
@@ -141,4 +141,4 @@ def reformatBiGG() -> None:
     writeData(inchi_keys)
 
     # remove tempfiles
-    os.remove(pbc_table)
+    os.remove(dat_all)
