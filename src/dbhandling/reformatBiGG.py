@@ -70,7 +70,6 @@ def downloadPBCInchiKey2String() -> str:
 def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
     # use zgrep to create a conversion table from inchi key to inchi string via the pubchem database
 
-
     # safe the inchi keys in a temporary file
     with tempfile.NamedTemporaryFile(delete=False, mode = "w") as temp_file:
         for entry in inchiKeys:
@@ -86,8 +85,8 @@ def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
         check=True  # Raises an error if the command fails
     )
     
-    return(result.stdout)  # Print matched lines
     os.remove(keys_file)
+    return(result.stdout)  # Print matched lines
 
 def writeData(dat:pd.DataFrame) -> None:
     config = get_config()
@@ -137,8 +136,8 @@ def reformatBiGG() -> None:
     dat_all = pd.concat([names, dbs], axis = 1)
     dat_all = pd.merge(dat_all, inchis, left_index =True, right_index = True)
     
+    # remove tempfiles
+    os.remove(pbc_table)
     # write the database
     writeData(dat_all)
 
-    # remove tempfiles
-    os.remove(pbc_table)
