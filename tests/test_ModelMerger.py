@@ -16,7 +16,7 @@ class TestModelMerging(unittest.TestCase):
         matches = model1.match(model2)
         merger = ModelMerger(model2, matches)
         pre_translation_exchanges = model2.cobra_model.exchanges
-        merger.convert_exchange_rxns_to_translation_rxns()
+        merger.replace_exchange_rxns_with_translation_rxns()
         self.assertTrue("t" in model2.cobra_model.compartments.keys())
         for ex in pre_translation_exchanges:
             self.assertTrue(ex.id.startswith("TR_"))

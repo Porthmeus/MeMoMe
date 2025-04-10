@@ -16,18 +16,31 @@ class ModelMerger:
         self.matches = self.matches.rename(columns={'met_id2': 'source_namespace'})
         self.matches = self.matches.rename(columns={'met_id1': 'target_namespace'})
 
-    def convert_exchange_rxns_to_translation_rxns(self):
-        """converts exchange reactions to namespace translation reactions and adds their respective compartment"""
+
+    def replace_exchange_rxns_with_translation_rxns(self):
+        """copies exchange reactions into new reactions that gets modified to behave as translation reactions. It also
+        adds their respective 't' (translation) compartment"""
         cobra_model = self.memo_model.cobra_model
         for ex in cobra_model.exchanges:
             if re.match(r"^EX_", ex.id):
-                # Replace "EX_" with "TR_" at the start of the string
-                new_id = re.sub(r"^EX_", "TR_", ex.id)
-                # Update the reaction ID
-                ex.id = new_id
+                tr_reac = cobra.Reaction(id=re.sub(r"^EX_", "TR_", ex.id))
+                tr_reac.name = ex.name
+                tr_reac.lower_bound = ex.lower_bound
+                tr_reac.upper_bound = ex.upper_bound
+                # copy notes and annotation dictionaries if they exist.
+                tr_reac.notes = ex.notes.copy() if ex.notes else {}
+                tr_reac.annotation = ex.annotation.copy() if ex.annotation else {}
+
+                # Since this is an exchange reaction, we expect only one metabolite.
+                # Iterate over the original reaction’s metabolites (should be one) and clone it.
                 if len(ex.metabolites.keys()) == 1:
                     met = list(ex.metabolites.keys())[0]
-                    # create the metabolite in the translation compartment and give it a +1 stoichiometry (production)
+                    stoich = ex.metabolites[met]
+                    # Add the metabolite to the cloned reaction with the same stoichiometry
+                    tr_reac.add_metabolites({met: stoich})
+                    #remove original exchange reaction
+                    cobra_model.reactions.remove(ex)
+                    # create the metabolite in the translation compartment and give it the opposite stoichiometry
                     met_t = met.copy()
                     #  TODO: replace regular expression with function call for the remove suffix function
                     #   (need to modify the handle_metabolites_prefix_suffix_function)
@@ -35,11 +48,13 @@ class ModelMerger:
                                                                             # that follows the last underscore) with
                                                                             # the new compartment's symbol
                     met_t.compartment = "t"
-                    ex.add_metabolites({met_t: 1.0})
+                    tr_reac.add_metabolites({met_t: -stoich})
                 else:
                     raise ValueError(ex.id + "should contain only one metabolite")
             else:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
+            cobra_model.add_reactions([tr_reac])
+
 
     def translate_metabolites(self, to_translate, score_type):
         """
@@ -120,7 +135,7 @@ class ModelMerger:
 
 
     def translate_namespace(self):
-        self.convert_exchange_rxns_to_translation_rxns()
+        self.replace_exchange_rxns_with_translation_rxns()
         self.translate_ids()
         self.create_exchanges()
         self.set_rxn_bounds()
