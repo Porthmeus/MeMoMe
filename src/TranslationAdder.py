@@ -8,16 +8,16 @@ from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 #from cobra.core import DictList
 
-class ModelMerger:
+class TranslationAdder:
     """
     This class aims to facilitate the merging of a model to another model that is based on a different namespace.
     It takes a model and a table of matches between the input model and the target namespace as inputs.
     It doesn't perform a full merging, but creates a new "namespace translation compartment" (denoted by the "_t" suffix
     on metabolite ids) that contains all the exchange metabolites of the input model that could be translated to the
     target namespace. The "t" compartment is connected to the original exchange compartment through a set of "translation
-     reactions" (denoted by the "TR_" prefix on reaction ids). Each "TR_" reaction connects one
-     external metabolite to its corresponding "_t" metabolite. The medium constraints are then moved from the external
-     to the translation compartments
+    reactions" (denoted by the "TR_" prefix on reaction ids). Each "TR_" reaction connects one
+    external metabolite to its corresponding "_t" metabolite. The medium constraints are then moved from the external
+    to the translation compartments
     """
     def __init__(self,
                  memo_model: MeMoModel = None,

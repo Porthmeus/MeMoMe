@@ -11,7 +11,7 @@ import cobra
 
 import src.MeMoModel
 from src.MeMoModel import *
-from src.ModelMerger import ModelMerger
+from src.TranslationAdder import ModelMerger
 from src.download_db import download, databases_available, update_database
 
 # Configure the logger

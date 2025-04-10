@@ -1,6 +1,6 @@
 import unittest
 from src.MeMoModel import MeMoModel
-from src.ModelMerger import ModelMerger
+from src.TranslationAdder import ModelMerger
 from pathlib import Path
 import re
 
