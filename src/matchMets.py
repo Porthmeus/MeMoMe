@@ -3,21 +3,18 @@
 
 #from src.MeMoMetabolite import MeMoMetabolite
 from __future__ import annotations
-import pandas as pd
-from src.matchInchiRoutines import *
 from rdkit import Chem, RDLogger
 from Levenshtein import ratio
-from warnings import warn
 from collections import namedtuple
 
 def matchMetsByInchi(nminchi1: str,
         nminchi2: str,
         mol1: Chem.rdchem.Mol,
         mol2: Chem.rdchem.Mol,
-        fp1,
-        fp2,
-        charge_neutralized_mol1,
-        charge_neutralized_mol2,
+        charge_neutralized_inchi1:str,
+        charge_neutralized_inchi2:str,
+        charge1:int,
+        charge2:int,
         verbose:bool = False) -> tuple:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
 
@@ -30,24 +27,23 @@ def matchMetsByInchi(nminchi1: str,
 #try:
     m1 = mol1
     m2 = mol2
-    charge1 = Chem.GetFormalCharge(m1)
-    charge2 = Chem.GetFormalCharge(m2)
+    # check for charge differences and correct them if necessary
     chargeDiff = charge1 - charge2
     if charge1 != charge2:
-        m1 = charge_neutralized_mol1
-        m2 = charge_neutralized_mol2
- #       m1 = NeutraliseCharges(m1)
- #       m2 = NeutraliseCharges(m2)
+        nminchi1 = charge_neutralized_inchi1
+        nminchi2 = charge_neutralized_inchi2
     
-    same = False
-    # check the fingerprint
-    if compareInchiByFingerprint0(fp1, fp2, verbose = verbose) == 1.0 or m1.GetNumAtoms() == m2.GetNumAtoms() == 1:
+    # check if we already have the same inchi string - normalized inchis also rectify tautorism
+    same = nminchi1 == nminchi2
+    
+
+    # if that is not the case check if we have the same molecule but different stereoisomers
+    if same == False:
+        # remove the layer for cis-trans isomerism and check again
+        nminchi1 = "/".join([x for x in nminchi1.split("/") if not x.startswith("b")])
+        nminchi2 = "/".join([x for x in nminchi2.split("/") if not x.startswith("b")])
         same = nminchi1 == nminchi2
-        if same == False:
-            # if that is false check if there is one of the stereoisomers the
-            # same
-            same = compareInchiByStereoIsomer0(m1,m2, verbose = verbose)
-# finally:
+        #print(nminchi1, nminchi2)
     return(same, chargeDiff)
 
 
