@@ -41,70 +41,39 @@ class ModelMerger:
             else:
                 raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
 
-    def translate_metabolites(self, to_translate, matches_df, score_type):
+    def translate_metabolites(self, to_translate, score_type):
         """
         Translates a list of metabolites from namespace 2 to the best matching metabolite in namespace 1.
 
-        This function takes a list of metabolite IDs from namespace 2 and attempts to translate each
-        to the best matching metabolite ID in namespace 1 based on a matching score. The function ensures
-        that no two metabolites from the to_translate list are translated to the same ID in namespace 1.
-        If two or more metabolites have the same best match, only the one with the highest score
-        (or the first alphanumerically in case of a tie) is assigned. Unassigned metabolites will retain
-        their original IDs.
+        This function takes a list of metabolite IDs from namespace 2 and translates each
+        to their matching metabolite ID in namespace 1.
+        Unassigned (with no match) metabolites will retain their original IDs.
 
         Parameters:
             to_translate (list): A list of metabolites that need to be translated.
-            matches_df (DataFrame): A DataFrame containing the potential matches between namespaces,
-                                    with columns ['source_namespace', 'target_namespace', score_type].
             score_type (string): A string indicating which column from matches_df contains the matching
                                  score that will be used to rank the metabolite matches.
         """
-        # # Sort the metabolites list alphanumerically by their ID
-        # to_translate = sorted(to_translate, key=lambda metabolite: metabolite.id)
 
         # Remove "_t" suffix from the metabolite IDs
         for met in to_translate:
             met.id = re.sub(r"_t$", "", met.id)
 
-        sorted_matches = matches_df.sort_values(by=[score_type, 'source_namespace', 'target_namespace'],
-                                                ascending=[False, True, True])
-
-        best_matches = dict()
-
-        # Iterate over the to_translate list
-        for met_id in sorted_matches["source_namespace"]:
-            if met_id in [m.id for m in to_translate]:
-                #print([m.id for m in to_translate])
-                #print(met_id)
-                # Filter the matches for the current metabolite
-                matches_for_met = sorted_matches[sorted_matches['source_namespace'] == met_id]
-                # Assign the best available match
-                for _, row in matches_for_met.iterrows():
-                    match_id = row['target_namespace']
-                    if (met_id not in best_matches.keys()) and (match_id not in best_matches.values()):
-                        best_matches[met_id] = match_id
-                        #print(met_id + ": " + match_id + ", " + str(row[score_type]))
-                #else:
-                #    # If no match is found, keep the original ID
-                #    best_matches[met_id] = met_id
-                #    print(met_id + ": " + met_id)
-
-        # apply the id translation to the metabolite and re-appends the translation compartment suffix
+        # Iterate over the to_translate list to apply the id translation to the metabolite and to re-append the
+        # translation compartment suffix
         for met in to_translate:
             try:
-                met.id = best_matches[met.id] + "_t"
+                met.id = self.matches[met.id] + "_t"
             except KeyError:
                 met.id = met.id + "_t"
 
-    def translate_ids(self, score_thr, score_type="Name_score"):
+    def translate_ids(self, score_type="total_score"):
         """
         Translates metabolite IDs in self.cobra_model based on a score threshold and updates corresponding
         translation reaction IDs.
 
         Parameters:
-            score_thr (float): Minimum score required for ID translation.
             score_type (str): Score type to filter matches by, must be a valid column in the matches table
-
         Raises:
             ValueError: If the specified score type is not found in the matches table or if a metabolite has
                         more than one or no "TR_" reaction.
@@ -112,14 +81,13 @@ class ModelMerger:
         if score_type not in self.matches.columns: # makes sure that the chosen score is specified in the matches table
             raise ValueError("Specified score type: " + score_type + "doesn't exist")
         cobra_model = self.memo_model.cobra_model
-        reliable_matches = self.matches.loc[self.matches[score_type] >= score_thr]
         #  selects the metabolites to be translated
         to_translate = list()
         for met in cobra_model.metabolites:
             if met.compartment == "t":
                 to_translate = to_translate + [met]
         # applies the translation to the metabolites
-        self.translate_metabolites(to_translate, reliable_matches, score_type)
+        self.translate_metabolites(to_translate, score_type)
         #  translate the ids of the respective TR_ reactions
         for met in cobra_model.metabolites:
             if met.compartment == "t":
