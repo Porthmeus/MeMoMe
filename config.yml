@@ -13,8 +13,8 @@ databases:
     file: "BiGG.tsv"
     reformat: "BiGG_MMM.csv"
   VMH:
-    URL: "Databases/vmh_formatted.csv"
-    file: "vmh_formatted.csv"
+    URL: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
+    file: "vmh.json"
   ChEBI:
     URL: "Databases/chebi_formatted.csv"
     file: "chebi_formatted.csv"
