@@ -1,141 +1,138 @@
 import cobra
 import pandas as pd
-import re
 from src.MeMoModel import MeMoModel
-#from cobra.core import DictList
-
-
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 
 class ModelMerger:
-
     def __init__(self,
-                 memo_model: MeMoModel = None,
-                 matches: pd.DataFrame = None) -> None:
-        self.memo_model = memo_model
-        self.matches = matches.copy()
-        self.matches = self.matches.rename(columns={'met_id2': 'source_namespace'})
-        self.matches = self.matches.rename(columns={'met_id1': 'target_namespace'})
+                 memo_model1: MeMoModel = None,
+                 memo_model2: MeMoModel = None,
+                 matches: pd.DataFrame = None,
+                 fail_on_missing_metabolite: bool = True) -> None:
+        self.memo_model1 = memo_model1
+        self.memo_model2 = memo_model2
+        self.matches = matches.copy().rename(columns={'met_id1': 'source_namespace',
+                                                      'met_id2': 'target_namespace'})
+        self.fail_on_missing_metabolite = fail_on_missing_metabolite
 
+        # Precompute a mapping of processed external metabolite IDs to their cobra.Metabolite in model1.
+        self.external_metabolite_map = {}
+        cobra_model1 = self.memo_model1.cobra_model
+        for met in cobra_model1.metabolites:
+            if met.compartment == "e":
+                key = handle_metabolites_prefix_suffix(met.id)
+                self.external_metabolite_map[key] = met
 
-    def replace_exchange_rxns_with_translation_rxns(self):
-        """copies exchange reactions into new reactions that gets modified to behave as translation reactions. It also
-        adds their respective 't' (translation) compartment"""
-        cobra_model = self.memo_model.cobra_model
-        for ex in cobra_model.exchanges:
-            if re.match(r"^EX_", ex.id):
-                tr_reac = cobra.Reaction(id=re.sub(r"^EX_", "TR_", ex.id))
-                tr_reac.name = ex.name
-                tr_reac.lower_bound = ex.lower_bound
-                tr_reac.upper_bound = ex.upper_bound
-                # copy notes and annotation dictionaries if they exist.
-                tr_reac.notes = ex.notes.copy() if ex.notes else {}
-                tr_reac.annotation = ex.annotation.copy() if ex.annotation else {}
+    def create_translation_reaction(self, met_mod1: cobra.Metabolite, copy_met_mod2: cobra.Metabolite):
+        """
+        Creates a translation reaction in model1:
+          - Copies met_mod2 (from model2) to create copy_met_mod2 and adds it to model1.
+          - Creates a reaction with ID "TR_" + <processed met_mod1 id> that converts met_mod1 into the copy of met_mod2.
+          - Returns the created reaction and the copy of met_mod2.
+        """
+        cobra_model1 = self.memo_model1.cobra_model
 
-                # Since this is an exchange reaction, we expect only one metabolite.
-                # Iterate over the original reaction’s metabolites (should be one) and clone it.
-                if len(ex.metabolites.keys()) == 1:
-                    met = list(ex.metabolites.keys())[0]
-                    stoich = ex.metabolites[met]
-                    # Add the metabolite to the cloned reaction with the same stoichiometry
-                    tr_reac.add_metabolites({met: stoich})
-                    #remove original exchange reaction
-                    cobra_model.reactions.remove(ex)
-                    # create the metabolite in the translation compartment and give it the opposite stoichiometry
-                    met_t = met.copy()
-                    #  TODO: replace regular expression with function call for the remove suffix function
-                    #   (need to modify the handle_metabolites_prefix_suffix_function)
-                    met_t.id = re.sub(r"[^_]+$", "t", met.id)  # substitutes the compartment suffix (all
-                                                                            # that follows the last underscore) with
-                                                                            # the new compartment's symbol
-                    met_t.compartment = "t"
-                    tr_reac.add_metabolites({met_t: -stoich})
-                else:
-                    raise ValueError(ex.id + "should contain only one metabolite")
+        # add the copy of met_mod2 to model1.
+
+        cobra_model1.add_metabolites([copy_met_mod2])
+
+        processed_met_mod1_id = handle_metabolites_prefix_suffix(met_mod1.id)
+        reaction_id = "TR_" + processed_met_mod1_id
+        translation_reaction = cobra.Reaction(reaction_id)
+        translation_reaction.add_metabolites({
+            met_mod1: -1,      # Consumes the external metabolite in model1.
+            copy_met_mod2: 1   # Produces the copied metabolite from model2.
+        })
+        cobra_model1.add_reactions([translation_reaction])
+
+    def delete_exchange_reaction(self, met_mod1: cobra.Metabolite) -> tuple:
+        """
+        Deletes any exchange reaction(s) in model1 that exchange met_mod1.
+        Assumes an exchange reaction has an ID that starts with "EX_" and involves only met_mod1.
+        Returns the lower and upper bounds from the first found exchange reaction,
+        or None if none is found.
+        """
+        cobra_model1 = self.memo_model1.cobra_model
+
+        exchange_rxns = [
+            rxn for rxn in cobra_model1.reactions
+            if rxn.id.startswith("EX_") and met_mod1 in rxn.metabolites and len(rxn.metabolites) == 1
+        ]
+        if len(exchange_rxns) != 1:
+            raise ValueError("There should be only one exchange reaction in model1 associated to"
+                             " metabolite  " + met_mod1.id + " while there are "+ str(len(exchange_rxns)))
+        ex_rxn = exchange_rxns[0]
+        # Take bounds from the matching reaction.
+        bounds = (ex_rxn.lower_bound, ex_rxn.upper_bound)
+        # Remove exchange reaction
+        cobra_model1.remove_reactions([ex_rxn])
+        return bounds
+
+    def create_exchange_reaction(self, copy_met_mod2: cobra.Metabolite, bounds):
+        """
+        Creates a new exchange reaction for the copy of met_mod2.
+        Its ID is "EX_" + <processed met_mod2 id> + "_e".
+        If bounds is provided as a tuple (lower_bound, upper_bound), those values are applied;
+        otherwise, default bounds are used.
+        """
+        cobra_model1 = self.memo_model1.cobra_model
+        new_ex_id = "EX_" + handle_metabolites_prefix_suffix(copy_met_mod2.id) + "_e"
+        new_ex_rxn = cobra.Reaction(new_ex_id)
+        new_ex_rxn.lower_bound, new_ex_rxn.upper_bound = bounds
+        new_ex_rxn.add_metabolites({copy_met_mod2: -1})
+        cobra_model1.add_reactions([new_ex_rxn])
+        return new_ex_rxn
+
+    def update_namespace_translation(self, met_mod2: cobra.Metabolite, met_mod1_translation_id: str) -> None:
+        """
+        Given a metabolite from model2 (met_mod2) and the expected translation ID (met_mod1_translation_id)
+        for model1, this function:
+          1. Finds the matching external metabolite in model1.
+          2. Creates a translation reaction (TR_) to produce a copy of met_mod2.
+          3. Deletes the corresponding exchange reaction for the original metabolite, capturing its bounds.
+          4. Creates a new exchange reaction (EX_) for the new copy, carrying over the bounds.
+        """
+        # Step 1: Find the external metabolite in model1.
+        # Fast lookup: Returns the external (compartment "e") metabolite in model1 whose processed ID matches the
+        # given translation_id
+        met_mod1 = self.external_metabolite_map.get(met_mod1_translation_id)
+        if met_mod1 is None:
+            msg = f"No external metabolite found in model1 for translation id '{met_mod1_translation_id}'"
+            if self.fail_on_missing_metabolite:
+                raise ValueError(msg)
             else:
-                raise ValueError("The exchange reaction " + ex.id + "should start with the 'EX_' prefix")
-            cobra_model.add_reactions([tr_reac])
+                print(msg)
+            return  # Skip creating the reaction for this metabolite.
 
+        copy_met_mod2 = met_mod2.copy()
 
-    def translate_metabolites(self, to_translate, score_type):
-        """
-        Translates a list of metabolites from namespace 2 to the best matching metabolite in namespace 1.
+        # Step 2: Create the translation reaction.
+        self.create_translation_reaction(met_mod1, copy_met_mod2)
 
-        This function takes a list of metabolite IDs from namespace 2 and translates each
-        to their matching metabolite ID in namespace 1.
-        Unassigned (with no match) metabolites will retain their original IDs.
+        # Step 3: Delete the existing exchange reaction for met_mod1 and capture bounds.
+        bounds = self.delete_exchange_reaction(met_mod1)
 
-        Parameters:
-            to_translate (list): A list of metabolites that need to be translated.
-            score_type (string): A string indicating which column from matches_df contains the matching
-                                 score that will be used to rank the metabolite matches.
-        """
+        # Step 4: Create a new exchange reaction for the copy of met_mod2 using the recovered bounds.
+        self.create_exchange_reaction(copy_met_mod2, bounds)
 
-        # Remove "_t" suffix from the metabolite IDs
-        for met in to_translate:
-            met.id = re.sub(r"_t$", "", met.id)
-
-        # Iterate over the to_translate list to apply the id translation to the metabolite and to re-append the
-        # translation compartment suffix
-        for met in to_translate:
-            try:
-                met.id = self.matches[met.id] + "_t"
-            except KeyError:
-                met.id = met.id + "_t"
-
-    def translate_ids(self, score_type="total_score"):
-        """
-        Translates metabolite IDs in self.cobra_model based on a score threshold and updates corresponding
-        translation reaction IDs.
-
-        Parameters:
-            score_type (str): Score type to filter matches by, must be a valid column in the matches table
-        Raises:
-            ValueError: If the specified score type is not found in the matches table or if a metabolite has
-                        more than one or no "TR_" reaction.
-        """
-        if score_type not in self.matches.columns: # makes sure that the chosen score is specified in the matches table
-            raise ValueError("Specified score type: " + score_type + "doesn't exist")
-        cobra_model = self.memo_model.cobra_model
-        #  selects the metabolites to be translated
-        to_translate = list()
-        for met in cobra_model.metabolites:
-            if met.compartment == "t":
-                to_translate = to_translate + [met]
-        # applies the translation to the metabolites
-        self.translate_metabolites(to_translate, score_type)
-        #  translate the ids of the respective TR_ reactions
-        for met in cobra_model.metabolites:
-            if met.compartment == "t":
-                tr_rxns_for_current_met = [rxn for rxn in met.reactions if rxn.id.startswith("TR_")]
-                if len(tr_rxns_for_current_met) != 1:
-                    raise ValueError(met.id + " should have one and only one TR_ reaction, it has " +
-                                     str(len(tr_rxns_for_current_met)) + " instead")
-                tr_rxn = tr_rxns_for_current_met[0]
-                tr_rxn.id = "TR_" + met.id
-
-    def create_exchanges(self):
-        cobra_model = self.memo_model.cobra_model
-        for met in cobra_model.metabolites:
-            if met.compartment == "t":
-                reaction_id = "EX_" + met.id
-                rxn = cobra.Reaction(id=reaction_id, name=met.name + " exchange", lower_bound=-1000, upper_bound=1000)
-                rxn.add_metabolites({met: -1})
-                cobra_model.add_reactions([rxn])
-
-    def set_rxn_bounds(self):
-        cobra_model = self.memo_model.cobra_model
-        for met in cobra_model.metabolites:
-            if met.compartment == "t":
-                ex_rxn = cobra_model.reactions.get_by_id("EX_" + met.id)
-                tr_rxn = cobra_model.reactions.get_by_id("TR_" + met.id)
-                ex_rxn.lower_bound = tr_rxn.lower_bound
-                ex_rxn.upper_bound = tr_rxn.upper_bound
-                tr_rxn.lower_bound = -1000
-                tr_rxn.upper_bound = 1000
-
+        # Step 5: remove
 
     def translate_namespace(self):
-        self.replace_exchange_rxns_with_translation_rxns()
-        self.translate_ids()
-        self.create_exchanges()
-        self.set_rxn_bounds()
+        """
+        Iterates over all external metabolites from model2 that are translatable
+        (i.e. their processed IDs appear in the matches table's target_namespace) and updates model1's namespace.
+        For each metabolite:
+          - Retrieves the corresponding translation ID (source_namespace) from the matches table.
+          - Calls update_namespace_translation to perform the translation reaction creation,
+            delete the old exchange reaction, and create a new exchange reaction with carried-over bounds.
+        """
+        translatable_model2_metabs = [
+            met for met in self.memo_model2.cobra_model.metabolites
+            if met.compartment == "e" and handle_metabolites_prefix_suffix(met.id) in self.matches["target_namespace"].values
+        ]
+        for met_mod2 in translatable_model2_metabs:
+            matching_row = self.matches[
+                self.matches["target_namespace"] == handle_metabolites_prefix_suffix(met_mod2.id)
+            ].iloc[0]
+            met_mod1_translation_id = matching_row["source_namespace"]
+            self.update_namespace_translation(met_mod2, met_mod1_translation_id)
