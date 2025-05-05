@@ -10,6 +10,8 @@ import sys
 import cobra
 
 import src.MeMoModel
+from dbhandling.reformatBiGG import reformatBiGG
+from dbhandling.reformatModelSeed import reformatModelSeed
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 
@@ -38,6 +40,9 @@ def main(args: argparse.Namespace):
             update_database()
         logger.debug("Finished downloading databases")
     else:
+        if args.reformat:
+          reformatBiGG()
+          reformatModelSeed()
         # Check if exactly two models were supplied
         if args.model1 is None:
             print("Please supply a second model with the --model1 parameter")
@@ -50,7 +55,8 @@ def main(args: argparse.Namespace):
             print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
             logger.error("User did not provide an output path")
             sys.exit(1)
-    
+
+
         # Load the model
         model1 = MeMoModel.fromPath(Path(args.model1))
         model2 = MeMoModel.fromPath(Path(args.model2))
@@ -70,6 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('--keep-one-to-many', action='store_true', default=False, help='Keep one-to-many merges')
     parser.add_argument('--keep-unmatched', action='store_true', default=False, help='Stored unmatched metabolties in the output')
     parser.add_argument('--download', action='store_true', help='Download all required databases')
+    parser.add_argument('--reformat', action='store_true', help='Reformat all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
     parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')
