@@ -9,18 +9,15 @@ databases:
     file: "modelSeed.tsv"
     reformat: "modelSeed_MMM.csv"
   BiGG:
-    URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt" 
+    URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
     file: "BiGG.tsv"
     reformat: "BiGG_MMM.csv"
   VMH:
     URL: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
     file: "vmh.json"
   ChEBI:
-    URL: "Databases/chebi_formatted.csv"
-    file: "chebi_formatted.csv"
-  HMDB:
-    URL: "Databases/hmdb_formatted.csv"
-    file: "hmdb_formatted.csv"
+    URL: "https://ftp.ebi.ac.uk/pub/databases/chebi/Flat_file_tab_delimited/chebiId_inchi.tsv"
+    file: "chebiId_inchi.tsv"
   Identifiers:
     URL: "https://registry.api.identifiers.org/restApi/namespaces?page=0&size=999999&sort=name%2Casc"
     file: "identifiers.org_registry.json"

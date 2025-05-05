@@ -17,7 +17,15 @@ if you just want to update a the environment use
 
 
 ## Run Tests
-python -m unittest
+
+For the general tests of the code base perform
+`python3 tests/tests/test_suite.py fast`
+
+For benchmarking tests run:
+`python3 tests/test_suite.py slow`
+
+Please do not use
+~~`python3 -m unittest`~~
 
 
 
@@ -28,3 +36,20 @@ python3 main.py --model1 tests/dat/e_coli_core.xml  --model2 tests/dat/e_coli_co
 Executing 
 `python3 -m tests.test_bulkPerformance  && google-chrome performace_table.html.`
 should generate a table called performace_table.html in the current folder.
+
+# Development with docker
+* You need to have docker installed
+
+## Running the docker image for developers
+cd into the MeMoMe folder
+```bash
+docker compose run dev # This will start the docker container interactively
+```
+You can now edit files locally with your favorite editor and them run MeMoMe in the container. In the container you can run all the development commands mentioned above.
+
+## Running the docker image for production
+Disclaimer: Currently the production image just runs the tets. The cli will be exposed later
+cd into the MeMoMe folder
+```bash
+docker compose run prod # This will run the tests
+```

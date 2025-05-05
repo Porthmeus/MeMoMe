@@ -18,9 +18,8 @@ from __future__ import annotations
 import warnings
 from copy import deepcopy
 
-from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
+from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix, validateInchi
 from src.annotation.annotateInchiRoutines import findOptimalInchi
-
 
 class MeMoMetabolite():
     """Class for "original" as well as "inferred"  information about a metabolite.
@@ -35,12 +34,18 @@ class MeMoMetabolite():
             orig_ids: list[str]|None = None,
             _model_id: str|None = None,
             names: list[str]|None = None,
+            names_source: list[str]|None = None,
             _inchi_string: str|None = None,
+            _inchi_source: str|None = None,
             _formula: str|None = None,
             _charge: int|None = None,
-            _pKa: dict|None= None,
-            _pKb: dict|None = None,
-            annotations: dict|None = None,
+            # TODO _charge_source: str|None = None,
+            _pKa: dict[str,float]|None= None,
+            # TODO  _pKa_source: dict|None = None,
+            _pKb: dict[str,float]|None = None,
+            # TODO _pKb_source: dict|None = None,
+            annotations: dict[str,list[str]]|None = None,
+            annotations_source: dict[str,list[str]]|str|None = None,
     ) -> None:
         """Initialize MeMoMetaboblite
 
@@ -90,9 +95,13 @@ class MeMoMetabolite():
 
         if names is None:
             self.names = []
+            self.names_source =[]
         else:
             self.names = []
-            self.set_names(names)
+            self.names_source =[]
+            if names_source is None:
+                names_source = "model"
+            self.set_names(names, source = names_source)
 
         if _formula is None:
             self._formula = None
@@ -102,9 +111,12 @@ class MeMoMetabolite():
 
         if _inchi_string is None:
             self._inchi_string = None
+            self._inchi_source = None
         else:
             self._inchi_string = None
-            self.set_inchi_string(_inchi_string)
+            if _inchi_source is None:
+                _inchi_source = "model"
+            self.set_inchi_string(_inchi_string, source = _inchi_source)
 
         if _charge is None:
             self._charge = None
@@ -126,9 +138,13 @@ class MeMoMetabolite():
 
         if annotations is None:
             self.annotations = {}
+            self.annotations_source = {}
         else:
             self.annotations = {}
-            self.set_annotations(annotations)
+            self.annotations_source = {}
+            if annotations_source is None:
+                annotations_source = "model"
+            self.set_annotations(annotations, source = annotations_source)
 
 
     def set_id(self, new_id: str) -> None:
@@ -147,22 +163,36 @@ class MeMoMetabolite():
                 "changed metbolite _model_id from {old} to {new}".format(old=self._model_id, new=new_model_id))
         self._model_id = new_model_id
 
-    def set_names(self, new_names: list[str]) -> None:
+    def set_names(self, new_names: list[str], source:str|list[str]|None=None) -> None:
         """ set function for names """
+        if source == None:
+            source = self.names_source
+        elif type(source) == str:
+            source = [source]*len(new_names)
+
+        if len(source) != len(new_names):
+            raise ValueError("List of new names have a different length than the one for the sources. Consider providing a corresponding soure list to the new names via the source parameter.")
+
         if self.names:
             warnings.warn("changed metbolite names from {old} to {new}".format(old=str(self.names), new=str(new_names)))
-        new_names = list(set(new_names))
-        new_names.sort()
-        self.names = new_names
+        
+        # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
+        new_names, source = zip(*sorted(zip(new_names,source))) # sort both 
+        self.names = list(new_names)
+        self.names_source = list(source)
 
-    def add_names(self, new_names: list[str]) -> int:
+    def add_names(self, new_names: list[str], source: str) -> int:
         ''' append new names to the list of metabolite names'''
         old_names = deepcopy(self.names)
-        for x in new_names:
-            self.names.append(x)
+        self.names.extend(new_names)
         # remove duplicates and sort lexographically
-        self.names = list(set(self.names))
-        self.names.sort()
+        self.names = list(dict.fromkeys(self.names)) # use dict instead of set to preserve order
+        # we allow addition of names only by one source at a time - however, if we want to add several names we need to extend the source list by the same number of elements as the name list
+        self.names_source.extend([source]*(len(self.names)-len(old_names))) # extend source list
+        # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
+        new_names, new_sources = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
+        self.names = list(new_names)
+        self.names_source = list(new_sources)
         # return if the names have changed
         return int(old_names != self.names)
 
@@ -195,26 +225,29 @@ class MeMoMetabolite():
             warnings.warn("changed metbolite _formula from {old} to {new}".format(old=self._formula, new=new_formula))
         self._formula = new_formula
 
-    def set_inchi_string(self, new_inchi_string: str) -> int:
+    def set_inchi_string(self, new_inchi_string: str, source: str) -> int:
         """ set function for _inchi_string """
         old_inchi = deepcopy(self._inchi_string)
-
-        # handle empty strings
-        if new_inchi_string == "":
-            new_inchi_string = None
-
+        
+        # validate inchi string - handles also empty strings
+        new_inchi_string = validateInchi(new_inchi_string)
+        
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
         self._inchi_string = new_inchi_string
+        self._inchi_source = source
         return int(self._inchi_string != old_inchi)
     
-    def add_inchi_string(self, new_inchi_string:str) -> int:
+    def add_inchi_string(self, new_inchi_string:str, source:str) -> int:
         """ compares to inchis and takes the most appropiate one"""
         changed = 0
-        # handle empty strings
-        if new_inchi_string == "":
+        
+        # handle invalid inchi strings -handles also empty strings
+        new_inchi_string = validateInchi(new_inchi_string)
+        if new_inchi_string == None:
             return changed
+        
         if self._inchi_string != None:
             old = self._inchi_string
             new = findOptimalInchi([self._inchi_string, new_inchi_string], charge = self._charge)
@@ -225,9 +258,11 @@ class MeMoMetabolite():
                 #print("OLD:",old)
                 #print("NEW:",new)
                 self._inchi_string = new
+                self._inchi_source = source
                 changed =  1
         else:
             self._inchi_string = new_inchi_string
+            self._inchi_source = source
             changed = 1
         return changed
     
@@ -252,7 +287,7 @@ class MeMoMetabolite():
         return int(old_pKa != self._pKa)
 
 
-    def set_pKa(self, new_pKa:dict) -> None:
+    def set_pKa(self, new_pKa:dict[str,float]) -> None:
         """ set function for _pKa """
         if self._pKa is not None and self._pKa != {}:
             old = ";".join([x+":"+str(y) for x,y in self._pKa.items()])
@@ -272,7 +307,7 @@ class MeMoMetabolite():
                     self._pKb[key] = value
         return int(old_pKb != self._pKb)
 
-    def set_pKb(self, new_pKb:dict) -> None:
+    def set_pKb(self, new_pKb:dict[str,float]) -> None:
         """ set function for _pKb """
         if self._pKb is not None and self._pKb != {}:
             old = ";".join([x+":"+str(y) for x,y in self._pKb.items()])
@@ -280,30 +315,89 @@ class MeMoMetabolite():
             warnings.warn("changed metabolite _pKs from {old} to {new}".format(old = old, new =new))
         self._pKb = new_pKb
     
-    def set_annotations(self, new_annotations: dict) -> None:
+    def set_annotations(self, new_annotations: dict[str,list[str]], source:str|dict[str,list[str]]|None=None) -> None:
         """ set function for annotations """
-        if self.annotations != {} and self.annotations != None:
-            warnings.warn("changed metbolite annotations from {old} to {new}".format(
-                old=str(self.annotations),
-                new=str(new_annotations)))
-        self.annotations = new_annotations
 
-    def add_annotations(self, new_annotations: dict) -> int:
+        # try to make sources if there is not much information
+        if source == None:
+            source == deepcopy(self.annotations_source)
+        elif type(source) == str:
+            val = source
+            source = dict()
+            for x,y in new_annotations.items():
+                source[x] = [val]*len(y)
+
+        # first check if the structure of annotations and sources are the same
+        if new_annotations.keys() != source.keys():
+            raise ValueError('''Keys of the new annotation dictionary differs from the keys in source. 
+            Annotation keys: {key1}
+            Source keys: {key2}'''.format(key1 = new_annotations.keys(), key2 = source.keys()))
+        elif [len(x) for x in new_annotations.values()] != [len(y) for y in source.values()]:
+            raise ValueError('''Entries length differs for new annotation and source dictionary. Consider to provide a source dictionary via the source value''')
+
+        # check if there is an old annotation which will be overwritten
+        if self.annotations != {} and self.annotations != None:
+            warntrigger = True
+            old_annotations = deepcopy(self.annotations)
+        else:
+            warntrigger = False
+        
+        # delete the old information
+        self.annotations = dict()
+        self.annotations_source = dict()
+        
+        # sort both new dictionaries and remove duplicates 
+        for x in new_annotations.keys():
+            new_annolst = []
+            new_sourcelst = []
+            for anno,src in zip(new_annotations[x], source[x]):
+                if not anno in new_annolst:
+                    new_annolst.append(anno)
+                    new_sourcelst.append(src)
+            new_annolst,new_sourcelst = zip(*sorted(zip(new_annolst,new_sourcelst)))
+            self.annotations[x] = list(new_annolst)
+            self.annotations_source[x] = list(new_sourcelst)
+        
+        # trigger the warning and give some information to the user
+        if warntrigger == True:
+            warnings.warn("changed metbolite annotations from {old} to {new}".format(
+                new=str(self.annotations),
+                old=str(old_annotations)))
+
+    def add_annotations(self, new_annotations: dict[str,list[str]], source:str) -> int:
         """ append new annotations to the dict of metabolite annotations
         check if there have been actually added new annotation, if so return 1,else 0"""
         old_annotation = deepcopy(self.annotations)
         for x in new_annotations.keys():
+            # check if there is already annotations with that key
             if x in self.annotations.keys():
                 self.annotations[x].extend(new_annotations[x])
                 # remove duplicates and sort list
-                new_annolst = list(set(self.annotations[x]))
-                new_annolst.sort()
-                self.annotations[x] = new_annolst
-            else:
+                new_annolst = list(dict.fromkeys(self.annotations[x])) # hacky way to create uniques
+                new_sources = self.annotations_source[x]
+                # here we extend the list number of source by the number of new annotations
+                new_sources.extend([source]*(len(new_annolst) - len(old_annotation[x])))
+                # we want the annotations to be sorted lexographically, thus we have
+                # to sort the sources accordingly, so that the index of the
+                # anno corresponds to the index of the source. This is done
+                # with this rather complicated line below (stackoverflow for
+                # the rescue)
+                new_annolst, new_sources = zip(*sorted(zip(new_annolst,new_sources)))
+                self.annotations[x] = list(new_annolst)
+                self.annotations_source[x] = list(new_sources)
+            else: # otherwise create a new dictionary entry
                 # remove duplicates and sort list
-                new_annolst = list(set(new_annotations[x]))
-                new_annolst.sort()
-                self.annotations[x] = new_annolst
+                new_annolst = list(dict.fromkeys(new_annotations[x])) # hacky way to create uniques
+                # here we extend the list number of source by the number of new annotations
+                new_sources = [source]*len(new_annolst)
+                # we want the annotations to be sorted lexographically, thus we have
+                # to sort the sources accordingly, so that the index of the
+                # anno corresponds to the index of the source. This is done
+                # with this rather complicated line below (stackoverflow for
+                # the rescue)
+                new_annolst,new_sources = zip(*sorted(zip(new_annolst,new_sources)))
+                self.annotations[x] = list(new_annolst)
+                self.annotations_source[x] = list(new_sources)
         
         # check if the annotations have been changed
         return int(old_annotation!=self.annotations)
@@ -342,12 +436,21 @@ class MeMoMetabolite():
             self.set_id(new_metabolite._id)
             self.set_model_id(new_metabolite._model_id)
             self.set_formula(new_metabolite._formula)
-            self.set_inchi_string(new_metabolite._inchi_string)
+            self.set_inchi_string(new_metabolite._inchi_string, new_metabolite._inchi_source)
             self.set_charge(new_metabolite._charge)
 
-        # add the non-unique attrbutes
-        self.add_annotations(new_metabolite.annotations)
-        self.add_names(list(new_metabolite.names))
+        # add the non-unique attrbutes including their sources of annotation
+        for key in new_metabolite.annotations.keys():
+            for i in range(len(new_metabolite.annotations[key])):
+                new_anno_dic = {key : [new_metabolite.annotations[key][i]]}
+                new_source = new_metabolite.annotations_source[key][i]
+                self.add_annotations(new_anno_dic, source = new_source)
+
+        # need to iterate, because source is only accepted as single string as
+        # variable of add_names(), yet it can contain several different values
+        # if derived from another model
+        for i in range(len(new_metabolite.names)):
+            self.add_names([new_metabolite.names[i]], new_metabolite.names_source[i])
         self.add_orig_ids(list(new_metabolite.orig_ids))
 
     def annotate(self):
@@ -362,11 +465,12 @@ class MeMoMetabolite():
             # databases we have to retrieve the inchi string
             # we could define a sequence of databases/annotation from most
             # relevant to less relevant and proceed following that sequence
-
+        warnings.warn("MeMoMetabolite.annotate() is not implemented yet")
         return None
 
     def compare(self, metabolite):
 
+        warnings.warn("MeMoMetabolite.compare() is not implemented yet")
         return None
 
     @property
