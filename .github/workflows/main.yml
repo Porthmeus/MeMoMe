@@ -62,3 +62,4 @@ jobs:
           # conda list
           python main.py --download
           python  tests/test_suite.py fast
+          python  tests/test_suite.py slow
