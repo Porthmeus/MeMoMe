@@ -69,20 +69,9 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
         df_ModelSEED = pd.DataFrame()
         metabolitesModelSEED_count = 0
 
-    # get metabolite info from gapseq
-    db_path =  os.path.join(get_database_path(), config["databases"]["gapseq"]["file"])
-    try:
-        df_gapseq = pd.read_table(db_path)
-        # find number of model metabolites in gapseq database
-        metabolitesgapseq_count = df_metabolites["model_metabolites"].isin(df_gapseq["id"]).sum()
-    except FileNotFoundError as e:
-        warnings.warn(str(e))
-        df_gapseq = pd.DataFrame()
-        metabolitesgapseq_count = 0
 
     # dictionary with percent of model metabolites found in each database
     metabolite_namespace = {"BiGG": metabolitesBiGG_count / len(df_metabolites["model_metabolites"]),
                           "VMH": metabolitesVMH_count / len(df_metabolites["model_metabolites"]),
-                          "ModelSEED": metabolitesModelSEED_count / len(df_metabolites["model_metabolites"]),
-                          "gapseq": metabolitesgapseq_count / len(df_metabolites["model_metabolites"])}
+                          "ModelSEED": metabolitesModelSEED_count / len(df_metabolites["model_metabolites"])}
     return metabolite_namespace

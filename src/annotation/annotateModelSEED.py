@@ -103,7 +103,7 @@ def extractModelSEEDAnnotationsFromAlias(alias:str):
 #        
 #    return(new_anno_corrected)
 
-def handle_seed_entry(aliases: pd.DataFrame) -> tuple[dict, list]:
+def handle_seed_entry(aliases: pd.DataFrame) -> tuple[dict, list, str]:
 # get the information from the database
   new_anno = dict()
   new_names = list()
@@ -124,10 +124,10 @@ def handle_seed_entry(aliases: pd.DataFrame) -> tuple[dict, list]:
           new_anno[key] = list(set(new_anno[key]))
       new_names = list(set(new_names))
 
-  return(new_anno, new_names)
+  return(new_anno, new_names, "seed")
 
 
-def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
     """
     A small helper function to avoid redundant code
     Uses a ModelSEED identifiers and annotates it with the identifiers.org entries.
@@ -145,7 +145,7 @@ def annotateModelSEED_entry(entry:str,  database:pd.DataFrame = pd.DataFrame(), 
       mseed = database
 
     if mseed.empty:
-      return dict(), list()
+      return dict(), list(), "seed"
 
     # extract the relevant annotation information and return it
     aliases = mseed.loc[mseed["id"]==entry,"aliases"]

@@ -16,7 +16,7 @@ DBName = NewType('DBName', str)
 # The dbs have have certain columns that correspond to their main identifier, e.g. vmh has vmhmetabolite, HMDB has accession and so one. This is what we call a database key. Aka the MAIN column which we use for entry lookup
 DBKey = NewType('DBKey', str)
 
-EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list]]
+EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
 
 
 
@@ -92,13 +92,14 @@ def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, 
   for met in metabolites:
     if any(db[db_key]==met._id):
       #TODO FIX LAST PARaM
-      new_met_anno_entry,new_names_entry = entry_annotation_function(met._id, db, allow_missing_dbs)
-      x = met.add_names(new_names_entry)
+      if met.id is None: raise Exception("met.id is None")
+      new_met_anno_entry,new_names_entry, source = entry_annotation_function(met._id, db, allow_missing_dbs)
+      x = met.add_names(new_names_entry, source)
       new_names = new_names + x
 
       # add the annotations to the slot in the metabolites
       if len(new_met_anno_entry) > 0:
-          x = met.add_annotations(new_met_anno_entry)
+          x = met.add_annotations(new_met_anno_entry, source)
           new_annos = new_annos + x 
 
   # return the number of metabolites which got newly annotated with inchis,
@@ -111,12 +112,13 @@ def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_ke
     new_annos_added = 0
     new_names_added = 0
     # go through the metabolites and check if there is data whigh can be added
+    source = None
     for met in metabolites:
         new_met_anno = dict()
         new_names = list() 
         if db_key in met.annotations.keys():
             for entry in met.annotations[db_key]:
-                new_met_anno_entry, new_names_entry = annotation_function(entry, db, allow_missing_dbs)
+                new_met_anno_entry, new_names_entry, source = annotation_function(entry, db, allow_missing_dbs)
                 for key, value in new_met_anno_entry.items():
                     if key in new_met_anno.keys():
                         new_met_anno[key].extend(value)
@@ -126,12 +128,13 @@ def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_ke
                 new_names.extend(new_names_entry)
 
             # add new names to the MeMoMetabolite
-            x =met.add_names(new_names)
+            if source is None: raise Exception("source is None")
+            x =met.add_names(new_names, source)
             new_names_added = new_names_added + x
             
             # add the annotations to the slot in the metabolites
             if len(new_met_anno) > 0:
-                x = met.add_annotations(new_met_anno)
+                x = met.add_annotations(new_met_anno, source)
                 new_annos_added = new_annos_added + x
     anno_result = AnnotationResult(0, new_names_added, new_names_added)
     return anno_result
