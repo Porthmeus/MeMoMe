@@ -45,7 +45,7 @@ def __load_csv(path: str) -> pd.DataFrame:
   return(df)
 
 
-def annotateHMDB_entry(entry: AnnotationKey,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+def annotateHMDB_entry(entry: AnnotationKey,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
   return annotateDB_entry(entry, DBName("HMDB"), __load_csv, handle_HMDB_entries, database, allow_missing_dbs)
 
 def annotateHMDB(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:

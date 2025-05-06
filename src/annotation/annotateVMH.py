@@ -34,9 +34,9 @@ def __json_to_tsv(path: str) -> pd.DataFrame:
   with open(path, "r") as f: 
     vmh = json.load(f)["results"]
     return(pd.DataFrame(vmh))
-                                      
 
-def annotateVMH_entry(entry: AnnotationKey ,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+
+def annotateVMH_entry(entry: AnnotationKey ,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
   """
     A small helper function to avoid redundant code.
     Uses a VMH identifier and annotates it with the identifiers.org entries.
@@ -51,13 +51,25 @@ def annotateVMH(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = Fal
     Annotate a list of metabolites with the entries from VMH. Look for VMH ids in the annotation slot of the metabolites and if one is found use these.
     The function will directly add the annotation and names to the MeMoMetabolite object.
     Return value: a tuple of 3 denoting the number of changes metabolites for the following values: [inchi_strings, annotations, names]
-    """  
-    return annotateDB(metabolites, DBName("VMH"), DBKey("vmhmetabolite"), __json_to_tsv, annotateVMH_entry, allow_missing_dbs)
+    """
+    
+    vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, __json_to_tsv)
+    
+    if vmh.empty:
+      return AnnotationResult(0, 0, 0)
 
+    return handleMetabolites(vmh, metabolites, "vmhmetabolite", annotateVMH_entry)
 
 def annotateVMH_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
-  """
-  Annotate a list of metabolites with the entries from VMH. Look for VMH ids in the metabolite._id slot and if one is found use these.
-  """
-  return annotateDB_id(metabolites, DBName("VMH"), DBKey("abbreviation"), __json_to_tsv, annotateVMH_entry, allow_missing_dbs)
+    """
+    Annotate a list of metabolites with the entries from VMH. Look for VMH ids in the metabolite._id slot and if one is found use these.
+    """
 
+    # check if the database was given, if not, try to load it
+    vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, __json_to_tsv)
+
+    if vmh.empty:
+      return AnnotationResult(0, 0, 0)
+
+
+    return handleIDs(vmh, metabolites, "abbreviation", annotateVMH_entry)

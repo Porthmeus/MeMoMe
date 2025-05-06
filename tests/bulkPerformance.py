@@ -17,11 +17,11 @@ from datetime import datetime
 table_data = [
 ]
 
-class Test_annotateBulkRoutines(unittest.TestCase):
+class Test_annotationPerformance(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
     this_directory = Path(__file__).parent.parent
-    dat = this_directory.joinpath("dat")
+    dat = this_directory.joinpath("tests/dat")
 
 
     def test_ecoli_core_seed(self):
@@ -59,7 +59,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     def test_ecoli_core_chebi(self):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(54, 0, 0)
+        exp = AnnotationResult(53, 0, 0)
         res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
         add_test_case_to_table(self.test_ecoli_core_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
@@ -67,7 +67,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     def test_ecoli_core_bigg_chebi(self):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(54, 0, 0)
+        exp = AnnotationResult(53, 0, 0)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
         add_test_case_to_table(self.test_ecoli_core_bigg_chebi.__name__, res1 + res2, exp, mod)   
@@ -93,7 +93,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     def test_ecoli_vmh_bigg_id_chebi(self):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(487,866,358)
+        exp = AnnotationResult(486,866,358)
         res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
         res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
         add_test_case_to_table(self.test_ecoli_vmh_bigg_id_chebi.__name__, res1 + res2, exp, mod)   

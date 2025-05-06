@@ -23,7 +23,7 @@ def annotateDB(metabolites: list[MeMoMetabolite], db_name: DBName, annotation_ke
 
 def annotateDB_entry(entry: AnnotationKey, db_name: DBName, loading_function,  
                      handle_function: Callable[[pd.DataFrame, AnnotationKey], tuple[dict, list]],
-                     database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list]:
+                     database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
     """
     A small helper function to avoid redundant code
     Uses a DB identifiers and annotates it with the identifiers.org entries.
@@ -37,10 +37,10 @@ def annotateDB_entry(entry: AnnotationKey, db_name: DBName, loading_function,
       db = load_database(get_config()["databases"][db_name]["file"], allow_missing_dbs, loading_function)
     
     if db.empty:
-      return dict(), list()
+      return dict(), list(), ""
 
     annotations, names = handle_function(db, entry)
-    return annotations, names
+    return annotations, names, db_name
 
 
 def annotateDB_id(metabolites: list[MeMoMetabolite], db_name: DBName, db_key: DBKey, loading_function: Callable[[str], pd.DataFrame], 

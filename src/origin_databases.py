@@ -20,7 +20,7 @@ def VMH2DataFrame():
             VMH_json = json.dumps(VMH_json['results'])
             VMH = pd.read_json(StringIO(VMH_json))
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         VMH = pd.DataFrame()
 
     # return the file as dataframe
@@ -43,26 +43,32 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
     db_path =  os.path.join(get_database_path(), config["databases"]["BiGG"]["file"])
     try:
         df_BiGG = pd.read_table(db_path)
+        # find number of model metabolites in BiGG database
+        metabolitesBiGG_count = df_metabolites["model_metabolites"].isin(df_BiGG["universal_bigg_id"]).sum()
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         df_Bigg = pd.DataFrame()
-    # find number of model metabolites in BiGG database
-    metabolitesBiGG_count = df_metabolites["model_metabolites"].isin(df_BiGG["universal_bigg_id"]).sum()
+        metabolitesBiGG_count = 0
 
     # get metabolite info from VMH
     df_VMH = VMH2DataFrame()
-    # find number of model metabolites in VMH database
-    metabolitesVMH_count = df_metabolites["model_metabolites"].isin(df_VMH["abbreviation"]).sum()
+    if df_VMH.empty:
+        metabolitesVMH_count=0
+    else:
+        # find number of model metabolites in VMH database
+        metabolitesVMH_count = df_metabolites["model_metabolites"].isin(df_VMH["abbreviation"]).sum()
 
     # get metabolite info from ModelSEED
     db_path =  os.path.join(get_database_path(), config["databases"]["ModelSeed"]["file"])
     try:
         df_ModelSEED = pd.read_table(db_path, low_memory=False)
+        # find number of model metabolites in ModelSEED database
+        metabolitesModelSEED_count = df_metabolites["model_metabolites"].isin(df_ModelSEED["id"]).sum()
     except FileNotFoundError as e:
-        warnings.warn(e)
+        warnings.warn(str(e))
         df_ModelSEED = pd.DataFrame()
-    # find number of model metabolites in ModelSEED database
-    metabolitesModelSEED_count = df_metabolites["model_metabolites"].isin(df_ModelSEED["id"]).sum()
+        metabolitesModelSEED_count = 0
+
 
     # dictionary with percent of model metabolites found in each database
     metabolite_namespace = {"BiGG": metabolitesBiGG_count / len(df_metabolites["model_metabolites"]),
