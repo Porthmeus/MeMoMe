@@ -28,6 +28,17 @@ Please do not use
 ~~`python3 -m unittest`~~
 
 
+## Contributing
+First run `pre-commit install`
+
+This will install the pre-commit hooks.
+
+Black will now check if your code is correctly formatted.
+If it is not, please run 
+```
+black .
+```
+
 
 ## Run application with test model
 python3 main.py --model1 tests/dat/e_coli_core.xml  --model2 tests/dat/e_coli_core.xml --output here.csv

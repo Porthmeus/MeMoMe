@@ -3,13 +3,14 @@ import os
 from pathlib import Path
 from urllib.error import URLError
 
-#from src.config import *
+# from src.config import *
 import yaml
 import requests
 import sys
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
+
 
 def is_inet_available() -> bool:
     try:
@@ -21,8 +22,9 @@ def is_inet_available() -> bool:
         print("Internet is not available.")
         return False
 
+
 def get_config() -> dict:
-    """ load the config file and return the dictionary"""
+    """load the config file and return the dictionary"""
     this_path: Path = Path(__file__)
     config_path: Path = this_path.parent.parent.joinpath("config.yml")
     with open(config_path, "r") as ff:
@@ -38,26 +40,32 @@ def get_database_path() -> Path:
     config_path: Path = this_path.parent.parent.joinpath("config.yml")
     with open(config_path, "r") as ff:
         config = yaml.safe_load(ff)
-    database_path:Path = this_path.parent.parent.joinpath(config["DB_location"])
-    return(database_path.absolute())
+    database_path: Path = this_path.parent.parent.joinpath(config["DB_location"])
+    return database_path.absolute()
+
 
 def create_folder(path: Path) -> Path | None:
     """
     param path: Folder where we want to create the new Database folder.
     """
     try:
-        dbfolder_there  = path.exists()
+        dbfolder_there = path.exists()
         inet_there = is_inet_available()
-        if (not dbfolder_there ) and (not inet_there):
-          print("No databases were found but no internet connection is available, aborting program")
-          sys.exit(1)
+        if (not dbfolder_there) and (not inet_there):
+            print(
+                "No databases were found but no internet connection is available, aborting program"
+            )
+            sys.exit(1)
         # TODO This code is not testable
         print("Creating database folder in " + str(path))
-        path.mkdir(parents = True)
+        path.mkdir(parents=True)
     except FileExistsError:
         # if it is an empty directory, that is fine, if not return nothing
         if not len(os.listdir(path)) == 0:
-            raise FileExistsError(str(path) + f" already exists and is not empty. Please check your database configuration or delete content in {str(path)})")
+            raise FileExistsError(
+                str(path)
+                + f" already exists and is not empty. Please check your database configuration or delete content in {str(path)})"
+            )
 
 
 def _download(path: Path, URL: str):
@@ -78,7 +86,7 @@ def download() -> bool:
     This method creates a folder to store the databases and also downloads them
     :return:
     """
-    # Get current path of this script. This should always end in /src and we will create the Database as defined in the config file 
+    # Get current path of this script. This should always end in /src and we will create the Database as defined in the config file
     # load the config yaml
     config = get_config()
     database_path = get_database_path()
@@ -88,6 +96,7 @@ def download() -> bool:
     status = update_database()
 
     return status
+
 
 def databases_available() -> bool:
     """
@@ -107,40 +116,45 @@ def databases_available() -> bool:
                 break
     return is_there
 
+
 def update_database() -> bool:
-    '''Remove the databases and download them again with possible new updates'''
+    """Remove the databases and download them again with possible new updates"""
     # load the config yaml
     config = get_config()
     database_path = get_database_path()
 
-    start_time =  time.time()
+    start_time = time.time()
 
     with ThreadPoolExecutor(max_workers=8) as executor:
-      for i in config["databases"]:
-          db_path = database_path.joinpath(config["databases"][i]["file"])
-          if os.path.exists(db_path):
-              os.remove(db_path)
-          executor.submit(_download, db_path, config["databases"][i]["URL"])
+        for i in config["databases"]:
+            db_path = database_path.joinpath(config["databases"][i]["file"])
+            if os.path.exists(db_path):
+                os.remove(db_path)
+            executor.submit(_download, db_path, config["databases"][i]["URL"])
 
     # Wait until all downloads are finished
     executor.shutdown(wait=True)
-    end_time =  time.time()
+    end_time = time.time()
     logging.debug(f"Downloading databases took: {end_time - start_time}")
 
     if "VMH" in config["databases"].keys():
         # handle special case for vmh
-      try:
-        with open(database_path.joinpath(config["databases"]["VMH"]["file"]), mode='r+', encoding="utf8") as f:
-            content: str = f.read()
-            # This will break if the link changes
-            content = content.removeprefix("Ext.data.JsonP.callback19(")
-            content = content.removesuffix(");")
-            # Go to the beginning of the file
-            f.seek(0)
-            # Write the new content
-            f.write(content)
-            # Truncate to the new contents length(because the old content of the file was longer)
-            f.truncate()
-      except FileNotFoundError: 
-          print("VMH could not be found, not trying to reformat it")
+        try:
+            with open(
+                database_path.joinpath(config["databases"]["VMH"]["file"]),
+                mode="r+",
+                encoding="utf8",
+            ) as f:
+                content: str = f.read()
+                # This will break if the link changes
+                content = content.removeprefix("Ext.data.JsonP.callback19(")
+                content = content.removesuffix(");")
+                # Go to the beginning of the file
+                f.seek(0)
+                # Write the new content
+                f.write(content)
+                # Truncate to the new contents length(because the old content of the file was longer)
+                f.truncate()
+        except FileNotFoundError:
+            print("VMH could not be found, not trying to reformat it")
     return True

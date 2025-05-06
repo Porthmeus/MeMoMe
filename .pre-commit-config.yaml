@@ -1,0 +1,7 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.3.0  # Use the latest version at https://github.com/psf/black/releases
+    hooks:
+      - id: black
+        args: [--check, --diff]  # Check formatting only, don't reformat
+
