@@ -9,10 +9,11 @@ import warnings
 from io import StringIO
 from src.download_db import get_config, get_database_path
 from src.MeMoMetabolite import MeMoMetabolite
-from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs, handleMetabolites
-from typing import Optional
+from src.annotation.annotateAux import AnnotationResult, load_database, handleIDs, handleMetabolites, DBName, DBKey, AnnotationKey
+from src.annotation.annotateALL import *
+from typing import Optional, Tuple
 
-def handle_vmh_entries(vmh:pd.DataFrame, entry:str) -> (dict,list):
+def handle_vmh_entries(vmh: pd.DataFrame, entry: str) -> Tuple[dict, list[str], str]:
   keys = ["biggId", "keggId", "cheBlId", "inchiString", "inchiKey", "smile", "hmdb", "metanetx", "seed", "biocyc"]
   vmh = vmh.loc[vmh["abbreviation"] == entry,]
   fullName = list(set(vmh["fullName"]))
@@ -27,37 +28,22 @@ def handle_vmh_entries(vmh:pd.DataFrame, entry:str) -> (dict,list):
         # If key does not exist, create it and append the value
         annotations.setdefault(key, []).append(value)
 
-  return(annotations, fullName)
+  return(annotations, fullName, "VMH")
 
-def __json_to_tsv(path) -> pd.DataFrame:
+def __json_to_tsv(path: str) -> pd.DataFrame:
   with open(path, "r") as f: 
     vmh = json.load(f)["results"]
     return(pd.DataFrame(vmh))
 
 
-def annotateVMH_entry(entry: str,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
-    """
+def annotateVMH_entry(entry: AnnotationKey ,  database: pd.DataFrame = pd.DataFrame(), allow_missing_dbs: bool = False) -> tuple[dict, list, str]:
+  """
     A small helper function to avoid redundant code.
     Uses a VMH identifier and annotates it with the identifiers.org entries.
     database - is either empty (default) or a dictionary with the data from the VMH homepage for the metabolites. If it is empty, the function will try to load the database from the config file.
     Returns a tuple containing a dictionary for the extracted annotations and a list of new names for the metabolite.
     """
-
-    # check if the database was given, if not, try to load it
-    if len(database) > 0:
-      vmh = database
-    else:
-      vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, __json_to_tsv)
-    
-    if vmh.empty:
-      return dict(), list(), ""
-
-    annotations, names = handle_vmh_entries(vmh, entry)
-    return annotations, names, "bigg"
-
-
-    
-
+  return annotateDB_entry(entry, DBName("VMH"), __json_to_tsv, handle_vmh_entries, database, allow_missing_dbs)
 
 
 def annotateVMH(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = False) -> AnnotationResult:
@@ -81,9 +67,9 @@ def annotateVMH_id(metabolites: list[MeMoMetabolite], allow_missing_dbs: bool = 
 
     # check if the database was given, if not, try to load it
     vmh = load_database(get_config()["databases"]["VMH"]["file"], allow_missing_dbs, __json_to_tsv)
-    
+
     if vmh.empty:
       return AnnotationResult(0, 0, 0)
-    
+
 
     return handleIDs(vmh, metabolites, "abbreviation", annotateVMH_entry)

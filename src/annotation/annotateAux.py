@@ -5,9 +5,20 @@ import pandas as pd
 from src.download_db import get_config, get_database_path
 import warnings
 import os
-from typing import Callable, List
+from typing import Callable, List, NewType
 from src.MeMoMetabolite import MeMoMetabolite
 import sys
+
+# HMDB0000972
+AnnotationKey = NewType('AnnotationKey', str)
+# Database name, corresponds to one of the keys in config.yaml
+DBName = NewType('DBName', str)
+# The dbs have have certain columns that correspond to their main identifier, e.g. vmh has vmhmetabolite, HMDB has accession and so one. This is what we call a database key. Aka the MAIN column which we use for entry lookup
+DBKey = NewType('DBKey', str)
+
+EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
+
+
 
 class AnnotationResult():
   def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
@@ -25,6 +36,9 @@ class AnnotationResult():
     return cls(annotationResult.annotated_inchis, annotationResult.annotated_dbs, annotationResult.annotated_names)
 
   def __str__(self) -> str:
+    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+
+  def __repr__(self) -> str:
     return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
 
   def __le__(self, other) -> bool:
@@ -49,7 +63,7 @@ class AnnotationResult():
 
 
 def load_database(database: str = "", allow_missing_dbs: bool = False, 
-                  conversion_method: Callable[[str], pd.DataFrame] = lambda x: x) -> pd.DataFrame:
+                  conversion_method: Callable[[str], pd.DataFrame] = lambda x: pd.DataFrame()) -> pd.DataFrame:
   """
   Load the given database. The file should in the projects root /Database folder.
   """
@@ -65,9 +79,9 @@ def load_database(database: str = "", allow_missing_dbs: bool = False,
     db = pd.DataFrame()
   return(db)
 
-def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
+def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, entry_annotation_function: EntryAnnotationFunction, allow_missing_dbs: bool = False) -> AnnotationResult:
   """
-  Checks for each metabolite if the metabolite id can be found in the column `db_key` of `db`. 
+  Checks for each metabolite if the metabolite id can be found in the column `db_key` of `db`.
   db: a dataframe with columns `db_key`. This column will be compared to the metabolite id (met._id)
   metabolites: A list of metabolites that will be checked
   db_key: The column in the db dataframe
@@ -79,7 +93,7 @@ def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, 
     if any(db[db_key]==met._id):
       # get the annotation dictionary, the list of names and the string of
       # source (e.g "bigg","vmh" for the current metabolite for the metabolite
-      new_met_anno_entry,new_names_entry,source = annotation_function(met._id, db)
+      new_met_anno_entry,new_names_entry,source = entry_annotation_function(met._id, db, allow_missing_dbs)
       x = met.add_names(new_names_entry,source = source)
       new_names = new_names + x
 
@@ -94,16 +108,17 @@ def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, 
   return anno_result
 
 
-def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
+def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: EntryAnnotationFunction, allow_missing_dbs: bool = False) -> AnnotationResult:
     new_annos_added = 0
     new_names_added = 0
-    # go through the metabolites and check if there is data which can be added
+    # go through the metabolites and check if there is data whigh can be added
     for met in metabolites:
         new_met_anno = dict()
         new_names = list() 
+        source = None
         if db_key in met.annotations.keys():
             for entry in met.annotations[db_key]:
-                new_met_anno_entry, new_names_entry, source = annotation_function(entry, db)
+                new_met_anno_entry, new_names_entry, source = annotation_function(entry, db, allow_missing_dbs)
                 for key, value in new_met_anno_entry.items():
                     if key in new_met_anno.keys():
                         new_met_anno[key].extend(value)
@@ -111,7 +126,8 @@ def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_ke
                         new_met_anno[key] = value
                 # combine the names for each entry
                 new_names.extend(new_names_entry)
-
+            if source is None: raise Exception("Source is none")
+            if source is "": raise Exception("Source is none")
             # add new names to the MeMoMetabolite
             x =met.add_names(new_names,source)
             new_names_added = new_names_added + x
