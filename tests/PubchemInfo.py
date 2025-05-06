@@ -10,7 +10,9 @@ from src.downloadPubchemInfo import looksLikeSumFormula, getPubchemInfo
 
 class TestPubchemInfo(unittest.TestCase):
     # The directory of this file
-    this_directory = Path(__file__).parent # parent because the actual file is part of the path
+    this_directory = Path(
+        __file__
+    ).parent  # parent because the actual file is part of the path
     dat_dir = this_directory.joinpath("dat")
 
     def test_looksLikeSumFormula(self):
@@ -20,9 +22,10 @@ class TestPubchemInfo(unittest.TestCase):
     def test_getPubchemInfo(self):
         self.assertIsInstance(getPubchemInfo(["alkdjfa", "Carnitine"]), pd.DataFrame)
 
-    #def test_getPubchemInfo_noInternet(self):
+    # def test_getPubchemInfo_noInternet(self):
     #    self.assertIsInstance(getPubchemInfo(["alkdjfa", "Carnitine"]), pd.DataFrame)
     #    self.assertTrue(getPubchemInfo(["alkdjfa", "Carnitine"]).empty)
+
 
 if __name__ == "__main__":
     unittest.main()

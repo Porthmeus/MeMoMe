@@ -18,3 +18,5 @@ dependencies:
   - tqdm
   - lxml
   - coverage
+  - black
+  - pre-commit

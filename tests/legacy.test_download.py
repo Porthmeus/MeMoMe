@@ -15,7 +15,10 @@ class TestDownload(unittest.TestCase):
         self.assertEqual(download_db.create_folder(non_exist_path), Path(""))
 
     def test_dir_alr_exists(self):
-        self.assertEqual(download_db.create_folder(self.this_directory), self.this_directory.joinpath("Databases"))
+        self.assertEqual(
+            download_db.create_folder(self.this_directory),
+            self.this_directory.joinpath("Databases"),
+        )
         self.assertEqual(download_db.create_folder(self.this_directory), Path(""))
 
         # Because other methods might try to create this folder we will delete it again
@@ -23,7 +26,10 @@ class TestDownload(unittest.TestCase):
 
     def test_exist_parent(self):
         # Check that create folder creates a /Database/ folder
-        self.assertEqual(download_db.create_folder(self.this_directory), self.this_directory.joinpath("Databases"))
+        self.assertEqual(
+            download_db.create_folder(self.this_directory),
+            self.this_directory.joinpath("Databases"),
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -32,5 +38,5 @@ class TestDownload(unittest.TestCase):
         cls.this_directory.joinpath("Databases").rmdir()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -14,10 +14,11 @@ from src.MeMoModel import MeMoModel
 this_directory = Path(__file__).parent
 dat = this_directory.joinpath("../manually_merged_models")
 
-#class Test_annotateBulkRoutines(unittest.TestCase):
+
+# class Test_annotateBulkRoutines(unittest.TestCase):
 def test_MeMoModelCompare2():
     import time
-    
+
     # Record the start time
     start_time = time.time()
     # test the comparison for metabolite matching
@@ -33,14 +34,12 @@ def test_MeMoModelCompare2():
     res = mod.match(mod2)
     res.to_csv("stuff.csv")
     end_time = time.time()
-    
+
     # Calculate the elapsed time
     elapsed_time = end_time - start_time
-    
+
     print("Elapsed time:", elapsed_time, "seconds")
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_MeMoModelCompare2()

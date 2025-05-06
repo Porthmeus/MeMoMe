@@ -2,9 +2,9 @@
 # 15.02.23
 # edit: 07.07.23
 
-'''
+"""
 Functions to parse relevant metabolite infos into a list of MeMoMetabolites from different objects like: a path to an SBML file, a libsbml.Model object or a cobra.Model object
-'''
+"""
 
 import libsbml as sbml
 import re
@@ -16,7 +16,8 @@ from debugpy.common.log import warning
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotation.annotateInchiRoutines import validateInchi, findOptimalInchi
 
-def getAnnoFromIdentifierURL(url:str) -> tuple[str, str]:
+
+def getAnnoFromIdentifierURL(url: str) -> tuple[str, str]:
     """Small function to extract the db and db id from an identifier.org url"""
     # check if it is indeed a identifier.org url
     if "identifiers.org" in url:
@@ -24,10 +25,11 @@ def getAnnoFromIdentifierURL(url:str) -> tuple[str, str]:
         db_id = "/".join(url.split("/")[4:]).replace('"/>', "")
         return db, db_id
     else:
-        return None,None
+        return None, None
+
 
 def getAnnotationFromMet(met: sbml.Species) -> dict:
-    ''' extract a dictionary containing additional annotations'''
+    """extract a dictionary containing additional annotations"""
     results = dict()
     urls = met.getAnnotationString().split("\n")
     # filter those anntations which have an identifier.org url attached
@@ -35,7 +37,7 @@ def getAnnotationFromMet(met: sbml.Species) -> dict:
     # if annotations are available extract the identifier.org db and id and put it in the annotations dictionary
     if len(urls) > 0:
         for url in urls:
-            src,val =getAnnoFromIdentifierURL(url)
+            src, val = getAnnoFromIdentifierURL(url)
             if src in results.keys():
                 results[src].append(val)
             else:
@@ -43,22 +45,25 @@ def getAnnotationFromMet(met: sbml.Species) -> dict:
 
     # remove duplicates from the annotations
     for key in results.keys():
-       new_val = list(set(results[key]))
-       results[key] = new_val
+        new_val = list(set(results[key]))
+        results[key] = new_val
     return results
 
 
 def validateSBML(modelDoc: sbml.SBMLDocument, strict: bool = False) -> None:
-    '''
+    """
     Uses the libsbml validator to validate an sbml file. Throws an error or warning if the validation fails.
     Params:
         modelDoc:libsbml.SBMLDoc - a Path object to the sbml file.
         strict:bool - Whether to raise an error or just a warning. Default: False - only raise Warning.
-    '''
+    """
     validator = sbml.SBMLValidator()
     errors = validator.validate(modelDoc)
     if errors > 0:
-        text = '''{MSG}: SBML file not valid, following failures have been found:\n''' + validator.getErrorLog().printErrors()
+        text = (
+            """{MSG}: SBML file not valid, following failures have been found:\n"""
+            + validator.getErrorLog().printErrors()
+        )
         if strict:
             raise IOError(text.format(MSG="ERROR"))
         else:
@@ -66,14 +71,14 @@ def validateSBML(modelDoc: sbml.SBMLDocument, strict: bool = False) -> None:
 
 
 def parseMetaboliteInfoFromSBML(modelfile: Path, validate: bool = True) -> list:
-    '''
-    Parses through the SBML and extracts metabolite objects from it. 
+    """
+    Parses through the SBML and extracts metabolite objects from it.
     Parameters
     ----------
         modelfile : Path - a Path object to a valid sbml file
         validate : bool - whether to validate the modelfile before parsing, default: True.
 
-    '''
+    """
     # handle non-existing files as sbml won't complain
     if not modelfile.exists():
         raise FileExistsError(str(modelfile) + " does not exist")
@@ -90,18 +95,18 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate: bool = True) -> list:
     mod = doc.getModel()
     mod_id = mod.getId()
 
-    # extract the metabolites 
+    # extract the metabolites
     memoMets = parseMetaboliteInfoFromSBMLMod(model=mod)
     return memoMets
 
 
 def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
-    '''
-    Parses through the SBML model object and extracts metabolite objects from it. 
+    """
+    Parses through the SBML model object and extracts metabolite objects from it.
     Parameters
     ----------
         model : sbml.model -  a valid sbml model which can be parsed
-    '''
+    """
 
     # go through the metabolites in the model and extract the relevant information
     metabolites = model.getListOfSpecies()
@@ -110,21 +115,23 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
         annotations = getAnnotationFromMet(met)
         # check if the inchi_string is available
         if "inchi" in annotations.keys():
-            inchi_string = annotations['inchi'][0]
+            inchi_string = annotations["inchi"][0]
             # check for validity of the inchi
             if not validateInchi(inchi_string):
                 inchi_string = None
         else:
             inchi_string = None
         # create a MeMoMetabolite
-        memomet = MeMoMetabolite(_id=met.getId(),
-                                 orig_ids=[met.getId()],
-                                 _model_id=model.getId(),
-                                 names=[met.getName()],
-                                 _inchi_string=inchi_string,
-                                 _formula=None,
-                                 _charge=met.getCharge(),
-                                 annotations=annotations)
+        memomet = MeMoMetabolite(
+            _id=met.getId(),
+            orig_ids=[met.getId()],
+            _model_id=model.getId(),
+            names=[met.getName()],
+            _inchi_string=inchi_string,
+            _formula=None,
+            _charge=met.getCharge(),
+            annotations=annotations,
+        )
 
         # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
         if memomet.id in [x.id for x in memoMets]:
@@ -137,12 +144,12 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
 
 
 def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
-    '''
-    Parses through and cobra model object and extracts metabolite objects from it. 
+    """
+    Parses through and cobra model object and extracts metabolite objects from it.
     Parameters
     ----------
         model : cobra.model -  a valid sbml model which can be parsed
-    '''
+    """
 
     metabolites = []
     memoMets = []
@@ -158,7 +165,7 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
             # check whether there is more than one inchi in the annotations
 
             if len(inchi) > 1:
-                inchi = findOptimalInchi(inchi, charge = met.charge)
+                inchi = findOptimalInchi(inchi, charge=met.charge)
                 if inchi is None:
                     raise NotImplementedError()
             elif validateInchi(inchi[0]):
@@ -168,14 +175,16 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
         else:
             inchi = None
         # create the MeMoMetabolite object
-        memomet = MeMoMetabolite(_id=met.id,
-                                 orig_ids=[met.id],
-                                 _model_id=[model.id],
-                                 names=[met.name],
-                                 _inchi_string=inchi,
-                                 _formula=met.formula,
-                                 _charge=met.charge,
-                                 annotations=annotations)
+        memomet = MeMoMetabolite(
+            _id=met.id,
+            orig_ids=[met.id],
+            _model_id=[model.id],
+            names=[met.name],
+            _inchi_string=inchi,
+            _formula=met.formula,
+            _charge=met.charge,
+            annotations=annotations,
+        )
 
         # check if the MeMoMetabolite is already in the list of metabolites and whether it can be merged.
         if memomet._id in [x._id for x in memoMets]:
@@ -184,4 +193,4 @@ def parseMetaboliteInfoFromCobra(model: cb.Model) -> list[MeMoMetabolite]:
         else:
             memoMets.append(memomet)
 
-    return (memoMets)
+    return memoMets
