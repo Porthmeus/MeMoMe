@@ -29,8 +29,10 @@ Please do not use
 
 
 ## Contributing
-First run pre-commit install
+First run `pre-commit install`
+
 This will install the pre-commit hooks.
+
 Black will now check if your code is correctly formatted.
 If it is not, please run 
 ```
