@@ -13,7 +13,7 @@ from src.annotation.annotateAux import AnnotationResult, load_database, handleID
 from src.annotation.annotateALL import *
 from typing import Optional, Tuple
 
-def handle_vmh_entries(vmh: pd.DataFrame, entry: str) -> Tuple[dict, list[str]]:
+def handle_vmh_entries(vmh: pd.DataFrame, entry: str) -> Tuple[dict, list[str], str]:
   keys = ["biggId", "keggId", "cheBlId", "inchiString", "inchiKey", "smile", "hmdb", "metanetx", "seed", "biocyc"]
   vmh = vmh.loc[vmh["abbreviation"] == entry,]
   fullName = list(set(vmh["fullName"]))
@@ -28,7 +28,7 @@ def handle_vmh_entries(vmh: pd.DataFrame, entry: str) -> Tuple[dict, list[str]]:
         # If key does not exist, create it and append the value
         annotations.setdefault(key, []).append(value)
 
-  return(annotations, fullName)
+  return(annotations, fullName, "VMH")
 
 def __json_to_tsv(path: str) -> pd.DataFrame:
   with open(path, "r") as f: 

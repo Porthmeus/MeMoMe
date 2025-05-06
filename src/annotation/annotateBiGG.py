@@ -57,7 +57,7 @@ def annotateBiGG_entry(entry: str,  database:pd.DataFrame = pd.DataFrame(), allo
       bigg = database
 
     if bigg.empty:
-      return dict(), list(), ""
+      return dict(), list(), "bigg"
 
     urls = bigg.loc[bigg["universal_bigg_id"] == entry,"database_links"]
     urls = urls.loc[~pd.isna(urls)]

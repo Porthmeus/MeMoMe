@@ -20,8 +20,7 @@ def normalize_hmdb_id(hmdb_id: AnnotationKey) -> AnnotationKey:
   normalized_id = f"{prefix}{numeric_part.zfill(7)}"
   return AnnotationKey(normalized_id)
 
-def handle_HMDB_entries(hmdb: pd.DataFrame, entry: AnnotationKey):
-
+def handle_HMDB_entries(hmdb: pd.DataFrame, entry: AnnotationKey) -> tuple[dict[str, list[str]], list[str], str]:
   # VMH models contain keys like HMDB00972, but in HMDB the id is HMDB0000972. I.e. the digit part is 7 long not 5.
   entry = normalize_hmdb_id(entry)
   # The db col is called inchi, but it's inchi strings
@@ -38,7 +37,7 @@ def handle_HMDB_entries(hmdb: pd.DataFrame, entry: AnnotationKey):
       if (not pd.isna(value)) and (len(str(value)) > 0):
         # If key does not exist, create it and append the value
         annotations.setdefault(key, []).append(value)
-  return(annotations, fullName)
+  return(annotations, fullName, "HMDB")
 
 def __load_csv(path: str) -> pd.DataFrame:
   df = pd.read_csv(path, low_memory=False)

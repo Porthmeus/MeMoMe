@@ -8,7 +8,7 @@ from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEE
 from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult, AnnotationKey
 from src.MeMoMetabolite import MeMoMetabolite
 
 
@@ -68,7 +68,7 @@ class Test_annotateMissingDbs(unittest.TestCase):
   @patch('sys.stderr', new_callable=StringIO)
   def testBiggEntry(self, mock_err):
     self.makeDbInvis("BiGG.tsv")
-    self.assertEqual(annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], ""))
+    self.assertEqual(annotateBiGG_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], "bigg"))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     with self.assertRaises(FileNotFoundError):
@@ -144,7 +144,7 @@ class Test_annotateMissingDbs(unittest.TestCase):
   @patch('sys.stderr', new_callable=StringIO)
   def testSEED_entry(self, mock_err):
     self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], {}, {}))
+    self.assertEqual(annotateModelSEED_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], "Seed"))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
@@ -155,23 +155,9 @@ class Test_annotateMissingDbs(unittest.TestCase):
     self.makeDbVis("modelSeed.tsvxxx")
   
   @patch('sys.stderr', new_callable=StringIO)
-  def correctAnnotationKeys(self, mock_err):
-    self.makeDbInvis("modelSeed.tsv")
-    self.assertEqual(correctAnnotationKeys({}, allow_missing_dbs = True), AnnotationResult(0,0,0))
-    output = mock_err.getvalue().strip()
-    self.assertIn("No such file or directory", output)
-    
-    with self.assertRaises(FileNotFoundError):
-      correctAnnotationKeys({},  allow_missing_dbs = False)
-      self.assertIn("No such file or directory", output)
-
-    self.makeDbVis("modelSeed.tsvxxx")
-
-
-  @patch('sys.stderr', new_callable=StringIO)
   def testVMH_entry(self, mock_err):
     self.makeDbInvis("vmh.json")
-    self.assertEqual(annotateVMH_entry("", pd.DataFrame(), allow_missing_dbs = True), ({}, [], ""))
+    self.assertEqual(annotateVMH_entry(AnnotationKey(""), pd.DataFrame(), allow_missing_dbs = True), ({}, [], "VMH"))
     output = mock_err.getvalue().strip()
     self.assertIn("No such file or directory", output)
     
