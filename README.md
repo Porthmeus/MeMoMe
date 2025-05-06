@@ -27,7 +27,13 @@ For benchmarking tests run:
 Please do not use
 ~~`python3 -m unittest`~~
 
+# Contributing 
 
+Run 
+```
+coverage run -m --source=src unittest discover
+coverage html
+```
 
 ## Run application with test model
 python3 main.py --model1 tests/dat/e_coli_core.xml  --model2 tests/dat/e_coli_core.xml --output here.csv
