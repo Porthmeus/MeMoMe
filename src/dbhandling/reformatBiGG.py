@@ -123,7 +123,7 @@ def reformatBiGG() -> None:
     inchi_keys = list(set(inchis_keys))
     # create a series
     inchis_keys =pd.DataFrame({"inchi_key":inchis_keys,
-                               "bigg_id" : dat.bigg_id})
+                               "id" : dat.bigg_id})
     
     # download the pubchem database and get the conversion table
     pbc_table = downloadPBCInchiKey2String()

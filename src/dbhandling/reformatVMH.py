@@ -18,7 +18,7 @@ def getData() -> pd.DataFrame:
     # get the database
     config = get_config()
     file = os.path.join(get_database_path(),config["databases"]["VMH"]["file"])
-    print(file)
+    #print(file)
     dat = __json_to_dataframe(file)
     return(dat)
 
@@ -56,5 +56,45 @@ def getAnnos(dat:pd.DataFrame) -> pd.Series:
     anno_series.index = list(dat["abbreviation"])
     return(anno_series)
 
+def concatNames(x:pd.Series) -> str:
+    """ handles the concatenation of the different fields which we consider a name of a metabolite. Will return a single string containing the names which are seperated by a '|'."""
+    iupac = x["iupac"]
+    name = x["fullName"]
+    alias = x["synonyms"]
+    concat = []
+    if name != "" and name != None:
+        concat.append(name)
+    if iupac != "" and iupac != None:
+        concat.append(iupac)
+    if alias != "" and alias != None:
+        alias = alias.replace("***","|")
+        concat.append(alias)
+    concat = "|".join(concat)
+    return(concat)
 # for names check fullName iupac and alias
 # alias contains a list of names seperated by "***" 
+def writeData(dat:pd.DataFrame) -> None:
+    config = get_config()
+    outfile = os.path.join(get_database_path(), config["databases"]["VMH"]["reformat"])
+    dat.to_csv(outfile)
+
+def reformatVMH() -> None:
+    """ Takes the VMH database, reformats it and writes a csv with standard columns (id, inchi, name, DBs) + additional information to disk """
+
+    vmh = getData()
+    vmh.index = vmh.abbreviation
+    # get names, inchis and database annotations
+    names = vmh.apply(concatNames, axis = 1).fillna(value = "")
+    inchis = vmh.inchiString.fillna(value = "")
+    dbs = getAnnos(vmh)
+
+    # concat the different series/dataframes
+    dat_all = pd.concat([names,inchis,dbs], axis = 1)
+    dat_all.columns = ["name","inchi","DBs"]
+    dat_all["id"] = dat_all.index
+    dat_all = dat_all.loc[:,["id","name","inchi","DBs"]]
+    dat_all = pd.concat([dat_all, vmh], axis = 1)
+    
+    # save data
+    writeData(dat_all)
+    
