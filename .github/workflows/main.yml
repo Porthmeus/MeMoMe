@@ -33,8 +33,8 @@ jobs:
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            miniforge-variant: Mambaforge
-            miniforge-version: latest
+            miniforge-variant: Miniforge3
+            miniforge-version: 24.11.2-1
             activate-environment: env
             # The env should be cached so we should no try to 
             # build a new one everytime
@@ -44,7 +44,7 @@ jobs:
       - name: Set cache date
         run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ matrix.prefix }}
           key: ${{ matrix.label }}-conda-${{ hashFiles('requirements.yml') }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
@@ -61,4 +61,5 @@ jobs:
           conda activate env
           # conda list
           python main.py --download
-          python -m unittest
+          python  tests/test_suite.py fast
+          python  tests/test_suite.py slow

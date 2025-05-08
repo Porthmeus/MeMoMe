@@ -17,11 +17,11 @@ from datetime import datetime
 table_data = [
 ]
 
-class Test_annotateBulkRoutines(unittest.TestCase):
+class Test_annotationPerformance(unittest.TestCase):
     # The directory of this file
     #this_directory = Path("tests")
     this_directory = Path(__file__).parent.parent
-    dat = this_directory.joinpath("dat")
+    dat = this_directory.joinpath("tests/dat")
 
 
     def test_ecoli_core_seed(self):
