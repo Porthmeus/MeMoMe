@@ -22,6 +22,9 @@ databases:
   Identifiers:
     URL: "https://registry.api.identifiers.org/restApi/namespaces?page=0&size=999999&sort=name%2Casc"
     file: "identifiers.org_registry.json"
+  TestCase:
+    reformat: "../TestCaseDir/TestCaseFile.txt"
+
 
 PubChem:
   inchi2inchikey:

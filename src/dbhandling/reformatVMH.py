@@ -2,25 +2,10 @@
 # 10.04.25
 
 # libraries
-from src.download_db import get_config, get_database_path
+from src.dbhandling.reformatAux import *
 from src.annotation.annotateInchiRoutines import *
 import pandas as pd
-import json
-import os
 
-def __json_to_dataframe(path) -> pd.DataFrame:
-  with open(path, "r") as f: 
-    vmh = json.load(f)["results"]
-    return(pd.DataFrame(vmh))
-
-def getData() -> pd.DataFrame:
-    # loads the VMH database
-    # get the database
-    config = get_config()
-    file = os.path.join(get_database_path(),config["databases"]["VMH"]["file"])
-    #print(file)
-    dat = __json_to_dataframe(file)
-    return(dat)
 
 def getAnnosPerEntry(dat:pd.DataFrame, met:str) -> dict[str,list[str]]:
     """ takes the dataframe for vmh entries and a str from the metabolite id and returns an annotation dictionary for selected annotations in VMH """
@@ -73,15 +58,11 @@ def concatNames(x:pd.Series) -> str:
     return(concat)
 # for names check fullName iupac and alias
 # alias contains a list of names seperated by "***" 
-def writeData(dat:pd.DataFrame) -> None:
-    config = get_config()
-    outfile = os.path.join(get_database_path(), config["databases"]["VMH"]["reformat"])
-    dat.to_csv(outfile)
 
 def reformatVMH() -> None:
     """ Takes the VMH database, reformats it and writes a csv with standard columns (id, inchi, name, DBs) + additional information to disk """
 
-    vmh = getData()
+    vmh = getData("VMH")
     vmh.index = vmh.abbreviation
     # get names, inchis and database annotations
     names = vmh.apply(concatNames, axis = 1).fillna(value = "")
@@ -96,5 +77,5 @@ def reformatVMH() -> None:
     dat_all = pd.concat([dat_all, vmh], axis = 1)
     
     # save data
-    writeData(dat_all)
+    writeData(dat_all, db = "VMH")
     
