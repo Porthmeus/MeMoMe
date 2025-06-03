@@ -22,6 +22,10 @@ databases:
   Identifiers:
     URL: "https://registry.api.identifiers.org/restApi/namespaces?page=0&size=999999&sort=name%2Casc"
     file: "identifiers.org_registry.json"
+  hmdb:
+    URL: "http://49.12.211.202:7999/hmdb_metabolites.zip"
+    file: "hmdb_metabolites.zip"
+    reformat: "hmdb_metabolitesMMM.csv"
   TestCase:
     reformat: "../TestCaseDir/TestCaseFile.txt"
 
