@@ -2,29 +2,18 @@
 # 20.01.25
 
 # functions to reformat the BiGG database to a standard format which can be easily read  
-from src.download_db import get_config, get_database_path
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 from src.annotation.annotateInchiRoutines import *
+from src.dbhandling.reformatAux import getData, writeData
 from tqdm import tqdm
 from io import StringIO
 from math import isnan
 import re
 import pandas as pd
 import os
-import json
 import tempfile
 import requests
 import subprocess
-
-def getData() -> pd.DataFrame:
-    # loads the modelSeed database and the indentifier prefixes and returns them
-    # get the database
-    config = get_config()
-    dat = pd.read_csv(os.path.join(get_database_path(),config["databases"]["BiGG"]["file"]),
-                      sep = "\t",
-                      low_memory=False)
-    return(dat)
-
 
 def handleDBs(urls:str) -> str:
     # reformat the list of URLs given by BiGG to a dictionary of database name (key) and database id (values)
@@ -88,14 +77,9 @@ def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
     os.remove(keys_file)
     return(result.stdout)  # Print matched lines
 
-def writeData(dat:pd.DataFrame) -> None:
-    config = get_config()
-    outfile = os.path.join(get_database_path(), config["databases"]["BiGG"]["reformat"])
-    dat.to_csv(outfile)
-
 def reformatBiGG() -> None:
     # get names, DBs and Inchi columns
-    dat = getData()
+    dat = getData("BiGG")
 
     # names
     names = dat.name.fillna(value = "").apply(lambda x: str(x).replace(";",","))
@@ -123,7 +107,7 @@ def reformatBiGG() -> None:
     inchi_keys = list(set(inchis_keys))
     # create a series
     inchis_keys =pd.DataFrame({"inchi_key":inchis_keys,
-                               "bigg_id" : dat.bigg_id})
+                               "id" : dat.bigg_id})
     
     # download the pubchem database and get the conversion table
     pbc_table = downloadPBCInchiKey2String()
@@ -139,5 +123,5 @@ def reformatBiGG() -> None:
     # remove tempfiles
     os.remove(pbc_table)
     # write the database
-    writeData(dat_all)
+    writeData(dat_all, db = "BiGG")
 

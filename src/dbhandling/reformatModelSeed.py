@@ -3,6 +3,7 @@
 
 from src.download_db import get_config, get_database_path
 from src.annotation.annotateInchiRoutines import smile2inchi
+from src.dbhandling.reformatAux import getData, writeData
 from io import StringIO
 import pandas as pd
 import os
@@ -25,20 +26,6 @@ if identifiers != None:
     identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
     identifier_prefixes = pd.read_json(StringIO(identifier_prefixes))
     identifier_prefixes = list(identifier_prefixes["prefix"])
-
-def getData() -> pd.DataFrame:
-    # loads the modelSeed database and the indentifier prefixes and returns them
-    # get the database
-    config = get_config()
-    dat = pd.read_csv(os.path.join(get_database_path(),config["databases"]["ModelSeed"]["file"]),
-                      sep = "\t",
-                      low_memory=False)
-    return(dat)
-
-def writeData(dat:pd.DataFrame) -> None:
-    config = get_config()
-    outfile = os.path.join(get_database_path(), config["databases"]["ModelSeed"]["reformat"])
-    dat.to_csv(outfile)
 
 def extractModelSEEDAnnotationsFromAlias(alias:str) -> tuple[dict,list]:
     '''
@@ -157,7 +144,7 @@ def handleNamesDBs(dat:pd.DataFrame) -> pd.DataFrame:
 def reformatModelSeed()->None:
     # a function to reformat the metabolite annotation table of ModelSEED to a standardized format
     # get the data
-    dat = getData()
+    dat = getData("ModelSeed")
     # get names and databases
     namesDBs = handleNamesDBs(dat)
     # get inchis
@@ -168,4 +155,4 @@ def reformatModelSeed()->None:
     dat.index = dat.id
     dat_all = pd.concat([namesDBs,inchis,dat],axis =1)
     # write the data
-    writeData(dat_all)
+    writeData(dat_all, db = "ModelSeed")
