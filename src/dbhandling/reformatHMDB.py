@@ -55,8 +55,8 @@ def concatCols(
     parts = []
     for field in colNames:
       val = x.get(field)
-        if val is not None and val != '':
-            parts.append(str(val))
+      if val is not None and val != '':
+          parts.append(str(val))
 
     for p in parts:
       index: int=  p.find(sep)
