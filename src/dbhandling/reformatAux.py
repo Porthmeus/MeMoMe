@@ -14,6 +14,7 @@ def getData(db:str) -> pd.DataFrame:
     # loads database and the indentifier prefixes and returns them
     # get the database
     config = get_config()
+    # no HMDB, can't be used because we do not want to load the whole DB
     dbs_csv = ["BiGG","ModelSeed"]
     dbs_json = ["VMH"]
     if db in dbs_csv:
@@ -32,3 +33,4 @@ def writeData(dat:pd.DataFrame, db:str) -> None:
     config = get_config()
     outfile = os.path.join(get_database_path(), config["databases"][db]["reformat"])
     dat.to_csv(outfile)
+
