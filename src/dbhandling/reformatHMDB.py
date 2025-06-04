@@ -54,7 +54,7 @@ def concatCols(
     """
     parts = []
     for field in colNames:
-        val = x.get(field)
+      val = x.get(field)
         if val is not None and val != '':
             parts.append(str(val))
 
@@ -62,7 +62,7 @@ def concatCols(
       index: int=  p.find(sep)
       if index > 0:
         print(index)
-        p = p.replace(sep,"-")
+        p = p.replace(sep,"*")
         print(f"Replacing {sep} in {p}")
         
     return sep.join(parts)
