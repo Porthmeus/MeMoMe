@@ -31,6 +31,7 @@ class Test_DBreformatting(unittest.TestCase):
         self.assertEqual(type(getData("VMH")), type(pd.DataFrame()))
         self.assertEqual(type(getData("BiGG")), type(pd.DataFrame()))
         self.assertEqual(type(getData("ModelSeed")), type(pd.DataFrame()))
+        self.assertEqual(type(getData("HMDB")), type(pd.DataFrame()))
 
     def test_writeData(self):
         # test if we can create an empty file

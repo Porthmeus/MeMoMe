@@ -69,8 +69,8 @@ def _download(path: Path, URL: str):
     try:
         urllib.request.urlretrieve(URL, path)
         print("Downloading " + URL + " to " + str(path))
-    except URLError:
-        print("WARNING: Could not download " + str(path))
+    except URLError as e:
+        print(f"WARNING: Could not download {str(URL)}. Error: {e}")
 
 
 def download() -> bool:
