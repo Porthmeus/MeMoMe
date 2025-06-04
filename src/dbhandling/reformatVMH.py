@@ -1,7 +1,14 @@
 # Porthmeus
 # 10.04.25
 
+
+# Enables execution as python  src/dbhandling/reformatVMH.py"
 # libraries
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+import warnings
 from src.dbhandling.reformatAux import *
 from src.annotation.annotateInchiRoutines import *
 import pandas as pd
@@ -13,7 +20,7 @@ def getAnnosPerEntry(dat:pd.DataFrame, met:str) -> dict[str,list[str]]:
             "keggId":"kegg.compound",
             "chemspider":"chemspider",
             "cheBlId":"chebi",
-            "biocyc":"biocyc", # not supported by identifiers.org
+            "biocyc":"biocyc", 
             "food_db":"foodb.compound",
             "hmdb":"hmdb",
             "iuphar_id":"iuphar.ligand",
@@ -54,6 +61,13 @@ def concatNames(x:pd.Series) -> str:
     if alias != "" and alias != None:
         alias = alias.replace("***","|")
         concat.append(alias)
+
+    for p in concat:
+      index =  p.find("|")
+      if index > 0:
+        p = p.replace("|","-")
+        print(f"Replacing | in {p}")
+
     concat = "|".join(concat)
     return(concat)
 # for names check fullName iupac and alias
@@ -79,3 +93,17 @@ def reformatVMH() -> None:
     # save data
     writeData(dat_all, db = "VMH")
     
+def main():
+    if len(sys.argv) != 1:
+        print("Usage: python reformat_vmh.py")
+        sys.exit(1)
+
+    try:
+        reformatVMH()
+        print("VMH reformatting completed successfully. Output written to standard location.")
+    except Exception as e:
+        warnings.warn(f"Error during VMH reformatting: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
