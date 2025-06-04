@@ -27,9 +27,9 @@ databases:
     file: "hmdb_metabolites.zip"
     reformat: "hmdb_metabolitesMMM.csv"
   TestCase:
-    file: ""
+    file: "TestCaseFile"
     reformat: "../TestCaseDir/TestCaseFile.txt"
-    URL: ""
+    URL: "TestCaseUrl"
 
 
 PubChem:
