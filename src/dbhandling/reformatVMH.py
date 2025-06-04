@@ -52,21 +52,18 @@ def concatNames(x:pd.Series) -> str:
     """ handles the concatenation of the different fields which we consider a name of a metabolite. Will return a single string containing the names which are seperated by a '|'."""
     iupac = x["iupac"]
     name = x["fullName"]
-    alias = x["synonyms"]
+    alias :str  = str(x["synonyms"])
     concat = []
     if name != "" and name != None:
         concat.append(name)
     if iupac != "" and iupac != None:
         concat.append(iupac)
     if alias != "" and alias != None:
-        alias = alias.replace("***","|")
-        concat.append(alias)
-
-    for p in concat:
-      index =  p.find("|")
-      if index > 0:
-        p = p.replace("|","-")
-        print(f"Replacing | in {p}")
+       index =  alias.find("|")
+       if index > 0:
+         print(f"Replacing | in {alias}")
+         alias = alias.replace("***","|")
+         concat.append(alias)
 
     concat = "|".join(concat)
     return(concat)
