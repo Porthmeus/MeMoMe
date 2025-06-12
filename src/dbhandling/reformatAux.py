@@ -4,6 +4,7 @@ from src.download_db import get_config, get_database_path
 import pandas as pd
 import os
 import json
+import warnings
 
 def __json_to_dataframe(path) -> pd.DataFrame:
   with open(path, "r") as f: 
@@ -17,6 +18,7 @@ def getData(db:str) -> pd.DataFrame:
     # no HMDB, can't be used because we do not want to load the whole DB
     dbs_csv = ["BiGG","ModelSeed"]
     dbs_json = ["VMH"]
+    dbs_other = ["HMDB"]
     if db in dbs_csv:
         dat = pd.read_csv(os.path.join(get_database_path(),config["databases"][db]["file"]),
                           sep = "\t",
@@ -24,8 +26,13 @@ def getData(db:str) -> pd.DataFrame:
     elif db in dbs_json:
         file = os.path.join(get_database_path(),config["databases"][db]["file"])
         dat = __json_to_dataframe(file)
+    elif db in dbs_other:
+        if db == "HMDB":
+        # TODO: read data in for HMDB - xml parser?
+            warnings.warn(db + " loading not yet implemented")
+            dat = pd.DataFrame()
     else:
-        raise ValueError("db must be one of " + str(dbs_csv + dbs_json))
+        raise ValueError("db must be one of " + str(dbs_csv + dbs_json + dbs_other))
     return(dat)
 
 

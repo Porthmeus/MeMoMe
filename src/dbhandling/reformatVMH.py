@@ -28,13 +28,16 @@ def getAnnosPerEntry(dat:pd.DataFrame, met:str) -> dict[str,list[str]]:
             "metlin":"metlin",
             "fda_id":"unii",
             "pubChemId":"pubchem.compound",
-            "seed":"seed.compound"}
+            "seed":"seed.compound",
+            "drugbank":"drugbank",
+            "knapsack":"knapsack",
+            "casRegistry":"cas"}
      
     dat_sel = dat.loc[dat.abbreviation == met,]
     anno = {"vmhmetabolite":[met]}
     for key in keys.keys():
         val = dat_sel[key].iloc[0]
-        if val != None:
+        if val != None and val != "":
             anno.setdefault(keys[key], []).append(val)
     return(anno)
 
@@ -72,10 +75,9 @@ def concatNames(x:pd.Series) -> str:
 # for names check fullName iupac and alias
 # alias contains a list of names seperated by "***" 
 
-def reformatVMH() -> None:
+def reformatVMH(vmh:pd.DataFrame = getData("VMH")) -> pd.DataFrame:
     """ Takes the VMH database, reformats it and writes a csv with standard columns (id, inchi, name, DBs) + additional information to disk """
 
-    vmh = getData("VMH")
     vmh.index = vmh.abbreviation
     # get names, inchis and database annotations
     names = vmh.apply(concatNames, axis = 1).fillna(value = "")
@@ -90,7 +92,8 @@ def reformatVMH() -> None:
     dat_all = pd.concat([dat_all, vmh], axis = 1)
     
     # save data
-    writeData(dat_all, db = "VMH")
+    # writeData(dat_all, db = "VMH")
+    return(dat_all)
     
 def main():
     if len(sys.argv) != 1:
@@ -98,7 +101,8 @@ def main():
         sys.exit(1)
 
     try:
-        reformatVMH()
+        refDB = reformatVMH()
+        writeData(refDB, db = "VMH")
         print("VMH reformatting completed successfully. Output written to standard location.")
     except Exception as e:
         warnings.warn(f"Error during VMH reformatting: {e}")
