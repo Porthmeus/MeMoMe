@@ -154,5 +154,9 @@ def reformatModelSeed()->None:
     inchis.index = dat.id
     dat.index = dat.id
     dat_all = pd.concat([namesDBs,inchis,dat],axis =1)
+    
+    dat_all_start = dat_all.loc[:,["id", "name","inchi", "DBs"]]
+    dat_all_end = dat_all.drop(["id", "name","inchi", "DBs"])
+    dat_all = pd.concat([dat_all_start, dat_all_end], axis = 1)
     # write the data
     writeData(dat_all, db = "ModelSeed")

@@ -1,3 +1,4 @@
+
 # Enables execution as python  src/dbhandling/reformatHMDB.py Databases/hmdb_metabolites.zip hmdb_metabolites.xml
 import sys
 import os
@@ -15,16 +16,18 @@ import warnings
  # TODO Merge name and synonyms and iupac_names
  # Translate to identifiers.org prefix
 _keys: dict[str, str] = {
-       "accession" : "hmdb", 
+       "accession" : "id", 
        "name" : "name",
         "synonyms" : "synonyms",  # Empty column, might chang in the future
        "chemical_formula": "formula",
-       "iupac_names" : "iupac_names", 
-       "traditional_iupac" : "traditional_iupac", 
-       "smiles" : " smiles",
-       "inchi" : "inci",
-       "inchi_key" : "inchi_key", 
-       "chemspider" : "chemspider",
+       "iupac_names" : "iupac_names",
+       "traditional_iupac" : "traditional_iupac",
+       "smiles" : "smiles",
+       "inchi" : "inchi",
+       "inchikey" : "inchi_key",
+       "chemspider_id" : "chemspider",
+       "drugbank_id" :  "drugbank",
+       "metlin_id" :  "metlin",
        "foodb_id" : "food.compound",
        "pubchem_compound_id" : "pubchem.compound", 
        "chebi_id": "chebi", 
@@ -32,6 +35,18 @@ _keys: dict[str, str] = {
        "biocyc_id" : "biocyc", 
        "bigg_id": "bigg.metabolite", 
        "vmh_id" : "vmhmetabolite",
+   }
+anno_keys: dict[str, str] = {
+       "chemspider" : "chemspider",
+       "drugbank" :  "drugbank",
+       "metlin" :  "metlin",
+       "food.compound" : "food.compound",
+       "pubchem.compound" : "pubchem.compound",
+       "chebi": "chebi",
+       "kegg.compound" : "kegg.compound",
+       "biocyc" : "biocyc",
+       "bigg.metabolite": "bigg.metabolite",
+       "vmhmetabolite" : "vmhmetabolite",
    }
 
 def concatCols(
@@ -75,9 +90,11 @@ def strip_namespace(tag: str ) -> str:
     return tag
 
 def xml_to_pandas_lazy(xml_stream: TextIOWrapper, record_tag: str):
-
+    i = 0
     rows: list[dict[str, list[str] | str]] = []
     for _, elem in ET.iterparse(xml_stream, events=('end',)):
+        print(i)
+        i += 1
         tag = strip_namespace(elem.tag)
         if tag == record_tag:
             row = {strip_namespace(child.tag): (child.text or '').strip() for child in elem}
@@ -88,6 +105,37 @@ def xml_to_pandas_lazy(xml_stream: TextIOWrapper, record_tag: str):
     # Convert to list to staisfy type checker 
     df = pd.DataFrame(rows, columns=list(_keys.keys()))
     return df
+
+
+def getAnnosPerEntry(dat:pd.DataFrame, met_id: str) -> dict[str,list[str]]:
+    dat_sel = dat.loc[dat.id == met_id,]
+
+    anno = {"hmdb":[met_id]}
+    for key in anno_keys.keys():
+      # Get whole key's col and get the cell (there is only one .... hopefully)
+      val = dat_sel[key].iloc[0]
+      if val != None and val != "":
+          anno.setdefault(anno_keys[key], []).append(val)
+    return(anno)
+
+def getAnnos(dat:pd.DataFrame) -> pd.Series:
+    """takes the data frame frwom VMH request and returns a pandas series of strings. Each string is a dictionary for the database annotations and can be simply evaluated (eval()) to be transformed in the correct format"""
+    anno_series = pd.Series()
+    for i in range(len(dat)):
+        met_id = dat.iloc[i]["id"]
+        anno = getAnnosPerEntry(dat, met_id)
+        anno_series[len(anno_series)] = str(anno)
+    anno_series.index = list(dat["id"])
+    return(anno_series)
+
+def rename_columns_safe(df, rename_dict):
+  for old_name, new_name in rename_dict.items():
+    if old_name in df.columns:
+      df.rename(columns={old_name: new_name}, inplace=True)
+    else:
+      print(f"Warning: Column '{old_name}' not found in DataFrame — skipping rename.")
+  return df
+
 
 def main():
     if len(sys.argv) != 3:
@@ -104,11 +152,22 @@ def main():
             columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
             # Apply the function row-wise to create a new column
             df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='|')
-            df = df.rename(_keys)
             if df is None:
                 warnings.warn("Error during concatenation of columns in HMDB. Not Database created.")
                 return 1
-            writeData(df, db = "VMH")
+            df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
+            # Don't ask me why, just df.rename(_keys) did not work
+            rename_columns_safe(df, _keys)
+            DBs = getAnnos(df)
+            dat_all = df.loc[:,["id","name","inchi"]]
+            dat_all.index = dat_all["id"]
+            DBs = DBs.astype(str)
+            DBsF = DBs.to_frame()
+            dat_all = pd.concat([dat_all, DBsF], axis = 1)
+            dat_all.columns = ["id", "name","inchi","DBs"]
+            df.index = df["id"]
+            dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
+            writeData(dat_all, db = "HMDB")
 
 
 if __name__ == '__main__':
