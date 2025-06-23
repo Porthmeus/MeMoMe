@@ -11,6 +11,8 @@ import os
 import shutil
 from io import StringIO
 import sys
+from io import TextIOWrapper
+from pandas.testing import assert_frame_equal
 
 class Test_DBreformatting(unittest.TestCase):
     # The directory of this file
@@ -169,8 +171,6 @@ class TestRenameColumnsSafe(unittest.TestCase):
 
         result = HMDB.rename_columns_safe(df_copy, {'A': 'X', 'Z': 'W'})
 
-        sys.stdout = sys.__stdout__  # Reset redirect
-
         self.assertIn("Warning: Column 'Z' not found", captured_output.getvalue())
         self.assertListEqual(list(result.columns), ['X', 'B', 'C'])
 
@@ -178,6 +178,50 @@ class TestRenameColumnsSafe(unittest.TestCase):
         result = HMDB.rename_columns_safe(self.df.copy(), {'X': 'Y'})
         self.assertListEqual(list(result.columns), ['A', 'B', 'C'])
 
+
+class TestPrepare(unittest.TestCase):
+
+    def test_prepare_normal_case(self):
+        df = pd.DataFrame({
+            "name": ["Water", "Ethanol"],
+            "synonyms": ["Dihydrogen monoxide", "Ethyl alcohol"],
+            "iupac_names": [None, "Ethanol"],
+            "traditional_iupac": ["Oxidane", None]
+        })
+        expected = pd.DataFrame({
+            "name": [
+                "Water_|_Dihydrogen monoxide_|_Oxidane",
+                "Ethanol_|_Ethyl alcohol_|_Ethanol"
+            ]
+        })
+        result = HMDB.prepare(df)
+        assert_frame_equal(result, expected)
+
+
+    def test_prepare_none_input(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            result = HMDB.prepare(None)
+            self.assertIsNone(result)
+            self.assertTrue(any("Error during concatenation" in str(warn.message) for warn in w))
+
+class TestGetAnnos(unittest.TestCase):
+    this_directory = Path(__file__).parent
+    dat_file = this_directory / "dat" / "hmdb_metab_test.xml"
+
+    @classmethod
+    def setUpClass(cls):
+        with open(TestGetAnnos.dat_file) as xml_file:
+            cls.df = xml_to_pandas_lazy(xml_file, "metabolite")
+            cls.df = HMDB.prepare(cls.df)
+            cls.df = HMDB.rename_columns_safe(cls.df, HMDB._keys)
+
+
+
+    def test_getAnnosPerEntry(self):
+      self.df.to_csv("hmdb_test211.csv")
+      ret = HMDB.getAnnosPerEntry(self.df, "HMDB0000001")
+      self.assertEqual(ret, {'hmdb': ['HMDB0000001'], 'chemspider': ['83153'], 'drugbank': ['DB04151'], 'metlin': ['3741'], 'food.compound': ['FDB093588'], 'pubchem.compound': ['92105'], 'chebi': ['50599'], 'kegg.compound': ['C01152']})
 
 if __name__ == '__main__':
     unittest.main()
