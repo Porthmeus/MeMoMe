@@ -4,10 +4,13 @@
 import unittest
 from src.dbhandling.reformatAux import *
 import src.dbhandling.reformatVMH as VMH
+import src.dbhandling.reformatHMDB as HMDB
 from pathlib import Path
 import pandas as pd
 import os
 import shutil
+from io import StringIO
+import sys
 
 class Test_DBreformatting(unittest.TestCase):
     # The directory of this file
@@ -25,7 +28,7 @@ class Test_DBreformatting(unittest.TestCase):
 
     def test_getData(self):
         # test that unallowed dbs lead to an error
-        with self.assertRaises(ValueError):
+        with self.assertRaises(KeyError):
             getData("foobar")
         
         # test if all implemented databases return pd.dataframes
@@ -105,7 +108,77 @@ class Test_DBreformatting(unittest.TestCase):
         dbs_ref = VMH.reformatVMH(vmh=vmh)
         self.assertTrue(all(dbs_ref.columns[0:4] == ['id', 'name', 'inchi', 'DBs']))
         self.assertEqual(dbs_ref.id.iloc[100], "test")
-        self.assertEqual(dbs_ref.name.iloc[100], 'test metabolite|t-metabolite|metabolite for test|test/assertion metabolite')
+        self.assertEqual(dbs_ref.name.iloc[100], 'test metabolite|t-metabolite|metabolite for test|test_|_assertion metabolite')
         self.assertEqual(dbs_ref.inchi.iloc[100], "InChI=1S-Metabolite")
         self.assertEqual(str(db100), dbs_ref.DBs.iloc[100])
         
+
+
+import unittest
+import pandas as pd
+import warnings
+
+class TestConcatCols(unittest.TestCase):
+
+    def setUp(self):
+        self.row = pd.Series({
+            'a': 'foo',
+            'b': 'bar',
+            'c': '',
+            'd': None,
+            'e': 'baz|qux'
+        })
+
+    def test_basic_concat(self):
+        result = HMDB.concatCols(self.row, ['a', 'b'])
+        self.assertEqual(result, 'foo|bar')
+
+    def test_ignore_empty_and_none(self):
+        result = HMDB.concatCols(self.row, ['a', 'c', 'd', 'b'])
+        self.assertEqual(result, 'foo|bar')
+
+    def test_empty_result(self):
+        result = HMDB.concatCols(self.row, ['c', 'd'])
+        self.assertEqual(result, '')
+
+    def test_separator_replacement_warning(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            result = HMDB.concatCols(self.row, ['a', 'e'])
+            self.assertEqual(result, 'foo|baz*/*qux')
+            self.assertEqual(len(w), 1)
+            self.assertTrue(issubclass(w[0].category, UserWarning))
+            self.assertIn("Replacing | in", str(w[0].message))
+
+class TestRenameColumnsSafe(unittest.TestCase):
+
+    def setUp(self):
+        self.df = pd.DataFrame({
+            'A': [1, 2],
+            'B': [3, 4],
+            'C': [5, 6]
+        })
+
+    def test_successful_rename(self):
+        result = HMDB.rename_columns_safe(self.df.copy(), {'A': 'X', 'B': 'Y'})
+        self.assertListEqual(list(result.columns), ['X', 'Y', 'C'])
+
+    def test_partial_rename_with_warning(self):
+        df_copy = self.df.copy()
+        captured_output = StringIO()
+        sys.stdout = captured_output  # Redirect stdout
+
+        result = HMDB.rename_columns_safe(df_copy, {'A': 'X', 'Z': 'W'})
+
+        sys.stdout = sys.__stdout__  # Reset redirect
+
+        self.assertIn("Warning: Column 'Z' not found", captured_output.getvalue())
+        self.assertListEqual(list(result.columns), ['X', 'B', 'C'])
+
+    def test_no_rename(self):
+        result = HMDB.rename_columns_safe(self.df.copy(), {'X': 'Y'})
+        self.assertListEqual(list(result.columns), ['A', 'B', 'C'])
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -14,13 +14,15 @@ from PubchemInfoNoInet import *
 from PubchemInfo import *
 from removeDuplicateMetabolites import *
 from bulkPerformance import *
-
+from DBreformatting import *
 
 
 fast_tests = [Test_annotateMissingDbs,Test_annotateEntryFunctions,Test_annotateID,Test_annotateFull,TestInchiRoutines,TestMatchInchit,Test_MeMoMetabolite,Test_annotateBulkRoutines,Test_MiscStuff,Test_removeDuplicates,TestParseSBML,TestPubchemInfoNoInet,TestPubchemInfo,Test_removeDuplicateMetabolites]
 
 
 slow_tests = [Test_annotationPerformance]
+
+formatting_tests = [Test_DBreformatting, TestConcatCols, TestRenameColumnsSafe]
 
 def fast():
   suite = unittest.TestSuite()
@@ -34,6 +36,12 @@ def slow():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(x))
   return suite
 
+def formatting():
+  suite = unittest.TestSuite()
+  for x in formatting_tests:
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(x))
+  return suite
+
 if __name__ == '__main__':
   runner = unittest.TextTestRunner()
   if len(sys.argv) < 2:
@@ -41,7 +49,7 @@ if __name__ == '__main__':
 
   fasts = fast()
   slows = slow()
-
+  formattings = formatting()
   if sys.argv[1] == "fast":
     print("\nRunning Unit Tests...")
     runner.run(fasts)
@@ -49,3 +57,7 @@ if __name__ == '__main__':
   if sys.argv[1] == "slow":
     print("\nRunning System Tests...")
     runner.run(slows)
+
+  if sys.argv[1] == "formatting":
+    print("\nRunning Formmating Tests...")
+    runner.run(formattings)

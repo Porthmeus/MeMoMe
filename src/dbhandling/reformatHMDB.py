@@ -34,13 +34,12 @@ def concatCols(
       if val is not None and val != '':
           parts.append(str(val))
 
-    for p in parts:
-      original = p
-      index: int=  p.find(sep)
-      if index > 0:
-        p = p.replace(sep,"*/*")
-        warnings.warn(f"Replacing {sep} in {original}")
-        
+    # Replace sep in-place
+    for i, p in enumerate(parts):
+        if sep in p:
+            warnings.warn(f"Replacing {sep} in {p}")
+            parts[i] = p.replace(sep, "*/*")
+
     return sep.join(parts)
 
 _keys: dict[str, str] = {
@@ -94,7 +93,6 @@ def getAnnos(dat:pd.DataFrame) -> pd.Series:
     """takes the data frame frwom VMH request and returns a pandas series of strings. Each string is a dictionary for the database annotations and can be simply evaluated (eval()) to be transformed in the correct format"""
     anno_series = pd.Series()
     for i in range(len(dat)):
-        print(i, len(dat))
         met_id = dat.iloc[i]["id"]
         anno = getAnnosPerEntry(dat, met_id)
         anno_series[len(anno_series)] = str(anno)
