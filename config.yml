@@ -25,7 +25,7 @@ databases:
   HMDB:
     URL: "http://49.12.211.202:7999/hmdb_metabolites.zip"
     file: "hmdb_metabolites.zip"
-    reformat: "hmdb_metabolitesMMM.csv"
+    reformat: "hmdb_metabolites_MMM.csv"
   TestCase:
     file: "TestCaseFile"
     reformat: "../TestCaseDir/TestCaseFile.txt"
