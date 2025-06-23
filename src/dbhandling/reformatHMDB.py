@@ -5,49 +5,10 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 import sys
-import zipfile
-import xml.etree.ElementTree as ET
-import csv
-from io import TextIOWrapper
+
 import pandas as pd
 from src.dbhandling.reformatAux import *
 import warnings
-
- # TODO Merge name and synonyms and iupac_names
- # Translate to identifiers.org prefix
-_keys: dict[str, str] = {
-       "accession" : "id", 
-       "name" : "name",
-        "synonyms" : "synonyms",  # Empty column, might chang in the future
-       "chemical_formula": "formula",
-       "iupac_names" : "iupac_names",
-       "traditional_iupac" : "traditional_iupac",
-       "smiles" : "smiles",
-       "inchi" : "inchi",
-       "inchikey" : "inchi_key",
-       "chemspider_id" : "chemspider",
-       "drugbank_id" :  "drugbank",
-       "metlin_id" :  "metlin",
-       "foodb_id" : "food.compound",
-       "pubchem_compound_id" : "pubchem.compound", 
-       "chebi_id": "chebi", 
-       "kegg_id" : "kegg.compound",
-       "biocyc_id" : "biocyc", 
-       "bigg_id": "bigg.metabolite", 
-       "vmh_id" : "vmhmetabolite",
-   }
-anno_keys: dict[str, str] = {
-       "chemspider" : "chemspider",
-       "drugbank" :  "drugbank",
-       "metlin" :  "metlin",
-       "food.compound" : "food.compound",
-       "pubchem.compound" : "pubchem.compound",
-       "chebi": "chebi",
-       "kegg.compound" : "kegg.compound",
-       "biocyc" : "biocyc",
-       "bigg.metabolite": "bigg.metabolite",
-       "vmhmetabolite" : "vmhmetabolite",
-   }
 
 def concatCols(
     x: pd.Series,
@@ -74,37 +35,48 @@ def concatCols(
           parts.append(str(val))
 
     for p in parts:
+      original = p
       index: int=  p.find(sep)
       if index > 0:
-        print(index)
         p = p.replace(sep,"*")
-        print(f"Replacing {sep} in {p}")
+        print(f"Replacing {sep} in {original}")
         
     return sep.join(parts)
 
-def strip_namespace(tag: str ) -> str:
-    # Remove namespace from tag: {namespace}tag -> tag
-    # Everything will have  http://www.hmdb.ca} preprended
-    if '}' in tag:
-        return tag.split('}', 1)[1]
-    return tag
+_keys: dict[str, str] = {
+    "accession" : "id", 
+    "name" : "name",
+     "synonyms" : "synonyms",  # Empty column, might chang in the future
+    "chemical_formula": "formula",
+    "iupac_names" : "iupac_names",
+    "traditional_iupac" : "traditional_iupac",
+    "smiles" : "smiles",
+    "inchi" : "inchi",
+    "inchikey" : "inchi_key",
+    "chemspider_id" : "chemspider",
+    "drugbank_id" :  "drugbank",
+    "metlin_id" :  "metlin",
+    "foodb_id" : "food.compound",
+    "pubchem_compound_id" : "pubchem.compound", 
+    "chebi_id": "chebi", 
+    "kegg_id" : "kegg.compound",
+    "biocyc_id" : "biocyc", 
+    "bigg_id": "bigg.metabolite", 
+    "vmh_id" : "vmhmetabolite",
+}
+anno_keys: dict[str, str] = {
+       "chemspider" : "chemspider",
+       "drugbank" :  "drugbank",
+       "metlin" :  "metlin",
+       "food.compound" : "food.compound",
+       "pubchem.compound" : "pubchem.compound",
+       "chebi": "chebi",
+       "kegg.compound" : "kegg.compound",
+       "biocyc" : "biocyc",
+       "bigg.metabolite": "bigg.metabolite",
+       "vmhmetabolite" : "vmhmetabolite",
+   }
 
-def xml_to_pandas_lazy(xml_stream: TextIOWrapper, record_tag: str):
-    i = 0
-    rows: list[dict[str, list[str] | str]] = []
-    for _, elem in ET.iterparse(xml_stream, events=('end',)):
-        print(i)
-        i += 1
-        tag = strip_namespace(elem.tag)
-        if tag == record_tag:
-            row = {strip_namespace(child.tag): (child.text or '').strip() for child in elem}
-            filtered_row: dict[str, list[str] | str] = {k: row.get(k, '') for k in _keys.keys()}
-            rows.append(filtered_row)
-            elem.clear()  # Free memory
-
-    # Convert to list to staisfy type checker 
-    df = pd.DataFrame(rows, columns=list(_keys.keys()))
-    return df
 
 
 def getAnnosPerEntry(dat:pd.DataFrame, met_id: str) -> dict[str,list[str]]:
@@ -122,9 +94,12 @@ def getAnnos(dat:pd.DataFrame) -> pd.Series:
     """takes the data frame frwom VMH request and returns a pandas series of strings. Each string is a dictionary for the database annotations and can be simply evaluated (eval()) to be transformed in the correct format"""
     anno_series = pd.Series()
     for i in range(len(dat)):
+        print(i, len(dat))
         met_id = dat.iloc[i]["id"]
         anno = getAnnosPerEntry(dat, met_id)
         anno_series[len(anno_series)] = str(anno)
+
+
     anno_series.index = list(dat["id"])
     return(anno_series)
 
@@ -138,40 +113,35 @@ def rename_columns_safe(df, rename_dict):
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python lazy_xml_to_csv.py <zipfile.zip> <xml_filename_inside_zip>)")
-        sys.exit(1)
-    # Cant use get data because we do not want to read the whole file
-    zip_path: str = sys.argv[1]
-    xml_name: str = sys.argv[2]
-    with zipfile.ZipFile(zip_path, 'r') as z:
-        with z.open(xml_name) as xml_file:
-            xml_text = TextIOWrapper(xml_file, encoding='utf-8')
-            df = xml_to_pandas_lazy(xml_text, "metabolite")
+    df = getData("HMDB")
 
-            columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
-            # Apply the function row-wise to create a new column
-            df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='|')
-            if df is None:
-                warnings.warn("Error during concatenation of columns in HMDB. Not Database created.")
-                return 1
-            df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
-            # Don't ask me why, just df.rename(_keys) did not work
-            rename_columns_safe(df, _keys)
-            DBs = getAnnos(df)
-            dat_all = df.loc[:,["id","name","inchi"]]
-            dat_all.index = dat_all["id"]
-            DBs = DBs.astype(str)
-            DBsF = DBs.to_frame()
-            dat_all = pd.concat([dat_all, DBsF], axis = 1)
-            dat_all.columns = ["id", "name","inchi","DBs"]
-            df.index = df["id"]
-            dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
-            writeData(dat_all, db = "HMDB")
+    columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
+    # Apply the function row-wise to create a new column
+    df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='|')
+    print("Added new col")
+    if df is None:
+        warnings.warn("Error during concatenation of columns in HMDB. Not Database created.")
+        return 1
+    df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
+    print("droped old cols")
+    # Don't ask me why, just df.rename(_keys) did not work
+    rename_columns_safe(df, _keys)
+    print("get annos")
+    DBs = getAnnos(df)
+    dat_all = df.loc[:,["id","name","inchi"]]
+    dat_all.index = dat_all["id"]
+    DBs = DBs.astype(str)
+    DBsF = DBs.to_frame()
+    print("starting join")
+    dat_all = pd.concat([dat_all, DBsF], axis = 1)
+    dat_all.columns = ["id", "name","inchi","DBs"]
+    df.index = df["id"]
+    dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
+    writeData(dat_all, db = "HMDB")
 
 
 if __name__ == '__main__':
-    # Run as python -m src.dbhandling.reformatHMDB Databases/hmdb_metabolites.zip hmdb_metabolites.xml from the root folder
-    # or as python  src/dbhandling/reformatHMDB.py Databases/hmdb_metabolites.zip hmdb_metabolites.xml
+    # Run as python -m src.dbhandling.reformatHMDB 
+    # or as python  src/dbhandling/reformatHMDB.py 
     main()
 
