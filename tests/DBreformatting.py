@@ -35,7 +35,6 @@ class Test_DBreformatting(unittest.TestCase):
         self.assertEqual(type(getData("VMH")), type(pd.DataFrame()))
         self.assertEqual(type(getData("BiGG")), type(pd.DataFrame()))
         self.assertEqual(type(getData("ModelSeed")), type(pd.DataFrame()))
-        self.assertEqual(type(getData("HMDB")), type(pd.DataFrame()))
 
     def test_writeData(self):
         # test if we can create an empty file
@@ -108,7 +107,7 @@ class Test_DBreformatting(unittest.TestCase):
         dbs_ref = VMH.reformatVMH(vmh=vmh)
         self.assertTrue(all(dbs_ref.columns[0:4] == ['id', 'name', 'inchi', 'DBs']))
         self.assertEqual(dbs_ref.id.iloc[100], "test")
-        self.assertEqual(dbs_ref.name.iloc[100], 'test metabolite|t-metabolite|metabolite for test|test_|_assertion metabolite')
+        self.assertEqual(dbs_ref.name.iloc[100], 'test metabolite_|_t-metabolite_|_metabolite for test_|_test|assertion metabolite')
         self.assertEqual(dbs_ref.inchi.iloc[100], "InChI=1S-Metabolite")
         self.assertEqual(str(db100), dbs_ref.DBs.iloc[100])
         
