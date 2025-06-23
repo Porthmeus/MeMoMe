@@ -4,6 +4,7 @@ from src.download_db import get_config, get_database_path
 import pandas as pd
 import os
 import json
+import warnings
 
 from io import TextIOWrapper
 import zipfile
@@ -71,7 +72,7 @@ def getData(db:str) -> pd.DataFrame:
     # no HMDB, can't be used because we do not want to load the whole DB
     dbs_csv = ["BiGG","ModelSeed"]
     dbs_json = ["VMH"]
-    dbs_xml = ["HMDB"]
+    dbs_other = ["HMDB"]
     path = os.path.join(get_database_path(),config["databases"][db]["file"])
     if db in dbs_csv:
         dat = pd.read_csv(path,
@@ -80,14 +81,15 @@ def getData(db:str) -> pd.DataFrame:
     elif db in dbs_json:
         file = os.path.join(path)
         dat = __json_to_dataframe(file)
-    elif db in dbs_xml:
-      with zipfile.ZipFile(path, 'r') as z:
-        print(z.namelist())
-        with z.open("hmdb_metabolites.xml") as xml_file:
-            xml_text = TextIOWrapper(xml_file, encoding='utf-8')
-            dat = xml_to_pandas_lazy(xml_text, "metabolite")
+    elif db in dbs_other:
+        if db == "HMDB"
+            with zipfile.ZipFile(path, 'r') as z:
+                print(z.namelist())
+                with z.open("hmdb_metabolites.xml") as xml_file:
+                    xml_text = TextIOWrapper(xml_file, encoding='utf-8')
+                    dat = xml_to_pandas_lazy(xml_text, "metabolite")
     else:
-        raise ValueError("db must be one of " + str(dbs_csv + dbs_json))
+        raise ValueError("db must be one of " + str(dbs_csv + dbs_json + dbs_other))
     return(dat)
 
 
