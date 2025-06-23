@@ -131,7 +131,7 @@ def handleNamesDBs(dat:pd.DataFrame) -> pd.DataFrame:
         names = [x.lower() for x in names]
         names = list(set(names))
         names.sort()
-        names = "|".join(names)
+        names = "_|_".join(names)
 
         # add names and database annotations
         name_db_dict["names"][i] = names

@@ -62,7 +62,7 @@ def concatNames(x:pd.Series) -> str:
        index =  alias.find("|")
        if index > 0:
          print(f"Replacing | in {alias}")
-         alias = alias.replace("***","|")
+         alias = alias.replace("***","_|_")
          concat.append(alias)
 
     concat = "|".join(concat)

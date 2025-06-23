@@ -117,7 +117,7 @@ def main():
 
     columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
     # Apply the function row-wise to create a new column
-    df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='|')
+    df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='_|_')
     print("Added new col")
     if df is None:
         warnings.warn("Error during concatenation of columns in HMDB. Not Database created.")
