@@ -38,8 +38,8 @@ def concatCols(
       original = p
       index: int=  p.find(sep)
       if index > 0:
-        p = p.replace(sep,"*")
-        print(f"Replacing {sep} in {original}")
+        p = p.replace(sep,"*/*")
+        warnings.warn(f"Replacing {sep} in {original}")
         
     return sep.join(parts)
 
