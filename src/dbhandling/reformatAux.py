@@ -82,7 +82,7 @@ def getData(db:str) -> pd.DataFrame:
         file = os.path.join(path)
         dat = __json_to_dataframe(file)
     elif db in dbs_other:
-        if db == "HMDB"
+      if db == "HMDB":
             with zipfile.ZipFile(path, 'r') as z:
                 print(z.namelist())
                 with z.open("hmdb_metabolites.xml") as xml_file:
