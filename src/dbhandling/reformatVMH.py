@@ -52,7 +52,7 @@ def getAnnos(dat:pd.DataFrame) -> pd.Series:
     return(anno_series)
 
 def concatNames(x:pd.Series) -> str:
-    """ handles the concatenation of the different fields which we consider a name of a metabolite. Will return a single string containing the names which are seperated by a '|'."""
+    """ handles the concatenation of the different fields which we consider a name of a metabolite. Will return a single string containing the names which are seperated by a '_|_'."""
     iupac = x["iupac"]
     name = x["fullName"]
     alias :str  = str(x["synonyms"])
@@ -69,7 +69,7 @@ def concatNames(x:pd.Series) -> str:
          alias = alias.replace("***","_|_")
          concat.append(alias)
 
-    concat = "|".join(concat)
+    concat = "_|_".join(concat)
     return(concat)
 # for names check fullName iupac and alias
 # alias contains a list of names seperated by "***" 
@@ -96,7 +96,7 @@ def reformatVMH(vmh:pd.DataFrame = getData("VMH")) -> pd.DataFrame:
     
 def main():
     if len(sys.argv) != 1:
-        print("Usage: python reformat_vmh.py")
+        print("Usage: python reformatVMH.py")
         sys.exit(1)
 
     try:
