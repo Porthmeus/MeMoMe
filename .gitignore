@@ -140,3 +140,20 @@ dmypy.json
 
 .idea/
 performace_table.html
+
+
+.~lock.hmdb_formatted.csv#
+2Databases/*
+]
+bac_specs/*
+out/*
+output.csv
+scripts/*
+src/dbhandling/hmdb_metabolites.xml
+src/dbhandling/hmdb_metabolites.zip
+src/dbhandling/output.csv
+tests/reformat_dbs.py
+tests/utils/.~lock.stuff.csv#
+tests/utils/__init.py__
+tests/utils/stuff.csv
+vmh_formatted.csv
