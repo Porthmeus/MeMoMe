@@ -2,13 +2,13 @@
 # 10.04.25
 
 
-# Enables execution as python  src/dbhandling/reformatVMH.py"
 # libraries
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
 import warnings
+# Enables execution as python  src/dbhandling/reformatVMH.py"
+if __name__ == "__main__":
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from src.dbhandling.reformatAux import *
 from src.annotation.annotateInchiRoutines import *
 import pandas as pd
