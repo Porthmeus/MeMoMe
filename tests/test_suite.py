@@ -43,7 +43,7 @@ def formatting():
   return suite
 
 if __name__ == '__main__':
-  runner = unittest.TextTestRunner()
+  runner = unittest.TextTestRunner(stream=sys.stdout, verbosity=2, buffer=False)
   if len(sys.argv) < 2:
     print("Please specify fast or slow")
 
@@ -60,4 +60,6 @@ if __name__ == '__main__':
 
   if sys.argv[1] == "formatting":
     print("\nRunning Formmating Tests...")
-    runner.run(formattings)
+    runner.run(
+        formattings
+        )

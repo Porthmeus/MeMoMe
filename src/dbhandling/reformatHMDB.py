@@ -91,14 +91,13 @@ def getAnnosPerEntry(dat:pd.DataFrame, met_id: str) -> dict[str,list[str]]:
 
 def getAnnos(dat:pd.DataFrame) -> pd.Series:
     """takes the data frame frwom VMH request and returns a pandas series of strings. Each string is a dictionary for the database annotations and can be simply evaluated (eval()) to be transformed in the correct format"""
-    anno_series = pd.Series()
+    anno_series = pd.Series(dtype=str)
     for i in range(len(dat)):
         met_id = dat.iloc[i]["id"]
         anno = getAnnosPerEntry(dat, met_id)
         anno_series[len(anno_series)] = str(anno)
 
 
-    anno_series.index = list(dat["id"])
     return(anno_series)
 
 def rename_columns_safe(df, rename_dict):

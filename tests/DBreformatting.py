@@ -208,20 +208,26 @@ class TestPrepare(unittest.TestCase):
 class TestGetAnnos(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat_file = this_directory / "dat" / "hmdb_metab_test.xml"
-
+    
     @classmethod
     def setUpClass(cls):
-        with open(TestGetAnnos.dat_file) as xml_file:
-            cls.df = xml_to_pandas_lazy(xml_file, "metabolite")
-            cls.df = HMDB.prepare(cls.df)
-            cls.df = HMDB.rename_columns_safe(cls.df, HMDB._keys)
-
+      with open(TestGetAnnos.dat_file) as xml_file:
+          cls.df = xml_to_pandas_lazy(xml_file, "metabolite")
+          cls.df = HMDB.prepare(cls.df)
+          cls.df = HMDB.rename_columns_safe(cls.df, HMDB._keys)
 
 
     def test_getAnnosPerEntry(self):
-      self.df.to_csv("hmdb_test211.csv")
       ret = HMDB.getAnnosPerEntry(self.df, "HMDB0000001")
       self.assertEqual(ret, {'hmdb': ['HMDB0000001'], 'chemspider': ['83153'], 'drugbank': ['DB04151'], 'metlin': ['3741'], 'food.compound': ['FDB093588'], 'pubchem.compound': ['92105'], 'chebi': ['50599'], 'kegg.compound': ['C01152']})
+
+    def test_getAnnos(self):
+      ret = pd.DataFrame(HMDB.getAnnos(self.df))
+      expected = pd.read_csv(self.this_directory / "dat" / "hmdb_test_reformated.csv", header = None)
+      assert_frame_equal(ret, expected)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
