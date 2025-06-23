@@ -45,10 +45,10 @@ def concatCols(
 _keys: dict[str, str] = {
     "accession" : "id", 
     "name" : "name",
-     "synonyms" : "synonyms",  # Empty column, might chang in the future
+     #"synonyms" : "synonyms",  # Empty column, might chang in the future
     "chemical_formula": "formula",
-    "iupac_names" : "iupac_names",
-    "traditional_iupac" : "traditional_iupac",
+    #"iupac_names" : "iupac_names", will be dropped before rename
+    #"traditional_iupac" : "traditional_iupac", will be dropped before rename
     "smiles" : "smiles",
     "inchi" : "inchi",
     "inchikey" : "inchi_key",
@@ -110,21 +110,24 @@ def rename_columns_safe(df, rename_dict):
   return df
 
 
+def prepare(df)-> pd.DataFrame | None:
+   columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
+   # Apply the function row-wise to create a new column
+   
+   try:
+      df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='_|_')
+   except Exception as e:
+     warnings.warn(f"Error during concatenation: {e}")
+     return None
+
+   df = df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
+   return df
+
+
 def main():
     df = getData("HMDB")
-
-    columns_to_concat = ["name", "synonyms", "iupac_names", "traditional_iupac"]
-    # Apply the function row-wise to create a new column
-    df['name'] = df.apply(concatCols, axis=1, colNames=columns_to_concat, sep='_|_')
-    print("Added new col")
-    if df is None:
-        warnings.warn("Error during concatenation of columns in HMDB. Not Database created.")
-        return 1
-    df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
-    print("droped old cols")
-    # Don't ask me why, just df.rename(_keys) did not work
+    df = prepare(df)
     rename_columns_safe(df, _keys)
-    print("get annos")
     DBs = getAnnos(df)
     dat_all = df.loc[:,["id","name","inchi"]]
     dat_all.index = dat_all["id"]

@@ -22,7 +22,7 @@ fast_tests = [Test_annotateMissingDbs,Test_annotateEntryFunctions,Test_annotateI
 
 slow_tests = [Test_annotationPerformance]
 
-formatting_tests = [Test_DBreformatting, TestConcatCols, TestRenameColumnsSafe]
+formatting_tests = [TestConcatCols, TestRenameColumnsSafe, TestPrepare, TestGetAnnos]
 
 def fast():
   suite = unittest.TestSuite()
