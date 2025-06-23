@@ -1,0 +1,6 @@
+"{'hmdb': ['HMDB0000001'], 'chemspider': ['83153'], 'drugbank': ['DB04151'], 'metlin': ['3741'], 'food.compound': ['FDB093588'], 'pubchem.compound': ['92105'], 'chebi': ['50599'], 'kegg.compound': ['C01152']}"
+"{'hmdb': ['HMDB0000002'], 'chemspider': ['415'], 'food.compound': ['FDB005274'], 'pubchem.compound': ['428'], 'chebi': ['15725'], 'kegg.compound': ['C00986'], 'biocyc': ['CPD-313']}"
+"{'hmdb': ['HMDB0000005'], 'chemspider': ['57'], 'drugbank': ['DB04553'], 'food.compound': ['FDB030356'], 'pubchem.compound': ['58'], 'chebi': ['30831'], 'kegg.compound': ['C00109'], 'biocyc': ['2-OXOBUTANOATE'], 'bigg.metabolite': ['33889'], 'vmhmetabolite': ['2OBUT']}"
+"{'hmdb': ['HMDB0000008'], 'chemspider': ['389701'], 'food.compound': ['FDB021867'], 'pubchem.compound': ['440864'], 'chebi': ['50613'], 'kegg.compound': ['C05984'], 'biocyc': ['CPD-3564']}"
+"{'hmdb': ['HMDB0000010'], 'chemspider': ['389515'], 'metlin': ['2578'], 'food.compound': ['FDB021868'], 'pubchem.compound': ['440624'], 'chebi': ['1189'], 'kegg.compound': ['C05299'], 'vmhmetabolite': ['C05299']}"
+"{'hmdb': ['HMDB0000011'], 'chemspider': ['83181'], 'food.compound': ['FDB021869'], 'pubchem.compound': ['92135'], 'chebi': ['17066'], 'kegg.compound': ['C01089'], 'biocyc': ['CPD-335'], 'bigg.metabolite': ['36784'], 'vmhmetabolite': ['BHB']}"

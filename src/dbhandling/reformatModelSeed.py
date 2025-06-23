@@ -1,12 +1,15 @@
 # Porthmeus
 # 17.01.25
 
+import sys
+import os
+if __name__ == "__main__":
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))) # to make it executable
 from src.download_db import get_config, get_database_path
 from src.annotation.annotateInchiRoutines import smile2inchi
 from src.dbhandling.reformatAux import getData, writeData
 from io import StringIO
 import pandas as pd
-import os
 import json
 import warnings
 # this needs to hang in global space, otherwise we need to read the info over and over again
@@ -111,7 +114,7 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
 def handleNamesDBs(dat:pd.DataFrame) -> pd.DataFrame:
     # create a common name column from 'abbreviation','name','alias'
     n = dat.shape[0]
-    name_db_dict = {"names" : [""]*n,
+    name_db_dict = {"name" : [""]*n,
                     "DBs" : [""]*n}
     for i in range(n):
         # handle name column
@@ -134,19 +137,21 @@ def handleNamesDBs(dat:pd.DataFrame) -> pd.DataFrame:
         names = "_|_".join(names)
 
         # add names and database annotations
-        name_db_dict["names"][i] = names
+        name_db_dict["name"][i] = names
         name_db_dict["DBs"][i] = str(databases)
 
     # put everything in a dataframe
     name_db_df = pd.DataFrame(name_db_dict, index = dat.id)
     return(name_db_df)
 
-def reformatModelSeed()->None:
+def reformatModelSeed()->pd.DataFrame:
     # a function to reformat the metabolite annotation table of ModelSEED to a standardized format
     # get the data
     dat = getData("ModelSeed")
     # get names and databases
     namesDBs = handleNamesDBs(dat)
+    # rename the name column from ModelSeed to avoid conflict with the new name column
+    dat = dat.rename(columns = {'name':'name_modelseed'})
     # get inchis
     inchis = dat.smiles.apply(smile2inchi)
     inchis.name = "inchi"
@@ -155,8 +160,23 @@ def reformatModelSeed()->None:
     dat.index = dat.id
     dat_all = pd.concat([namesDBs,inchis,dat],axis =1)
     
+    # sort data
     dat_all_start = dat_all.loc[:,["id", "name","inchi", "DBs"]]
-    dat_all_end = dat_all.drop(["id", "name","inchi", "DBs"])
+    dat_all_end = dat_all.drop(["id", "name","inchi", "DBs"], axis = 1)
     dat_all = pd.concat([dat_all_start, dat_all_end], axis = 1)
-    # write the data
-    writeData(dat_all, db = "ModelSeed")
+    return(dat_all)
+
+def main():
+    if len(sys.argv) != 1:
+        print("Usage: python reformatModesSeed.py")
+        sys.exit(1)
+    try:
+        refDB = reformatModelSeed()
+        writeData(refDB, db = "ModelSeed")
+        print("ModelSeed reformatting completed successfully. Output written to standard location.")
+    except Exception as e:
+        warnings.warn(f"Error during ModelSeed reformatting: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
