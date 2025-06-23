@@ -2,6 +2,10 @@
 # 20.01.25
 
 # functions to reformat the BiGG database to a standard format which can be easily read  
+import sys
+import os
+if __name__ == "__main__":
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))) # to make it executable
 from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 from src.annotation.annotateInchiRoutines import *
 from src.dbhandling.reformatAux import getData, writeData
@@ -10,7 +14,6 @@ from io import StringIO
 from math import isnan
 import re
 import pandas as pd
-import os
 import tempfile
 import requests
 import subprocess
@@ -49,7 +52,7 @@ def downloadPBCInchiKey2String() -> str:
     with tempfile.NamedTemporaryFile(delete=False, mode='wb') as temp_file:
         with requests.get(url, stream=True) as response:
             response.raise_for_status()  # Ensure request was successful
-            for chunk in tqdm(response.iter_content(chunk_size=1024*1024), desc = "Downloading Pubchem Database"):  # Read in chunks of 1 MB
+            for chunk in tqdm(response.iter_content(chunk_size=1024*1024), desc = "Downloading Pubchem Database (~6800it)"):  # Read in chunks of 1 MB
                 temp_file.write(chunk)  # Write chunk to file
         
         temp_file_path = temp_file.name  # Get the file path
@@ -77,14 +80,15 @@ def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
     os.remove(keys_file)
     return(result.stdout)  # Print matched lines
 
-def reformatBiGG() -> None:
+def reformatBiGG() -> pd.DataFrame():
+    '''reformats BiGG database and returns a dataframe with the id, names, inchistrings and databases + extra information for each metabolite as it is given in the BiGG database'''
     # get names, DBs and Inchi columns
     dat = getData("BiGG")
 
     # names
     names = dat.name.fillna(value = "").apply(lambda x: str(x).replace(";",","))
     names.index = dat.bigg_id
-    names.name = "names"
+    names.name = "name"
 
     # dbs
     dbs = dat.database_links.fillna(value = "").apply(handleDBs)
@@ -116,7 +120,7 @@ def reformatBiGG() -> None:
     tbl_conversion.columns = ["inchi","inchi_key"]
     # create a proper table and merge them to the reformatted table
     inchis = pd.merge(inchis_keys, tbl_conversion,on ="inchi_key", how = "left")
-    inchis.index = inchis.bigg_id
+    inchis.index = inchis.id
     dat_all = pd.concat([names, dbs], axis = 1)
     dat_all = pd.merge(dat_all, inchis, left_index =True, right_index = True)
     
@@ -124,8 +128,23 @@ def reformatBiGG() -> None:
     os.remove(pbc_table)
 
     dat_all_start = dat_all.loc[:,["id", "name","inchi", "DBs"]]
-    dat_all_end = dat_all.drop(["id", "name","inchi", "DBs"])
+    dat_all_end = dat_all.drop(["id", "name","inchi", "DBs"], axis = 1)
     dat_all = pd.concat([dat_all_start, dat_all_end], axis = 1)
-    # write the database
-    writeData(dat_all, db = "BiGG")
+    # return the database
+    return(dat_all)
 
+def main():
+    if len(sys.argv) != 1:
+        print("Usage: python reformatBigg.py")
+        sys.exit(1)
+
+    try:
+        refDB = reformatBiGG()
+        writeData(refDB, db = "BiGG")
+        print("BiGG reformatting completed successfully. Output written to standard location.")
+    except Exception as e:
+        warnings.warn(f"Error during BiGG reformatting: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
