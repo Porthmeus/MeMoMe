@@ -96,8 +96,7 @@ def getAnnos(dat:pd.DataFrame) -> pd.Series:
         met_id = dat.iloc[i]["id"]
         anno = getAnnosPerEntry(dat, met_id)
         anno_series[len(anno_series)] = str(anno)
-
-
+    anno_series.index = list(dat["id"])
     return(anno_series)
 
 def rename_columns_safe(df, rename_dict):
@@ -122,9 +121,7 @@ def prepare(df)-> pd.DataFrame | None:
    df = df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
    return df
 
-
-def main():
-    df = getData("HMDB")
+def do_all(df: pd.DataFrame) -> pd.DataFrame:
     df = prepare(df)
     rename_columns_safe(df, _keys)
     DBs = getAnnos(df)
@@ -137,6 +134,18 @@ def main():
     dat_all.columns = ["id", "name","inchi","DBs"]
     df.index = df["id"]
     dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
+
+    return dat_all
+
+def main():
+    df = getData("HMDB")
+    #df = None
+
+    #with open("hmdb_metabolites.xml") as xml_file:
+    #  df = xml_to_pandas_lazy(xml_file, "metabolite")
+    #df.to_csv("hmdb.csv")
+    dat_all = do_all(df)
+    dat_all.to_csv("hmdb_metabolites_reformatted_all.csv")
     writeData(dat_all, db = "HMDB")
 
 
