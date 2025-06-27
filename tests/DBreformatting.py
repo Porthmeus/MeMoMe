@@ -5,12 +5,14 @@ import unittest
 from src.dbhandling.reformatAux import *
 import src.dbhandling.reformatVMH as VMH
 import src.dbhandling.reformatHMDB as HMDB
+import src.dbhandling.reformatBiGG as BiGG
 from pathlib import Path
 import pandas as pd
 import os
 import shutil
 from io import StringIO
 import sys
+import subprocess as sp
 from io import TextIOWrapper
 from pandas.testing import assert_frame_equal
 
@@ -20,13 +22,25 @@ class Test_DBreformatting(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory.joinpath("dat")
 
+
     def setUp(self):
+        # create a directory to test the download function
         self.test_dir = "TestCaseDir"
         os.makedirs(self.test_dir, exist_ok = True)
+        # start a https server for testing the download function locally
+        self.https_server = sp.Popen(
+                ["python3","-m", "http.server", "8888"],
+        cwd=str(self.dat.absolute()),
+        stdout=sp.PIPE,
+        stderr=sp.PIPE
+        )
 
     def tearDown(self):
+        # remove the directory which was needed for the download testing
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        # close the server
+        self.https_server.terminate()
 
     def test_getData(self):
         # test that unallowed dbs lead to an error
@@ -112,7 +126,37 @@ class Test_DBreformatting(unittest.TestCase):
         self.assertEqual(dbs_ref.name.iloc[100], 'test metabolite_|_t-metabolite_|_metabolite for test_|_test|assertion metabolite')
         self.assertEqual(dbs_ref.inchi.iloc[100], "InChI=1S-Metabolite")
         self.assertEqual(str(db100), dbs_ref.DBs.iloc[100])
+    
+    # BiGG
+    def test_reformatBiGG(self):
+        # tests only individual functions on a shortened data frame
+        bigg = getData("BiGG")
+        bigg.columns
+        bigg = bigg.iloc[0:100,] # reduce the table to the first 100 entries
+
+        # add a line with known values
+        bigg.loc[len(bigg)] = ["bigg_id", # met_id
+                               "test", # universal_bigg_id 
+                               "test metabolite", # name
+                               "", # model_list 
+                               "Test:  http://identifiers.org/test/test1", # database_links
+                               "bigg_id_c; bigg_id[c]"] # old_bigg_ids 
+        # add another line with slight differences, to test the aggregation of universal_bigg_ids
+        bigg.loc[len(bigg)] = ["bigg_id", # met_id
+                               "u_bigg_id", # universal_bigg_id 
+                               "test|metabolite", # name
+                               "", # model_list - not important, will be discarded
+                               "Test:  http://identifiers.org/test/test2; InChI key https://identifiers.org/inchikey/VHRGRCVQAFMJIZ-UHFFFAOYSA-P", # database_links
+                               "bigg_id_c; bigg_id(c)"] # old_bigg_ids 
+        # reformat and test
+        dbs_ref = BiGG.reformatBiGG(dat = bigg, inchiKey2String_url = "http://localhost:8888/TestInchiKey2String.gz")
         
+        db100 = {'test': ['test1','test2']}
+        self.assertTrue(all(dbs_ref.columns[0:4] == ['id', 'name', 'inchi', 'DBs']))
+        self.assertEqual(dbs_ref.id.loc["test"], "test")
+        self.assertEqual(dbs_ref.name.loc["test"], 'test metabolite_|_test|metabolite')
+        self.assertEqual(dbs_ref.inchi.loc["test"], "InChI=1S/C5H14N2/c6-4-2-1-3-5-7/h1-7H2/p+2")
+        self.assertEqual(str(db100), dbs_ref.DBs.loc["test"])
 
 
 import unittest
