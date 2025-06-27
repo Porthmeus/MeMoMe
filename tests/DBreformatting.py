@@ -6,15 +6,19 @@ from src.dbhandling.reformatAux import *
 import src.dbhandling.reformatVMH as VMH
 import src.dbhandling.reformatHMDB as HMDB
 import src.dbhandling.reformatBiGG as BiGG
+import src.dbhandling.reformatModelSeed as SEED
 from pathlib import Path
 import pandas as pd
 import os
 import shutil
 from io import StringIO
+from io import TextIOWrapper
 import sys
 import subprocess as sp
-from io import TextIOWrapper
 from pandas.testing import assert_frame_equal
+import http.server
+import socketserver
+import threading
 
 class Test_DBreformatting(unittest.TestCase):
     # The directory of this file
@@ -22,25 +26,33 @@ class Test_DBreformatting(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory.joinpath("dat")
 
+    def start_http_server(self, port: int = 8000):
+        handler = http.server.SimpleHTTPRequestHandler
+        httpd = socketserver.TCPServer(("", port), handler)
+
+        thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+        thread.start()
+        return httpd  # You can later call httpd.shutdown()
+
 
     def setUp(self):
         # create a directory to test the download function
         self.test_dir = "TestCaseDir"
         os.makedirs(self.test_dir, exist_ok = True)
-        # start a https server for testing the download function locally
-        self.https_server = sp.Popen(
-                ["python3","-m", "http.server", "8888"],
-        cwd=str(self.dat.absolute()),
-        stdout=sp.PIPE,
-        stderr=sp.PIPE
-        )
+
 
     def tearDown(self):
         # remove the directory which was needed for the download testing
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
-        # close the server
-        self.https_server.terminate()
+        # close the server if it still running
+        try: 
+            self.https_server.shutdown()
+            self.https_server.close()
+        except Exception as e:
+            pass
+
+
 
     def test_getData(self):
         # test that unallowed dbs lead to an error
@@ -55,7 +67,10 @@ class Test_DBreformatting(unittest.TestCase):
     def test_writeData(self):
         # test if we can create an empty file
         writeData(pd.DataFrame(), db = "TestCase")
-        self.assertTrue(os.path.exists(os.path.join(self.test_dir,"TestCaseFile.txt")))
+        testfile = os.path.join(self.test_dir,"TestCaseFile.txt")
+        print("\n\n" + testfile)
+        print( os.path.abspath(os.path.curdir))
+        self.assertTrue(os.path.exists(testfile))
     
     ### VMH
     def test_reformatVMH(self):
@@ -131,7 +146,6 @@ class Test_DBreformatting(unittest.TestCase):
     def test_reformatBiGG(self):
         # tests only individual functions on a shortened data frame
         bigg = getData("BiGG")
-        bigg.columns
         bigg = bigg.iloc[0:100,] # reduce the table to the first 100 entries
 
         # add a line with known values
@@ -143,19 +157,77 @@ class Test_DBreformatting(unittest.TestCase):
                                "bigg_id_c; bigg_id[c]"] # old_bigg_ids 
         # add another line with slight differences, to test the aggregation of universal_bigg_ids
         bigg.loc[len(bigg)] = ["bigg_id", # met_id
-                               "u_bigg_id", # universal_bigg_id 
+                               "test", # universal_bigg_id 
                                "test|metabolite", # name
                                "", # model_list - not important, will be discarded
                                "Test:  http://identifiers.org/test/test2; InChI key https://identifiers.org/inchikey/VHRGRCVQAFMJIZ-UHFFFAOYSA-P", # database_links
                                "bigg_id_c; bigg_id(c)"] # old_bigg_ids 
         # reformat and test
-        dbs_ref = BiGG.reformatBiGG(dat = bigg, inchiKey2String_url = "http://localhost:8888/TestInchiKey2String.gz")
-        
-        db100 = {'test': ['test1','test2']}
+        self.https_server = self.start_http_server(port = 8888)
+        try: 
+            dbs_ref = BiGG.reformatBiGG(dat = bigg, inchiKey2String_url = "http://localhost:8888/tests/dat/TestInchiKey2String.gz")
+        except Exception as e:
+            raise e
+        finally: 
+            self.https_server.shutdown()
+            self.https_server.server_close()
+
+        db100 = {'inchikey': ['VHRGRCVQAFMJIZ-UHFFFAOYSA-P'], 'test': ['test1','test2']}
         self.assertTrue(all(dbs_ref.columns[0:4] == ['id', 'name', 'inchi', 'DBs']))
         self.assertEqual(dbs_ref.id.loc["test"], "test")
         self.assertEqual(dbs_ref.name.loc["test"], 'test metabolite_|_test|metabolite')
         self.assertEqual(dbs_ref.inchi.loc["test"], "InChI=1S/C5H14N2/c6-4-2-1-3-5-7/h1-7H2/p+2")
+        self.assertEqual(str(db100), dbs_ref.DBs.loc["test"])
+
+    ### ModelSeed
+    def test_reformatModelSeed(self):
+        # tests only individual functions on a shortened data frame
+
+        seed = getData("ModelSeed")
+        seed = seed.iloc[0:100,] # reduce the table to the first 100 entries
+        # add a line with known values
+        new_row = [ "test", # id
+                    "test_met", # abbreviation
+                    "test metabolite", # name
+                    "C2H6O", # formula
+                    "46.069", # mass
+                    "", # source
+                    "LFQSCWFLJHTTHZ-UHFFFAOYSA-N", # inchikey
+                    "0", # charge
+                    "", # is_core
+                    "", # is_obsolete
+                    "", # linked_compound
+                    "", # is_cofactor
+                    "15.62", # deltag
+                    "0.34", # deltagerr
+                    "1:3:16.47", # pka
+                    "1:3:-2.16", # pkb
+                    "", # abstract_compound
+                    "", # comprised_of
+                   "Name: testMet; test metabolite|Kegg: C_TestCompound; C_testCompound; D_TestDrug|PubChem: removethis|MetaCyc: metacycID|BiGG: etoh|MetaNetX: MNXM1108092|BitterDB: bitterTest|ECyano: ecyanoTest|PDB: pdbTest|Lincs: lincsTest|Merops: meropsTest|Panther: pantherTest", # aliases
+                    "OCC", # smiles
+                    ""] # notes
+        seed.loc[len(seed)] = new_row
+#        t = seed.iloc[0:1,]
+#        t.loc[len(t)] = new_row
+        dbs_ref = SEED.reformatModelSeed(dat = seed)
+
+        db100 = {'kegg.drug': ['D_TestDrug'],
+                 'kegg.compound': ['C_TestCompound','C_testCompound'],
+                 'metacyc.compound': ["metacycID"],
+                 'bigg.metabolite': ["etoh"],
+                 'metanetx.substance':["MNXM1108092"],
+                 'bitterdb.cpd' : ["bitterTest"],
+                 'ecyano.entity' : ["ecyanoTest"],
+                 "pdb.ligand" : ["pdbTest"],
+                 "lincs.smallmolecule" : ["lincsTest"],
+                 "merops.inhibitor" : ["meropsTest"],
+                 "panther.pthcmp" : ["pantherTest"]}
+        self.assertTrue(all(dbs_ref.columns[0:4] == ['id', 'name', 'inchi', 'DBs']))
+        self.assertEqual(dbs_ref.id.loc["test"], "test")
+        self.assertEqual(dbs_ref.name.loc["test"], 'test metabolite_|_test_met_|_testmet')
+        self.assertEqual(dbs_ref.inchi.loc["test"], "InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3")
+        print(dbs_ref.DBs.loc["test"])
         self.assertEqual(str(db100), dbs_ref.DBs.loc["test"])
 
 
@@ -284,8 +356,8 @@ class TestGetAnnos(unittest.TestCase):
       expected = pd.read_csv(self.this_directory / "dat" / "hmdb_metabolites_reformatted_all.csv", index_col = 0)
       pd.set_option('display.max_rows', None)
       pd.set_option('display.max_columns', None)
-      print(ret)
-      print(expected)
+     # print(ret)
+     # print(expected)
       assert_frame_equal(ret, expected)
 
 

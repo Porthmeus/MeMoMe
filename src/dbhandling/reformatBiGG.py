@@ -87,11 +87,11 @@ def sortDataFrame(bigg_data:pd.DataFrame()) -> pd.DataFrame():
     bigg_data = bigg_data.loc[~bigg_data.duplicated(),]
 
     # aggregate columns
-    bigg_combined = bigg_data.groupby('universal_bigg_id').agg(lambda x: '_|_'.join(set(x.astype(str))))
+    bigg_combined = bigg_data.groupby('universal_bigg_id').agg(lambda x: '_|_'.join(sorted(set(x.astype(str)))))
     # replace the separator with actual separators for the columns and remove duplicate information for names
-    bigg_combined["old_bigg_ids"] = bigg_combined["old_bigg_ids"].apply(lambda x: "; ".join(set(x.replace("_|_","; ").split("; "))))
-    bigg_combined["database_links"] = bigg_combined["database_links"].apply(lambda x: "; ".join(set(x.replace("_|_","; ").split("; "))))
-    # add the universal bigg id column back
+    bigg_combined["old_bigg_ids"] = bigg_combined["old_bigg_ids"].apply(lambda x: "; ".join(sorted(set(x.replace("_|_","; ").split("; ")))))
+    bigg_combined["database_links"] = bigg_combined["database_links"].apply(lambda x: "; ".join(sorted(set(x.replace("_|_","; ").split("; ")))))
+    # add back the universal bigg ids as column
     bigg_combined["universal_bigg_id"] = bigg_combined.index
     return(bigg_combined)
 
