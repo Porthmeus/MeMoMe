@@ -268,7 +268,26 @@ class TestGetAnnos(unittest.TestCase):
     def test_getAnnos(self):
       ret = pd.DataFrame(HMDB.getAnnos(self.df))
       expected = pd.read_csv(self.this_directory / "dat" / "hmdb_test_reformated.csv", header = None)
+      expected = pd.DataFrame(expected.iloc[:, 1])
+      ret.reset_index(drop=True, inplace=True)
+
+      ret.columns = range(ret.shape[1])
+      expected.columns = range(expected.shape[1])
+
       assert_frame_equal(ret, expected)
+    
+    def test_doAll(self):
+      df = None
+      with open(TestGetAnnos.dat_file) as xml_file:
+        df = xml_to_pandas_lazy(xml_file, "metabolite")
+      ret = pd.DataFrame(HMDB.do_all(df))
+      expected = pd.read_csv(self.this_directory / "dat" / "hmdb_metabolites_reformatted_all.csv", index_col = 0)
+      pd.set_option('display.max_rows', None)
+      pd.set_option('display.max_columns', None)
+      print(ret)
+      print(expected)
+      assert_frame_equal(ret, expected)
+
 
 
 
