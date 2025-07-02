@@ -23,7 +23,7 @@ try:
 except FileNotFoundError as e:
     warnings.warn(str(e))
     identifiers = None
-    # Rethrow exception because we want don't allow missing dbs
+    # Rethrow exception because we don't allow missing dbs
     # not working here, but there will be check further down again
 if identifiers != None:
     identifier_prefixes = json.dumps(identifiers["_embedded"]["namespaces"])
@@ -79,12 +79,14 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
                     drugs.append(val)
                 elif val.startswith("C"):
                     compounds.append(val)
+                else:
+                    warnings.warn("Unclear KEGG entry found, will be removed:" + str(val))
             if len(drugs) >0:
                 new_anno_corrected["kegg.drug"] = drugs
             if len(compounds) >0:
                 new_anno_corrected["kegg.compound"] = compounds
         # remove undefined pubchem entries - compounds and substances can have the same ID, but are usually different metabolites 
-        if key.lower() == "pubchem":
+        elif key.lower() == "pubchem":
             warnings.warn("Removing pubchem entries because of missing information about compound or substance:" + str(value))
         # handle database specific stuff like the .compound suffix
         elif key.lower()+".compound" in prefixes:
@@ -102,7 +104,7 @@ def correctAnnotationKeys(anno:dict, allow_missing_dbs: bool = False) -> dict:
         elif key.lower()+".ligand" in prefixes:
             new_anno_corrected[key.lower() + ".ligand"] = value
         elif key.lower()+".smallmolecule" in prefixes:
-            new_anno_corrected[key.lower() + ".ligand"] = value
+            new_anno_corrected[key.lower() + ".smallmolecule"] = value
         elif key.lower()+".inhibitor" in prefixes:
             new_anno_corrected[key.lower() + ".inhibitor"] = value
         elif key.lower()+".pthcmp" in prefixes:
@@ -144,10 +146,8 @@ def handleNamesDBs(dat:pd.DataFrame) -> pd.DataFrame:
     name_db_df = pd.DataFrame(name_db_dict, index = dat.id)
     return(name_db_df)
 
-def reformatModelSeed()->pd.DataFrame:
+def reformatModelSeed(dat:pd.DataFrame)->pd.DataFrame:
     # a function to reformat the metabolite annotation table of ModelSEED to a standardized format
-    # get the data
-    dat = getData("ModelSeed")
     # get names and databases
     namesDBs = handleNamesDBs(dat)
     # rename the name column from ModelSeed to avoid conflict with the new name column
@@ -171,7 +171,9 @@ def main():
         print("Usage: python reformatModesSeed.py")
         sys.exit(1)
     try:
-        refDB = reformatModelSeed()
+        # get the data
+        dat = getData("ModelSeed")
+        refDB = reformatModelSeed(dat)
         writeData(refDB, db = "ModelSeed")
         print("ModelSeed reformatting completed successfully. Output written to standard location.")
     except Exception as e:
