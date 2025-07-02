@@ -70,7 +70,7 @@ def getData(db:str) -> pd.DataFrame:
     # get the database
     config = get_config()
     # no HMDB, can't be used because we do not want to load the whole DB
-    dbs_csv = ["BiGG","ModelSeed"]
+    dbs_csv = ["BiGG","ModelSeed", "ChEBI"]
     dbs_json = ["VMH"]
     dbs_other = ["HMDB"]
     path = os.path.join(get_database_path(),config["databases"][db]["file"])
