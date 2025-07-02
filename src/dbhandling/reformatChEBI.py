@@ -10,8 +10,7 @@ import warnings
 
 
 
-def main():
-    df = getData("ChEBI")
+def reformatChEBI(df: pd.DataFrame):
     df.index = df["CHEBI_ID"]
     df = df.rename(columns = {'CHEBI_ID': "id", "InChI": "inchi"})
 
@@ -22,5 +21,6 @@ def main():
 if __name__ == '__main__':
     # Run as python -m src.dbhandling.reformatHMDB 
     # or as python  src/dbhandling/reformatHMDB.py 
-    df = main()
-    writeData(df, "ChEBI")
+    df = getData("ChEBI")
+    df_ref = reformatChEBI(df)
+    writeData(df_ref, "ChEBI")

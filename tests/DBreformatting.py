@@ -2,9 +2,12 @@
 # 22.05.25 
 
 import unittest
+
+from pandas._testing import assert_equal
 from src.dbhandling.reformatAux import *
 import src.dbhandling.reformatVMH as VMH
 import src.dbhandling.reformatHMDB as HMDB
+import src.dbhandling.reformatChEBI as ChEBI
 from pathlib import Path
 import pandas as pd
 import os
@@ -240,13 +243,35 @@ class TestGetAnnos(unittest.TestCase):
       expected = pd.read_csv(self.this_directory / "dat" / "hmdb_metabolites_reformatted_all.csv", index_col = 0)
       pd.set_option('display.max_rows', None)
       pd.set_option('display.max_columns', None)
-      print(ret)
-      print(expected)
       assert_frame_equal(ret, expected)
 
 
 
+class TestChebi(unittest.TestCase):
+    this_directory = Path(__file__).parent
+    @classmethod
+    def setUpClass(cls):
+        # Define the expected DataFrame structure after main() processes the data
+        expected_data = {
+            "id": ["CHEBI:1", "CHEBI:2", "CHEBI:3"],
+            "inchi": ["InChI=1A", "InChI=2B", "InChI=3C"],
+        }
+        cls.expected_df = pd.DataFrame(expected_data)
+        cls.expected_df.index = cls.expected_df["id"]
+        cls.expected_df.index.rename('', inplace=True)
+        
 
+
+    def test_main_functionality(self):
+        data = {
+            "CHEBI_ID": ["CHEBI:1", "CHEBI:2", "CHEBI:3"],
+            "InChI": ["InChI=1A", "InChI=2B", "InChI=3C"],
+        }
+        # Call the main function to get the actual processed DataFrame
+        actual_df = ChEBI.reformatChEBI(pd.DataFrame(data))
+        print("ACT", actual_df)
+        print("EXP", TestChebi.expected_df)
+        assert_frame_equal(actual_df, TestChebi.expected_df)
 
 if __name__ == '__main__':
     unittest.main()
