@@ -212,7 +212,7 @@ class ModelMerger:
                 met.id = new_id
                 met.compartment = TRANSLATION_COMPARTMENT
 
-    def translate_ids(self, score_thr: float, score_type: str = "matching_score") -> None:
+    def translate_ids(self, score_thr: float, score_type: str = "total_score") -> None:
         """Rename translation metabolites and their TR reactions."""
 
         if score_type not in self.matches.columns:
@@ -289,7 +289,7 @@ class ModelMerger:
             self.add_translation_reaction(f"model1_{row['target_raw']}", common_met)
             self.add_translation_reaction(f"model2_{row['source_raw']}", common_met)
 
-    def translate_namespace(self, score_thr: float = 0.8, score_type: str = "matching_score") -> cobra.Model:
+    def translate_namespace(self, score_thr: float = 0.8, score_type: str = "total_score") -> cobra.Model:
         """Public entry point that executes the full namespace translation pipeline."""
 
         self.convert_exchange_rxns_to_translation_rxns()
