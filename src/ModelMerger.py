@@ -122,7 +122,7 @@ class ModelMerger:
             for ex in model.exchanges:
                 if ex.id.startswith('EX_'):
                     # Extract the model prefix from the reaction ID
-                    # The exchange reaction IDs are in the format 'EX_modelX_met_id'
+                    # The exchange reaction IDs are in the format 'EX_modelX_met_id_compartmentSuffix'
                     ex_met_id_with_prefix = ex.id[3:]  # Skip 'EX_'
                     # Determine which model we're processing
                     if ex_met_id_with_prefix.startswith('model1_'):
