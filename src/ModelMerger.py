@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 from typing import Iterable
 
 import cobra
@@ -10,7 +9,7 @@ from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 from src.removeDuplicateMetabolites import removeDuplicateMetabolites
 
-TRANSLATION_COMPARTMENT = "t"
+
 
 
 class ModelMerger:
@@ -18,7 +17,7 @@ class ModelMerger:
     merge two metabolic models by translating metabolites from one namespace to another
     using a translation compartment, and integrating shared metabolites.
     """
-
+    TRANSLATION_COMPARTMENT = "t"
     def __init__(
         self,
         model1: cobra.Model,
@@ -54,26 +53,22 @@ class ModelMerger:
         # No need to update matches DataFrame with prefixes since we'll remove them during translation
         # Initialize merged model
         self.merged_model = cobra.Model("merged_model")
-        # Add metabolites and reactions from both models
+        # Add metabolites and reactions from both models, cobra.Model does not expose add_genes; genes referenced in GPRs are already added via add_reactions
         self.merged_model.add_metabolites(self.model1.metabolites)
         self.merged_model.add_reactions(self.model1.reactions)
         self.merged_model.add_metabolites(self.model2.metabolites)
         self.merged_model.add_reactions(self.model2.reactions)
-        # TODO: cobra.Model does not expose add_genes; genes referenced in GPRs are added via add_reactions.
-        # If we need to carry over genes not referenced by any reaction, we'll need a custom merge step.
 
 
     def preprocess_models(self) -> None:
-        """Remove duplicate metabolites/reactions from both inputs."""
+        """Remove duplicate metabolites/reactions from both input models"""
+        meMoModel1 = MeMoModel(cobra_model=self.model1)
+        meMoModel2 = MeMoModel(cobra_model=self.model2)
+        meMoModel1, _ = removeDuplicateMetabolites(meMoModel1)
+        self.model1 = meMoModel1.cobra_model
+        meMoModel2, _ = removeDuplicateMetabolites(meMoModel2)
+        self.model2 = meMoModel2.cobra_model
 
-        self.model1 = self._remove_duplicates(self.model1)
-        self.model2 = self._remove_duplicates(self.model2)
-
-    @staticmethod
-    def _remove_duplicates(model: cobra.Model) -> cobra.Model:
-        memo_model = MeMoModel(cobra_model=model)
-        memo_model, _ = removeDuplicateMetabolites(memo_model)
-        return memo_model.cobra_model
 
     def add_prefix_to_model_ids(self, model: cobra.Model, prefix: str) -> None:
         """
@@ -83,11 +78,8 @@ class ModelMerger:
             model (cobra.Model): The model whose IDs will be prefixed.
             prefix (str): The prefix to add to the IDs.
         """
-        old_metabolite_mapping = {}
         for met in model.metabolites:
-            old_id = met.id
             met.id = prefix + met.id
-            old_metabolite_mapping[old_id] = met
 
         special_prefixes = ("EX_", "DM_", "SK_", "sink_")
         for reaction in model.reactions:
@@ -98,25 +90,219 @@ class ModelMerger:
             else:
                 reaction.id = prefix + original_id
 
-            new_metabolite_dict = {}
-            for met, stoich in reaction.metabolites.items():
-                old_met_id = met.id  # Since met.id has been updated, we need to get the old ID
-                if old_met_id in old_metabolite_mapping:
-                    new_met = old_metabolite_mapping[old_met_id]
-                else:
-                    new_met = met
-                new_metabolite_dict[new_met] = stoich
-
-            reaction.subtract_metabolites(reaction.metabolites)
-            reaction.add_metabolites(new_metabolite_dict)
-
         for gene in model.genes:
             gene.id = f"{prefix}{gene.id}"
 
+    def add_translation_metabolite(self, target_namespace: str) -> cobra.Metabolite:
+        """
+        Add (or fetch) a translation-compartment metabolite and its exchange reaction.
+
+        Parameters:
+            target_namespace (str): The target namespace identifier (without the _{self.TRANSLATION_COMPARTMENT} suffix).
+        """
+        translation_id = f"{target_namespace}_{self.TRANSLATION_COMPARTMENT}"
+        source_met = self._find_source_metabolite(target_namespace)
+        if translation_id in self.merged_model.metabolites:
+            translation_met = self.merged_model.metabolites.get_by_id(translation_id)
+            if source_met is not None:
+                if translation_met.name is None:
+                    translation_met.name = source_met.name
+                if translation_met.formula is None:
+                    translation_met.formula = source_met.formula
+                if translation_met.charge is None:
+                    translation_met.charge = source_met.charge
+                if not translation_met.annotation and source_met.annotation:
+                    translation_met.annotation = dict(source_met.annotation)
+        else:
+            name = source_met.name if source_met is not None else translation_id
+            formula = source_met.formula if source_met is not None else None
+            charge = source_met.charge if source_met is not None else None
+            annotation = dict(source_met.annotation) if source_met is not None else {}
+            translation_met = cobra.Metabolite(
+                id=translation_id,
+                name=name,
+                formula=formula,
+                charge=charge,
+                compartment=self.TRANSLATION_COMPARTMENT,
+            )
+            translation_met.annotation = annotation
+            self.merged_model.add_metabolites([translation_met])
+
+        ex_id = f"EX_{translation_id}"
+        if ex_id not in self.merged_model.reactions:
+            ex_rxn = cobra.Reaction(ex_id)
+            ex_rxn.lower_bound = -1000
+            ex_rxn.upper_bound = 1000
+            ex_rxn.add_metabolites({translation_met: -1})
+            self.merged_model.add_reactions([ex_rxn])
+        else:
+            ex_rxn = self.merged_model.reactions.get_by_id(ex_id)
+            if translation_met not in ex_rxn.metabolites:
+                ex_rxn.add_metabolites({translation_met: -1})
+        return translation_met
+
+    def _prefix_tr_reaction(self, reaction: cobra.Reaction, model_prefix: str) -> None:
+        if model_prefix not in ("model1_", "model2_"):
+            return
+        if reaction.id.startswith(("TR_model1_", "TR_model2_")):
+            return
+        base_id = reaction.id
+        if base_id.startswith("TR_"):
+            base_id = base_id[len("TR_") :]
+        if base_id.startswith(("model1_", "model2_")):
+            base_id = base_id.split("_", 1)[1]
+        model_tag = model_prefix.rstrip("_")
+        reaction.id = f"TR_{model_tag}_{base_id}"
+
+    def _find_source_metabolite(self, target_namespace: str) -> cobra.Metabolite | None:
+        def pick_from_prefix(prefix: str) -> cobra.Metabolite | None:
+            fallback = None
+            for met in self.merged_model.metabolites:
+                if not met.id.startswith(prefix):
+                    continue
+                base_id = handle_metabolites_prefix_suffix(met.id[len(prefix) :])
+                if base_id != target_namespace:
+                    continue
+                if met.compartment in ("e", "e0"):
+                    return met
+                if fallback is None:
+                    fallback = met
+            return fallback
+
+        return pick_from_prefix("model1_") or pick_from_prefix("model2_")
+
+    def _build_exchange_map(
+        self, model_prefix: str
+    ) -> dict[str, list[tuple[cobra.Reaction, cobra.Metabolite]]]:
+        exchange_map: dict[str, list[tuple[cobra.Reaction, cobra.Metabolite]]] = {}
+        ex_prefix = f"EX_{model_prefix}"
+        for rxn in self.merged_model.reactions:
+            if not rxn.id.startswith(ex_prefix):
+                continue
+            for met in rxn.metabolites:
+                if met.id.startswith(model_prefix):
+                    base_id = handle_metabolites_prefix_suffix(met.id[len(model_prefix) :])
+                else:
+                    base_id = handle_metabolites_prefix_suffix(met.id)
+                if base_id is None:
+                    continue
+                exchange_map.setdefault(base_id, []).append((rxn, met))
+        return exchange_map
 
 
-    def translate_namespace(self, score_thr: float = 0.8, score_type: str = "total_score") -> cobra.Model:
+
+    def translate_namespace(
+        self,
+        #score_thr: float = 0.8,
+        score_type: str = "total_score",
+        name_score_thr: float = 0.9,
+    ) -> cobra.Model:
         """Public entry point that executes the full namespace translation pipeline."""
+        target_exchange_map = self._build_exchange_map("model1_")
+        source_exchange_map = self._build_exchange_map("model2_")
+        if score_type not in self.matches.columns:
+            raise ValueError(f"{score_type!r} not present in matches table columns")
+        matches = self.matches[
+            self.matches["target_namespace"].isin(target_exchange_map)
+            & self.matches["source_namespace"].isin(source_exchange_map)
+        ]
+        matches = matches.loc[
+            (matches["inchi_score"] == 1.0)
+            | ((matches["Name_score"] >= name_score_thr) & (matches["DB_score"] >= 0.5))
+        ]
+        if "Name_score" in matches.columns:
+            matches = matches.loc[matches["Name_score"] >= name_score_thr]
+        else:
+            raise ValueError("Name_score not present in matches table columns")
+        matches = (
+            matches.sort_values(
+                by=[score_type, "target_namespace", "source_namespace"],
+                ascending=[False, True, True],
+            )
+            .drop_duplicates(subset=["target_namespace"], keep="first")
+        )
 
+        for target,source in matches[['target_namespace', 'source_namespace']].itertuples(index=False):
+            target_ex_rxn, target_met = target_exchange_map[target][0]
+            # Add translation metabolite for each match, and creates its exchange reaction
+            tr_met = self.add_translation_metabolite(target)
+            source_ex_rxn, source_met = source_exchange_map[source][0]
+            # Save original bounds
+            source_lb = source_ex_rxn.lower_bound
+            source_ub = source_ex_rxn.upper_bound
+            target_lb = target_ex_rxn.lower_bound
+            target_ub = target_ex_rxn.upper_bound
+            # Rename exchange reactions replacing "EX_" with "TR_"
+            source_ex_rxn.id = source_ex_rxn.id.replace("EX_", "TR_")
+            target_ex_rxn.id = target_ex_rxn.id.replace("EX_", "TR_")
+            self._prefix_tr_reaction(source_ex_rxn, "model2_")
+            self._prefix_tr_reaction(target_ex_rxn, "model1_")
+            # Set bounds to -1000 to 1000 to allow free flow
+            source_ex_rxn.lower_bound = -1000
+            source_ex_rxn.upper_bound = 1000
+            target_ex_rxn.lower_bound = -1000
+            target_ex_rxn.upper_bound = 1000
+            # Modify source exchange reaction to export to translation compartment
+            source_ex_rxn.add_metabolites({tr_met: 1})
+            # Modify target exchange reaction to export to translation compartment
+            target_ex_rxn.add_metabolites({tr_met: 1})
+            # create ex_tr_met reaction to "import" from "nowhere" to target namespace.
+            ex_tr_met_id = f"EX_{tr_met.id}"
+            if ex_tr_met_id in self.merged_model.reactions:
+                ex_tr_met_rxn = self.merged_model.reactions.get_by_id(ex_tr_met_id)
+            else:
+                ex_tr_met_rxn = cobra.Reaction(ex_tr_met_id)
+                ex_tr_met_rxn.add_metabolites({tr_met: -1})
+                self.merged_model.add_reactions([ex_tr_met_rxn])
+            # TODO: convert the following bounds logic to a function
+            # Set lower bound based on some function of source and target bounds (here we use sum as an example)
+            ex_tr_met_rxn.lower_bound = source_lb + target_lb
+            ex_tr_met_rxn.upper_bound = 1000
+
+        # Convert any remaining exchange reactions (unmatched) to TR_ and add translation exchanges.
+        for rxn in list(self.merged_model.reactions):
+            if not rxn.id.startswith("EX_"):
+                continue
+            if any(met.compartment == self.TRANSLATION_COMPARTMENT for met in rxn.metabolites):
+                continue
+
+            met = None
+            prefix = None
+            for candidate in rxn.metabolites:
+                if candidate.id.startswith("model1_"):
+                    met = candidate
+                    prefix = "model1_"
+                    break
+                if candidate.id.startswith("model2_"):
+                    met = candidate
+                    prefix = "model2_"
+                    break
+            if met is None:
+                continue
+
+            base_id = handle_metabolites_prefix_suffix(met.id[len(prefix) :])
+            if base_id is None:
+                continue
+
+            tr_met = self.add_translation_metabolite(base_id)
+            ex_lb = rxn.lower_bound
+            ex_ub = rxn.upper_bound
+            rxn.id = rxn.id.replace("EX_", "TR_", 1)
+            self._prefix_tr_reaction(rxn, prefix)
+            rxn.lower_bound = -1000
+            rxn.upper_bound = 1000
+            rxn.add_metabolites({tr_met: 1})
+
+            ex_tr_met_id = f"EX_{tr_met.id}"
+            if ex_tr_met_id in self.merged_model.reactions:
+                ex_tr_met_rxn = self.merged_model.reactions.get_by_id(ex_tr_met_id)
+                if tr_met not in ex_tr_met_rxn.metabolites:
+                    ex_tr_met_rxn.add_metabolites({tr_met: -1})
+            else:
+                ex_tr_met_rxn = cobra.Reaction(ex_tr_met_id)
+                ex_tr_met_rxn.add_metabolites({tr_met: -1})
+                self.merged_model.add_reactions([ex_tr_met_rxn])
+            ex_tr_met_rxn.lower_bound = ex_lb
+            ex_tr_met_rxn.upper_bound = ex_ub
 
         return self.merged_model

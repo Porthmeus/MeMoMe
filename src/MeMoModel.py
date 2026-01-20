@@ -90,10 +90,37 @@ class MeMoModel:
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         print(f"ORIG DB {origin_db}")
+        print(f"Origin DB fractions: {origin_dbs}")
 
         logger.debug(origin_db)
 
         final_numbers = AnnotationResult(0,0,0)
+        id_based_threshold = 0.8
+        id_based_applied = []
+        if origin_dbs.get("ModelSEED", 0) >= id_based_threshold or origin_dbs.get("gapseq", 0) >= id_based_threshold:
+            temp_result = annotateModelSEED_id(self.metabolites, allow_missing_dbs)
+            print("ModelSEED (id):", temp_result)
+            final_numbers = final_numbers + temp_result
+            id_based_applied.append("ModelSEED")
+        if origin_dbs.get("BiGG", 0) >= id_based_threshold:
+            temp_result = annotateBiGG_id(self.metabolites, allow_missing_dbs)
+            print("BiGG (id):", temp_result)
+            final_numbers = final_numbers + temp_result
+            id_based_applied.append("BiGG")
+        if origin_dbs.get("VMH", 0) >= id_based_threshold:
+            temp_result = annotateVMH_id(self.metabolites, allow_missing_dbs)
+            print("VMH (id):", temp_result)
+            final_numbers = final_numbers + temp_result
+            id_based_applied.append("VMH")
+        if not id_based_applied:
+            cpd_count = sum(1 for met in self.metabolites if met._id and met._id.startswith("cpd"))
+            cpd_ratio = cpd_count / len(self.metabolites) if self.metabolites else 0
+            if cpd_ratio >= id_based_threshold:
+                temp_result = annotateModelSEED_id(self.metabolites, allow_missing_dbs)
+                print("ModelSEED (id fallback):", temp_result)
+                final_numbers = final_numbers + temp_result
+                id_based_applied.append("ModelSEED")
+        print(f"ID-based annotators applied: {id_based_applied or 'none'} (threshold {id_based_threshold})")
 
         total = 1
         while total != 0:

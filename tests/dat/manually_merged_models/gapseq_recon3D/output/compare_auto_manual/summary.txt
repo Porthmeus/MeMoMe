@@ -1,0 +1,26 @@
+Auto vs Manual Comparison Summary
+auto metabolites: 10638
+manual metabolites: 10622
+auto reactions: 16635
+manual reactions: 16619
+
+host base auto: 2797
+host base manual: 2797
+host auto-only: 0
+host manual-only: 0
+
+micro base auto: 2870
+micro base manual: 2870
+micro auto-only: 0
+micro manual-only: 0
+
+feed base auto: 1661
+feed base manual: 1645
+feed auto-only: 19
+feed manual-only: 3
+
+pairs auto: 162
+pairs manual: 158
+pairs overlap: 143
+pairs auto-only: 19
+pairs manual-only: 15
