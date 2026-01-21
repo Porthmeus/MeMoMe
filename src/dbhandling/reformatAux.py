@@ -96,5 +96,6 @@ def getData(db:str) -> pd.DataFrame:
 def writeData(dat:pd.DataFrame, db:str) -> None:
     config = get_config()
     outfile = os.path.join(get_database_path(), config["databases"][db]["reformat"])
+    dat.index.rename("", inplace = True)
     dat.to_csv(outfile)
 
