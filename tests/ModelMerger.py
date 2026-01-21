@@ -10,10 +10,6 @@ from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 
 
-class Test_ModelMerger(unittest.TestCase):
-    this_directory = Path(__file__).parent
-    dat = this_directory / "dat"
-
 def is_tr_reaction(reaction: cobra.Reaction) -> bool:
     translation_mets = [
         met
@@ -37,6 +33,11 @@ def tr_reaction_prefix(reaction_id: str) -> str | None:
         return "model2"
     return None
 
+
+class Test_ModelMerger(unittest.TestCase):
+    this_directory = Path(__file__).parent
+    dat = this_directory / "dat"
+
     def setUp(self):
         self.target = MeMoModel.fromPath(self.dat / "tiny_ecoli_keep_inchi.xml")
         self.source = MeMoModel.fromPath(self.dat / "tiny_myb11.xml")
@@ -54,7 +55,7 @@ def tr_reaction_prefix(reaction_id: str) -> str | None:
         ]
         # TODO: Check that there are 2 translation reactions for each matched metabolite plus one translation reaction for each unmatched metabolite in source and target
 
-        
+
         translation_met_ids = {met.id for met in merged_model.metabolites if met.compartment == ModelMerger.TRANSLATION_COMPARTMENT}
         for expected_met in ("h2o_t", "o2_t", "pi_t", "co2_t"):
             self.assertIn(expected_met, translation_met_ids)
@@ -193,6 +194,7 @@ def tr_reaction_prefix(reaction_id: str) -> str | None:
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / "automatically_merged_tiny.xml"
         cobra.io.write_sbml_model(merged_model, output_path)
+
 
 if __name__ == "__main__":
     unittest.main()
