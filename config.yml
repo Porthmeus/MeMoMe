@@ -6,7 +6,7 @@ DB_location: "Databases" # a directory relative to the path of the main script
 databases:
   ModelSeed:
     URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
-    REFORMAT_URL: ""
+    REFORMAT_URL: "https://zenodo.org/records/15591559/files/modelSeed_MMM.csv?download=1"
     file: "modelSeed.tsv"
     reformat: "modelSeed_MMM.csv"
   BiGG:
@@ -34,11 +34,6 @@ databases:
     REFORMAT_URL: "https://zenodo.org/records/15591559/files/hmdb_metabolites_MMM.csv?download=1"
     file: "hmdb_metabolites.zip"
     reformat: "hmdb_metabolites_MMM.csv"
-  TestCase:
-    file: "TestCaseFile"
-    REFORMAT_URL: ""
-    reformat: "../TestCaseDir/TestCaseFile.txt"
-    URL: "TestCaseUrl"
 
 
 PubChem:

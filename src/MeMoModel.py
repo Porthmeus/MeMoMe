@@ -12,6 +12,7 @@ import libsbml as sbml
 import pandas as pd
 import numpy as np
 import logging
+import sys
 from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy
@@ -89,42 +90,44 @@ class MeMoModel:
                           }
 
         origin_dbs = origin_databases(self.metabolites)
+        print(origin_dbs)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
-        print(f"ORIG DB {origin_db}")
+        sys.exit(1)
+        #print(f"ORIG DB {origin_db}")
 
-        logger.debug(origin_db)
+        #logger.debug(origin_db)
 
-        final_numbers = AnnotationResult(0,0,0)
+        #final_numbers = AnnotationResult(0,0,0)
 
-        total = 1
-        while total != 0:
-            # count the number of newly annotated metabolites
-            anno_result= AnnotationResult(0,0,0)
-            # BiGG
-            temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
-            print("BiGG:",temp_result)
-            anno_result = anno_result + temp_result
-            # Use ChEBI
-            temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
-            print("ChEBI:",temp_result)
-            anno_result = anno_result + temp_result
-            # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-            temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
-            print("ModelSEED:", temp_result)
-            anno_result = anno_result + temp_result
-            temp_result = annotateVMH(self.metabolites, allow_missing_dbs)
-            print("VMH:", temp_result)
-            anno_result = anno_result + temp_result
-            temp_result = annotateHMDB(self.metabolites, allow_missing_dbs)
-            print("HMDB:", temp_result)
-            anno_result = anno_result + temp_result
-            #print("Total:", anno_result)
-            final_numbers = final_numbers + anno_result
-            total = anno_result.annotated_total
+        #total = 1
+        #while total != 0:
+        #    # count the number of newly annotated metabolites
+        #    anno_result= AnnotationResult(0,0,0)
+        #    # BiGG
+        #    temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
+        #    print("BiGG:",temp_result)
+        #    anno_result = anno_result + temp_result
+        #    # Use ChEBI
+        #    temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
+        #    print("ChEBI:",temp_result)
+        #    anno_result = anno_result + temp_result
+        #    # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+        #    temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
+        #    print("ModelSEED:", temp_result)
+        #    anno_result = anno_result + temp_result
+        #    temp_result = annotateVMH(self.metabolites, allow_missing_dbs)
+        #    print("VMH:", temp_result)
+        #    anno_result = anno_result + temp_result
+        #    temp_result = annotateHMDB(self.metabolites, allow_missing_dbs)
+        #    print("HMDB:", temp_result)
+        #    anno_result = anno_result + temp_result
+        #    #print("Total:", anno_result)
+        #    final_numbers = final_numbers + anno_result
+        #    total = anno_result.annotated_total
 
-        self.annotated = True
-        print("TOTAL:", final_numbers)
-        return(final_numbers)
+        #self.annotated = True
+        #print("TOTAL:", final_numbers)
+        #return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
         ''' At some point this is advisable to do, otherwise we will loose all the information we have newly annotated. So here is a function to do just that. It will go through the metabolite annotations which have been stored in the MeMoModel object and writes it to the cobra model annotation slot '''
