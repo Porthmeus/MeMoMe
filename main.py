@@ -10,8 +10,8 @@ import sys
 import cobra
 
 import src.MeMoModel
-from dbhandling.reformatBiGG import reformatBiGG
-from dbhandling.reformatModelSeed import reformatModelSeed
+from src.dbhandling.reformatBiGG import reformatBiGG
+from src.dbhandling.reformatModelSeed import reformatModelSeed
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 
@@ -34,15 +34,12 @@ def main(args: argparse.Namespace):
     if args.download:
         logger.debug("Starting to download databases")
         # check if the path database folder exists
-        if not databases_available():
-            download()
+        if not databases_available("reformat"):
+            download("REFORMAT_URL", "reformat")
         else:
-            update_database()
+            update_database("REFORMAT_URL", "reformat")
         logger.debug("Finished downloading databases")
     else:
-        if args.reformat:
-          reformatBiGG()
-          reformatModelSeed()
         # Check if exactly two models were supplied
         if args.model1 is None:
             print("Please supply a second model with the --model1 parameter")
