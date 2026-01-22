@@ -190,6 +190,7 @@ class MeMoMetabolite():
         # we allow addition of names only by one source at a time - however, if we want to add several names we need to extend the source list by the same number of elements as the name list
         self.names_source.extend([source]*(len(self.names)-len(old_names))) # extend source list
         # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
+        print(self.names, self.names_source)
         new_names, new_sources = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
         self.names = list(new_names)
         self.names_source = list(new_sources)

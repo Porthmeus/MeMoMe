@@ -15,12 +15,12 @@ import logging
 from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy
-
-from src.annotation.annotateChEBI import annotateChEBI
+from src.download_db import get_config
+from src.annotation.annotateAux import AnnotationResult, handleIDs, handleMetabolites
 from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id
+from src.annotation.annotateChEBI import annotateChEBI
 from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
 from src.annotation.annotateVMH import annotateVMH_id
-from src.annotation.annotateAux import AnnotationResult
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -81,20 +81,25 @@ class MeMoModel:
 
         print(self._id)
 
-        #TEMP FIX
-        annotationDict = {"VMH" : annotateVMH_id,
-                          "ModelSEED": annotateModelSEED_id,
-                          "BiGG": annotateBiGG_id
-                          }
-
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         print(f"ORIG DB {origin_db}")
         print(f"Origin DB fractions: {origin_dbs}")
-
         logger.debug(origin_db)
-
         final_numbers = AnnotationResult(0,0,0)
+
+        # Attempt the newer reformatted-ID based annotation first. This is
+        # optional: if reformatted databases are not available, we fall back
+        # to the legacy raw-database annotators below.
+        try:
+            reformatted_id_result = handleIDs(
+                self.metabolites, origin_db, allow_missing_dbs=allow_missing_dbs
+            )
+            print(f"{origin_db} (id, reformatted):", reformatted_id_result)
+            final_numbers = final_numbers + reformatted_id_result
+        except Exception as exc:
+            print(f"{origin_db} (id, reformatted) skipped: {exc}")
+
         id_based_threshold = 0.8
         id_based_applied = []
         if origin_dbs.get("ModelSEED", 0) >= id_based_threshold or origin_dbs.get("gapseq", 0) >= id_based_threshold:
@@ -121,24 +126,39 @@ class MeMoModel:
                 final_numbers = final_numbers + temp_result
                 id_based_applied.append("ModelSEED")
         print(f"ID-based annotators applied: {id_based_applied or 'none'} (threshold {id_based_threshold})")
-
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
             anno_result= AnnotationResult(0,0,0)
-            # BiGG
+
+            # Legacy raw-database annotators (known to work with the current
+            # Databases/*.tsv inputs).
             temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
-            print("BiGG:",temp_result)
+            print("BiGG:", temp_result)
             anno_result = anno_result + temp_result
-            # Use ChEBI
+
             temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
-            print("ChEBI:",temp_result)
+            print("ChEBI:", temp_result)
             anno_result = anno_result + temp_result
-            # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
+
             temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
             print("ModelSEED:", temp_result)
             anno_result = anno_result + temp_result
-            #print("Total:", anno_result)
+
+            # Opportunistically run the new reformatted-database annotators.
+            # These will be no-ops when reformatted DBs are not available.
+            for db_name in get_config()["databases"].keys():
+                if db_name in ["Identifiers", "TestCase"]:
+                    continue
+                try:
+                    temp_result = handleMetabolites(
+                        self.metabolites, db_name, allow_missing_dbs=allow_missing_dbs
+                    )
+                except Exception:
+                    continue
+                if temp_result.annotated_total > 0:
+                    print(db_name + " (reformatted):", temp_result)
+                    anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
 

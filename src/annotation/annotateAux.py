@@ -1,125 +1,369 @@
 # Porthmeus
 # 08.03.24
 from __future__ import annotations
-import pandas as pd
-from src.download_db import get_config, get_database_path
-import warnings
+
+from collections import defaultdict
+from typing import Callable, Iterable, List, NewType, Sequence
+
 import os
-from typing import Callable, List
-from src.MeMoMetabolite import MeMoMetabolite
 import sys
+import warnings
 
-class AnnotationResult():
-  def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
-    self.annotated_inchis: int =  annotated_inchis
-    self.annotated_dbs: int = annotated_dbs
-    self.annotated_names: int = annotated_names
-    self.annotated_total: int = annotated_inchis + annotated_dbs + annotated_names
-  
-  @classmethod
-  def fromTuple(cls, annotationResult: tuple[int, int, int]) -> AnnotationResult:
-    return cls(annotationResult[0], annotationResult[1], annotationResult[2])
-  
-  @classmethod
-  def fromAnnotation(cls, annotationResult: AnnotationResult) -> AnnotationResult:
-    return cls(annotationResult.annotated_inchis, annotationResult.annotated_dbs, annotationResult.annotated_names)
+import pandas as pd
 
-  def __str__(self) -> str:
-    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+from src.MeMoMetabolite import MeMoMetabolite
+from src.annotation.annotateInchiRoutines import findOptimalInchi
+from src.download_db import get_config, get_database_path
 
-  def __le__(self, other) -> bool:
-    return self.annotated_inchis <= other.annotated_inchis and self.annotated_dbs <= other.annotated_dbs and self.annotated_names <= other.annotated_names
+# HMDB0000972
+AnnotationKey = NewType("AnnotationKey", str)
+DBName = NewType("DBName", str)
+DBKey = NewType("DBKey", str)
 
-  def __gt__(self, other):
-    return not (self.__le__(other))
+EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
 
-  def __add__(self, other):
-    return AnnotationResult(self.annotated_inchis + other.annotated_inchis, self.annotated_dbs + other.annotated_dbs, self.annotated_names + other.annotated_names)
 
-  def __iter__(self):
-      return iter([self.annotated_inchis, self.annotated_dbs, self.annotated_names])
+class AnnotationResult:
+    def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
+        self.annotated_inchis: int = annotated_inchis
+        self.annotated_dbs: int = annotated_dbs
+        self.annotated_names: int = annotated_names
+        self.annotated_total: int = annotated_inchis + annotated_dbs + annotated_names
 
-  def __eq__(self, other): 
-      if not isinstance(other, AnnotationResult):
-          # don't attempt to compare against unrelated types
-          return NotImplemented
+    @classmethod
+    def fromTuple(cls, annotationResult: tuple[int, int, int]) -> AnnotationResult:
+        return cls(annotationResult[0], annotationResult[1], annotationResult[2])
 
-      return self.annotated_inchis == other.annotated_inchis and self.annotated_dbs == other.annotated_dbs and self.annotated_names == other.annotated_names
+    @classmethod
+    def fromAnnotation(cls, annotationResult: AnnotationResult) -> AnnotationResult:
+        return cls(
+            annotationResult.annotated_inchis,
+            annotationResult.annotated_dbs,
+            annotationResult.annotated_names,
+        )
+
+    def __str__(self) -> str:
+        return (
+            f"Annotated inchis {self.annotated_inchis}, "
+            f"annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+        )
+
+    def __le__(self, other) -> bool:
+        return (
+            self.annotated_inchis <= other.annotated_inchis
+            and self.annotated_dbs <= other.annotated_dbs
+            and self.annotated_names <= other.annotated_names
+        )
+
+    def __gt__(self, other):
+        return not self.__le__(other)
+
+    def __add__(self, other):
+        return AnnotationResult(
+            self.annotated_inchis + other.annotated_inchis,
+            self.annotated_dbs + other.annotated_dbs,
+            self.annotated_names + other.annotated_names,
+        )
+
+    def __iter__(self):
+        return iter([self.annotated_inchis, self.annotated_dbs, self.annotated_names])
+
+    def __eq__(self, other):
+        if not isinstance(other, AnnotationResult):
+            return NotImplemented
+        return (
+            self.annotated_inchis == other.annotated_inchis
+            and self.annotated_dbs == other.annotated_dbs
+            and self.annotated_names == other.annotated_names
+        )
+
+
 ####################################
 
 
-def load_database(database: str = "", allow_missing_dbs: bool = False, 
-                  conversion_method: Callable[[str], pd.DataFrame] = lambda x: x) -> pd.DataFrame:
-  """
-  Load the given database. The file should in the projects root /Database folder.
-  """
-  # load the database
-  try:
-    db_path =  os.path.join(get_database_path(), database)
-    db = conversion_method(db_path)
-  except FileNotFoundError as e:
-    # Rethrow exception if we don't allow missing dbs
-    if allow_missing_dbs == False:
-      raise e
-    warnings.warn(str(e))
-    db = pd.DataFrame()
-  return(db)
+def _resolve_database_filename(db_name: str) -> str:
+    """Resolve a database key or filename to a filename under Databases/."""
+    config = get_config()
 
-def handleIDs(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
-  """
-  Checks for each metabolite if the metabolite id can be found in the column `db_key` of `db`. 
-  db: a dataframe with columns `db_key`. This column will be compared to the metabolite id (met._id)
-  metabolites: A list of metabolites that will be checked
-  db_key: The column in the db dataframe
-  annotation_function: Defines how to get an entry from the db which the given met_id (Check annotateVMH/BiGG for example usages.
-  """
-  new_annos = 0
-  new_names = 0
-  for met in metabolites:
-    if any(db[db_key]==met._id):
-      # get the annotation dictionary, the list of names and the string of
-      # source (e.g "bigg","vmh" for the current metabolite for the metabolite
-      new_met_anno_entry,new_names_entry,source = annotation_function(met._id, db)
-      x = met.add_names(new_names_entry,source = source)
-      new_names = new_names + x
+    # db_name can be a database key (e.g. "BiGG") or already a filename
+    if db_name in config["databases"]:
+        db_cfg = config["databases"][db_name]
+        # Prefer reformatted database if present, otherwise fall back to raw file
+        filename = db_cfg.get("reformat") or db_cfg.get("file")
+        if not filename:
+            raise KeyError(f"No 'reformat' or 'file' entry configured for database '{db_name}'")
+        return filename
 
-      # add the annotations to the slot in the metabolites
-      if len(new_met_anno_entry) > 0:
-          x = met.add_annotations(new_met_anno_entry, source = source)
-          new_annos = new_annos + x 
-
-  # return the number of metabolites which got newly annotated with inchis,
-  # annotations and names
-  anno_result = AnnotationResult(0, new_annos, new_names)
-  return anno_result
+    # Treat it as a direct filename
+    return db_name
 
 
-def handleMetabolites(db: pd.DataFrame, metabolites: List[MeMoMetabolite], db_key: str, annotation_function: Callable[[str, pd.DataFrame], tuple[dict, list]]) -> AnnotationResult:
-    new_annos_added = 0
-    new_names_added = 0
-    # go through the metabolites and check if there is data which can be added
+def load_database(
+    db_name: str = "",
+    allow_missing_dbs: bool = False,
+    conversion_method: Callable[[str], pd.DataFrame] | None = None,
+) -> pd.DataFrame:
+    """
+    Load the given database from the Databases folder.
+
+    This function is backward-compatible with older call sites that passed a
+    filename and a custom conversion method, and newer call sites that pass a
+    configured database key (e.g. "BiGG").
+    """
+    try:
+        filename = _resolve_database_filename(db_name)
+        db_path = os.path.join(get_database_path(), filename)
+        if conversion_method is not None:
+            db = conversion_method(db_path)
+        else:
+            db = pd.read_csv(db_path, sep=",", header=0, dtype=str)
+    except FileNotFoundError as e:
+        if not allow_missing_dbs:
+            raise e
+        warnings.warn(str(e))
+        db = pd.DataFrame()
+    return db
+
+
+def annotateEntry(entry: str, database: pd.DataFrame = pd.DataFrame()) -> tuple[dict, list, str]:
+    """
+    Retrieve annotations, names, and a best-effort InChI string for a database entry.
+
+    The database is expected to follow the internal reformatted schema with columns
+    like "id", "name", "DBs", and "inchi".
+    """
+    if database.empty:
+        return dict(), list(), ""
+
+    # Names
+    if "name" in database.columns:
+        names = database.loc[database["id"] == entry, "name"]
+        all_names: list[str] = []
+        for name in names:
+            all_names.extend(name.split("_|_"))
+    else:
+        all_names = []
+
+    # Cross-database annotations
+    if "DBs" in database.columns:
+        annos = database.loc[database["id"] == entry, "DBs"]
+        all_annos: list[dict] = []
+        for anno in annos:
+            if isinstance(anno, str) and anno.startswith("{") and anno.endswith("}"):
+                anno_dict = eval(anno)
+            else:
+                raise ValueError("Check your database files!")
+            all_annos.append(anno_dict)
+        merged_annos: dict[str, list] = defaultdict(list)
+        for anno_dict in all_annos:
+            for key, value in anno_dict.items():
+                merged_annos[key].extend(value)
+        merged_annos = dict(merged_annos)
+    else:
+        merged_annos = dict()
+
+    # InChI
+    opt_inchi = ""
+    if "inchi" in database.columns:
+        inchis = database.loc[database["id"] == entry, "inchi"].dropna()
+        if len(inchis) != 0:
+            opt_inchi = findOptimalInchi(inchis.tolist())
+
+    return merged_annos, all_names, opt_inchi
+
+
+def _unpack_annotation_function_result(result: Sequence) -> tuple[dict, list, str, str]:
+    """Normalize annotation function return values to (annos, names, inchi, source)."""
+    if len(result) == 4:
+        annos, names, inchi, source = result
+        return annos, names, inchi, source
+    if len(result) == 3:
+        annos, names, source = result
+        return annos, names, "", source
+    if len(result) == 2:
+        annos, names = result
+        return annos, names, "", ""
+    raise ValueError(f"Unexpected annotation function result shape: {len(result)}")
+
+
+def handleIDs(*args, **kwargs) -> AnnotationResult:
+    """
+    Backward-compatible ID-based annotation.
+
+    Old style:
+        handleIDs(db: pd.DataFrame, metabolites, db_key: str, annotation_function)
+
+    New style:
+        handleIDs(metabolites, db_name: str, allow_missing_dbs: bool = False)
+    """
+    # Old-style signature
+    if args and isinstance(args[0], pd.DataFrame):
+        db: pd.DataFrame = args[0]
+        metabolites: List[MeMoMetabolite] = args[1]
+        db_key: str = args[2]
+        annotation_function: Callable = args[3]
+
+        new_annos = 0
+        new_names = 0
+        new_inchis = 0
+
+        for met in metabolites:
+            if met._id is None or db.empty or db_key not in db.columns:
+                continue
+            if not any(db[db_key] == met._id):
+                continue
+
+            annos, names, inchi, source = _unpack_annotation_function_result(
+                annotation_function(met._id, db)
+            )
+            source = source or "id"
+
+            if names:
+                new_names += met.add_names(names, source=source)
+            if annos:
+                new_annos += met.add_annotations(annos, source=source)
+            if inchi:
+                new_inchis += met.add_inchi_string(inchi, source)
+
+        return AnnotationResult(new_inchis, new_annos, new_names)
+
+    # New-style signature
+    metabolites: List[MeMoMetabolite] = args[0]
+    db_name: str = args[1]
+    allow_missing_dbs: bool = kwargs.get("allow_missing_dbs", False)
+
+    db = load_database(db_name, allow_missing_dbs)
+    if db.empty or "id" not in db.columns:
+        return AnnotationResult(0, 0, 0)
+
+    new_annos = 0
+    new_names = 0
+    new_inchis = 0
+    source = db_name
+
     for met in metabolites:
-        new_met_anno = dict()
-        new_names = list() 
-        if db_key in met.annotations.keys():
+        if met._id is None:
+            continue
+        if not any(db["id"] == met._id):
+            continue
+
+        annos, names, inchi = annotateEntry(met._id, db)
+
+        if names:
+            new_names += met.add_names(names, source)
+        if annos:
+            new_annos += met.add_annotations(annos, source)
+        if inchi:
+            new_inchis += met.add_inchi_string(inchi, source)
+
+    return AnnotationResult(new_inchis, new_annos, new_names)
+
+
+def handleMetabolites(*args, **kwargs) -> AnnotationResult:
+    """
+    Backward-compatible annotation via metabolite annotation slots.
+
+    Old style:
+        handleMetabolites(db: pd.DataFrame, metabolites, db_key: str, annotation_function)
+
+    New style:
+        handleMetabolites(metabolites, db_name: str, allow_missing_dbs: bool = False)
+    """
+    # Old-style signature
+    if args and isinstance(args[0], pd.DataFrame):
+        db: pd.DataFrame = args[0]
+        metabolites: List[MeMoMetabolite] = args[1]
+        db_key: str = args[2]
+        annotation_function: Callable = args[3]
+
+        new_annos_added = 0
+        new_names_added = 0
+        new_inchis_added = 0
+
+        for met in metabolites:
+            if db.empty or db_key not in met.annotations:
+                continue
+
+            new_met_anno: dict[str, list] = {}
+            new_names: list[str] = []
+            new_inchi = ""
+            source = "annotation"
+
             for entry in met.annotations[db_key]:
-                new_met_anno_entry, new_names_entry, source = annotation_function(entry, db)
-                for key, value in new_met_anno_entry.items():
-                    if key in new_met_anno.keys():
+                annos, names, inchi, src = _unpack_annotation_function_result(
+                    annotation_function(entry, db)
+                )
+                source = src or source
+
+                for key, value in annos.items():
+                    if key in new_met_anno:
                         new_met_anno[key].extend(value)
                     else:
                         new_met_anno[key] = value
-                # combine the names for each entry
-                new_names.extend(new_names_entry)
+                new_names.extend(names)
+                if inchi:
+                    new_inchi = findOptimalInchi([new_inchi, inchi])
 
-            # add new names to the MeMoMetabolite
-            x =met.add_names(new_names,source)
-            new_names_added = new_names_added + x
-            
-            # add the annotations to the slot in the metabolites
-            if len(new_met_anno) > 0:
-                x = met.add_annotations(new_met_anno,source)
-                new_annos_added = new_annos_added + x
+            if new_names:
+                new_names_added += met.add_names(new_names, source)
+            if new_met_anno:
+                new_annos_added += met.add_annotations(new_met_anno, source)
+            if new_inchi:
+                new_inchis_added += met.add_inchi_string(new_inchi, source)
 
-    anno_result = AnnotationResult(0, new_names_added, new_names_added)
-    return anno_result
+        return AnnotationResult(new_inchis_added, new_annos_added, new_names_added)
+
+    # New-style signature
+    metabolites: List[MeMoMetabolite] = args[0]
+    db_name: str = args[1]
+    allow_missing_dbs: bool = kwargs.get("allow_missing_dbs", False)
+
+    # Conversion from internal database name to identifiers.org namespace
+    db_keys = {
+        "BiGG": "bigg.metabolite",
+        "VMH": "vmhmetabolite",
+        "HMDB": "HMDB",
+        "ModelSeed": "seed.compound",
+        "ChEBI": "chebi",
+        "gapseq": "seed.compound",
+    }
+    db_key = db_keys.get(db_name)
+    if db_key is None:
+        return AnnotationResult(0, 0, 0)
+
+    db = load_database(db_name, allow_missing_dbs)
+    if db.empty:
+        return AnnotationResult(0, 0, 0)
+
+    new_annos_added = 0
+    new_names_added = 0
+    new_inchis_added = 0
+    source = db_name
+
+    for met in metabolites:
+        if db_key not in met.annotations:
+            continue
+
+        new_met_anno: dict[str, list] = {}
+        new_names: list[str] = []
+        new_inchi = ""
+
+        for entry in met.annotations[db_key]:
+            annos, names, inchi = annotateEntry(entry, db)
+            for key, value in annos.items():
+                if key in new_met_anno:
+                    new_met_anno[key].extend(value)
+                else:
+                    new_met_anno[key] = value
+            new_names.extend(names)
+            if inchi:
+                new_inchi = findOptimalInchi([new_inchi, inchi])
+
+        if new_names:
+            new_names_added += met.add_names(new_names, source)
+        if new_met_anno:
+            new_annos_added += met.add_annotations(new_met_anno, source)
+        if new_inchi:
+            new_inchis_added += met.add_inchi_string(new_inchi, source)
+
+    return AnnotationResult(new_inchis_added, new_annos_added, new_names_added)

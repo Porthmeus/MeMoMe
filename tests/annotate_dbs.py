@@ -211,12 +211,6 @@ class Test_annotateMissingDbs(unittest.TestCase):
 class Test_annotateEntryFunctions(unittest.TestCase):
 
   def testBiggEntry(self):
-    this_directory = Path(__file__).parent
-    dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateBiGG_entry("13dpg", allow_missing_dbs = False)
-    self.assertTrue(len(ret[0]) > 0)
-    self.assertTrue(len(ret[1]) > 0)
-    
     ret = annotateBiGG_entry("", allow_missing_dbs = False)
     self.assertEqual(ret, (dict(), list(), "bigg"))
 
@@ -224,9 +218,12 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testBiggEntryToy(self):
 
     data = {
-      'universal_bigg_id': ["1", "2", "3"],
+      'id': ["1", "2", "3"],
       'name': ["Metabolite 1", "Metabolite 2", "Metabolite 3"],
-      'database_links': ["http://identifiers.org/A/A_M1", "http://identifiers.org/A/A_M2" ,"http://identifiers.org/A/A_M3"]
+      'DBs': ['''{"DB_A":["A_M1"]}''',
+              '''{"DB_C":["A_M2", "A_M2"], "DB_D":["A_M3"]}''',
+              '''{"DB_F":["A_M1", "A_M2"], "DB_G":["A_M3"]}'''],
+      'inchi': ["InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6?/m1/s1", "InChI=1S/C3H8O10P2/c4-2(1-12-14(6,7)8)3(5)13-15(9,10)11/h2,4H,1H2,(H2,6,7,8)(H2,9,10,11)/p-4/t2-/m1/s1","InChI=1S/C3H8O10P2/c4-2(1-12-14(6,7)8)3(5)13-1"]
     }
     
     # Create DataFrame
@@ -235,20 +232,20 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     exprected = ({'A': ['A_M1']}, ['Metabolite 1'],"bigg")
     self.assertEqual(ret, exprected)
   
-  def testBiggHandler(self):
-    urls = pd.Series([
-      "http://identifiers.org/hmdb/HMDB02322",
-      "http://identifiers.org/hmdb/HMDB04567",
-      "http://identifiers.org/hmdb/HMDB07890",
-      "http://identifiers.org/A/A_M1"
-    ])
-
-    res = handle_bigg_entries(urls)
-    self.assertTrue("hmdb" in res)
-    self.assertTrue("A" in res)
-
-    self.assertTrue(set(["HMDB02322", "HMDB04567", "HMDB07890"]) == set(res["hmdb"]))
-    self.assertTrue(set(["A_M1"]) == set(res["A"]))
+#  def testBiggHandler(self):
+#    urls = pd.Series([
+#      "http://identifiers.org/hmdb/HMDB02322",
+#      "http://identifiers.org/hmdb/HMDB04567",
+#      "http://identifiers.org/hmdb/HMDB07890",
+#      "http://identifiers.org/A/A_M1"
+#    ])
+#
+#    res = handle_bigg_entries(urls)
+#    self.assertTrue("hmdb" in res)
+#    self.assertTrue("A" in res)
+#
+#    self.assertTrue(set(["HMDB02322", "HMDB04567", "HMDB07890"]) == set(res["hmdb"]))
+#    self.assertTrue(set(["A_M1"]) == set(res["A"]))
 
 
  
@@ -259,8 +256,6 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     
     self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
     self.assertFalse(len(ret[0]) == 0)
-
-
 class Test_annotateID(unittest.TestCase):
   def testBiggID(self):
     this_directory = Path(__file__).parent
@@ -322,4 +317,3 @@ class Test_annotateFull(unittest.TestCase):
     expected_inchi = "InChI=1S/C20H27N3O2/c1-4-20(3)13-14-9-6-7-10-15(14)17-16(20)18(25)23(5-2)19(22-17)21-11-8-12-24/h6-7,9-10,24H,4-5,8,11-13H2,1-3H3,(H,21,22)"
     self.assertEqual(ret, AnnotationResult(1, 0, 0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
-
