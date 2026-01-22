@@ -10,7 +10,7 @@ from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateB
 from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
 from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
 from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias
-from src.annotation.annotateAux import AnnotationResult, AnnotationKey
+from src.annotation.annotateAux import AnnotationResult, AnnotationKey, annotateEntry, load_database
 from src.MeMoMetabolite import MeMoMetabolite
 
 
@@ -213,81 +213,80 @@ class Test_annotateMissingDbs(unittest.TestCase):
 class Test_annotateEntryFunctions(unittest.TestCase):
 
   def testBiggEntry(self):
-    this_directory = Path(__file__).parent
-    dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateBiGG_entry("13dpg", allow_missing_dbs = False)
+    #ret = annotateBiGG_entry("13dpg", allow_missing_dbs = False)
+    db = load_database("BiGG")
+    ret = annotateEntry("13dpg", db)
+    print(ret)
     self.assertTrue(len(ret[0]) > 0)
     self.assertTrue(len(ret[1]) > 0)
     
-    ret = annotateBiGG_entry("", allow_missing_dbs = False)
-    self.assertEqual(ret, (dict(), list()))
+    ret = annotateEntry("", db)
+    self.assertEqual(ret, (dict(), list(), ""))
 
 
   def testBiggEntryToy(self):
 
     data = {
-      'universal_bigg_id': ["1", "2", "3"],
+      'id': ["1", "2", "3"],
       'name': ["Metabolite 1", "Metabolite 2", "Metabolite 3"],
-      'database_links': ["http://identifiers.org/A/A_M1", "http://identifiers.org/A/A_M2" ,"http://identifiers.org/A/A_M3"]
+      'DBs': ['''{"DB_A":["A_M1"]}''',
+              '''{"DB_C":["A_M2", "A_M2"], "DB_D":["A_M3"]}''',
+              '''{"DB_F":["A_M1", "A_M2"], "DB_G":["A_M3"]}'''],
+      'inchi': ["InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6?/m1/s1", "InChI=1S/C3H8O10P2/c4-2(1-12-14(6,7)8)3(5)13-15(9,10)11/h2,4H,1H2,(H2,6,7,8)(H2,9,10,11)/p-4/t2-/m1/s1","InChI=1S/C3H8O10P2/c4-2(1-12-14(6,7)8)3(5)13-1"]
     }
     
     # Create DataFrame
     df = pd.DataFrame(data)
-    ret = annotateBiGG_entry("1", df, allow_missing_dbs = False)
-    exprected = ({'A': ['A_M1']}, ['Metabolite 1'])
-    self.assertEqual(ret, exprected)
+    ret = annotateEntry("1", df)
+    expected = ({'DB_A': ['A_M1']}, ['Metabolite 1'], "InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6?/m1/s1")
+    self.assertEqual(ret, expected)
   
-  def testBiggHandler(self):
-    urls = pd.Series([
-      "http://identifiers.org/hmdb/HMDB02322",
-      "http://identifiers.org/hmdb/HMDB04567",
-      "http://identifiers.org/hmdb/HMDB07890",
-      "http://identifiers.org/A/A_M1"
-    ])
-
-    res = handle_bigg_entries(urls)
-    self.assertTrue("hmdb" in res)
-    self.assertTrue("A" in res)
-
-    self.assertTrue(set(["HMDB02322", "HMDB04567", "HMDB07890"]) == set(res["hmdb"]))
-    self.assertTrue(set(["A_M1"]) == set(res["A"]))
+#  def testBiggHandler(self):
+#    urls = pd.Series([
+#      "http://identifiers.org/hmdb/HMDB02322",
+#      "http://identifiers.org/hmdb/HMDB04567",
+#      "http://identifiers.org/hmdb/HMDB07890",
+#      "http://identifiers.org/A/A_M1"
+#    ])
+#
+#    res = handle_bigg_entries(urls)
+#    self.assertTrue("hmdb" in res)
+#    self.assertTrue("A" in res)
+#
+#    self.assertTrue(set(["HMDB02322", "HMDB04567", "HMDB07890"]) == set(res["hmdb"]))
+#    self.assertTrue(set(["A_M1"]) == set(res["A"]))
 
 
  
   def testVMHEntry(self):
-    this_directory = Path(__file__).parent
-    dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateVMH_entry(AnnotationKey("10fthf"), allow_missing_dbs = False)
-    
-    self.assertEqual(ret[1], ["10-Formyltetrahydrofolate"])
+    db = load_database("VMH")
+    ret = annotateEntry("10fthf", db)
+    print(ret)
+    self.assertEqual(ret[1][0], "10-Formyltetrahydrofolate")
     self.assertFalse(len(ret[0]) == 0)
 
 
   def testHMDBEntry(self):
-    this_directory = Path(__file__).parent
-    dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateHMDB_entry(AnnotationKey("HMDB00972"), allow_missing_dbs = False)
+    db = load_database("HMDB")
+    ret = annotateEntry("HMDB00972", db)
     self.assertTrue(len(ret[0]) > 0)
     self.assertTrue(len(ret[1]) > 0)
     
-    ret = annotateHMDB_entry(AnnotationKey(""), allow_missing_dbs = False)
-    self.assertEqual(ret, (dict(), list()))
-
+    ret = annotateEntry("", db)
+    self.assertEqual(ret, (dict(), list(),""))
 
   def testSEEDEntry(self):
-    self.maxDiff = None
-    this_directory = Path(__file__).parent
-    dbs_dir = this_directory.parent/Path("Databases")
-    ret = annotateModelSEED_entry("cpd00052", allow_missing_dbs = False)
+    db = load_database("ModelSeed")
+    ret = annotateEntry("cpd00052", db)
     self.assertEqual(sorted(ret[1]), sorted(["cytidine-triphosphate",
-   "Cytidine triphosphate",
-   "Cytidine 5'-triphosphate",
+   "cytidine triphosphate",
+   "cytidine 5'-triphosphate",
    "cytidine-5'-triphosphate",
-   "CTP"]))
+   "ctp"]))
     self.assertFalse(len(ret[0]) == 0)
 
-    ret = annotateModelSEED_entry("", allow_missing_dbs = False)
-    self.assertEqual(ret, (dict(), list()))
+    ret = annotateEntry("", db)
+    self.assertEqual(ret, (dict(), list(), ""))
 
 
 

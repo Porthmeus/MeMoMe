@@ -47,8 +47,11 @@ def xml_to_pandas_lazy(xml_stream: TextIOWrapper, record_tag: str):
 
     i = 0
     rows: list[dict[str, list[str] | str]] = []
+
     for _, elem in ET.iterparse(xml_stream, events=('end',)):
         i += 1
+        if i%1000000==0:
+            print(f"\rIteration: {i}", end="", flush=True)
         tag = strip_namespace(elem.tag)
         if tag == record_tag:
             row = {strip_namespace(child.tag): (child.text or '').strip() for child in elem}

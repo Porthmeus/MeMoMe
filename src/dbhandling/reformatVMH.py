@@ -62,12 +62,12 @@ def concatNames(x:pd.Series) -> str:
     if iupac != "" and iupac != None:
         concat.append(iupac)
     if alias != "" and alias != None:
-       # check if there is | in the, this should be replaced as it is our separator
-       index =  alias.find("|")
-       if index > 0:
-         print(f"Replacing | in {alias}")
-         alias = alias.replace("***","_|_")
-         concat.append(alias)
+        alias = alias.replace("***","_|_")
+        concat.append(alias)
+      # # check if there is | in the, this should be replaced as it is our separator
+      # index =  alias.find("|")
+      # if index > 0:
+      #   print(f"Replacing | in {alias}")
 
     concat = "_|_".join(concat)
     return(concat)

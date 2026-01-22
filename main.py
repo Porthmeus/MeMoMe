@@ -61,7 +61,7 @@ def main(args: argparse.Namespace):
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
 
-        matched_model = model1.match(model2, keep1ToMany = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
+        matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
@@ -70,7 +70,6 @@ if __name__ == '__main__':
     # Specifying this tells the program to download all the databases
     parser.add_argument('--output-names', action='store_true', default=False, help='If two metabolites got matched on a name basis, output the names that lead to this match')
     parser.add_argument('--output-dbs', action='store_true', default=False, help='If two metabolites got matched on a database basis, output the databases that lead to this match')
-    parser.add_argument('--keep-one-to-many', action='store_true', default=False, help='Keep one-to-many merges')
     parser.add_argument('--keep-unmatched', action='store_true', default=False, help='Stored unmatched metabolties in the output')
     parser.add_argument('--download', action='store_true', help='Download all required databases')
     parser.add_argument('--reformat', action='store_true', help='Reformat all required databases')

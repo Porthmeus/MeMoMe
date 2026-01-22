@@ -121,20 +121,45 @@ def prepare(df)-> pd.DataFrame | None:
    df = df.drop(columns = ["synonyms", "iupac_names", "traditional_iupac"])
    return df
 
+def reformat_small_ids(df):
+    import pandas as pd
+
+    
+    # extract numeric part of id
+    df["id_num"] = df["id"].str.extract(r"(\d+)").astype(int)
+    
+    # filter id < 99999
+    df_append = df[df["id_num"] < 99999].copy()
+    
+    # remove two leading zeros from id
+    df_append["id"] = df_append["id"].str.replace(r"^(\D*)00", r"\1", regex=True)
+    
+    # optional: drop helper column
+    df = pd.concat([df, df_append])
+    df = df.drop(columns="id_num")
+    return(df)
+
+
 def do_all(df: pd.DataFrame) -> pd.DataFrame:
     df = prepare(df)
+    print("Prepared data frame")
     rename_columns_safe(df, _keys)
+    print("Renamed columns")
     DBs = getAnnos(df)
+    print("Reformatted annotations")
     dat_all = df.loc[:,["id","name","inchi"]]
     dat_all.index = dat_all["id"]
     DBs = DBs.astype(str)
     DBsF = DBs.to_frame()
+    print("Transformed data to data frame")
     print("starting join")
     dat_all = pd.concat([dat_all, DBsF], axis = 1)
     dat_all.columns = ["id", "name","inchi","DBs"]
     df.index = df["id"]
     dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
-
+    print("Concated columns")
+    dat_all = reformat_small_ids(dat_all)
+    print("Added small ids")
     return dat_all
 
 def main():
