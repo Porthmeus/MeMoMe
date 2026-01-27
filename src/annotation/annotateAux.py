@@ -88,11 +88,24 @@ def _resolve_database_filename(db_name: str) -> str:
     # db_name can be a database key (e.g. "BiGG") or already a filename
     if db_name in config["databases"]:
         db_cfg = config["databases"][db_name]
-        # Prefer reformatted database if present, otherwise fall back to raw file
-        filename = db_cfg.get("reformat") or db_cfg.get("file")
-        if not filename:
+        raw_filename = db_cfg.get("file")
+        reformat_filename = db_cfg.get("reformat")
+        if not raw_filename and not reformat_filename:
             raise KeyError(f"No 'reformat' or 'file' entry configured for database '{db_name}'")
-        return filename
+
+        # Prefer reformatted database if it exists on disk, otherwise fall back
+        # to the raw download so annotation still works without reformatted DBs.
+        if reformat_filename:
+            reformat_path = os.path.join(get_database_path(), reformat_filename)
+            if os.path.exists(reformat_path):
+                return reformat_filename
+
+        if raw_filename:
+            return raw_filename
+
+        # Last resort: return the reformat filename and let the caller handle
+        # missing files according to allow_missing_dbs.
+        return reformat_filename
 
     # Treat it as a direct filename
     return db_name
