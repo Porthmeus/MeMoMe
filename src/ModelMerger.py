@@ -100,6 +100,14 @@ class ModelMerger:
         Parameters:
             target_namespace (str): The target namespace identifier (without the _{self.TRANSLATION_COMPARTMENT} suffix).
         """
+        def ensure_exchange_name(
+            reaction: cobra.Reaction, translation_met: cobra.Metabolite
+        ) -> None:
+            if reaction.name:
+                return
+            met_name = translation_met.name or translation_met.id
+            reaction.name = f"Translation compartment {met_name} exchange"
+
         translation_id = f"{target_namespace}_{self.TRANSLATION_COMPARTMENT}"
         source_met = self._find_source_metabolite(target_namespace)
         if translation_id in self.merged_model.metabolites:
@@ -134,11 +142,13 @@ class ModelMerger:
             ex_rxn.lower_bound = -1000
             ex_rxn.upper_bound = 1000
             ex_rxn.add_metabolites({translation_met: -1})
+            ensure_exchange_name(ex_rxn, translation_met)
             self.merged_model.add_reactions([ex_rxn])
         else:
             ex_rxn = self.merged_model.reactions.get_by_id(ex_id)
             if translation_met not in ex_rxn.metabolites:
                 ex_rxn.add_metabolites({translation_met: -1})
+            ensure_exchange_name(ex_rxn, translation_met)
         return translation_met
 
     def _prefix_tr_reaction(self, reaction: cobra.Reaction, model_prefix: str) -> None:

@@ -143,6 +143,11 @@ class Test_ModelMerger(unittest.TestCase):
             rxn for rxn in merged_model.reactions
             if rxn.id.startswith("EX_") and any(met.compartment == ModelMerger.TRANSLATION_COMPARTMENT for met in rxn.metabolites)
         ]
+        missing_names = [rxn.id for rxn in ex_translation_reactions if not rxn.name]
+        self.assertFalse(
+            missing_names,
+            f"Missing names for translation exchange reactions: {missing_names}",
+        )
         print("Exchange reactions in translation compartment:")
         for rxn in ex_translation_reactions:
             print(f"{rxn.id}: bounds ({rxn.lower_bound}, {rxn.upper_bound})")       
