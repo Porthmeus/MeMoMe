@@ -1,1 +1,37 @@
-[auto]\nhost_reactions: 200\nzero_range_before: 17\nzero_range_after: 20\nchanged_ranges: 162\nmean_pct_change: -16.594742997928915\nmedian_pct_change: -18.302431718796065\nbacterial_exchange_closed: 263\nclosed_feasible: True\nmax_host_flux_open: 0.4550910919351427\nmax_host_flux_closed: 0.35906366860430466\nbacterial_exchange_nonzero_open: 63\nbacterial_exchange_forced_nonzero: 0\nhost_only_objective: 0.4550910919351415\nforced_zero_exchange_count: 1\nmanual_diet_applied: 0\nmanual_diet_candidates: 0\n\n[manual]\nhost_reactions: 200\nzero_range_before: 21\nzero_range_after: 24\nchanged_ranges: 123\nmean_pct_change: 675.7091269062902\nmedian_pct_change: -1.0681658465641283e-09\nbacterial_exchange_closed: 261\nclosed_feasible: True\nmax_host_flux_open: 0.45509109193514274\nmax_host_flux_closed: 0.35906366860431366\nbacterial_exchange_nonzero_open: 66\nbacterial_exchange_forced_nonzero: 0\nhost_only_objective: 0.4550910919351424\nforced_zero_exchange_count: 1\nmanual_diet_applied: 1642\nmanual_diet_candidates: 1645\n
+[auto]
+host_reactions: 9041
+zero_range_before: 1011
+zero_range_after: 1091
+changed_ranges: 4676
+increased_ranges: 8
+mean_pct_change: -34.91487496537983
+median_pct_change: -23.819751
+mean_rel_change: -0.3491487844333748
+median_rel_change: -0.238198
+bacterial_exchange_forced_nonzero: 0
+bacterial_exchange_nonzero_open: 195
+bacterial_exchange_closed: 263
+closed_feasible: True
+max_host_flux_open: 0.455091
+max_host_flux_closed: 0.359064
+host_only_objective: 0.455091
+forced_zero_exchange_count: 1
+
+[manual]
+host_reactions: 9041
+zero_range_before: 1002
+zero_range_after: 1088
+changed_ranges: 4682
+increased_ranges: 8
+mean_pct_change: -34.981421899863165
+median_pct_change: -23.819751
+mean_rel_change: -0.34981425363851226
+median_rel_change: -0.238198
+bacterial_exchange_forced_nonzero: 0
+bacterial_exchange_nonzero_open: 194
+bacterial_exchange_closed: 261
+closed_feasible: True
+max_host_flux_open: 0.455091
+max_host_flux_closed: 0.359064
+host_only_objective: 0.455091
+forced_zero_exchange_count: 1

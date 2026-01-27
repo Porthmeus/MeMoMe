@@ -1,0 +1,37 @@
+[auto]
+host_reactions: 300
+zero_range_before: 27
+zero_range_after: 27
+changed_ranges: 218
+increased_ranges: 0
+mean_pct_change: -37.25725673315645
+median_pct_change: -21.990607024758145
+mean_rel_change: -0.36259022138733493
+median_rel_change: -0.21990607024755268
+bacterial_exchange_closed: 263
+closed_feasible: True
+max_host_flux_open: 0.4550910919351427
+max_host_flux_closed: 0.35906366860430466
+bacterial_exchange_nonzero_open: 63
+bacterial_exchange_forced_nonzero: 0
+host_only_objective: 0.4550910919351415
+forced_zero_exchange_count: 1
+
+[manual]
+host_reactions: 300
+zero_range_before: 40
+zero_range_after: 44
+changed_ranges: 185
+increased_ranges: 0
+mean_pct_change: 2122865543652010.8
+median_pct_change: -34.48936914842068
+mean_rel_change: 1.0538150408846096
+median_rel_change: -0.2600252643096264
+bacterial_exchange_closed: 261
+closed_feasible: True
+max_host_flux_open: 0.45509109193514274
+max_host_flux_closed: 0.35906366860431366
+bacterial_exchange_nonzero_open: 66
+bacterial_exchange_forced_nonzero: 0
+host_only_objective: 0.4550910919351424
+forced_zero_exchange_count: 1
