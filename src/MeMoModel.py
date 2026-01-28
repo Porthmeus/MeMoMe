@@ -87,16 +87,16 @@ class MeMoModel:
         print(f"Origin DB fractions: {origin_dbs}")
         logger.debug(origin_db)
         final_numbers = AnnotationResult(0,0,0)
+        reformatted_added_total = 0
 
-        # Attempt the newer reformatted-ID based annotation first. This is
-        # optional: if reformatted databases are not available, we fall back
-        # to the legacy raw-database annotators below.
+        # New default: reformatted-database ID annotation.
         try:
             reformatted_id_result = handleIDs(
                 self.metabolites, origin_db, allow_missing_dbs=allow_missing_dbs
             )
             print(f"{origin_db} (id, reformatted):", reformatted_id_result)
             final_numbers = final_numbers + reformatted_id_result
+            reformatted_added_total += reformatted_id_result.annotated_total
         except Exception as exc:
             print(f"{origin_db} (id, reformatted) skipped: {exc}")
 
@@ -126,27 +126,14 @@ class MeMoModel:
                 final_numbers = final_numbers + temp_result
                 id_based_applied.append("ModelSEED")
         print(f"ID-based annotators applied: {id_based_applied or 'none'} (threshold {id_based_threshold})")
-        total = 1
-        while total != 0:
-            # count the number of newly annotated metabolites
-            anno_result= AnnotationResult(0,0,0)
 
-            # Legacy raw-database annotators (known to work with the current
-            # Databases/*.tsv inputs).
-            temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
-            print("BiGG:", temp_result)
-            anno_result = anno_result + temp_result
-
-            temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
-            print("ChEBI:", temp_result)
-            anno_result = anno_result + temp_result
-
-            temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
-            print("ModelSEED:", temp_result)
-            anno_result = anno_result + temp_result
-
-            # Opportunistically run the new reformatted-database annotators.
-            # These will be no-ops when reformatted DBs are not available.
+        # Reformatted-database propagation loop (default behavior).
+        reformatted_total = 1
+        reformatted_iter = 0
+        max_reformatted_iters = 5
+        while reformatted_total != 0 and reformatted_iter < max_reformatted_iters:
+            reformatted_iter += 1
+            anno_result = AnnotationResult(0, 0, 0)
             for db_name in get_config()["databases"].keys():
                 if db_name in ["Identifiers", "TestCase"]:
                     continue
@@ -160,7 +147,35 @@ class MeMoModel:
                     print(db_name + " (reformatted):", temp_result)
                     anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
-            total = anno_result.annotated_total
+            reformatted_added_total += anno_result.annotated_total
+            reformatted_total = anno_result.annotated_total
+        if reformatted_iter >= max_reformatted_iters and reformatted_total != 0:
+            print(
+                f"Reformatted annotation reached iteration cap ({max_reformatted_iters}); "
+                "continuing with current annotations."
+            )
+
+        # Fallback: only run legacy raw-database annotators if the reformatted
+        # pipeline did not annotate anything beyond the ID step.
+        if reformatted_added_total == 0:
+            total = 1
+            while total != 0:
+                anno_result = AnnotationResult(0, 0, 0)
+
+                temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
+                print("BiGG:", temp_result)
+                anno_result = anno_result + temp_result
+
+                temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
+                print("ChEBI:", temp_result)
+                anno_result = anno_result + temp_result
+
+                temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
+                print("ModelSEED:", temp_result)
+                anno_result = anno_result + temp_result
+
+                final_numbers = final_numbers + anno_result
+                total = anno_result.annotated_total
 
         self.annotated = True
         print("TOTAL:", final_numbers)

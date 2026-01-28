@@ -14,6 +14,7 @@ import pandas as pd
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotation.annotateInchiRoutines import findOptimalInchi
 from src.download_db import get_config, get_database_path
+from src.parseMetaboliteInfos import getAnnoFromIdentifierURL
 
 # HMDB0000972
 AnnotationKey = NewType("AnnotationKey", str)
@@ -21,6 +22,8 @@ DBName = NewType("DBName", str)
 DBKey = NewType("DBKey", str)
 
 EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
+
+_DB_CACHE: dict[str, pd.DataFrame] = {}
 
 
 class AnnotationResult:
@@ -124,18 +127,226 @@ def load_database(
     configured database key (e.g. "BiGG").
     """
     try:
+        if conversion_method is None and db_name in _DB_CACHE:
+            return _DB_CACHE[db_name]
         filename = _resolve_database_filename(db_name)
         db_path = os.path.join(get_database_path(), filename)
+        used_raw_fallback = False
         if conversion_method is not None:
             db = conversion_method(db_path)
         else:
-            db = pd.read_csv(db_path, sep=",", header=0, dtype=str)
+            # We prefer reformatted DBs, but when they are not present we fall
+            # back to raw downloads and normalize them to the reformatted schema.
+            raw_db_name = None
+            if not os.path.exists(db_path) and db_name in get_config()["databases"]:
+                raw_filename = get_config()["databases"][db_name].get("file")
+                if raw_filename:
+                    db_path = os.path.join(get_database_path(), raw_filename)
+                    used_raw_fallback = True
+                    raw_db_name = db_name
+            raw_filename = None
+            if db_name in get_config()["databases"]:
+                raw_filename = get_config()["databases"][db_name].get("file")
+
+            # Choose delimiter based on the raw DB type.
+            sep = ","
+            raw_is_tab = False
+            if raw_filename and os.path.basename(db_path) == raw_filename:
+                raw_is_tab = db_name in {"BiGG", "ModelSeed", "gapseq", "ChEBI"}
+            if (used_raw_fallback and raw_db_name in {"BiGG", "ModelSeed", "gapseq", "ChEBI"}) or raw_is_tab:
+                sep = "\t"
+            if sep == "\t":
+                db = pd.read_csv(
+                    db_path,
+                    sep=sep,
+                    header=0,
+                    dtype=str,
+                    engine="python",
+                    on_bad_lines="skip",
+                )
+            else:
+                db = pd.read_csv(db_path, sep=sep, header=0, dtype=str, low_memory=False)
+
+        # Normalize raw databases to the reformatted schema when needed.
+        if db_name in get_config()["databases"]:
+            db = _normalize_database(db_name, db, used_raw_fallback)
+        if conversion_method is None and db_name:
+            _DB_CACHE[db_name] = db
     except FileNotFoundError as e:
         if not allow_missing_dbs:
             raise e
         warnings.warn(str(e))
         db = pd.DataFrame()
     return db
+
+
+def _write_reformat_cache(db_name: str, df: pd.DataFrame) -> None:
+    """Best-effort write of a normalized DB to the configured reformat file."""
+    try:
+        reformat_filename = get_config()["databases"][db_name].get("reformat")
+        if not reformat_filename:
+            return
+        reformat_path = os.path.join(get_database_path(), reformat_filename)
+        # Only write when the cache does not exist yet.
+        if not os.path.exists(reformat_path):
+            df.to_csv(reformat_path, index=False)
+    except Exception:
+        # Caching must never break annotation.
+        return
+
+
+def _normalize_database(db_name: str, df: pd.DataFrame, used_raw_fallback: bool) -> pd.DataFrame:
+    """
+    Normalize raw databases into the reformatted schema (id/name/inchi/DBs).
+
+    When a reformatted DB already exists, this is effectively a no-op.
+    """
+    if df.empty:
+        return df
+
+    # If this already looks like a reformatted DB, keep it.
+    if "id" in df.columns and ("DBs" in df.columns or "inchi" in df.columns):
+        return df
+
+    if not used_raw_fallback:
+        # We loaded a file that exists under the reformat name but does not
+        # follow the reformat schema; normalize anyway.
+        pass
+
+    if db_name == "BiGG":
+        norm = _normalize_bigg(df)
+    elif db_name in {"ModelSeed", "gapseq"}:
+        norm = _normalize_modelseed_like(db_name, df)
+    elif db_name == "ChEBI":
+        norm = _normalize_chebi(df)
+    else:
+        # For other DBs (e.g. VMH raw JSON is handled elsewhere), attempt a
+        # minimal normalization if possible.
+        norm = df
+
+    if isinstance(norm, pd.DataFrame) and not norm.empty:
+        _write_reformat_cache(db_name, norm)
+        return norm
+    return df
+
+
+def _normalize_bigg(df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize the raw BiGG table to the reformatted schema."""
+    if df.empty:
+        return df
+
+    # BiGG raw schema uses universal_bigg_id as the stable identifier.
+    if "universal_bigg_id" not in df.columns:
+        return df
+
+    working = df.copy()
+    working["id"] = working["universal_bigg_id"]
+
+    def _parse_links(links: str) -> dict:
+        annos: dict[str, list[str]] = defaultdict(list)
+        if not isinstance(links, str) or not links:
+            return {}
+        for url in links.split(";"):
+            src, val = getAnnoFromIdentifierURL(url)
+            if src is None or val is None:
+                continue
+            annos[src].append(val)
+        # ensure BiGG self-id is present
+        if "bigg.metabolite" not in annos:
+            annos["bigg.metabolite"] = []
+        return dict(annos)
+
+    working["DBs"] = working.get("database_links", "").apply(_parse_links)
+
+    # Aggregate by id to merge annotations and names across models.
+    grouped = working.groupby("id", dropna=True)
+    out_rows = []
+    for uid, sub in grouped:
+        names = sorted({n for n in sub.get("name", pd.Series(dtype=str)).dropna() if n})
+        dbs: dict[str, list[str]] = defaultdict(list)
+        for entry in sub["DBs"]:
+            if not isinstance(entry, dict):
+                continue
+            for key, vals in entry.items():
+                dbs[key].extend(vals)
+        # Ensure self-id is included.
+        dbs["bigg.metabolite"].append(uid)
+        dbs = {k: sorted(set(v)) for k, v in dbs.items() if v}
+        out_rows.append(
+            {
+                "id": uid,
+                "name": "_|_".join(names),
+                "DBs": str(dbs),
+            }
+        )
+    return pd.DataFrame(out_rows)
+
+
+def _normalize_modelseed_like(db_name: str, df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize ModelSEED/gapseq raw tables to the reformatted schema."""
+    if df.empty or "id" not in df.columns:
+        return df
+
+    working = df.copy()
+    # Local import to avoid circular dependency during module import.
+    from src.annotation.annotateModelSEED import extractModelSEEDAnnotationsFromAlias
+
+    def _aliases_to_dbs(row: pd.Series) -> dict:
+        dbs: dict[str, list[str]] = defaultdict(list)
+        met_id = row.get("id")
+        if isinstance(met_id, str) and met_id:
+            dbs["seed.compound"].append(met_id)
+        aliases = row.get("aliases")
+        if isinstance(aliases, str) and aliases:
+            try:
+                annos, _ = extractModelSEEDAnnotationsFromAlias(aliases)
+                for key, vals in annos.items():
+                    dbs[key].extend(vals)
+            except Exception:
+                pass
+        # gapseq provides several explicit ID columns
+        for col, key in [
+            ("biggID", "bigg.metabolite"),
+            ("keggID", "kegg.compound"),
+            ("hmdbID", "hmdb"),
+            ("chebiID", "chebi"),
+            ("reactomeID", "reactome"),
+            ("biocycID", "biocyc"),
+        ]:
+            val = row.get(col)
+            if isinstance(val, str) and val:
+                dbs[key].extend([v for v in val.split(";") if v])
+        return {k: sorted(set(v)) for k, v in dbs.items() if v}
+
+    working["DBs"] = working.apply(_aliases_to_dbs, axis=1)
+    working["name"] = working.get("name", "").fillna("")
+
+    # Prefer explicit InChI column when present (gapseq).
+    if "InChI" in working.columns:
+        working["inchi"] = working["InChI"]
+
+    cols = ["id", "name", "inchi", "DBs"]
+    present_cols = [c for c in cols if c in working.columns]
+    out = working[present_cols].copy()
+    out["DBs"] = out["DBs"].apply(lambda d: str(d) if isinstance(d, dict) else d)
+    return out
+
+
+def _normalize_chebi(df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize the ChEBI InChI table to the reformatted schema."""
+    if df.empty:
+        return df
+
+    working = df.copy()
+    if "CHEBI_ID" in working.columns and "id" not in working.columns:
+        working["id"] = working["CHEBI_ID"].astype(str)
+    if "InChI" in working.columns and "inchi" not in working.columns:
+        working["inchi"] = working["InChI"]
+    if "id" in working.columns:
+        working["DBs"] = working["id"].apply(lambda x: str({"chebi": [str(x)]}))
+    cols = ["id", "inchi", "DBs"]
+    present_cols = [c for c in cols if c in working.columns]
+    return working[present_cols].copy()
 
 
 def annotateEntry(entry: str, database: pd.DataFrame = pd.DataFrame()) -> tuple[dict, list, str]:
