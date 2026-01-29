@@ -1,0 +1,64 @@
+reaction_id,name,flux
+TR_model2_cpd00001[e],H2O Exchange,4.859748441431333
+TR_model2_cpd00067[e],H+ Exchange,3.4532696576643866
+TR_model2_cpd00106[e],Fumarate Exchange,2.8245331867252554
+TR_model2_cpd00207[e],Guanine Exchange,-2.680439282873254
+TR_model2_cpd00139[e],Glycolate Exchange,-2.0899793700504823
+TR_model2_cpd00054[e],L-Serine Exchange,1.399276415448256
+TR_model2_cpd00246[e],Inosine Exchange,1.2399718511839377
+TR_model2_cpd15494[e],Maltoheptaose Exchange,-1.1728169830637962
+TR_model2_cpd01262[e],Amylotriose Exchange,1.165029883063796
+TR_model2_cpd00277[e],Deoxyguanosine Exchange,1.0252203154756678
+TR_model2_cpd00036[e],Succinate Exchange,0.4030925515087195
+TR_model2_cpd00098[e],Choline Exchange,0.3518516166294679
+TR_model2_cpd00025[e],H2O2 Exchange,-0.29063998245415146
+TR_model2_cpd00012[e],PPi Exchange,-0.28365207291852856
+TR_model2_cpd00218[e],Niacin Exchange,-0.2824782264017895
+TR_model2_cpd00003[e],NAD Exchange,0.28247822640178777
+TR_model2_cpd00132[e],L-Asparagine Exchange,-0.2614
+TR_model2_cpd00129[e],L-Proline Exchange,0.18771779396577537
+TR_model2_cpd00084[e],L-Cysteine Exchange,-0.18556755031751618
+TR_model2_cpd00019[e],S-Adenosyl-homocysteine Exchange,0.18537807621552232
+TR_model2_cpd00108[e],Galactose Exchange,-0.17609641188625758
+TR_model2_cpd00210[e],Ex_cpd00210[e0],0.13359729456310432
+TR_model2_cpd01663[e],Ex_cpd01663[e0],0.13359729456310432
+TR_model2_cpd03246[e],Taurochenodeoxycholate Exchange,-0.1335972945631043
+TR_model2_cpd00141[e],Propionate Exchange,0.10975139849884756
+TR_model2_cpd00051[e],L-Arginine Exchange,-0.09460397431138068
+TR_model2_cpd00064[e],Ornithine Exchange,-0.09401573601313944
+TR_model2_cpd00119[e],L-Histidine Exchange,-0.05725431609251431
+TR_model2_cpd00092[e],Uracil Exchange,0.04232208656614511
+TR_model2_cpd00300[e],Urate Exchange,-0.0133
+TR_model2_cpd00039[e],L-Lysine Exchange,0.013250421666448452
+TR_model2_cpd00121[e],L-Inositol Exchange,0.010610448808467851
+TR_model2_cpd00128[e],Adenine Exchange,-0.007994465864980984
+TR_model2_cpd01080[e],ocdca Exchange,0.00426457974808703
+TR_model2_cpd00182[e],Adenosine Exchange,-0.00344
+TR_model2_cpd00179[e],Maltose Exchange,-0.0019897
+TR_model2_Biomass_Gram_negative[c],EX_Biomass_Gram_negative[c],0.001
+TR_model2_Biomass_Gram_positive[c],EX_Biomass_Gram_positive[c],0.0009999999999999998
+TR_model2_cpd00322[e],L-Isoleucine Exchange,-0.0005896071180220689
+TR_model2_cpd00066[e],L-Phenylalanine Exchange,-0.0003803227139742509
+TR_model2_cpd00060[e],L-Methionine Exchange,-0.000277596849926271
+TR_model2_cpd00069[e],L-Tyrosine Exchange,-0.000259755444923367
+TR_model2_cpd00367[e],Cytidine Exchange,-0.00016650857739114965
+TR_model2_cpd00264[e],Spermidine Exchange,-0.0001431
+TR_model2_cpd00065[e],L-Tryptophan Exchange,-0.00011719782553029776
+TR_model2_cpd00558[e],Spermine Exchange,6.699391743034659e-05
+TR_model2_cpd00654[e],Deoxycytidine Exchange,-5.327604983318369e-05
+TR_model2_cpd10516[e],fe3 Exchange,-4.740162963945573e-05
+TR_model2_cpd00393[e],Folate Exchange,-2.7336495417920487e-05
+TR_model2_cpd00220[e],Riboflavin Exchange,-1.822433027861312e-05
+TR_model2_cpd00644[e],Pantothenic acid Exchange,-1.8224330278611233e-05
+TR_model2_cpd00099[e],Cl- Exchange,-1.458864968042104e-05
+TR_model2_cpd00149[e],Co2+ Exchange,-1.4588649680421038e-05
+TR_model2_cpd00034[e],Zn2+ Exchange,-1.4588649680421037e-05
+TR_model2_cpd00048[e],Sulfate Exchange,-1.4588649680421037e-05
+TR_model2_cpd00205[e],K+ Exchange,-1.4588649680421037e-05
+TR_model2_cpd00063[e],Ca2+ Exchange,-1.4588649680421037e-05
+TR_model2_cpd00058[e],Cu2+ Exchange,-1.4588649680421037e-05
+TR_model2_cpd00030[e],Mn2+ Exchange,-1.4588649680421035e-05
+TR_model2_cpd00254[e],Mg Exchange,-1.4588649680421035e-05
+TR_model2_cpd00305[e],Thiamin Exchange,-9.112165139306831e-06
+TR_model2_cpd00263[e],Pyridoxol Exchange,-9.112165139306831e-06
+TR_model2_cpd00226[e],Hypoxanthine Exchange,-2.5750000000000003e-06

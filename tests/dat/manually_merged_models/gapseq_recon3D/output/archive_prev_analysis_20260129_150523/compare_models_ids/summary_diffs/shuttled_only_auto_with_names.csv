@@ -1,0 +1,20 @@
+metabolite,rxn_ids,rxn_names
+Biomass_Gram_negative,TR_model2_Biomass_Gram_negative[c],EX_Biomass_Gram_negative[c]
+Biomass_Gram_positive,TR_model2_Biomass_Gram_positive[c],EX_Biomass_Gram_positive[c]
+M02447,TR_model1_M02447[e],EX_M02447[e]
+M02451,TR_model1_M02451[e],EX_M02451[e]
+cpd00027,TR_model2_cpd00027[e],D-Glucose Exchange
+cpd00105,TR_model2_cpd00105[e],D-Ribose Exchange
+cpd00154,TR_model2_cpd00154[e],Xylose Exchange
+cpd00221,TR_model2_cpd00221[e],D-Lactate Exchange
+cpd00224,TR_model2_cpd00224[e],L-Arabinose Exchange
+cpd00644,TR_model2_cpd00644[e],Pantothenic acid Exchange
+cpd00751,TR_model2_cpd00751[e],L-Fucose Exchange
+cpd00949,TR_model2_cpd00949[e],"3alpha,7alpha-Dihydroxy-12-oxo-5beta-cholanate Exchange"
+cpd01399,TR_model2_cpd01399[e],Maltotetraose Exchange
+cpd01861,TR_model2_cpd01861[e],"(R)-1,2-Propanediol Exchange"
+cpd02829,TR_model2_cpd02829[e],"3alpha,12alpha-Dihydroxy-7-oxo-5beta-cholanate Exchange"
+cpd17760,TR_model2_cpd17760[e],Ursocholate Exchange
+cpd23431,TR_model2_cpd23431[e],3-dehydrocholate Exchange
+cpd90006,TR_model2_cpd90006[e],Maltoundecaose Exchange
+cpd90007,TR_model2_cpd90007[e],Maltohexaose Exchange
