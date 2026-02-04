@@ -12,6 +12,7 @@ import libsbml as sbml
 import pandas as pd
 import numpy as np
 import logging
+import sys
 from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy
@@ -77,6 +78,7 @@ class MeMoModel:
 
 
         origin_dbs = origin_databases(self.metabolites)
+        print(origin_dbs)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         #print(f"ORIG DB {origin_db}")
         logger.debug(origin_db)
@@ -97,9 +99,9 @@ class MeMoModel:
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
 
-        self.annotated = True
-        print("TOTAL:", final_numbers)
-        return(final_numbers)
+        #self.annotated = True
+        #print("TOTAL:", final_numbers)
+        #return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
         ''' At some point this is advisable to do, otherwise we will loose all the information we have newly annotated. So here is a function to do just that. It will go through the metabolite annotations which have been stored in the MeMoModel object and writes it to the cobra model annotation slot '''
