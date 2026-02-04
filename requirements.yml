@@ -13,6 +13,7 @@ dependencies:
   - python-libsbml 
   - numpy
   - rdkit
+  - ruff
   - pandas
   - pubchempy
   - pyyaml

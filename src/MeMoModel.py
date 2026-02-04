@@ -78,7 +78,6 @@ class MeMoModel:
 
 
         origin_dbs = origin_databases(self.metabolites)
-        print(origin_dbs)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         #print(f"ORIG DB {origin_db}")
         logger.debug(origin_db)

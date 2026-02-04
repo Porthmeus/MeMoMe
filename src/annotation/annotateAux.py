@@ -209,3 +209,4 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
 
     anno_result = AnnotationResult(new_inchis_added, new_names_added, new_names_added)
     return anno_result
+

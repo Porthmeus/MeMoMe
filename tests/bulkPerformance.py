@@ -8,9 +8,6 @@ if __name__ == '__main__':
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoModel import MeMoModel
-from src.annotation.annotateChEBI import *
-from src.annotation.annotateBiGG import *
-from src.annotation.annotateModelSEED import *
 from src.annotation.annotateAux import AnnotationResult
 from datetime import datetime
   # Example data for the table

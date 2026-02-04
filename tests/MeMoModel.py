@@ -10,9 +10,6 @@ import sys
 from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
-from src.annotation.annotateChEBI import annotateChEBI
-from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id
 from src.annotation.annotateAux import AnnotationResult, load_database, handleMetabolites, handleIDs
 from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
 
