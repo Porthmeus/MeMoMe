@@ -31,7 +31,7 @@ def concatCols(
     parts = []
     for field in colNames:
       val = x.get(field)
-      if val is not None and val != '':
+      if val is not None and val != '' and not pd.isna(val):
           parts.append(str(val))
 
     # Replace sep in-place
@@ -85,7 +85,7 @@ def getAnnosPerEntry(dat:pd.DataFrame, met_id: str) -> dict[str,list[str]]:
     for key in anno_keys.keys():
       # Get whole key's col and get the cell (there is only one .... hopefully)
       val = dat_sel[key].iloc[0]
-      if val != None and val != "":
+      if val != None and val != "" and not pd.isna(val):
           anno.setdefault(anno_keys[key], []).append(val)
     return(anno)
 
