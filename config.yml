@@ -21,7 +21,7 @@ databases:
     reformat: "VMH_MMM.csv"
   ChEBI:
     URL: "https://ftp.ebi.ac.uk/pub/databases/chebi/archive/chebi_legacy/Flat_file_tab_delimited/chebiId_inchi.tsv"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/VMH_MMM.csv?download=1"
+    REFORMAT_URL: "https://zenodo.org/records/15591559/files/ChEBI_MMM.csv?download=1"
     file: "chebiId_inchi.tsv"
     reformat: "ChEBI_MMM.csv"
   Identifiers:

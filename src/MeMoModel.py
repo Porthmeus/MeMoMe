@@ -15,7 +15,7 @@ import logging
 import sys
 from deepdiff import DeepDiff
 from rdkit import Chem
-from copy import deepcopy
+from copy import deepcopy, copy
 from src.download_db import get_config
 from src.annotation.annotateAux import AnnotationResult, handleIDs, handleMetabolites
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
@@ -389,4 +389,7 @@ class MeMoModel:
 
     def copy(self):
         ''' return a deepcopy of the same object '''
-        return(deepcopy(self))
+        new_model = MeMoModel(metabolites = deepcopy(self.metabolites),
+                              cobra_model = self.cobra_model.copy(),
+                              _id = copy(self._id))
+        return(new_model)

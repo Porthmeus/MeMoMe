@@ -262,6 +262,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testHMDBEntry(self):
     db = load_database("HMDB")
     ret = annotateEntry("HMDB00972", db)
+    print(ret)
     self.assertTrue(len(ret[0]) > 0)
     self.assertTrue(len(ret[1]) > 0)
     

@@ -10,6 +10,7 @@ from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 import pubchempy as pcp
 import warnings
 from time import sleep
+from pandas import isna
 
 def inchikeyToInchi(inchikey:str) -> str|None:
     # use pubchem to convert inchiKeys to inchi strings
@@ -32,7 +33,7 @@ def inchikeyToInchi(inchikey:str) -> str|None:
 
 # Define your function
 def inchiToMol(inchi:str)->Chem.rdchem.Mol|None:
-    if inchi is not None:
+    if inchi is not None and not isna(inchi) and not inchi == "":
         return Chem.MolFromInchi(inchi)
     else:
         return None
