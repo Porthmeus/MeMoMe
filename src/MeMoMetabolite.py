@@ -190,7 +190,6 @@ class MeMoMetabolite():
         # we allow addition of names only by one source at a time - however, if we want to add several names we need to extend the source list by the same number of elements as the name list
         self.names_source.extend([source]*(len(self.names)-len(old_names))) # extend source list
         # we want the names to be sorted lexographically, thus we have to sort the sources accordingly, so that the index of the name corresponds to the index of the source. This is done with this rather complicated line below (stackoverflow for the rescue)
-        print(self.names, self.names_source)
         new_names, new_sources = zip(*sorted(zip(self.names,self.names_source))) # sort both list for self.names
         self.names = list(new_names)
         self.names_source = list(new_sources)
@@ -255,9 +254,6 @@ class MeMoMetabolite():
             if new is None:
                 raise NotImplementedError()
             if new != old:
-                #print(self.id) # nice feature for debugging
-                #print("OLD:",old)
-                #print("NEW:",new)
                 self._inchi_string = new
                 self._inchi_source = source
                 changed =  1
@@ -423,7 +419,6 @@ class MeMoMetabolite():
 
         # check if the IDs are the same, if not check what to do:
         if all([x == y for x, y in zip(self.get_unique_attributes(), new_metabolite.get_unique_attributes())]) != True:
-            print([x == y for x, y in zip(self.get_unique_attributes(), new_metabolite.get_unique_attributes())])
             if force == False:
                 raise ValueError("Unique attributes differ in the two metabolites {old} vs. {new}".format(
                     old=str(self.get_unique_attributes()), new=str(new_metabolite.get_unique_attributes())))
@@ -460,7 +455,6 @@ class MeMoMetabolite():
             # we can either add it on some external class or perfrom it here
             # downl_status = download()
             # if downl_status:
-            #    print("Succesfully downloaded")
 
             # series of if/else statements to handle querying all the types of
             # databases we have to retrieve the inchi string

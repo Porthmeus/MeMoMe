@@ -75,11 +75,10 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
 
-        print(self._id)
 
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
-        print(f"ORIG DB {origin_db}")
+        #print(f"ORIG DB {origin_db}")
         logger.debug(origin_db)
         final_numbers = handleIDs(metabolites = self.metabolites,
                                   db_name = origin_db,

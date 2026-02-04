@@ -43,7 +43,6 @@ def matchMetsByInchi(nminchi1: str,
         nminchi1 = "/".join([x for x in nminchi1.split("/") if not x.startswith("b")])
         nminchi2 = "/".join([x for x in nminchi2.split("/") if not x.startswith("b")])
         same = nminchi1 == nminchi2
-        #print(nminchi1, nminchi2)
     return(same, chargeDiff)
 
 

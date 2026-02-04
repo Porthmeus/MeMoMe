@@ -4,15 +4,8 @@ import pandas as pd
 import os
 from unittest.mock import patch
 from io import *
-from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id, annotateModelSEED_entry
-from src.annotation.annotateChEBI import annotateChEBI
-from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id, annotateBiGG_entry, handle_bigg_entries
-from src.annotation.annotateVMH import annotateVMH_entry, annotateVMH, annotateVMH_id
-from src.annotation.annotateHmdb import annotateHMDB_entry, annotateHMDB
-from src.annotation.annotateModelSEED import annotateModelSEED_entry, extractModelSEEDAnnotationsFromAlias
-from src.annotation.annotateAux import AnnotationResult, AnnotationKey, annotateEntry, load_database
+from src.annotation.annotateAux import AnnotationResult, AnnotationKey, annotateEntry, load_database, handleIDs, handleMetabolites
 from src.MeMoMetabolite import MeMoMetabolite
-
 
 # List of files to check for
 files_to_check = ["BiGG.tsv", "chebiId_inchi.tsv", "identifiers.org_registry.json", "modelSeed.tsv", "vmh.json"]
@@ -296,13 +289,13 @@ class Test_annotateID(unittest.TestCase):
     dbs_dir = this_directory.parent/Path("Databases")
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("13dpg")
-    metabolite.set_names(["A"])
+    metabolite.set_names(["A"], source = "test")
     
-    ret = annotateBiGG_id([metabolite], allow_missing_dbs = False)
+    ret = handleIDs([metabolite], db_name = "BiGG", allow_missing_dbs = False)
     expected_annotations = {'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate", "A"])
-    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
   def testVMH_id(self):
@@ -310,13 +303,13 @@ class Test_annotateID(unittest.TestCase):
     dbs_dir = this_directory.parent/Path("Databases")
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("10fthf")
-    metabolite.set_names(["A"])
-    ret = annotateVMH_id([metabolite], allow_missing_dbs = False)
+    metabolite.set_names(["A"], source = "test")
+    ret = handleIDs([metabolite], db_name = "VMH", allow_missing_dbs = False)
     self.maxDiff = None
-    expected_annotations =  {'biggId': ['10fthf'], 'keggId': ['C00234'], 'cheBlId': ['15637'], 'inchiString': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/p-2/t11?,13-/m0/s1'], 'inchiKey': ['AUFGTPPARQZWDO-YUZLPWPTSA-L'], 'smile': ['[H]OC1=NC(=NC2=C1N([H])C([H])(C([H])([H])N(C([H])=O)C1=C([H])C([H])=C(C([H])=C1[H])C(=O)N([H])[C@]([H])(C([O-])=O)C([H])([H])C([H])([H])C([O-])=O)C([H])([H])N2[H])N([H])[H]'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'seed': ['cpd00201'], 'biocyc': ['10-FORMYL-THF']}
+    expected_annotations =  {'vmhmetabolite': ['10fthf'], 'bigg.metabolite': ['10fthf'], 'kegg.compound': ['C00234'], 'chemspider': ['109092'], 'chebi': ['15637'], 'biocyc': ['10-FORMYL-THF'], 'foodb.compound': ['FDB022345'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'metlin': ['5912'], 'pubchem.compound': ['122347'], 'seed.compound': ['cpd00201'], 'cas': ['2800-34-2']}
     self.assertEqual(metabolite.annotations, expected_annotations)
-    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate', 'A'])
-    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid','10-Formyltetrahydrofolate', 'A'])
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
   def testSEED_id(self):
@@ -324,9 +317,9 @@ class Test_annotateID(unittest.TestCase):
     dbs_dir = this_directory.parent/Path("Databases")
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("cpd00002")
-    ret = annotateModelSEED_id([metabolite], allow_missing_dbs = False)
-    expected_annotations = {'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}
-    expected_names = ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate']
+    ret = handleIDs([metabolite],db_name = "ModelSeed", allow_missing_dbs = False)
+    expected_annotations = {'bigg.metabolite': ['atp'], 'kegg.compound': ['C00002'], 'metacyc.compound': ['ATP']}
+    expected_names = ["adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate', 'atp']
 
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, expected_names)
@@ -338,43 +331,42 @@ class Test_annotateFull(unittest.TestCase):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("13dpg")
     metabolite.annotations = {'bigg.metabolite': ['13dpg']}
-    
-    ret = annotateBiGG([metabolite], allow_missing_dbs = False)
+    ret = handleMetabolites([metabolite], db_name = "BiGG", allow_missing_dbs = False)
     expected_annotations = {'bigg.metabolite': ['13dpg'], 'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate"])
-    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
   def testVMHAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("10fthf")
-    metabolite.annotations = {'vmhmetabolite': ['10fthf']}
-    ret = annotateVMH([metabolite], allow_missing_dbs = False)
-
-    expected_annotations =  {'vmhmetabolite': ['10fthf'], 'biggId': ['10fthf'], 'keggId': ['C00234'], 'cheBlId': ['15637'], 'inchiString': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/p-2/t11?,13-/m0/s1'], 'inchiKey': ['AUFGTPPARQZWDO-YUZLPWPTSA-L'], 'smile': ['[H]OC1=NC(=NC2=C1N([H])C([H])(C([H])([H])N(C([H])=O)C1=C([H])C([H])=C(C([H])=C1[H])C(=O)N([H])[C@]([H])(C([O-])=O)C([H])([H])C([H])([H])C([O-])=O)C([H])([H])N2[H])N([H])[H]'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'seed': ['cpd00201'], 'biocyc': ['10-FORMYL-THF']}
+    metabolite.set_annotations({'vmhmetabolite': ['10fthf']}, source = "VMH")
+    ret = handleMetabolites([metabolite], db_name = "VMH", allow_missing_dbs = False)
+    expected_annotations =  {'vmhmetabolite': ['10fthf'], 'bigg.metabolite': ['10fthf'], 'kegg.compound': ['C00234'], 'chemspider': ['109092'], 'chebi': ['15637'], 'biocyc': ['10-FORMYL-THF'], 'foodb.compound': ['FDB022345'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'metlin': ['5912'], 'pubchem.compound': ['122347'], 'seed.compound': ['cpd00201'], 'cas': ['2800-34-2']}
     self.assertEqual(metabolite.annotations, expected_annotations)
-    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
-    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+    print(metabolite.names)
+    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-Formyltetrahydrofolate'])
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
   def testSEEDAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id('cpd00052')
-    metabolite.annotations = {'seed.compound': ['cpd00052']}
-    ret = annotateModelSEED([metabolite], allow_missing_dbs = False)
+    metabolite.set_annotations({'seed.compound': ['cpd00052']}, source = "test")
+    ret = handleMetabolites([metabolite], db_name = "ModelSeed", allow_missing_dbs = False)
     self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
-    self.assertEqual(metabolite.names, ['CTP', "Cytidine 5'-triphosphate", 'Cytidine triphosphate', "cytidine-5'-triphosphate", 'cytidine-triphosphate'])
-    self.assertEqual(metabolite.annotations, {'seed.compound': ['cpd00052'], 'AraCyc': ['CTP'], 'BiGG': ['ctp'], 'BrachyCyc': ['CTP'], 'KEGG': ['C00063'], 'MetaCyc': ['CTP']})
+    self.assertEqual(metabolite.names, sorted(['ctp', "cytidine 5'-triphosphate", 'cytidine triphosphate', "cytidine-5'-triphosphate", 'cytidine-triphosphate']))
+    self.assertEqual(metabolite.annotations, {'seed.compound': ['cpd00052'], 'bigg.metabolite': ['ctp'], 'kegg.compound': ['C00063'], 'metacyc.compound': ['CTP']})
     self.assertEqual(metabolite._inchi_string, "InChI=1S/C9H16N3O14P3/c10-5-1-2-12(9(15)11-5)8-7(14)6(13)4(24-8)3-23-28(19,20)26-29(21,22)25-27(16,17)18/h1-2,4,6-8,13-14H,3H2,(H,19,20)(H,21,22)(H2,10,11,15)(H2,16,17,18)/p-3/t4-,6-,7-,8-/m1/s1")
 
 
   def testChEBIAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id('117228')
-    metabolite.annotations = {'chebi': ['117228']}
-    ret = annotateChEBI([metabolite], allow_missing_dbs = False)
+    metabolite.set_annotations({'chebi': ['117228']}, source = "test")
+    ret = handleMetabolites([metabolite], db_name ="ChEBI", allow_missing_dbs = False)
     expected_inchi = "InChI=1S/C20H27N3O2/c1-4-20(3)13-14-9-6-7-10-15(14)17-16(20)18(25)23(5-2)19(22-17)21-11-8-12-24/h6-7,9-10,24H,4-5,8,11-13H2,1-3H3,(H,21,22)"
     self.assertEqual(ret, AnnotationResult(1, 0, 0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
@@ -382,12 +374,13 @@ class Test_annotateFull(unittest.TestCase):
   def testHMDBAnnotate(self):
     metabolite: MeMoMetabolite = MeMoMetabolite()
     metabolite.set_id("10fthf")
-    metabolite.annotations = {'HMDB': ['HMDB0000972']}
-    expected_annotations = {'HMDB': ['HMDB0000972'], 'accession': ['HMDB0000972'], 'chemical_formula': ['C20H23N7O7'], 'iupac_name': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-1,2,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'traditional_iupac': ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-5,6,7,8-tetrahydro-1H-pteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid'], 'smiles': ['NC1=NC(=O)C2=C(NCC(CN(C=O)C3=CC=C(C=C3)C(=O)N[C@@H](CCC(O)=O)C(O)=O)N2)N1'], 'inchi': ['InChI=1S/C20H23N7O7/c21-20-25-16-15(18(32)26-20)23-11(7-22-16)8-27(9-28)12-3-1-10(2-4-12)17(31)24-13(19(33)34)5-6-14(29)30/h1-4,9,11,13,23H,5-8H2,(H,24,31)(H,29,30)(H,33,34)(H4,21,22,25,26,32)/t11?,13-/m0/s1'], 'chebi_id': [15637.0], 'pubchem_compound_id': [122347.0], 'kegg_id': ['C00234'], 'bigg_id': [34337.0], 'vmh_id': ['10FTHF']}
-    ret = annotateHMDB([metabolite], allow_missing_dbs = False)
+    metabolite.set_annotations({'HMDB': ['HMDB0000972']}, source = "test")
+    expected_annotations = {'HMDB': ['HMDB0000972'], 'hmdb': ['HMDB0000972'], 'chemspider': ['109092'], 'metlin': ['5912'], 'food.compound': ['FDB030256'], 'pubchem.compound': ['122347'], 'chebi': ['15637'], 'kegg.compound': ['C00234'], 'bigg.metabolite': ['34337'], 'vmhmetabolite': ['10FTHF']}
+    ret = handleMetabolites([metabolite], db_name = "HMDB", allow_missing_dbs = False)
     self.assertEqual(metabolite.annotations, expected_annotations)
-    self.assertEqual(metabolite.names, ['10-Formyltetrahydrofolate'])
-    self.assertEqual(ret, AnnotationResult(0, 1, 1))
+    print(metabolite.names)
+    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-5,6,7,8-tetrahydro-1H-pteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-Formyltetrahydrofolate'])
+    self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
 class Test_annotateAuxiliares(unittest.TestCase):

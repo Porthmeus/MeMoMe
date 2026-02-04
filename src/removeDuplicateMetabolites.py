@@ -39,9 +39,6 @@ def findCommonReactions(met1:cb.Metabolite, met2:cb.Metabolite, reversible_is_sa
                 if reac_rule1.find("<=>") != -1 or reac_rule2.find("<=>") != -1:
                     reac_rule1 = reac_rule1.replace("-->","<=>").replace("<--","<=>")
                     reac_rule2 = reac_rule2.replace("-->","<=>").replace("<--","<=>")
-            #else:
-                #print(reac_rule1)
-                #print(reac_rule2)
             # TODO: check if compartments are the same for the reactions. Kind of difficult as several compartments are allowed for one reaction - not sure how to handle that for now
             if reac_rule1 == re.sub(metId2, metId1, reac_rule2):
                 same.append((reactions1[i], reactions2[j]))
