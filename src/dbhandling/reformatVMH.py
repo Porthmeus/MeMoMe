@@ -74,9 +74,11 @@ def concatNames(x:pd.Series) -> str:
 # for names check fullName iupac and alias
 # alias contains a list of names seperated by "***" 
 
-def reformatVMH(vmh:pd.DataFrame = getData("VMH")) -> pd.DataFrame:
+def reformatVMH(vmh:pd.DataFrame = pd.DataFrame()) -> pd.DataFrame:
     """ Takes the VMH database, reformats it and writes a csv with standard columns (id, inchi, name, DBs) + additional information to disk """
 
+    if vmh.empty:
+        vmh = getData("VMH")
     vmh.index = vmh.abbreviation
     # get names, inchis and database annotations
     names = vmh.apply(concatNames, axis = 1).fillna(value = "")
