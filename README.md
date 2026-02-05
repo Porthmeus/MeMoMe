@@ -43,6 +43,13 @@ Executing
 `python3 -m tests.test_bulkPerformance  && google-chrome performace_table.html.`
 should generate a table called performace_table.html in the current folder.
 
+## gapseq_recon3D analysis inputs (manual vs MeMoMe)
+Automatic merged model:
+- `tests/dat/manually_merged_models/gapseq_recon3D/output/automatically_merged_metamodel.xml`
+
+Manual merged model (dieted + IEX fixed):
+- `tests/dat/manually_merged_models/gapseq_recon3D/output/merged_model_2025_prefixed_normalized_diet_fixIEX.xml`
+
 # Development with docker
 * You need to have docker installed
 

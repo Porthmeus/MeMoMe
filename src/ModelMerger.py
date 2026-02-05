@@ -199,6 +199,22 @@ class ModelMerger:
                 exchange_map.setdefault(base_id, []).append((rxn, met))
         return exchange_map
 
+    def _propagate_subsystems_to_notes(self) -> None:
+        """
+        Persist subsystem information through SBML round-trips.
+
+        cobra does not reliably write ``reaction.subsystem`` back into SBML,
+        but it preserves ``reaction.notes``. To keep subsystem data, copy it
+        into notes when missing.
+        """
+        for reaction in self.merged_model.reactions:
+            subsystem = getattr(reaction, "subsystem", None)
+            if not subsystem:
+                continue
+            notes = reaction.notes or {}
+            if "SUBSYSTEM" not in notes or not notes.get("SUBSYSTEM"):
+                notes["SUBSYSTEM"] = subsystem
+            reaction.notes = notes
 
 
     def translate_namespace(
@@ -315,4 +331,6 @@ class ModelMerger:
             ex_tr_met_rxn.lower_bound = ex_lb
             ex_tr_met_rxn.upper_bound = ex_ub
 
+        # Ensure subsystem information survives SBML write/read cycles.
+        self._propagate_subsystems_to_notes()
         return self.merged_model
