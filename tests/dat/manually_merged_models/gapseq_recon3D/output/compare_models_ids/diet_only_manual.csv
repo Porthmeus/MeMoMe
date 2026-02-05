@@ -1,4 +1,4 @@
-diet_only_manual
-cpd00453
-cpd01376
-cpd02992
+met_id,manual_lb,manual_ub
+cpd00453,0.0,1000.0
+cpd01376,0.0,1000.0
+cpd02992,0.0,1000.0

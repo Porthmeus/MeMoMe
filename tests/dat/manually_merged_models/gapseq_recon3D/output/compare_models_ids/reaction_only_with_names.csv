@@ -1,0 +1,41 @@
+model,canonical_reaction_id,actual_reaction_id,met_id,met_name
+auto,EX_4hpro_LT,EX_4hpro_LT_t,4hpro_LT_t,Trans-4-Hydroxy-L-Proline
+auto,EX_CE1556,EX_CE1556_t,CE1556_t,N-Acetyl-L-Asparagine
+auto,EX_M02447,EX_M02447_t,M02447_t,Maltohexaose
+auto,EX_M02451,EX_M02451_t,M02451_t,Maltotetraose
+auto,EX_cpd00027,EX_cpd00027_t,cpd00027_t,D-Glucose
+auto,EX_cpd00105,EX_cpd00105_t,cpd00105_t,D-Ribose
+auto,EX_cpd00154,EX_cpd00154_t,cpd00154_t,Xylose
+auto,EX_cpd00221,EX_cpd00221_t,cpd00221_t,D-Lactate
+auto,EX_cpd00224,EX_cpd00224_t,cpd00224_t,L-Arabinose
+auto,EX_cpd00644,EX_cpd00644_t,cpd00644_t,Pantothenic acid
+auto,EX_cpd00751,EX_cpd00751_t,cpd00751_t,L-Fucose
+auto,EX_cpd00949,EX_cpd00949_t,cpd00949_t,3alpha,7alpha-Dihydroxy-12-oxo-5beta-cholanate
+auto,EX_cpd01399,EX_cpd01399_t,cpd01399_t,Maltotetraose
+auto,EX_cpd01861,EX_cpd01861_t,cpd01861_t,(R)-1,2-Propanediol
+auto,EX_cpd02829,EX_cpd02829_t,cpd02829_t,3alpha,12alpha-Dihydroxy-7-oxo-5beta-cholanate
+auto,EX_cpd17760,EX_cpd17760_t,cpd17760_t,Ursocholate
+auto,EX_cpd23431,EX_cpd23431_t,cpd23431_t,3-dehydrocholate
+auto,EX_cpd90006,EX_cpd90006_t,cpd90006_t,Maltoundecaose
+auto,EX_cpd90007,EX_cpd90007_t,cpd90007_t,Maltohexaose
+auto,EX_cpppg1,EX_cpppg1_t,cpppg1_t,Coproporphyrinogen I
+auto,EX_ddeccrn,EX_ddeccrn_t,ddeccrn_t,Lauroyl Carnitine
+auto,EX_eidi1114ac,EX_eidi1114ac_t,eidi1114ac_t,Cis,Cis-11,14-Eicosadienoic Acid
+auto,EX_isomal,EX_isomal_t,isomal_t,Isomaltose,  Brachiose
+auto,EX_oxy1rb,EX_oxy1rb_t,oxy1rb_t,oxypurinol-1-riboside
+auto,EX_oxy7rb,EX_oxy7rb_t,oxy7rb_t,oxypurinol-7-riboside
+auto,EX_slfcys,EX_slfcys_t,slfcys_t,S-Sulfo-L-Cysteine
+auto,TR_Biomass_Gram_negative,TR_model2_Biomass_Gram_negative[c],model2_Biomass_Gram_negative[c],Bacterial Gram-negative biomass reaction
+auto,TR_Biomass_Gram_positive,TR_model2_Biomass_Gram_positive[c],model2_Biomass_Gram_positive[c],Bacterial Gram-positive biomass reaction
+manual,EX_4hpro,EX_4hpro[f],4hpro_LT[f],Trans-4-Hydroxy-L-Proline
+manual,EX_CE1557,EX_CE1557[f],CE1556[f],N-Acetyl-L-Asparagine
+manual,EX_CE4843,EX_CE4843[f],eidi1114ac[f],Cis,Cis-11,14-Eicosadienoic Acid
+manual,EX_HC00229,EX_HC00229[f],isomal[f],Isomaltose,  Brachiose
+manual,EX_HC01610,EX_HC01610[f],cpppg1[f],Coproporphyrinogen I
+manual,EX_cpd00453,EX_cpd00453[f],cpd00453[f],1,2-Propanediol
+manual,EX_cpd01376,EX_cpd01376[f],cpd01376[f],Cellotetraose
+manual,EX_cpd02992,EX_cpd02992[f],cpd02992[f],core4
+manual,EX_ddecrn,EX_ddecrn[f],ddeccrn[f],Lauroyl Carnitine
+manual,EX_oxyp1rb,EX_oxyp1rb[f],oxy1rb[f],oxypurinol-1-riboside
+manual,EX_oxyp7rb,EX_oxyp7rb[f],oxy7rb[f],oxypurinol-7-riboside
+manual,EX_sfcys,EX_sfcys[f],slfcys[f],S-Sulfo-L-Cysteine

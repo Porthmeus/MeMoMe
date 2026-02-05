@@ -1,0 +1,23 @@
+model,canonical_reaction_id,actual_reaction_id,met_id,met_name
+auto,EX_M02447,EX_M02447_t,M02447_t,Maltohexaose
+auto,EX_M02451,EX_M02451_t,M02451_t,Maltotetraose
+auto,EX_cpd00027,EX_cpd00027_t,cpd00027_t,D-Glucose
+auto,EX_cpd00105,EX_cpd00105_t,cpd00105_t,D-Ribose
+auto,EX_cpd00154,EX_cpd00154_t,cpd00154_t,Xylose
+auto,EX_cpd00221,EX_cpd00221_t,cpd00221_t,D-Lactate
+auto,EX_cpd00224,EX_cpd00224_t,cpd00224_t,L-Arabinose
+auto,EX_cpd00644,EX_cpd00644_t,cpd00644_t,Pantothenic acid
+auto,EX_cpd00751,EX_cpd00751_t,cpd00751_t,L-Fucose
+auto,EX_cpd00949,EX_cpd00949_t,cpd00949_t,3alpha,7alpha-Dihydroxy-12-oxo-5beta-cholanate
+auto,EX_cpd01399,EX_cpd01399_t,cpd01399_t,Maltotetraose
+auto,EX_cpd01861,EX_cpd01861_t,cpd01861_t,(R)-1,2-Propanediol
+auto,EX_cpd02829,EX_cpd02829_t,cpd02829_t,3alpha,12alpha-Dihydroxy-7-oxo-5beta-cholanate
+auto,EX_cpd17760,EX_cpd17760_t,cpd17760_t,Ursocholate
+auto,EX_cpd23431,EX_cpd23431_t,cpd23431_t,3-dehydrocholate
+auto,EX_cpd90006,EX_cpd90006_t,cpd90006_t,Maltoundecaose
+auto,EX_cpd90007,EX_cpd90007_t,cpd90007_t,Maltohexaose
+auto,TR_Biomass_Gram_negative,TR_model2_Biomass_Gram_negative[c],model2_Biomass_Gram_negative[c],Bacterial Gram-negative biomass reaction
+auto,TR_Biomass_Gram_positive,TR_model2_Biomass_Gram_positive[c],model2_Biomass_Gram_positive[c],Bacterial Gram-positive biomass reaction
+manual,EX_cpd00453,EX_cpd00453[f],cpd00453[f],1,2-Propanediol
+manual,EX_cpd01376,EX_cpd01376[f],cpd01376[f],Cellotetraose
+manual,EX_cpd02992,EX_cpd02992[f],cpd02992[f],core4
