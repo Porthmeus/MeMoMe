@@ -104,8 +104,11 @@ def plot_ora_dotplot(*, ora_csv: Path, out_png: Path, out_pdf: Path, top_n: int)
     fdr = df["fdr_bh"].to_numpy(dtype=float)
 
     # Size scaling (Count legend uses raw counts; sizes are proportional).
-    # This is tuned to look similar across plots while keeping the legend meaningful.
-    size_scale = 35.0
+    # Use a dynamic scale so the largest point stays within a consistent visual size,
+    # preventing the legend from overflowing when k is large.
+    max_marker_area = 900.0  # points^2
+    c_max = float(np.nanmax(np.clip(counts, 1.0, None)))
+    size_scale = max_marker_area / c_max if c_max > 0 else 1.0
     s = np.clip(counts, 1.0, None) * size_scale
 
     # Color scaling: use log-normalization so tiny FDR values are distinguishable.
@@ -196,4 +199,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
