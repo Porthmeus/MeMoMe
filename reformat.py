@@ -15,6 +15,7 @@ from src.dbhandling.reformatBiGG import reformatBiGG
 from src.dbhandling.reformatModelSeed import reformatModelSeed
 from src.dbhandling.reformatHMDB import *
 from src.dbhandling.reformatVMH import *
+from src.dbhandling.reformatChEBI import *
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 from src.dbhandling.reformatAux import getData, writeData
@@ -62,6 +63,9 @@ def main(args: argparse.Namespace):
         refDB = reformatVMH()
         writeData(refDB, db = "VMH")
 
+        dat = getData("ChEBI")
+        dat_all = reformatChEBI(dat)
+        writeData(dat_all, db = "ChEBI")
 
         # Load the model
 if __name__ == '__main__':

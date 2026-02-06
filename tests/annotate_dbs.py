@@ -254,15 +254,13 @@ class Test_annotateEntryFunctions(unittest.TestCase):
   def testVMHEntry(self):
     db = load_database("VMH")
     ret = annotateEntry("10fthf", db)
-    print(ret)
-    self.assertEqual(ret[1][0], "10-Formyltetrahydrofolate")
+    self.assertEqual(ret[1][0], "(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid")
     self.assertFalse(len(ret[0]) == 0)
 
 
   def testHMDBEntry(self):
     db = load_database("HMDB")
     ret = annotateEntry("HMDB00972", db)
-    print(ret)
     self.assertTrue(len(ret[0]) > 0)
     self.assertTrue(len(ret[1]) > 0)
     
@@ -309,7 +307,7 @@ class Test_annotateID(unittest.TestCase):
     self.maxDiff = None
     expected_annotations =  {'vmhmetabolite': ['10fthf'], 'bigg.metabolite': ['10fthf'], 'kegg.compound': ['C00234'], 'chemspider': ['109092'], 'chebi': ['15637'], 'biocyc': ['10-FORMYL-THF'], 'foodb.compound': ['FDB022345'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'metlin': ['5912'], 'pubchem.compound': ['122347'], 'seed.compound': ['cpd00201'], 'cas': ['2800-34-2']}
     self.assertEqual(metabolite.annotations, expected_annotations)
-    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid','10-Formyltetrahydrofolate', 'A'])
+    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-FTHF', '10-Formyl-(6Rs)-tetrahydrofolic acid', '10-Formyl-H4pteglu1', '10-Formyl-THF', '10-Formyl-tetrahydrofolate', '10-Formyltetrahydrofolate', '10-Formyltetrahydrofolic acid', '10-Formyltetrahydropteroylglutamate', '10-Formyltetrahydropteroylglutamic acid', 'A', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamic acid', 'N10-Formyl-5,6,7,8-tetrahydrofolate', 'N10-Formyl-5,6,7,8-tetrahydrofolic acid', 'N10-Formyl-H4F', 'N10-Formyl-THF', 'N10-Formyltetrahydrofolate', 'N10-Formyltetrahydrofolic acid', 'N10-Formyltetrahydropteroylglutamate']) # the "A" comes from the test and is fine it is
     self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 
@@ -347,7 +345,7 @@ class Test_annotateFull(unittest.TestCase):
     expected_annotations =  {'vmhmetabolite': ['10fthf'], 'bigg.metabolite': ['10fthf'], 'kegg.compound': ['C00234'], 'chemspider': ['109092'], 'chebi': ['15637'], 'biocyc': ['10-FORMYL-THF'], 'foodb.compound': ['FDB022345'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'metlin': ['5912'], 'pubchem.compound': ['122347'], 'seed.compound': ['cpd00201'], 'cas': ['2800-34-2']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     print(metabolite.names)
-    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-Formyltetrahydrofolate'])
+    self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-FTHF', '10-Formyl-(6Rs)-tetrahydrofolic acid', '10-Formyl-H4pteglu1', '10-Formyl-THF', '10-Formyl-tetrahydrofolate', '10-Formyltetrahydrofolate', '10-Formyltetrahydrofolic acid', '10-Formyltetrahydropteroylglutamate', '10-Formyltetrahydropteroylglutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamic acid', 'N10-Formyl-5,6,7,8-tetrahydrofolate', 'N10-Formyl-5,6,7,8-tetrahydrofolic acid', 'N10-Formyl-H4F', 'N10-Formyl-THF', 'N10-Formyltetrahydrofolate', 'N10-Formyltetrahydrofolic acid', 'N10-Formyltetrahydropteroylglutamate'])
     self.assertEqual(ret, AnnotationResult(1, 1, 1))
 
 

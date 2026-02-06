@@ -32,9 +32,11 @@ def annotateEntry(entry,
         names = database.loc[database["id"] == entry, "name"]
         all_names = list()
         for name in names:
-            all_names.extend(name.split("_|_"))
+            if not pd.isna(name):
+                all_names.extend(name.split("_|_"))
     else:
         all_names = []
+    all_names = sorted(set(all_names))
     
     # get annotations
     if "DBs" in database.columns:

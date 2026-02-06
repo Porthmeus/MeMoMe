@@ -37,7 +37,7 @@ def getAnnosPerEntry(dat:pd.DataFrame, met:str) -> dict[str,list[str]]:
     anno = {"vmhmetabolite":[met]}
     for key in keys.keys():
         val = dat_sel[key].iloc[0]
-        if val != None and val != "":
+        if val != None and val != "" and not pd.isna(val):
             anno.setdefault(keys[key], []).append(val)
     return(anno)
 
