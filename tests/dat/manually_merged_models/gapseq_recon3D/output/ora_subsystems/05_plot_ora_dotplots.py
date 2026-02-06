@@ -152,24 +152,6 @@ def plot_ora_dotplot(*, ora_csv: Path, out_png: Path, out_pdf: Path, top_n: int)
     # Colorbar
     cbar = fig.colorbar(sc, ax=ax, pad=0.02)
     cbar.set_label("FDR (BH)")
-    if norm is not None and vmin is not None:
-        # Explicit tick labels: show the cap (0.05) and a few powers of 10 down to vmin.
-        vmax = 0.05
-        exp_max = int(np.floor(np.log10(vmax)))  # -2 for 0.05
-        exp_min = int(np.floor(np.log10(max(vmin, 1e-300))))
-        # Pick a small number of exponent ticks to avoid clutter.
-        exps = np.unique(np.round(np.linspace(exp_max, exp_min, num=5)).astype(int))
-        pow10_ticks = [10.0 ** int(e) for e in exps if 10.0 ** int(e) <= vmax and 10.0 ** int(e) >= vmin]
-        ticks = sorted(set([vmax, *pow10_ticks]))
-        cbar.set_ticks(ticks)
-        labels = []
-        for t in ticks:
-            if np.isclose(t, vmax):
-                labels.append("0.05")
-            else:
-                e = int(round(np.log10(t)))
-                labels.append(rf"$10^{{{e}}}$")
-        cbar.set_ticklabels(labels)
 
     # Size legend ("Count")
     legend_vals = _choose_size_legend_values(counts)
