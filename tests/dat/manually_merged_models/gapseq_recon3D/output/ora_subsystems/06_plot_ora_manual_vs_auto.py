@@ -128,7 +128,11 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
     fdr_all = pd.concat([manual_sig["fdr_bh"], auto_sig["fdr_bh"]], ignore_index=True).astype(float)
     fdr_pos = fdr_all[(fdr_all > 0) & np.isfinite(fdr_all)].to_numpy()
     if fdr_pos.size:
-        norm = LogNorm(vmin=max(float(fdr_pos.min()), 1e-300), vmax=float(fdr_pos.max()))
+        vmin = float(fdr_pos.min())
+        vmax = 0.05
+        if vmin >= vmax:
+            vmin = max(vmax / 1e6, 1e-300)
+        norm = LogNorm(vmin=max(vmin, 1e-300), vmax=vmax)
     else:
         norm = None
 
