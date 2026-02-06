@@ -112,19 +112,17 @@ def plot_ora_dotplot(*, ora_csv: Path, out_png: Path, out_pdf: Path, top_n: int)
     s = np.clip(counts, 1.0, None) * size_scale
 
     # Color scaling: use log-normalization so tiny FDR values are distinguishable.
-    # For comparability across plots, cap the *maximum* color at FDR=0.05 and use
-    # the minimum observed positive value as the lower end.
+    # Use the observed min/max (no artificial cap), so the colorbar reflects the data.
     fdr_pos = fdr[np.isfinite(fdr) & (fdr > 0)]
     if fdr_pos.size == 0:
         norm = None
         vmin = vmax = None
     else:
         vmin = float(np.nanmin(fdr_pos))
-        vmax = 0.05
-        # Avoid invalid LogNorm if vmin >= vmax (can happen if all FDR == 0.05 after rounding).
+        vmax = float(np.nanmax(fdr_pos))
         if vmin >= vmax:
             vmin = max(vmax / 1e6, 1e-300)
-        norm = LogNorm(vmin=max(vmin, 1e-300), vmax=vmax)
+        norm = LogNorm(vmin=max(vmin, 1e-300), vmax=max(vmax, 1e-300))
 
     fig, ax = plt.subplots(figsize=(10, max(4, 0.45 * len(df))))
     ax.set_axisbelow(True)

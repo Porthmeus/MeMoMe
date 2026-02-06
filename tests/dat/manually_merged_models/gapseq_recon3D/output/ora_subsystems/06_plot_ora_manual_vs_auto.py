@@ -129,10 +129,10 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
     fdr_pos = fdr_all[(fdr_all > 0) & np.isfinite(fdr_all)].to_numpy()
     if fdr_pos.size:
         vmin = float(fdr_pos.min())
-        vmax = 0.05
+        vmax = float(fdr_pos.max())
         if vmin >= vmax:
             vmin = max(vmax / 1e6, 1e-300)
-        norm = LogNorm(vmin=max(vmin, 1e-300), vmax=vmax)
+        norm = LogNorm(vmin=max(vmin, 1e-300), vmax=max(vmax, 1e-300))
     else:
         norm = None
 
