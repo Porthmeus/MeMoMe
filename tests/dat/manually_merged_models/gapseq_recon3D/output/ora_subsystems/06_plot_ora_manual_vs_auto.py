@@ -64,7 +64,7 @@ def _choose_size_legend_values(counts: np.ndarray) -> list[int]:
     return q
 
 
-def _plot_panel(*, ax, df: pd.DataFrame, title: str, norm, size_scale: float) -> None:
+def _plot_panel(*, ax, df: pd.DataFrame, title: str, norm, size_scale: float, show_y_labels: bool) -> None:
     y = np.arange(len(df))
     x = df["gene_ratio"].to_numpy(dtype=float)
     counts = df["k_high_in_subsystem"].to_numpy(dtype=float)
@@ -85,7 +85,11 @@ def _plot_panel(*, ax, df: pd.DataFrame, title: str, norm, size_scale: float) ->
         alpha=0.95,
     )
     ax.set_yticks(y)
-    ax.set_yticklabels(df["subsystem"].tolist())
+    if show_y_labels:
+        ax.set_yticklabels(df["subsystem"].tolist())
+        ax.tick_params(axis="y", labelsize=10)
+    else:
+        ax.tick_params(axis="y", labelleft=False)
     ax.set_xlabel("GeneRatio")
     ax.set_title(title)
     return sc
@@ -142,13 +146,22 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
         sharex=True,
         sharey=True,
     )
-    sc0 = _plot_panel(ax=axes[0], df=manual_sig, title="Manual merge (ORA; FDR ≤ 0.05)", norm=norm, size_scale=size_scale)
-    sc1 = _plot_panel(ax=axes[1], df=auto_sig, title="MeMoMe merge (ORA; FDR ≤ 0.05)", norm=norm, size_scale=size_scale)
-
-    # Show subsystem names only on the left subplot to save space.
-    axes[1].set_yticklabels([])
-    axes[1].set_ylabel("")
-    axes[0].tick_params(axis="y", labelsize=10)
+    sc0 = _plot_panel(
+        ax=axes[0],
+        df=manual_sig,
+        title="Manual merge (ORA; FDR ≤ 0.05)",
+        norm=norm,
+        size_scale=size_scale,
+        show_y_labels=True,
+    )
+    sc1 = _plot_panel(
+        ax=axes[1],
+        df=auto_sig,
+        title="MeMoMe merge (ORA; FDR ≤ 0.05)",
+        norm=norm,
+        size_scale=size_scale,
+        show_y_labels=False,
+    )
 
     # One shared colorbar.
     cbar = fig.colorbar(sc1, ax=axes.ravel().tolist(), pad=0.03, shrink=0.85)
