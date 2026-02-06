@@ -127,6 +127,7 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
     # Shared color scaling across panels (FDR), log scale.
     fdr_all = pd.concat([manual_sig["fdr_bh"], auto_sig["fdr_bh"]], ignore_index=True).astype(float)
     fdr_pos = fdr_all[(fdr_all > 0) & np.isfinite(fdr_all)].to_numpy()
+    vmin = None
     if fdr_pos.size:
         vmin = float(fdr_pos.min())
         vmax = 0.05
@@ -170,6 +171,22 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
     # One shared colorbar.
     cbar = fig.colorbar(sc1, ax=axes.ravel().tolist(), pad=0.03, shrink=0.85)
     cbar.set_label("FDR (BH)")
+    if norm is not None and vmin is not None:
+        vmax = 0.05
+        exp_max = int(np.floor(np.log10(vmax)))
+        exp_min = int(np.floor(np.log10(max(vmin, 1e-300))))
+        exps = np.unique(np.round(np.linspace(exp_max, exp_min, num=5)).astype(int))
+        pow10_ticks = [10.0 ** int(e) for e in exps if 10.0 ** int(e) <= vmax and 10.0 ** int(e) >= vmin]
+        ticks = sorted(set([vmax, *pow10_ticks]))
+        cbar.set_ticks(ticks)
+        labels = []
+        for t in ticks:
+            if np.isclose(t, vmax):
+                labels.append("0.05")
+            else:
+                e = int(round(np.log10(t)))
+                labels.append(rf"$10^{{{e}}}$")
+        cbar.set_ticklabels(labels)
 
     # One shared size legend.
     legend_vals = _choose_size_legend_values(counts_all.to_numpy())
