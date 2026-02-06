@@ -86,6 +86,7 @@ def plot_relative_change_hist(df: pd.DataFrame, outdir: Path, bins: int) -> None
     fig, ax = plt.subplots(figsize=(7, 4))
     ax.hist(m, bins=edges, alpha=0.5, label="Manual", color="#1f77b4", density=True)
     ax.hist(a, bins=edges, alpha=0.5, label="MeMoMe (Auto)", color="#ff7f0e", density=True)
+    ax.axvline(0.8, color="#cc0000", linewidth=2)
     ax.set_xlabel("Dependency (relative change in host FVA range)")
     ax.set_ylabel("Density")
     ax.set_title("Host Reaction Dependency Distribution")
