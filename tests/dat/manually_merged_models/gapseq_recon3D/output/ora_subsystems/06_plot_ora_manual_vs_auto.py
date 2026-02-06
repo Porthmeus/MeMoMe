@@ -97,14 +97,31 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
         print("matplotlib not available; skipping ORA paired plot.")
         return
 
-    manual = _read_ora(manual_csv).sort_values(["fdr_bh", "p_value", "enrichment"], ascending=[True, True, False])
-    auto = _read_ora(auto_csv).sort_values(["fdr_bh", "p_value", "enrichment"], ascending=[True, True, False])
+    manual = _read_ora(manual_csv)
+    auto = _read_ora(auto_csv)
 
-    manual = manual.head(top_n).iloc[::-1].reset_index(drop=True)
-    auto = auto.head(top_n).iloc[::-1].reset_index(drop=True)
+    # Keep only significant subsystems, then align the two panels by subsystem name.
+    fdr_cutoff = 0.05
+    manual_sig = manual[manual["fdr_bh"] <= fdr_cutoff].copy()
+    auto_sig = auto[auto["fdr_bh"] <= fdr_cutoff].copy()
+
+    subsystems = sorted(set(manual_sig["subsystem"]) | set(auto_sig["subsystem"]))
+    if not subsystems:
+        raise SystemExit(f"No subsystems pass FDR <= {fdr_cutoff} in either file.")
+
+    # Optional cap for readability.
+    if top_n and len(subsystems) > top_n:
+        subsystems = subsystems[:top_n]
+
+    manual_sig = manual_sig.set_index("subsystem").reindex(subsystems).reset_index()
+    auto_sig = auto_sig.set_index("subsystem").reindex(subsystems).reset_index()
+
+    # Order alphabetically (already), plot top at the top.
+    manual_sig = manual_sig.iloc[::-1].reset_index(drop=True)
+    auto_sig = auto_sig.iloc[::-1].reset_index(drop=True)
 
     # Shared color scaling across panels (FDR), log scale.
-    fdr_all = pd.concat([manual["fdr_bh"], auto["fdr_bh"]], ignore_index=True).astype(float)
+    fdr_all = pd.concat([manual_sig["fdr_bh"], auto_sig["fdr_bh"]], ignore_index=True).astype(float)
     fdr_pos = fdr_all[(fdr_all > 0) & np.isfinite(fdr_all)].to_numpy()
     if fdr_pos.size:
         norm = LogNorm(vmin=max(float(fdr_pos.min()), 1e-300), vmax=float(fdr_pos.max()))
@@ -112,14 +129,25 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
         norm = None
 
     # Shared size scaling so marker sizes are comparable between panels.
-    counts_all = pd.concat([manual["k_high_in_subsystem"], auto["k_high_in_subsystem"]], ignore_index=True).astype(float)
+    counts_all = pd.concat(
+        [manual_sig["k_high_in_subsystem"], auto_sig["k_high_in_subsystem"]], ignore_index=True
+    ).astype(float)
     c_max = float(np.nanmax(np.clip(counts_all.to_numpy(), 1.0, None)))
     max_marker_area = 900.0
     size_scale = max_marker_area / c_max if c_max > 0 else 1.0
 
-    fig, axes = plt.subplots(ncols=2, figsize=(16, max(5, 0.45 * max(len(manual), len(auto)))), sharex=True)
-    sc0 = _plot_panel(ax=axes[0], df=manual, title="Manual merge (ORA; ≥0.8)", norm=norm, size_scale=size_scale)
-    sc1 = _plot_panel(ax=axes[1], df=auto, title="MeMoMe merge (ORA; ≥0.8)", norm=norm, size_scale=size_scale)
+    fig, axes = plt.subplots(
+        ncols=2,
+        figsize=(16, max(5, 0.45 * max(len(manual_sig), len(auto_sig)))),
+        sharex=True,
+        sharey=True,
+    )
+    sc0 = _plot_panel(ax=axes[0], df=manual_sig, title="Manual merge (ORA; FDR ≤ 0.05)", norm=norm, size_scale=size_scale)
+    sc1 = _plot_panel(ax=axes[1], df=auto_sig, title="MeMoMe merge (ORA; FDR ≤ 0.05)", norm=norm, size_scale=size_scale)
+
+    # Show subsystem names only on the left subplot to save space.
+    axes[1].set_yticklabels([])
+    axes[1].set_ylabel("")
 
     # One shared colorbar.
     cbar = fig.colorbar(sc1, ax=axes.ravel().tolist(), pad=0.02)
@@ -170,15 +198,19 @@ def main() -> None:
         default=root / "plots",
         help="Directory to write the paired plot.",
     )
-    parser.add_argument("--top-n", type=int, default=20, help="Number of subsystems per panel.")
+    parser.add_argument(
+        "--top-n",
+        type=int,
+        default=0,
+        help="Optional cap on the number of significant subsystems (after FDR filter), sorted alphabetically; 0 means no cap.",
+    )
     args = parser.parse_args()
 
     out_png = args.output_dir / "manual_vs_auto_ora_ge_0.8_exclude_loops.png"
     out_pdf = args.output_dir / "manual_vs_auto_ora_ge_0.8_exclude_loops.pdf"
-    plot_pair(manual_csv=args.manual, auto_csv=args.auto, out_png=out_png, out_pdf=out_pdf, top_n=args.top_n)
+    plot_pair(manual_csv=args.manual, auto_csv=args.auto, out_png=out_png, out_pdf=out_pdf, top_n=int(args.top_n))
     print(f"wrote: {out_png}")
 
 
 if __name__ == "__main__":
     main()
-
