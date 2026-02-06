@@ -80,6 +80,12 @@ def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
     os.remove(keys_file)
     return(result.stdout)  # Print matched lines
 
+def joinValues(x:list[str], sep:str = "_|_") -> str:
+    '''Helper function to remove nan from the string columns in the data frame'''
+    x = [val for val in x if val != None and not pd.isna(val) and val != ""]
+    ret = "_|_".join(sorted(set(x)))
+    return ret
+
 def sortDataFrame(bigg_data:pd.DataFrame()) -> pd.DataFrame():
     ''' Takes the bigg data frame and removes the duplicates which arise due to the same metabolites in different compartments '''
     # remove unecessary columns
@@ -87,7 +93,7 @@ def sortDataFrame(bigg_data:pd.DataFrame()) -> pd.DataFrame():
     bigg_data = bigg_data.loc[~bigg_data.duplicated(),]
 
     # aggregate columns
-    bigg_combined = bigg_data.groupby('universal_bigg_id').agg(lambda x: '_|_'.join(sorted(set(x.astype(str)))))
+    bigg_combined = bigg_data.groupby('universal_bigg_id').agg(lambda x: joinValues(x, sep = "_|_"))
     # replace the separator with actual separators for the columns and remove duplicate information for names
     bigg_combined["old_bigg_ids"] = bigg_combined["old_bigg_ids"].apply(lambda x: "; ".join(sorted(set(x.replace("_|_","; ").split("; ")))))
     bigg_combined["database_links"] = bigg_combined["database_links"].apply(lambda x: "; ".join(sorted(set(x.replace("_|_","; ").split("; ")))))

@@ -55,20 +55,20 @@ def concatNames(x:pd.Series) -> str:
     """ handles the concatenation of the different fields which we consider a name of a metabolite. Will return a single string containing the names which are seperated by a '_|_'."""
     iupac = x["iupac"]
     name = x["fullName"]
-    alias :str  = str(x["synonyms"])
+    alias = x["synonyms"]
     concat = []
-    if name != "" and name != None:
+    if name != "" and name != None and not pd.isna(name):
         concat.append(name)
-    if iupac != "" and iupac != None:
+    if iupac != "" and iupac != None and not pd.isna(iupac):
         concat.append(iupac)
-    if alias != "" and alias != None:
+    if alias != "" and alias != None and not pd.isna(alias):
         alias = alias.replace("***","_|_")
         concat.append(alias)
       # # check if there is | in the, this should be replaced as it is our separator
       # index =  alias.find("|")
       # if index > 0:
       #   print(f"Replacing | in {alias}")
-
+    concat = sorted(set(concat))
     concat = "_|_".join(concat)
     return(concat)
 # for names check fullName iupac and alias
