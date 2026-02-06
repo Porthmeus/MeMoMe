@@ -155,7 +155,17 @@ def plot_ora_dotplot(*, ora_csv: Path, out_png: Path, out_pdf: Path, top_n: int)
             ax.scatter([], [], s=v * size_scale, c="black", alpha=0.9, edgecolors="none", label=str(v))
             for v in legend_vals
         ]
-        ax.legend(handles=handles, title="Count", loc="center left", bbox_to_anchor=(1.18, 0.2), frameon=False)
+        ax.legend(
+            handles=handles,
+            title="Count",
+            loc="center left",
+            bbox_to_anchor=(1.20, 0.2),
+            frameon=False,
+            labelspacing=1.2,
+            handletextpad=1.2,
+            borderpad=0.6,
+            scatterpoints=1,
+        )
 
     _savefig(fig, out_png)
     _savefig(fig, out_pdf)
