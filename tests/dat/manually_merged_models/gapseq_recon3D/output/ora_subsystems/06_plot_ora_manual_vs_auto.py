@@ -138,7 +138,7 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
 
     fig, axes = plt.subplots(
         ncols=2,
-        figsize=(16, max(5, 0.45 * max(len(manual_sig), len(auto_sig)))),
+        figsize=(18, max(5, 0.45 * max(len(manual_sig), len(auto_sig)))),
         sharex=True,
         sharey=True,
     )
@@ -148,9 +148,10 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
     # Show subsystem names only on the left subplot to save space.
     axes[1].set_yticklabels([])
     axes[1].set_ylabel("")
+    axes[0].tick_params(axis="y", labelsize=10)
 
     # One shared colorbar.
-    cbar = fig.colorbar(sc1, ax=axes.ravel().tolist(), pad=0.02)
+    cbar = fig.colorbar(sc1, ax=axes.ravel().tolist(), pad=0.03, shrink=0.85)
     cbar.set_label("FDR (BH)")
 
     # One shared size legend.
@@ -164,13 +165,16 @@ def plot_pair(*, manual_csv: Path, auto_csv: Path, out_png: Path, out_pdf: Path,
             handles=handles,
             title="Count",
             loc="center left",
-            bbox_to_anchor=(1.05, 0.2),
+            bbox_to_anchor=(1.22, 0.2),
             frameon=False,
             labelspacing=1.2,
             handletextpad=1.2,
             borderpad=0.6,
             scatterpoints=1,
         )
+
+    # Allocate space for long subsystem labels (left) and legends/colorbar (right).
+    fig.subplots_adjust(left=0.35, right=0.80, wspace=0.25)
 
     _savefig(fig, out_png)
     _savefig(fig, out_pdf)
