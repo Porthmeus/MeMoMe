@@ -7,11 +7,6 @@ import argparse
 import logging
 import sys
 
-import cobra
-
-import src.MeMoModel
-from src.dbhandling.reformatBiGG import reformatBiGG
-from src.dbhandling.reformatModelSeed import reformatModelSeed
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 
