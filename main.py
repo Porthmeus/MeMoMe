@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Main entry point of the program
+Main entry point of the programt
 """
 import argparse
 import logging
