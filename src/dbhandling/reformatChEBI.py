@@ -11,11 +11,19 @@ import warnings
 
 
 def reformatChEBI(df: pd.DataFrame):
-    df.index = df["CHEBI_ID"]
-    df = df.rename(columns = {'CHEBI_ID': "id", "InChI": "inchi"})
+    # Prepend "CHEBI:" to the CHEBI_ID column
+    df["CHEBI_ID"] = "CHEBI:" + df["CHEBI_ID"].astype(str)
 
+    # Set as index
+    df.index = df["CHEBI_ID"]
+
+    # Rename columns
+    df = df.rename(columns={'CHEBI_ID': "id", "InChI": "inchi"})
+
+    # Remove index name
     df.index.rename('', inplace=True)
-    return df
+
+    return df   
 
 
 if __name__ == '__main__':
