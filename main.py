@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Main entry point of the program
+Main entry point of the programt
 """
 import argparse
 import logging
 import sys
 
-import cobra
-
-import src.MeMoModel
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 
@@ -32,10 +29,10 @@ def main(args: argparse.Namespace):
     if args.download:
         logger.debug("Starting to download databases")
         # check if the path database folder exists
-        if not databases_available():
-            download()
+        if not databases_available("reformat"):
+            download("REFORMAT_URL", "reformat")
         else:
-            update_database()
+            update_database("REFORMAT_URL", "reformat")
         logger.debug("Finished downloading databases")
     else:
         # Check if exactly two models were supplied
@@ -50,7 +47,8 @@ def main(args: argparse.Namespace):
             print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
             logger.error("User did not provide an output path")
             sys.exit(1)
-    
+
+
         # Load the model
         model1 = MeMoModel.fromPath(Path(args.model1))
         model2 = MeMoModel.fromPath(Path(args.model2))
@@ -58,7 +56,7 @@ def main(args: argparse.Namespace):
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
 
-        matched_model = model1.match(model2, keep1ToMany = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
+        matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
 
 if __name__ == '__main__':
@@ -67,9 +65,9 @@ if __name__ == '__main__':
     # Specifying this tells the program to download all the databases
     parser.add_argument('--output-names', action='store_true', default=False, help='If two metabolites got matched on a name basis, output the names that lead to this match')
     parser.add_argument('--output-dbs', action='store_true', default=False, help='If two metabolites got matched on a database basis, output the databases that lead to this match')
-    parser.add_argument('--keep-one-to-many', action='store_true', default=False, help='Keep one-to-many merges')
     parser.add_argument('--keep-unmatched', action='store_true', default=False, help='Stored unmatched metabolties in the output')
     parser.add_argument('--download', action='store_true', help='Download all required databases')
+    parser.add_argument('--reformat', action='store_true', help='Reformat all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
     parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')

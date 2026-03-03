@@ -4,6 +4,7 @@
 import re
 from typing import Optional
 import sys
+from pandas import isna
 sys.path.append('../')
 
 def handle_metabolites_prefix_suffix(met_id: str) -> str:
@@ -40,7 +41,7 @@ def handle_metabolites_prefix_suffix(met_id: str) -> str:
 def validateInchi(inchi_string: str) -> str:
     ''' Checks if an inchi string conforms to some standards, if not, returns None '''
     correct_inchi = inchi_string
-    if inchi_string is None or inchi_string == "":
+    if inchi_string is None or inchi_string == "" or isna(inchi_string):
         correct_inchi = None
     elif not inchi_string.startswith("InChI="):
         correct_inchi = None

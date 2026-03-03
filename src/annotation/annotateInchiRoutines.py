@@ -7,13 +7,33 @@ from rdkit import Chem, RDLogger
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdmolops import GetFormalCharge
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
+import pubchempy as pcp
 import warnings
+from time import sleep
+from pandas import isna
+
+def inchikeyToInchi(inchikey:str) -> str|None:
+    # use pubchem to convert inchiKeys to inchi strings
+    compounds = pcp.get_compounds(inchikey, "inchikey")
+    sleep(0.1)
+    if compounds == None:
+        warnings.warn("Could not translate {mol} to inchi".format(mol = inchikey))
+        inchi = None
+    elif len(compounds) == 0:
+        warnings.warn("Could not translate {mol} to inchi".format(mol = inchikey))
+        inchi = None
+    elif len(compounds) >1:
+        inchis = [x.inchi for x in compounds] 
+        inchi = findOptimalInchi(inchis)
+    else:
+        inchi = compounds[0].inchi
+    return(inchi)
 
 
 
 # Define your function
 def inchiToMol(inchi:str)->Chem.rdchem.Mol|None:
-    if inchi is not None:
+    if inchi is not None and not isna(inchi) and not inchi == "":
         return Chem.MolFromInchi(inchi)
     else:
         return None
@@ -62,12 +82,35 @@ def smile2inchi(smile:str, verbose:bool = False) -> str:
         RDLogger.DisableLog("rdApp.*")
 
     # load smiles and convert to inchi
+    try:
         m = Chem.MolFromSmiles(smile)
+    except:
+        warnings.warn("Could not read {mol} to rdkit molecule".format(mol = smile))
+        return(None)
+
     try:
         log = Chem.SanitizeMol(m)
     except:
         warnings.warn("Could not sanitize {mol}".format(mol = smile))
-    inchi = Chem.MolToInchi(m)
+    try:
+        inchi = Chem.MolToInchi(m)
+    except:
+        # try to find a pubchem entry with the smile
+        try:
+            compounds = pcp.get_compounds(smile, "smiles")
+            sleep(0.1)
+            if len(compounds) ==0:
+                warnings.warn("Could not translate {mol} to inchi".format(mol = smile))
+                inchi = None
+            elif len(compounds) >1:
+                inchis = [x.inchi for x in compounds]
+                inchi = findOptimalInchi(inchis) 
+            else:
+                inchi = compounds[0].inchi
+        except:
+                warnings.warn("Could not translate {mol} to inchi".format(mol = smile))
+                inchi = None
+
     return(inchi)
 
 def findOptimalInchi(inchis_: list[str], charge:int|None = None, verbose:bool = False) -> Optional[str]:

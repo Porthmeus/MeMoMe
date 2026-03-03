@@ -12,15 +12,12 @@ import libsbml as sbml
 import pandas as pd
 import numpy as np
 import logging
+import sys
 from deepdiff import DeepDiff
 from rdkit import Chem
-from copy import deepcopy
-
-from src.annotation.annotateChEBI import annotateChEBI
-from src.annotation.annotateBiGG import annotateBiGG, annotateBiGG_id
-from src.annotation.annotateModelSEED import annotateModelSEED, annotateModelSEED_id
-from src.annotation.annotateVMH import annotateVMH_id
-from src.annotation.annotateAux import AnnotationResult
+from copy import deepcopy, copy
+from src.download_db import get_config
+from src.annotation.annotateAux import AnnotationResult, handleIDs, handleMetabolites
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -79,44 +76,30 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
 
-        print(self._id)
-
-        #TEMP FIX
-        annotationDict = {"VMH" : annotateVMH_id,
-                          "ModelSEED": annotateModelSEED_id,
-                          "BiGG": annotateBiGG_id
-                          }
 
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
-        print(f"ORIG DB {origin_db}")
-
+        #print(f"ORIG DB {origin_db}")
         logger.debug(origin_db)
+        final_numbers = handleIDs(metabolites = self.metabolites,
+                                  db_name = origin_db,
+                                  allow_missing_dbs = allow_missing_dbs)
 
-        final_numbers = AnnotationResult(0,0,0)
-
+        print(origin_db, final_numbers)
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
             anno_result= AnnotationResult(0,0,0)
-            # BiGG
-            temp_result = annotateBiGG(self.metabolites, allow_missing_dbs)
-            print("BiGG:",temp_result)
-            anno_result = anno_result + temp_result
-            # Use ChEBI
-            temp_result = annotateChEBI(self.metabolites, allow_missing_dbs)
-            print("ChEBI:",temp_result)
-            anno_result = anno_result + temp_result
-            # GO BULK WISE ThORUGH BIGG AND VMH AND MODELSEED, try to extract as much as possible
-            temp_result = annotateModelSEED(self.metabolites, allow_missing_dbs)
-            print("ModelSEED:", temp_result)
-            anno_result = anno_result + temp_result
-            #print("Total:", anno_result)
+            for db_name in get_config()["databases"].keys():
+                if db_name not in ["Identifiers", "TestCase"]:
+                    temp_result = handleMetabolites(self.metabolites, db_name, allow_missing_dbs)
+                    print(db_name + ":", temp_result)
+                    anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
 
-        self.annotated = True
-        print("TOTAL:", final_numbers)
+        #self.annotated = True
+        #print("TOTAL:", final_numbers)
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
@@ -406,4 +389,7 @@ class MeMoModel:
 
     def copy(self):
         ''' return a deepcopy of the same object '''
-        return(deepcopy(self))
+        new_model = MeMoModel(metabolites = deepcopy(self.metabolites),
+                              cobra_model = self.cobra_model.copy(),
+                              _id = copy(self._id))
+        return(new_model)

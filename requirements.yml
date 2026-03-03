@@ -4,6 +4,7 @@ channels:
   - bioconda
 dependencies:
   - python>=3.13
+  - aiohttp
   - cobra
   - debugpy
   - deepdiff
@@ -11,9 +12,11 @@ dependencies:
   - python-libsbml 
   - numpy
   - rdkit
+  - ruff
   - pandas
   - pubchempy
   - pyyaml
   - requests
   - tqdm
+  - lxml
   - coverage
