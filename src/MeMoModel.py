@@ -100,7 +100,7 @@ class MeMoModel:
 
         #self.annotated = True
         #print("TOTAL:", final_numbers)
-        #return(final_numbers)
+        return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
         ''' At some point this is advisable to do, otherwise we will loose all the information we have newly annotated. So here is a function to do just that. It will go through the metabolite annotations which have been stored in the MeMoModel object and writes it to the cobra model annotation slot '''

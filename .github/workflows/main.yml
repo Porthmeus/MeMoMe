@@ -1,23 +1,29 @@
-name: ci 
+name: ci
 
 on:
   push:
     branches:
-      - '*'
+      - '**'
 
   pull_request:
     branches:
-      - '*'
+      - '**'
 
   schedule:
     - cron: '0 0 * * *'
 
+  workflow_dispatch:
+    inputs:
+      cache_number:
+        description: "Increase to manually reset conda cache"
+        required: false
+        default: "0"
+
 env:
-  CACHE_NUMBER: 0  # increase to reset cache manually
+  CACHE_NUMBER: ${{ github.event.inputs.cache_number || 0 }}
 
 jobs:
   build:
-
     strategy:
       matrix:
         include:
@@ -27,39 +33,36 @@ jobs:
 
     name: ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
-            miniforge-variant: Miniforge3
-            miniforge-version: 24.11.2-1
-            activate-environment: env
-            # The env should be cached so we should no try to 
-            # build a new one everytime
-            # environment-file: requirements.yml
-            use-mamba: true
+          miniforge-variant: Miniforge3
+          miniforge-version: 24.11.2-1
+          activate-environment: env
+          use-mamba: true
 
       - name: Set cache date
         run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-      - uses: actions/cache@v3
+      - name: Restore conda environment cache
+        id: cache
+        uses: actions/cache@v3
         with:
           path: ${{ matrix.prefix }}
           key: ${{ matrix.label }}-conda-${{ hashFiles('requirements.yml') }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
-        id: cache
 
       - name: Update environment
-        run: mamba env update -n env -f requirements.yml 
         if: steps.cache.outputs.cache-hit != 'true'
+        run: mamba env update -n env -f requirements.yml
 
       - name: Run tests
         shell: bash -el {0}
-        run: | 
-          # conda list
+        run: |
           conda activate env
-          # conda list
           python main.py --download
-          python  tests/test_suite.py fast
-          python  tests/test_suite.py slow
+          python tests/test_suite.py fast

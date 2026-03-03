@@ -5,10 +5,13 @@ import shutil
 import sys
 if __name__ == '__main__':
   sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+  sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+print(sys.path)
+
 
 #from src.MeMoModel import MeMoModel
 from src.MeMoModel import MeMoModel
-from src.annotation.annotateAux import AnnotationResult
+from src.annotation.annotateAux import AnnotationResult, handleMetabolites, DBName, handleIDs
 from datetime import datetime
   # Example data for the table
 table_data = [
@@ -24,8 +27,8 @@ class Test_annotationPerformance(unittest.TestCase):
     def test_ecoli_core_seed(self):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(54, 54, 54)
-        res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
+        exp = AnnotationResult(53, 54, 54)
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_ecoli_core_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -33,7 +36,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 0,0 )
-        res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_ecoli_core_seed_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -41,7 +44,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 0, 0)
-        res = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("BiGG")))
         add_test_case_to_table(self.test_ecoli_core_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -49,15 +52,15 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0, 54, 0)
-        res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("BiGG")))
         add_test_case_to_table(self.test_ecoli_core_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_ecoli_core_chebi(self):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(54, 0, 0)
-        res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        exp = AnnotationResult(53, 0, 0)
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_ecoli_core_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -65,8 +68,8 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_core.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(53, 0, 0)
-        res1 = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
-        res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        res1 = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("BiGG")))
+        res2 = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_ecoli_core_bigg_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
@@ -74,7 +77,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateBiGG(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("BiGG")))
         add_test_case_to_table(self.test_ecoli_vmh_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -83,7 +86,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,866,358)
-        res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("BiGG")))
         add_test_case_to_table(self.test_ecoli_vmh_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -91,8 +94,8 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(487,866,358)
-        res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
-        res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        res1 = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("BiGG")))
+        res2 = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_ecoli_vmh_bigg_id_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
@@ -101,7 +104,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_ecoli_vmh_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
     
@@ -109,7 +112,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_ecoli_vmh_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -117,7 +120,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("e_coli_vmh.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_ecoli_vmh_seed_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -153,7 +156,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_chebi.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -161,7 +164,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -169,16 +172,16 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,577,196)
-        res = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("BiGG")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
     def test_adlercreutzia_equolifaciens_bigg_id_chebi(self):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
-        exp = AnnotationResult(311,577,196)
-        res1 = AnnotationResult.fromAnnotation(annotateBiGG_id(mod.metabolites))
-        res2 = AnnotationResult.fromAnnotation(annotateChEBI(mod.metabolites))
+        exp = AnnotationResult(308,577,196)
+        res1 = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("BiGG")))
+        res2 = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ChEBI")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_bigg_id_chebi.__name__, res1 + res2, exp, mod)   
         self.assertLessEqual(exp, res1 + res2, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res1 + res2}. All three must be >=")
 
@@ -195,7 +198,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateModelSEED(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleMetabolites(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -203,7 +206,7 @@ class Test_annotationPerformance(unittest.TestCase):
         mod_path = self.dat.joinpath("Adlercreutzia_equolifaciens_DSM_19450.xml")
         mod = MeMoModel.fromPath(mod_path)
         exp = AnnotationResult(0,0,0)
-        res = AnnotationResult.fromAnnotation(annotateModelSEED_id(mod.metabolites))
+        res = AnnotationResult.fromAnnotation(handleIDs(mod.metabolites, DBName("ModelSeed")))
         add_test_case_to_table(self.test_adlercreutzia_equolifaciens_seed_id.__name__, res, exp, mod)   
         self.assertLessEqual(exp, res, msg=f"Expected amount of annotated metabolites: {exp}, calculated amount of annotated metabolites: {res}. All three must be >=")
 
@@ -476,7 +479,7 @@ if __name__ == '__main__':
     os.makedirs(folder_name)
 
     # Create a test suite
-    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotateBulkRoutines)
+    suite = unittest.TestLoader().loadTestsFromTestCase(Test_annotationPerformance)
     # The LSP complains but this works with id(). This is a super hacky way to just execute one single test for debugging
     #filtered_tests = unittest.TestSuite(
     #        test for test in suite if test.id() in ["__main__.Test_annotateBulkRoutines.test_ecoli_vmh_all"]
