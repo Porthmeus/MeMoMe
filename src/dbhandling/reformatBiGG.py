@@ -17,6 +17,9 @@ import pandas as pd
 import tempfile
 import requests
 import subprocess
+import shutil
+import tempfile
+import os
 
 def handleDBs(urls:str) -> str:
     # reformat the list of URLs given by BiGG to a dictionary of database name (key) and database id (values)
@@ -59,26 +62,29 @@ def downloadPBCInchiKey2String(url:str = "https://ftp.ncbi.nlm.nih.gov/pubchem/C
     return(temp_file_path)
 
 
-def createInchiKey2String(pbc_table:str, inchiKeys:list[str]) -> str:
-    # use zgrep to create a conversion table from inchi key to inchi string via the pubchem database
 
-    # safe the inchi keys in a temporary file
-    with tempfile.NamedTemporaryFile(delete=False, mode = "w") as temp_file:
+def createInchiKey2String(pbc_table: str, inchiKeys: list[str]) -> str:
+    # Check if zgrep exists
+    if shutil.which("zgrep") is None:
+        raise RuntimeError("zgrep is not installed or not in PATH")
+
+    # Save the InChI keys in a temporary file
+    with tempfile.NamedTemporaryFile(delete=False, mode="w") as temp_file:
         for entry in inchiKeys:
-            if entry !="":
+            if entry != "":
                 temp_file.write(entry + "\n")
         keys_file = temp_file.name
-    
-    # create subprocess to zgrep the inchi keys
-    result = subprocess.run(
-        ["zgrep", "-f", keys_file, pbc_table], 
-        text=True,  # Ensures output is returned as a string
-        capture_output=True,  # Captures stdout and stderr
-        check=True  # Raises an error if the command fails
-    )
-    
-    os.remove(keys_file)
-    return(result.stdout)  # Print matched lines
+
+    try:
+        result = subprocess.run(
+            ["zgrep", "-f", keys_file, pbc_table],
+            text=True,
+            capture_output=True,
+            check=True
+        )
+        return result.stdout
+    finally:
+        os.remove(keys_file)
 
 def joinValues(x:list[str], sep:str = "_|_") -> str:
     '''Helper function to remove nan from the string columns in the data frame'''
