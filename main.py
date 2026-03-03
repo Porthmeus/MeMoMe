@@ -7,6 +7,7 @@ import argparse
 import logging
 import sys
 
+from pathlib import Path
 from src.MeMoModel import *
 from src.download_db import download, databases_available, update_database
 
@@ -55,6 +56,10 @@ def main(args: argparse.Namespace):
         # bulk annotate the model
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
+
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
 
         matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
