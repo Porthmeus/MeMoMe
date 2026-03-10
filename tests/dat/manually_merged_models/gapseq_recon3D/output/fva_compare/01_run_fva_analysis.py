@@ -47,8 +47,23 @@ auto_model = cobra.io.read_sbml_model(str(AUTO_MODEL_PATH))
 manual_model = cobra.io.read_sbml_model(str(MANUAL_MODEL_PATH))
 
 #Choose host reaction list
-auto_host_rxns = [rxn.id for rxn in auto_model.reactions if rxn.id.startswith(SUBMODEL_PREFIXES["auto"]["host"])]
-manual_host_rxns = [rxn.id for rxn in manual_model.reactions if rxn.id.startswith(SUBMODEL_PREFIXES["manual"]["host"])]
+AUTO_HOST_RXN_PREFIXES = (
+    "model1_",
+    # demand reactions in the auto model are encoded as DM_model1_*
+    "DM_model1_",
+    # sink reactions in the auto model are encoded as sink_model1_*
+    "sink_model1_",
+)
+
+def is_auto_host_reaction_id(rxn_id: str) -> bool:
+    return rxn_id.startswith(AUTO_HOST_RXN_PREFIXES)
+
+def is_manual_host_reaction_id(rxn_id: str) -> bool:
+    # Manual host reactions are prefixed with H_ (including H_DM_* and H_sink_*).
+    return rxn_id.startswith("H_")
+
+auto_host_rxns = [rxn.id for rxn in auto_model.reactions if is_auto_host_reaction_id(rxn.id)]
+manual_host_rxns = [rxn.id for rxn in manual_model.reactions if is_manual_host_reaction_id(rxn.id)]
 
 #Apply host-only constraints (same for auto + manual)
 #   - set HOST_BIOMASS_ID lower bound to HOST_BIOMASS_LOWER_BOUND
@@ -117,5 +132,4 @@ closed_manual_fva["range"] = closed_manual_fva["maximum"] - closed_manual_fva["m
 #save results
 closed_auto_fva.to_csv(OUT_DIR / "auto_host_fva_closed.csv")
 closed_manual_fva.to_csv(OUT_DIR / "manual_host_fva_closed.csv")
-
 

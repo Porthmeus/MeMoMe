@@ -25,11 +25,28 @@ def canonicalize_rxn_id(rxn_id: str) -> str:
         if base.startswith(pref):
             base = base[len(pref):]
             break
+    for pref in ("sink_model1_", "sink_model2_"):
+        if base.startswith(pref):
+            base = "sink_" + base[len(pref):]
+            break
     for pref in ("DM_model1_", "DM_model2_"):
         if base.startswith(pref):
             base = "DM_" + base[len(pref):]
             break
     return base
+
+# Exclude connector reactions (TR/IEX) from the *host-reaction* dependency analysis.
+# Rationale: these reactions are bookkeeping connectors between compartments/models and
+# are treated separately in the dedicated exchange analysis.
+def is_connector_rxn_id(rxn_id: str) -> bool:
+    cid = canonicalize_rxn_id(rxn_id)
+    return cid.startswith(("IEX_", "TR_"))
+
+# Drop connector reactions from all four FVA tables (baseline + closed; auto + manual).
+auto_host_fva_baseline = auto_host_fva_baseline[~auto_host_fva_baseline.index.to_series().astype(str).map(is_connector_rxn_id)]
+manual_host_fva_baseline = manual_host_fva_baseline[~manual_host_fva_baseline.index.to_series().astype(str).map(is_connector_rxn_id)]
+auto_host_fva_closed = auto_host_fva_closed[~auto_host_fva_closed.index.to_series().astype(str).map(is_connector_rxn_id)]
+manual_host_fva_closed = manual_host_fva_closed[~manual_host_fva_closed.index.to_series().astype(str).map(is_connector_rxn_id)]
 
 # Flag/remove loop-participating reactions:
 #    - A reaction is considered a loop if abs(min) >= 999 and abs(max) >= 999

@@ -76,18 +76,21 @@ def plot_relative_change_hist(df: pd.DataFrame, outdir: Path, bins: int) -> None
         print("matplotlib not available; skipping plot generation.")
         return
 
+    # The scatterplot already shows that the two distributions are very similar; we therefore
+    # show the MeMoMe distribution alone to avoid redundancy in the main results figure.
     a = df["relative_change_auto"].to_numpy(dtype=float)
-    m = df["relative_change_manual"].to_numpy(dtype=float)
 
-    x_min = float(np.nanmin([a.min(), m.min()]))
-    x_max = float(np.nanmax([a.max(), m.max()]))
+    x_min = float(np.nanmin(a))
+    x_max = float(np.nanmax(a))
+    # Keep a stable axis for dependency values (expected ~[0, 1]).
+    x_min = min(-0.05, x_min)
+    x_max = max(1.05, x_max)
     edges = np.linspace(x_min, x_max, bins + 1)
 
     fig, ax = plt.subplots(figsize=(7, 4))
-    ax.hist(m, bins=edges, alpha=0.5, label="Manual", color="#1f77b4", density=True)
-    ax.hist(a, bins=edges, alpha=0.5, label="MeMoMe (Auto)", color="#ff7f0e", density=True)
+    ax.hist(a, bins=edges, alpha=0.7, label="MeMoMe (Auto)", color="#ff7f0e", density=True)
     ax.axvline(0.8, color="#cc0000", linewidth=2)
-    ax.set_xlabel("Dependency (relative change in host FVA range)")
+    ax.set_xlabel("Dependency")
     ax.set_ylabel("Density")
     ax.set_title("Host Reaction Dependency Distribution")
     ax.legend(frameon=False)
@@ -129,7 +132,8 @@ def plot_dependency_scatter(df: pd.DataFrame, outdir: Path, *, highlight_top_n: 
     x = df["relative_change_manual"].to_numpy(dtype=float)
     y = df["relative_change_auto"].to_numpy(dtype=float)
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    # Smaller figure (same font sizes) for easier inclusion in the thesis.
+    fig, ax = plt.subplots(figsize=(3.5, 3.5))
     ax.scatter(x, y, s=8, alpha=0.25, color="#444444", linewidths=0)
 
     # Highlight top deltas (keep this small for readability)
@@ -186,9 +190,9 @@ def plot_dependency_scatter(df: pd.DataFrame, outdir: Path, *, highlight_top_n: 
 
     ax.set_xlim(lim_min, lim_max)
     ax.set_ylim(lim_min, lim_max)
-    ax.set_xlabel("Manual dependency (relative change)")
-    ax.set_ylabel("MeMoMe dependency (relative change)")
-    ax.set_title("Host Reaction Dependency: Manual vs MeMoMe")
+    ax.set_xlabel("Manual model dependency")
+    ax.set_ylabel("MeMoMe model dependency")
+    ax.set_title("Host reactions microbiome-dependency")
 
     _savefig(fig, outdir / "relative_change_scatter.png")
     _savefig(fig, outdir / "relative_change_scatter.pdf")
@@ -242,7 +246,7 @@ def main() -> None:
     parser.add_argument(
         "--highlight-top-n",
         type=int,
-        default=5,
+        default=10,
         help="Highlight top-N absolute delta reactions on the scatterplot.",
     )
     parser.add_argument(
