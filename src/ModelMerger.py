@@ -72,7 +72,7 @@ class ModelMerger:
 
     def add_prefix_to_model_ids(self, model: cobra.Model, prefix: str) -> None:
         """
-        Adds a prefix to all metabolite and reaction IDs in a model to prevent conflicts.
+        Adds a prefix to all gene, metabolite and reaction IDs in a model to prevent conflicts.
 
         Parameters:
             model (cobra.Model): The model whose IDs will be prefixed.
@@ -228,6 +228,7 @@ class ModelMerger:
         source_exchange_map = self._build_exchange_map("model2_")
         if score_type not in self.matches.columns:
             raise ValueError(f"{score_type!r} not present in matches table columns")
+        #filter matches to those that have exchange reactions in both models, and meet score thresholds
         matches = self.matches[
             self.matches["target_namespace"].isin(target_exchange_map)
             & self.matches["source_namespace"].isin(source_exchange_map)
