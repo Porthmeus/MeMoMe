@@ -798,6 +798,7 @@ DMATT,Cholesterol metabolism
 DMATTx,Cholesterol metabolism
 DMGDHm,"Glycine, serine, alanine, and threonine metabolism"
 DMGtm,"Transport, mitochondrial"
+DM_PROTEIN,Protein formation
 DNDPt10m,"Transport, mitochondrial"
 DNDPt11m,"Transport, mitochondrial"
 DNDPt12m,"Transport, mitochondrial"

@@ -482,6 +482,7 @@ DMATT,0.8610711865716203,Cholesterol metabolism
 DMATTx,0.8610711865716203,Cholesterol metabolism
 DMGDHm,0.8258354134546484,"Glycine, serine, alanine, and threonine metabolism"
 DMGtm,0.8258354134546484,"Transport, mitochondrial"
+DM_PROTEIN,0.4479607481687944,Protein formation
 DNDPt3m,0.4763950079999999,"Transport, mitochondrial"
 DNDPt46m,0.4763950079999999,"Transport, mitochondrial"
 DNDPt47m,0.4763950079999999,"Transport, mitochondrial"
