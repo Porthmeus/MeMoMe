@@ -1,0 +1,1 @@
+feed_base,host_met_id,host_name,host_charge,micro_met_id,micro_name,micro_charge,charge_diff_host_minus_micro,manual_treats_as_same_pool,is_charge_diff,auto_translation_met_present,auto_has_model1_tr,auto_has_model2_tr,auto_matched_both_models

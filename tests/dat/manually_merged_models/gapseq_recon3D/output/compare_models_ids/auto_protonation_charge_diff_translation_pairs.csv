@@ -1,0 +1,13 @@
+translation_met_id,translation_base,model1_met_id,model1_name,model1_charge,model2_met_id,model2_name,model2_charge,charge_diff_model1_minus_model2
+oh1_t,oh1,model1_oh1[e],Hydroxide Ion,-1,model2_cpd00001[e],H2O,0,-1
+so3_t,so3,model1_so3[e],Sulfite,-2,model2_cpd00081[e],Sulfite,-1,-1
+tsul_t,tsul,model1_tsul[e],Thiosulfate,-2,model2_cpd00268[e],H2S2O3,-1,-1
+ribflv_t,ribflv,model1_ribflv[e],Riboflavin,0,model2_cpd00220[e],Riboflavin,-1,1
+fol_t,fol,model1_fol[e],Folate,-1,model2_cpd00393[e],Folate,-2,1
+gtp_t,gtp,model1_gtp[e],Guanosine-5'-Triphosphate,-4,model2_cpd00038[e],GTP,-3,-1
+tchola_t,tchola,model1_tchola[e],Taurocholic acid,0,model2_cpd03047[e],Taurocholate,-1,1
+tdchola_t,tdchola,model1_tdchola[e],Taurochenodeoxycholate,0,model2_cpd03246[e],Taurochenodeoxycholate,-1,1
+alltn_t,alltn,model1_alltn[e],Allantoin,0,model2_cpd01092[e],Allantoin,-1,1
+gchola_t,gchola,model1_gchola[e],Glycocholate,0,model2_cpd01318[e],Glycocholate,-1,1
+dgchol_t,dgchol,model1_dgchol[e],Glycochenodeoxycholate,0,model2_cpd03247[e],Glycochenodeoxycholate,-1,1
+co_t,co,model1_co[e],Carbon Monoxide,0,model2_cpd00204[e],CO,1,-1

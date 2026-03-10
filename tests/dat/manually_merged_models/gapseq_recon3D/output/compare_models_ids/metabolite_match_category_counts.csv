@@ -1,0 +1,6 @@
+category,count
+false_negative,12
+false_positive,3
+true_match,162
+true_negative,1484
+wrong_match,3

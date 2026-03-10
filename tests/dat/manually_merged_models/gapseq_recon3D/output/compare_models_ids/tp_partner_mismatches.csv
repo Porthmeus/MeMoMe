@@ -1,0 +1,4 @@
+pool_base_id,manual_micro_partner_base_ids,auto_micro_partner_base_ids,partner_mismatch,manual_M_IEX_rxn_ids,auto_TR_model2_rxn_ids,manual_micro_met_ids,auto_micro_met_ids,manual_micro_met_names,auto_micro_met_names
+12ppd_R,cpd01861,cpd00453,1,M_IEX_cpd01861[e],TR_model2_cpd00453[e],M_cpd01861[e],model2_cpd00453[e],"(R)-1,2-Propanediol","1,2-Propanediol"
+lac_D,cpd00221,cpd00159,1,M_IEX_cpd00221[e],TR_model2_cpd00159[e],M_cpd00221[e],model2_cpd00159[e],D-Lactate,L-Lactate
+maltttr,cpd01399,cpd01376,1,M_IEX_cpd01399[e],TR_model2_cpd01376[e],M_cpd01399[e],model2_cpd01376[e],Maltotetraose,Cellotetraose

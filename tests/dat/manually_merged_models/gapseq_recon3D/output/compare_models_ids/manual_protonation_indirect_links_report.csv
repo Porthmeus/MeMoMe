@@ -1,0 +1,13 @@
+translation_base,model1_met_id,model2_met_id,host_iex_id,micro_iex_id,host_iex_found,micro_iex_found,host_iex_has_proton,micro_iex_has_proton,host_pool_f_mets,micro_pool_f_mets,shared_pool_f_mets,protonation_bridge_rxns_in_f,host_iex_equation,micro_iex_equation
+oh1,model1_oh1[e],model2_cpd00001[e],H_IEX_oh1[e],M_IEX_cpd00001[e],True,True,False,False,oh1[f],h2o[f],,,H_oh1[e] <=> oh1[f],M_cpd00001[e] <=> h2o[f]
+so3,model1_so3[e],model2_cpd00081[e],H_IEX_so3[e],M_IEX_cpd00081[e],True,True,False,True,so3[f],so3[f],so3[f],,H_so3[e] <=> so3[f],M_cpd00081[e] <=> h[f] + so3[f]
+tsul,model1_tsul[e],model2_cpd00268[e],H_IEX_tsul[e],M_IEX_cpd00268[e],True,True,False,True,tsul[f],tsul[f],tsul[f],,H_tsul[e] <=> tsul[f],M_cpd00268[e] <=> h[f] + tsul[f]
+ribflv,model1_ribflv[e],model2_cpd00220[e],H_IEX_ribflv[e],M_IEX_cpd00220[e],True,True,False,True,ribflv[f],ribflv[f],ribflv[f],,H_ribflv[e] <=> ribflv[f],M_cpd00220[e] + h[f] <=> ribflv[f]
+fol,model1_fol[e],model2_cpd00393[e],H_IEX_fol[e],M_IEX_cpd00393[e],True,True,False,True,fol[f],fol[f],fol[f],,H_fol[e] <=> fol[f],M_cpd00393[e] + h[f] <=> fol[f]
+gtp,model1_gtp[e],model2_cpd00038[e],H_IEX_gtp[e],M_IEX_cpd00038[e],True,True,False,True,gtp[f],gtp[f],gtp[f],,H_gtp[e] <=> gtp[f],M_cpd00038[e] <=> gtp[f] + h[f]
+tchola,model1_tchola[e],model2_cpd03047[e],H_IEX_tchola[e],M_IEX_cpd03047[e],True,True,False,True,tchola[f],tchola[f],tchola[f],,H_tchola[e] <=> tchola[f],M_cpd03047[e] + h[f] <=> tchola[f]
+tdchola,model1_tdchola[e],model2_cpd03246[e],H_IEX_tdchola[e],M_IEX_cpd03246[e],True,True,False,True,tdchola[f],tdchola[f],tdchola[f],,H_tdchola[e] <=> tdchola[f],M_cpd03246[e] + h[f] <=> tdchola[f]
+alltn,model1_alltn[e],model2_cpd01092[e],H_IEX_alltn[e],M_IEX_cpd01092[e],True,True,False,True,alltn[f],alltn[f],alltn[f],,H_alltn[e] <=> alltn[f],M_cpd01092[e] + h[f] <=> alltn[f]
+gchola,model1_gchola[e],model2_cpd01318[e],H_IEX_gchola[e],M_IEX_cpd01318[e],True,True,False,True,gchola[f],gchola[f],gchola[f],,H_gchola[e] <=> gchola[f],M_cpd01318[e] + h[f] <=> gchola[f]
+dgchol,model1_dgchol[e],model2_cpd03247[e],H_IEX_dgchol[e],M_IEX_cpd03247[e],True,True,False,True,dgchol[f],dgchol[f],dgchol[f],,H_dgchol[e] <=> dgchol[f],M_cpd03247[e] + h[f] <=> dgchol[f]
+co,model1_co[e],model2_cpd00204[e],H_IEX_co[e],M_IEX_cpd00204[e],True,True,False,True,co[f],co[f],co[f],,H_co[e] <=> co[f],M_cpd00204[e] <=> co[f] + h[f]
