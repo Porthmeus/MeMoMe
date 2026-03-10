@@ -60,6 +60,15 @@ class ModelMerger:
         self.merged_model.add_reactions(self.model2.reactions)
 
 
+    def set_objective_reaction(self, target_model, merged_model: cobra.Model) -> None:
+        objective_rxns = [rxn for rxn in target_model.reactions if rxn.objective_coefficient]
+        if objective_rxns:
+            original_id = objective_rxns[0].id
+            merged_obj_id = f"model1_{original_id}"
+            if merged_obj_id in merged_model.reactions:
+                merged_model.objective = merged_model.reactions.get_by_id(merged_obj_id)
+
+
     def preprocess_models(self) -> None:
         """Remove duplicate metabolites/reactions from both input models"""
         meMoModel1 = MeMoModel(cobra_model=self.model1)
@@ -333,4 +342,11 @@ class ModelMerger:
 
         # Ensure subsystem information survives SBML write/read cycles.
         self._propagate_subsystems_to_notes()
+        self.set_objective_reaction(self.model1, self.merged_model)
+
+        # Final cleanup: if any merged metabolite is missing a name, set it to the ID for better readability.
+        for met in self.merged_model.metabolites:
+            if met.name is None:
+                met.name = met.id
+
         return self.merged_model

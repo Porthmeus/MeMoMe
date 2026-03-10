@@ -19,14 +19,14 @@ from bulkPerformance import *
 
 
 
-fast_tests = [#Test_annotateMissingDbs,Test_annotateEntryFunctions,Test_annotateID,Test_annotateFull,TestInchiRoutines,
-              #TestMatchInchit,Test_MeMoMetabolite,Test_annotateBulkRoutines,Test_MiscStuff,
-              Test_ModelMerger#,Test_removeDuplicates,TestParseSBML,TestPubchemInfoNoInet,TestPubchemInfo,Test_removeDuplicateMetabolites
+fast_tests = [Test_annotateMissingDbs,Test_annotateEntryFunctions,Test_annotateID,Test_annotateFull,TestInchiRoutines,
+              TestMatchInchit,Test_MeMoMetabolite,Test_annotateBulkRoutines,Test_MiscStuff,
+              Test_ModelMerger,Test_removeDuplicates,TestParseSBML,TestPubchemInfoNoInet,TestPubchemInfo,Test_removeDuplicateMetabolites
               ]
 
 
 slow_tests = [
-  #Test_annotationPerformance, 
+  Test_annotationPerformance, 
   Test_ModelMerger_Slow
   ]
 

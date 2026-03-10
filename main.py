@@ -11,7 +11,9 @@ import cobra
 
 import src.MeMoModel
 from src.MeMoModel import *
+from src.ModelMerger import ModelMerger
 from src.download_db import download, databases_available, update_database
+
 
 # Configure the logger
 logging.basicConfig(
@@ -58,8 +60,12 @@ def main(args: argparse.Namespace):
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
 
-        matched_model = model1.match(model2, keepAllMatches = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
-        matched_model.to_csv(args.output, index = False)
+        matching_table = model1.match(model2, keepAllMatches = args.keep_one_to_many, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
+        matching_table.to_csv(args.output, index = False)
+
+        merger = ModelMerger(model1.cobra_model, model2.cobra_model, matching_table)
+        merged_model = merger.translate_namespace()
+        cobra.io.write_sbml_model(merged_model, args.output)
 
 if __name__ == '__main__':
     # Specifies which arguments are accepted by the program

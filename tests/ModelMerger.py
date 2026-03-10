@@ -227,16 +227,6 @@ class Test_ModelMerger_Slow(unittest.TestCase):
 
             merger = ModelMerger(target.cobra_model, source.cobra_model, matches)
             merged_model = merger.translate_namespace()
-            objective_rxns = [rxn for rxn in target_model.reactions if rxn.objective_coefficient]
-            if objective_rxns:
-                original_id = objective_rxns[0].id
-                merged_obj_id = f"model1_{original_id}"
-                if merged_obj_id in merged_model.reactions:
-                    merged_model.objective = merged_model.reactions.get_by_id(merged_obj_id)
-
-            for met in merged_model.metabolites:
-                if met.name is None:
-                    met.name = met.id
 
             cobra.io.write_sbml_model(merged_model, output_path)
 
