@@ -1,0 +1,2485 @@
+reaction_id,dependency,subsystem
+12HTACRtep,0.4763950139999999,Drug metabolism
+12HTACRtu,0.4763950139999999,Drug metabolism
+13DAMPPOX,0.8166589999999999,Beta-Alanine metabolism
+13DMTtep,0.4763950139999999,Drug metabolism
+13DMTtu,0.4763950139999999,Drug metabolism
+1513TACRtep,0.4763950139999999,Drug metabolism
+1513TACRtu,0.4763950139999999,Drug metabolism
+15DMTtep,0.4763950139999999,Drug metabolism
+15DMTtu,0.4763950139999999,Drug metabolism
+1PPDCRp,0.9972695117829466,Lysine metabolism
+2AMACHYD,0.4763950139999999,"Glycine, serine, alanine, and threonine metabolism"
+2AMACSULT,0.99962859,Methionine and cysteine metabolism
+2DR1PP,0.4763950139999999,Pyrimidine catabolism
+2H3MVc,0.9997721289933916,"Valine, leucine, and isoleucine metabolism"
+2HATVACIDhc,0.738197507,Drug metabolism
+2HATVACIDteb,0.4763950139999999,Drug metabolism
+2HATVLAChc,0.738197507,Drug metabolism
+2HATVLACteb,0.4763950139999999,Drug metabolism
+2HBO,0.489335979,Propanoate metabolism
+2HIVc,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+2M3HBUc,0.6161524509999999,"Valine, leucine, and isoleucine metabolism"
+2M3HBUtm,0.6161524509999999,"Transport, mitochondrial"
+2M3HVACc,0.780658543,Propanoate metabolism
+2M3OVACm,0.780658543,Propanoate metabolism
+2M3OVACtm,0.780658543,"Transport, mitochondrial"
+2M3OVCOAm,0.780658543,Propanoate metabolism
+2OXOADOXm,0.999669731,Lysine metabolism
+31DMTtep,0.4763950139999999,Drug metabolism
+31DMTtu,0.4763950139999999,Drug metabolism
+34DHOXPEGOX,0.99246484,Tyrosine metabolism
+34DHPEAR,0.99623242,Tyrosine metabolism
+34DHPHAMT,0.99623242,Tyrosine metabolism
+34HPLFM,0.9994616333959432,Ubiquinone synthesis
+34HPLtm,0.9994469919775792,"Transport, mitochondrial"
+34HPPOR,0.99623242,Tyrosine metabolism
+35CGMPtn,0.738197507,"Transport, nuclear"
+3AIB_Dtm,0.8979930708508782,"Transport, mitochondrial"
+3DHLCAS,1.0,Bile acid synthesis
+3DPHBH1,0.9886972598869724,Ubiquinone synthesis
+3DPHBH2,0.9886972598869724,Ubiquinone synthesis
+3DSPHR,0.8254084926508171,Sphingolipid metabolism
+3H3MGLTc,0.593293468,"Valine, leucine, and isoleucine metabolism"
+3HAO,0.9986131299861314,Tryptophan metabolism
+3HBCOAHLm,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+3HGLUTCOAm,0.999659077400244,Lysine metabolism
+3HIVAcm,0.9995993549779644,"Valine, leucine, and isoleucine metabolism"
+3HIVActm,0.9995993549779644,"Transport, mitochondrial"
+3HLYTCL,0.9963782225816676,Tyrosine metabolism
+3HMPtm,0.48972126,"Transport, mitochondrial"
+3HPPtm,0.4763950139999999,"Transport, mitochondrial"
+3HPVSTETteb,0.4763950139999999,Drug metabolism
+3HPVSTETtev,0.4763950139999999,Drug metabolism
+3HPVSteb,0.4763950139999999,Drug metabolism
+3ISPVSteb,0.4763950139999999,Drug metabolism
+3M4HDXPAC,0.99623242,Tyrosine metabolism
+3MGLUTACc,0.535192535,"Valine, leucine, and isoleucine metabolism"
+3MGLUTACtm,0.535192535,"Transport, mitochondrial"
+3MGLUTRc,0.535192535,"Valine, leucine, and isoleucine metabolism"
+3MHISc,0.9575677117010948,Histidine metabolism
+3MOXTYROX,0.99623242,Tyrosine metabolism
+3OHGLUTACm,0.999659077400244,Lysine metabolism
+3OHGLUTACtm,0.999659077400244,"Transport, mitochondrial"
+3SALACBOXL,0.9965893,Taurine and hypotaurine metabolism
+3SALAOX,0.9948839499488394,Taurine and hypotaurine metabolism
+3SALATAi,0.9965893,Methionine and cysteine metabolism
+3SALATAim,0.9965893,Methionine and cysteine metabolism
+3SPYRSP,0.9965893,Methionine and cysteine metabolism
+3SPYRSPm,0.9965893,Methionine and cysteine metabolism
+41R1H2MAE12BOOX,0.9909455565412092,Tyrosine metabolism
+41R2A1H12BOOX,0.99246484,Tyrosine metabolism
+42A12BOOX,0.99623242,Tyrosine metabolism
+4BHGLZABCt,0.4763950139999999,Drug metabolism
+4BHGLZtev,0.4763950139999999,Drug metabolism
+4HATVACIDhc,0.738197507,Drug metabolism
+4HATVACIDteb,0.4763950139999999,Drug metabolism
+4HATVLAChc,0.738197507,Drug metabolism
+4HATVLACteb,0.4763950139999999,Drug metabolism
+4HBZCOAFm,0.9993702491130956,Ubiquinone synthesis
+4HBZFm,0.9993702491130956,Ubiquinone synthesis
+4HBZtm,0.9988069698756664,"Transport, mitochondrial"
+56DHPVSteb,0.4763950139999999,Drug metabolism
+56DHPVStev,0.4763950139999999,Drug metabolism
+56EPPVSteb,0.4763950139999999,Drug metabolism
+56EPPVStev,0.4763950139999999,Drug metabolism
+5ADTSTSTERONESULT,0.825465005,Steroid metabolism
+5HLTDL,0.9945432380132188,Tryptophan metabolism
+5HOXINOXDA,0.9945432380132188,Tryptophan metabolism
+5THFtm,0.69163951,"Transport, mitochondrial"
+6AHGLZABCt,0.4763950139999999,Drug metabolism
+6AHGLZtev,0.4763950139999999,Drug metabolism
+6BHGLZABCt,0.4763950139999999,Drug metabolism
+6BHGLZGLCABCt,0.4763950139999999,Drug metabolism
+6BHGLZGLCtev,0.4763950139999999,Drug metabolism
+6BHGLZtev,0.4763950139999999,Drug metabolism
+6EPSteb,0.4763950139999999,Drug metabolism
+6THFtm,0.7587983380000001,"Transport, mitochondrial"
+7AHGLZABCt,0.4763950139999999,Drug metabolism
+7AHGLZtev,0.4763950139999999,Drug metabolism
+7BHGLZABCt,0.4763950139999999,Drug metabolism
+7BHGLZGLCABCt,0.4763950139999999,Drug metabolism
+7BHGLZGLCtev,0.4763950139999999,Drug metabolism
+7BHGLZtev,0.4763950139999999,Drug metabolism
+7HPVSteb,0.4763950139999999,Drug metabolism
+7HPVStev,0.4763950139999999,Drug metabolism
+7THFtm,0.825465005,"Transport, mitochondrial"
+A4GALTc,0.738197507,Sphingolipid metabolism
+A4GALTg,0.5757505668296171,Sphingolipid metabolism
+AACOAT,0.738197507,Propanoate metabolism
+AASAD3m,0.9997159589832416,Lysine metabolism
+ABTD1,0.8475059793248397,Pentose phosphate pathway
+ACALDtx,1.0,"Transport, peroxisomal"
+ACCOAC,0.4763950139999999,Fatty acid oxidation
+ACCOACm,0.4763950139999999,Fatty acid oxidation
+ACCOAL,0.4763950139999999,Propanoate metabolism
+ACCOALm,0.738197507,Propanoate metabolism
+ACER11r,0.82546500465093,Sphingolipid metabolism
+ACER22g,0.738197506476395,Sphingolipid metabolism
+ACER23g,0.5271146600000001,Sphingolipid metabolism
+ACER31r,0.5271146600000001,Sphingolipid metabolism
+ACGAGBSIDEtg,0.602266156402766,"Transport, golgi apparatus"
+ACGAGBSIDEtl,0.602266156402766,"Transport, lysosomal"
+ACGALK,0.738197507,Aminosugar metabolism
+ACGALK2,0.738197507,Aminosugar metabolism
+ACGALtlg,0.5757505668296171,"Transport, golgi apparatus"
+ACGALtly,0.825465005,"Transport, lysosomal"
+ACGAMK,0.738197507,Aminosugar metabolism
+ACGAMPM,0.738197507,Aminosugar metabolism
+ACGBGBSIDEtg,0.5757505668296171,"Transport, golgi apparatus"
+ACGBGBSIDEtl,0.5757505668296171,"Transport, lysosomal"
+ACGLUtm,0.992437663,"Transport, mitochondrial"
+ACGSm,0.992437663,Urea cycle
+ACILEm,0.9731026452942996,"Valine, leucine, and isoleucine metabolism"
+ACILEtm,0.9731026452942996,"Transport, mitochondrial"
+ACITL,0.4763950139999999,Citric acid cycle
+ACLEUm,0.9527088103529396,"Valine, leucine, and isoleucine metabolism"
+ACLEUtm,0.9527088103529396,"Transport, mitochondrial"
+ACMPGLUTtep,0.4763950139999999,Drug metabolism
+ACMPGLUTthc,0.4763950139999999,Drug metabolism
+ACMPGLUtep,0.738197507,Drug metabolism
+ACMPGLUthc,0.738197507,Drug metabolism
+ACMPthc,0.4763950139999999,Drug metabolism
+ACMPtu,0.4763950139999999,Drug metabolism
+ACNAM9PL,0.738197507,Aminosugar metabolism
+ACNAM9PL2,0.756287640319522,Aminosugar metabolism
+ACNAMPH,0.738197507,Aminosugar metabolism
+ACNAMlt,0.9040738151857928,"Transport, lysosomal"
+ACNAMtn,0.738197507,"Transport, nuclear"
+ACOAD10m,0.9997721289933916,"Valine, leucine, and isoleucine metabolism"
+ACOAD1fm,0.8254084930000001,Butanoate metabolism
+ACOAD8m,0.9995993549779644,"Valine, leucine, and isoleucine metabolism"
+ACOAD9m,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+ACP1_FMN_,0.4763950139999999,Vitamin B2 metabolism
+ACS,0.738197507,Glycolysis/gluconeogenesis
+ACS2,0.738197507,Propanoate metabolism
+ACSRTNMT,0.9890864760264376,Tryptophan metabolism
+ACSm,0.738197507,Glycolysis/gluconeogenesis
+ACTHRtc,0.9729848437311508,"Transport, mitochondrial"
+ACTYRm,0.955528375422014,Tyrosine metabolism
+ACTYRtc,0.955528375422014,"Transport, mitochondrial"
+ACYP,0.4763950139999999,Glycolysis/gluconeogenesis
+ACtg,0.853566950889534,"Transport, golgi apparatus"
+ADA,0.738192075,Purine catabolism
+ADAe,0.738192075,Purine catabolism
+ADMDC,0.4118710878976763,Arginine and proline metabolism
+ADNCYC,0.738197507,Nucleotide interconversion
+ADNK1,0.4763950019999999,Nucleotide interconversion
+ADNK1m,0.4763950019999999,Nucleotide interconversion
+ADNK3,0.4763950019999999,Purine synthesis
+ADNK4,0.4763950019999999,Purine synthesis
+ADNtl,0.4763950139999999,"Transport, lysosomal"
+ADPACDAc,0.738197507,Fatty acid oxidation
+ADPACtx,0.738197507,Fatty acid oxidation
+ADPCOACROT,0.738197507,Fatty acid oxidation
+ADPCOAPTE,0.738197507,Fatty acid oxidation
+ADPOHc,0.999669731,Lysine metabolism
+ADPRDP,0.825465005,Nucleotide interconversion
+ADPT,0.4763950019999999,Nucleotide salvage pathway
+ADRNCPT1,0.738197507,Fatty acid oxidation
+ADRNCPT2,0.738197507,Fatty acid oxidation
+ADSK,0.4763950139999999,Nucleotide interconversion
+ADSL1,0.4763950139999999,Nucleotide interconversion
+ADSL2,0.9969524097163082,Purine synthesis
+ADSS,0.4763950139999999,Nucleotide interconversion
+AG13T16g,0.7044395846430334,Keratan sulfate synthesis
+AG13T17g,0.7044395846430334,Keratan sulfate synthesis
+AG13T18g,0.7044395846430334,Keratan sulfate synthesis
+AG13T1g,0.7081407006654742,Keratan sulfate synthesis
+AG13T2g,0.7081407006654742,Keratan sulfate synthesis
+AG13T3g,0.7081407006654742,Keratan sulfate synthesis
+AGMTm,0.995960767,Arginine and proline metabolism
+AGPAT1,0.8952789972403449,Triacylglycerol synthesis
+AGPAT4,0.4681686064544659,Glycerophospholipid metabolism
+AGRMtm,0.9979846524416376,"Transport, mitochondrial"
+AHANDROSTANtr,0.4763950139999999,"Transport, endoplasmic reticular"
+AHC,0.8254491439999999,Methionine and cysteine metabolism
+AICART,0.9968461778964286,Purine synthesis
+AIRCr,0.9969524097163082,Purine synthesis
+ALAASNLEUr,0.8108351967546252,Peptide metabolism
+ALAGLYLYSr,0.8658898529156248,Peptide metabolism
+ALAHISALAr,0.929279527849502,Peptide metabolism
+ALALYSTHRr,0.8919393494141554,Peptide metabolism
+ALCD2if,1.0,Glycolysis/gluconeogenesis
+ALCD2yf,1.0,Glycolysis/gluconeogenesis
+ALDD20x,0.9945432380132188,Tryptophan metabolism
+ALDD20xm,0.9945432380132188,Tryptophan metabolism
+AM19CSteb,0.4763950139999999,Drug metabolism
+AM1ACSteb,0.4763950139999999,Drug metabolism
+AM1ACStep,0.4763950139999999,Drug metabolism
+AM1ALCSteb,0.4763950139999999,Drug metabolism
+AM1ALCStep,0.4763950139999999,Drug metabolism
+AM1C9CSteb,0.4763950139999999,Drug metabolism
+AM1C9CStev,0.4763950139999999,Drug metabolism
+AM1CCSteb,0.4763950139999999,Drug metabolism
+AM1CCStev,0.4763950139999999,Drug metabolism
+AM1CSAtep,0.4763950139999999,Drug metabolism
+AM4N9CStev,0.4763950139999999,Drug metabolism
+AM4NC9CSteb,0.4763950139999999,Drug metabolism
+AM4NCSteb,0.4763950139999999,Drug metabolism
+AM4NCStep,0.4763950139999999,Drug metabolism
+AM9CSAteb,0.4763950139999999,Drug metabolism
+AM9CSAtep,0.4763950139999999,Drug metabolism
+AMANK,0.738197507,Aminosugar metabolism
+AMCOXO,0.9986131299861314,Tryptophan metabolism
+AMPDA,0.476395009,Nucleotide interconversion
+AMPTASECG,0.738197507,Glutathione metabolism
+AMPTASECGe,0.738197507,Glutathione metabolism
+ANDRSTANDRtr,0.4763950139999999,"Transport, endoplasmic reticular"
+ANDRSTRNtr,0.4740594327423331,"Transport, endoplasmic reticular"
+APOCF,0.738197507,Biotin metabolism
+APOCFm,0.738197507,Biotin metabolism
+APOC_LYS_BTNP,0.738197507,Biotin metabolism
+APOC_LYS_BTNPm,0.738197507,Biotin metabolism
+ARGALAPHEr,0.7942788100956175,Peptide metabolism
+ARGALATHRr,0.8379090623869052,Peptide metabolism
+ARGARGLYSr,0.6647245531387994,Peptide metabolism
+ARGARGMETr,0.8280504947179208,Peptide metabolism
+ARGDCm,0.995960767,Arginine and proline metabolism
+ARGHISTHRr,0.8868472044903417,Peptide metabolism
+ARGLEUPHEr,0.7942788100956175,Peptide metabolism
+ARGLYSASPr,0.7653073534126326,Peptide metabolism
+ARGN,0.995960767,Urea cycle
+ARGNm,0.995960767,Urea cycle
+ARGPHEARGr,0.6914181058705923,Peptide metabolism
+ARGPROMETr,0.8280504947179208,Peptide metabolism
+ARGPROTHRr,0.8379090623869052,Peptide metabolism
+ARGSL,0.73849330581008,Alanine and aspartate metabolism
+ARGSS,0.738197507,Alanine and aspartate metabolism
+ARGTYRVALr,0.7896817162294907,Peptide metabolism
+ARGVALTRPr,0.9618026751099756,Peptide metabolism
+ARSA,0.9063630740398728,Sphingolipid metabolism
+ARTCOAL1,0.738197507,R group synthesis
+ARTCOAL2,0.738197507,R group synthesis
+ARTCOAL3,0.738197507,R group synthesis
+ASAH1,0.8952790027905579,Sphingolipid metabolism
+ASNMETPROr,0.8280504947179208,Peptide metabolism
+ASNNm,0.82502291,Alanine and aspartate metabolism
+ASNPHEASPr,0.8628525076866128,Peptide metabolism
+ASNS1,0.8252842819999999,Alanine and aspartate metabolism
+ASNTYRGLYr,0.8221134596934421,Peptide metabolism
+ASNTYRPHEr,0.9110567298467208,Peptide metabolism
+ASNTYRTHRr,0.8919393494141554,Peptide metabolism
+ASNtm,0.82502291,"Transport, mitochondrial"
+ASP1DC,0.4763950139999999,Beta-Alanine metabolism
+ASPCTr,0.4901747738349318,Pyrimidine synthesis
+ASPGLUTRPr,0.9781729469000476,Peptide metabolism
+ASPHISCYSr,0.7270063813257939,Peptide metabolism
+ASPHISPROr,0.929279527849502,Peptide metabolism
+ASPLYSGLUr,0.8658898529156248,Peptide metabolism
+ASPLYSHISr,0.9151354234021896,Peptide metabolism
+ASPMETASPr,0.8280504947179208,Peptide metabolism
+ASPPROLYSr,0.8658898529156248,Peptide metabolism
+ASPVALASNr,0.8597877777190213,Peptide metabolism
+ATP1ter,0.4763950139999999,"Transport, endoplasmic reticular"
+ATP2ter,0.738197452,"Transport, endoplasmic reticular"
+ATPH1e,0.825465005,Nucleotide interconversion
+ATPH2e,0.825465005,Nucleotide interconversion
+ATPasel,0.895279003,"Transport, lysosomal"
+ATPtg,0.4763950139999999,"Transport, golgi apparatus"
+ATVACIDhc,0.738197507,Drug metabolism
+ATVACIDhr,0.7755978619999999,Drug metabolism
+ATVACIDitr,0.775597863,Drug metabolism
+ATVACIDtu,0.4763950139999999,Drug metabolism
+ATVACYLGLUChc,0.775597863,Drug metabolism
+ATVETHGLUChc,0.7755978619999999,Drug metabolism
+ATVLACGLCURhc,0.775597863,Drug metabolism
+ATVLACh2r,0.775597863,Drug metabolism
+ATVLAChc,0.738197507,Drug metabolism
+ATVLAChr,0.775597863,Drug metabolism
+ATVLACitr,0.775597863,Drug metabolism
+ATVLACtu,0.4763950139999999,Drug metabolism
+Am19CStev,0.4763950139999999,Drug metabolism
+Am1CSAteb,0.4763950139999999,Drug metabolism
+B3GALT3g,0.5757505668296171,Sphingolipid metabolism
+B3GALT41g,0.6862512472232961,Sphingolipid metabolism
+B3GALT42g,0.6862512472232961,Sphingolipid metabolism
+B3GALT43g,0.7011916674462374,Sphingolipid metabolism
+B3GNT36g,0.5757505668296171,Sphingolipid metabolism
+B3GNT39g,0.6513902780214893,Sphingolipid metabolism
+BACCL,0.738197507,Biotin metabolism
+BACCLm,0.738197507,Biotin metabolism
+BAMPPALDOX,0.8028540599999999,Beta-Alanine metabolism
+BETALDHxm,0.925585365,"Glycine, serine, alanine, and threonine metabolism"
+BGAL1e,0.738197507,Sphingolipid metabolism
+BGAL1l,0.9040738151857928,Sphingolipid metabolism
+BGAL2l,0.8958311721557799,Sphingolipid metabolism
+BGAL3l,0.869098753,Sphingolipid metabolism
+BHMT,0.913261125,"Glycine, serine, alanine, and threonine metabolism"
+BILDGLCURtr,0.4756150605214974,"Transport, endoplasmic reticular"
+BIOCYTtn,0.738197507,"Transport, nuclear"
+BPNT,0.825462616,Nucleotide interconversion
+BPNT2,0.4763950139999999,Nucleotide interconversion
+BTND1,0.738197507,Biotin metabolism
+BTND1n,0.738197507,Biotin metabolism
+BTNDm,0.738197507,Biotin metabolism
+BTNPL,0.738197507,Biotin metabolism
+BTNPLm,0.738197507,Biotin metabolism
+BTNtn,0.7381974996180249,"Transport, nuclear"
+BUP2,0.904688299,Pyrimidine catabolism
+BUTt2m,0.999998289,"Transport, mitochondrial"
+C02592tx,1.0,"Transport, peroxisomal"
+C03990tr,1.0,"Transport, endoplasmic reticular"
+C03990tx,1.0,"Transport, peroxisomal"
+C10DCCACT,0.738197507,Fatty acid oxidation
+C10DCc,0.738197507,Fatty acid oxidation
+C12DCACOT,0.738197507,Fatty acid oxidation
+C12DCACT,0.738197507,Fatty acid oxidation
+C12DCTD,0.738197507,Fatty acid oxidation
+C161CPT22,0.6878156977507563,Fatty acid oxidation
+C16txc,0.4763950139999999,"Transport, peroxisomal"
+C204CPT2,0.6975987077940238,Fatty acid oxidation
+C4DCCACT,0.4672356142847437,Fatty acid oxidation
+C4tcx,0.422910625,"Transport, peroxisomal"
+C4x,0.422910625,"Transport, peroxisomal"
+C6DCCACT,0.738197507,Fatty acid oxidation
+C6DCc,0.738197507,Fatty acid oxidation
+C8DCc,0.7328980242834218,Fatty acid oxidation
+CAPROICc,0.73811274,Fatty acid oxidation
+CAT2p,1.0,Glycolysis/gluconeogenesis
+CBPPer,0.8231999409999999,Glycolysis/gluconeogenesis
+CBPS,0.8231999409999999,Pyrimidine synthesis
+CBPSam,0.996218831,Glutamate metabolism
+CBPter,0.8231999409999999,"Transport, endoplasmic reticular"
+CDIPTr,0.7380135251802267,Glycerophospholipid metabolism
+CDPDAGtm,0.738197507,"Transport, mitochondrial"
+CDS,0.738197507,Glycerophospholipid metabolism
+CDSm,0.738197507,Glycerophospholipid metabolism
+CE2026tm,0.9527088103529396,"Transport, mitochondrial"
+CE2176tm,0.955528375422014,"Transport, mitochondrial"
+CE4968tm,0.9527088103529396,"Transport, mitochondrial"
+CE4970tm,0.9731026452942996,"Transport, mitochondrial"
+CEPTC,0.7381974809999999,Glycerophospholipid metabolism
+CEPTE,0.7381876110000001,Glycerophospholipid metabolism
+CERK,0.4763950139999999,Sphingolipid metabolism
+CERT1rt,0.738197506,"Transport, endoplasmic reticular"
+CERT1tn,0.8952790027905579,"Transport, nuclear"
+CHLP,0.4763950139999999,Glycerophospholipid metabolism
+CHLPCTD,0.7381974809999999,Glycerophospholipid metabolism
+CHLtm,0.8506302220298739,"Transport, mitochondrial"
+CHOLD2m,0.925585365,"Glycine, serine, alanine, and threonine metabolism"
+CHOLESACATc,0.73819749966953,Cholesterol metabolism
+CHOLK,0.476375274,Glycerophospholipid metabolism
+CHOLPtg,0.7381876629999999,"Transport, golgi apparatus"
+CHOLPtl,0.9057796251082784,"Transport, lysosomal"
+CHOLPtn,0.7381876629999999,"Transport, nuclear"
+CHOLtg,0.825458442,"Transport, golgi apparatus"
+CHOLtr,0.825458442,"Transport, endoplasmic reticular"
+CHSTEROLSULT,0.825465005,Steroid metabolism
+CHSTEROLtg,0.4763950139999999,"Transport, golgi apparatus"
+CITMCOAHm,1.0,C5-branched dibasic acid metabolism
+CITMCOALm,1.0,C5-branched dibasic acid metabolism
+CMPACNAtg,0.825465005,"Transport, golgi apparatus"
+CMPACNAtn,0.738197507,"Transport, nuclear"
+CMPSAS,0.738197507,Aminosugar metabolism
+CMPSASn,0.738197507,Aminosugar metabolism
+CO2tg,0.784682224336666,"Transport, golgi apparatus"
+COAtl,0.4763950139999999,"Transport, lysosomal"
+COQ3m,0.9886972598869724,Ubiquinone synthesis
+COQ5m,0.9886972598869724,Ubiquinone synthesis
+COQ6m,0.9886972598869724,Ubiquinone synthesis
+COQ7m,0.9886972598869724,Ubiquinone synthesis
+CORE2GTg,0.7081407006654742,O-glycan metabolism
+CORE3GTg,0.7044395846430334,O-glycan metabolism
+CORE4GTg,0.7044395846430334,O-glycan metabolism
+CORE6GTg,0.602266156402766,O-glycan metabolism
+COUCOAFm,0.9993702491130956,Ubiquinone synthesis
+CRGLZABCt,0.4763950139999999,Drug metabolism
+CRGLZtev,0.4763950139999999,Drug metabolism
+CRMte,0.8130385878528458,Sphingolipid metabolism
+CRVS1tev,0.4763950139999999,Drug metabolism
+CRVSATPthc,0.4763950139999999,Drug metabolism
+CRVSATPtu,0.4763950139999999,Drug metabolism
+CRVSM1hr,0.775597863,Drug metabolism
+CRVSM1teb,0.4763950139999999,Drug metabolism
+CRVSM23hr,0.775597863,Drug metabolism
+CRVSM23teb,0.4763950139999999,Drug metabolism
+CRVSM23tev,0.4763950139999999,Drug metabolism
+CRVSM24teb,0.4763950139999999,Drug metabolism
+CRVSM24tev,0.4763950139999999,Drug metabolism
+CSAPASEly,0.784682224336666,Chondroitin sulfate degradation
+CSASULPteb,0.4763950139999999,Drug metabolism
+CSASULPtev,0.4763950139999999,Drug metabolism
+CSAtd,0.4763950139999999,Drug metabolism
+CSAtu,0.4763950139999999,Drug metabolism
+CSBPASEly,0.8161628383661337,Chondroitin sulfate degradation
+CSCPASEly,0.784682224336666,Chondroitin sulfate degradation
+CSDPASEly,0.8256951406141888,Chondroitin sulfate degradation
+CSEPASEly,0.8383718503227625,Chondroitin sulfate degradation
+CSND,1.0,Pyrimidine catabolism
+CSPG_Atly,0.784682224336666,"Transport, lysosomal"
+CSPG_Btly,0.8161628383661337,"Transport, lysosomal"
+CSPG_Ctly,0.784682224336666,"Transport, lysosomal"
+CSPG_Dtly,0.8256951406141888,"Transport, lysosomal"
+CSPG_Etly,0.8383718503227625,"Transport, lysosomal"
+CTPS1,0.4763950139999999,Nucleotide interconversion
+CTPS2,0.737926423,Pyrimidine synthesis
+CTPtn,0.738197507,"Transport, nuclear"
+CVM1GLUChc,0.775597863,Drug metabolism
+CVM23GLUChc,0.775597863,Drug metabolism
+CYSASNMETr,0.6561017729155371,Peptide metabolism
+CYSGLNMETr,0.6561017729155371,Peptide metabolism
+CYSGLUHISr,0.7270063813257939,Peptide metabolism
+CYSGLUTRPr,0.8946796465096357,Peptide metabolism
+CYSGLYPTASEe_1,0.825465005,Tyrosine metabolism
+CYSLEUTHRr,0.4785834869240916,Peptide metabolism
+CYSO,0.9965893,Taurine and hypotaurine metabolism
+CYSSERMETr,0.6561017729155371,Peptide metabolism
+CYSTA,0.825329819,Methionine and cysteine metabolism
+CYSTGL,0.999924525,Methionine and cysteine metabolism
+CYSTS,0.999924525,Methionine and cysteine metabolism
+CYTDK2m,0.738197507,Nucleotide interconversion
+CYTDtl,0.4763950139999999,"Transport, lysosomal"
+CYTDtm,0.738197507,"Transport, mitochondrial"
+CYTK1m,0.738197507,Nucleotide interconversion
+DADA,0.738192075,Nucleotide interconversion
+DADAe,0.738192075,Nucleotide interconversion
+DADNK,0.4763950019999999,Nucleotide interconversion
+DAGK_hs,0.4763950139999999,Glycerophospholipid metabolism
+DAGKn_hs,0.4763950139999999,Glycerophospholipid metabolism
+DAG_HStg,0.7381876609999999,"Transport, golgi apparatus"
+DATPtn,0.8707992487560954,"Transport, nuclear"
+DCATDc,0.4763950139999999,Fatty acid oxidation
+DCIm,0.782313326758139,Fatty acid oxidation
+DCSPTN1COAtx,0.4705762790403173,"Transport, peroxisomal"
+DCSPTN1COAtxc,0.4763950139999999,"Transport, peroxisomal"
+DCT,0.955528375422014,Tyrosine metabolism
+DCTPtm,0.8707991643255628,"Transport, mitochondrial"
+DECDPtm,0.9886972598869724,"Transport, mitochondrial"
+DEDOLP1_L,0.8606380651102518,N-glycan synthesis
+DEDOLP2_L,0.8606380651102518,N-glycan synthesis
+DEDOLR_L,0.8606380651102518,N-glycan synthesis
+DES21,0.5271146600000001,Sphingolipid metabolism
+DGAT,0.738197507,Triacylglycerol synthesis
+DGK2m,0.477598408608093,Nucleotide interconversion
+DGNSKm,0.476395009,Nucleotide interconversion
+DGSNtm,0.476395009,"Transport, mitochondrial"
+DGTPtm,0.4763950139999999,"Transport, mitochondrial"
+DGTPtn,0.8707991643255628,"Transport, nuclear"
+DHCHOLESTANATEtm,0.4742535300575279,"Transport, peroxisomal"
+DHCRD1,0.4763950119999999,Sphingolipid metabolism
+DHCRD2,0.4763950119999999,Sphingolipid metabolism
+DHCRMter,0.738197506476395,"Transport, endoplasmic reticular"
+DHCRMtg,0.738197506476395,"Transport, golgi apparatus"
+DHDPBMTm,0.9886972598869724,Ubiquinone synthesis
+DHEASULT,0.825465005,Steroid metabolism
+DHEAtr,0.8200087590213401,"Transport, endoplasmic reticular"
+DHGLZABCt,0.4763950139999999,Drug metabolism
+DHGLZtev,0.4763950139999999,Drug metabolism
+DHORD9,0.4837150516151082,Pyrimidine synthesis
+DHORTS,0.4837150516151082,Pyrimidine synthesis
+DHPM1,0.89516034,Pyrimidine catabolism
+DHPM2,0.904688299,Pyrimidine catabolism
+DHPR,0.99286539,Tetrahydrobiopterin metabolism
+DHPR2,0.99286539,Tetrahydrobiopterin metabolism
+DIGALSIDEtg,0.6510660936015379,"Transport, golgi apparatus"
+DIGALSIDEtl,0.738197507,"Transport, lysosomal"
+DKMPPD,0.4119291247521818,Arginine and proline metabolism
+DKMPPD2,0.4119291247521818,Methionine and cysteine metabolism
+DKMPPD3,0.4119291247521818,Methionine and cysteine metabolism
+DLNLCGCPT2,0.738197507,Fatty acid oxidation
+DMATT,0.8610711865716203,Cholesterol metabolism
+DMATTx,0.8610711865716203,Cholesterol metabolism
+DMGDHm,0.8258354134546484,"Glycine, serine, alanine, and threonine metabolism"
+DMGtm,0.8258354134546484,"Transport, mitochondrial"
+DM_PROTEIN,0.4479607481687944,Protein formation
+DNDPt3m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt46m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt47m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt48m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt49m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt4m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt50m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt51m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt52m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt53m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt54m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt55m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt56m,0.8707991643255628,"Transport, mitochondrial"
+DNDPt57m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt58m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt59m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt5m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt60m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt61m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt62m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt63m,0.4763950139999999,"Transport, mitochondrial"
+DNDPt6m,0.4763950079999999,"Transport, mitochondrial"
+DNDPt7m,0.4763950079999999,"Transport, mitochondrial"
+DOCOSACT,0.738197507,Fatty acid oxidation
+DOCOSACTDe,0.6530351281068266,Fatty acid oxidation
+DOCOSCOAtxc,0.42309736,"Transport, peroxisomal"
+DOCOSDIACTD,0.4229967899999999,Fatty acid oxidation
+DOLGLCP_Lter,0.738197507,N-glycan synthesis
+DOLGPP_Ler,0.738197507,N-glycan synthesis
+DOLICHOL_Lter,0.825465005,N-glycan synthesis
+DOLK_L,0.825465005,N-glycan synthesis
+DOLPGT3_Ler,0.825465005,N-glycan synthesis
+DOLPMT4_Ler,0.738197507,N-glycan synthesis
+DOPABMO,0.9927564452329674,Tyrosine metabolism
+DOPACCL,0.955528375422014,Tyrosine metabolism
+DOPACHRMDC,0.955528375422014,Tyrosine metabolism
+DOPAMT,0.9963782225816676,Tyrosine metabolism
+DOPAOQNOX,0.955528375422014,Tyrosine metabolism
+DOPAQNISO1,0.955528375422014,Tyrosine metabolism
+DOPAc,0.9945673339247256,Tyrosine metabolism
+DPCOAK,0.4763950139999999,CoA synthesis
+DPCOAPPe,0.999703434,CoA synthesis
+DPCOAtl,0.4763950139999999,"Transport, lysosomal"
+DPGM,0.4763950139999999,Glycolysis/gluconeogenesis
+DPGase,0.4763950139999999,Glycolysis/gluconeogenesis
+DPHMBDCm,0.9886972598869724,Ubiquinone synthesis
+DPMVDc,0.825465005,Squalene and cholesterol synthesis
+DPMVDx,0.7381975076309013,Cholesterol metabolism
+DPPS,0.9886972598869724,Miscellaneous
+DRBK,0.4763950139999999,Pentose phosphate pathway
+DSAT,0.738197506476395,Sphingolipid metabolism
+DSPVSteb,0.4763950139999999,Drug metabolism
+DSPVStev,0.4763950139999999,Drug metabolism
+DTMPK,0.4763950079999999,Nucleotide interconversion
+DTMPKm,0.4763950079999999,Pyrimidine synthesis
+DUMPtn,0.738197507,"Transport, nuclear"
+DURIK1m,0.4763950139999999,Nucleotide interconversion
+DUTPDP,0.738197507,Pyrimidine catabolism
+DUTPDPm,0.738197507,Nucleotide interconversion
+DUTPDPn,0.738197507,Nucleotide interconversion
+D_LACtm,0.738197507,"Transport, mitochondrial"
+ECOAH12m,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+ECOAH1m,0.825219133,Tryptophan metabolism
+ECOAH1x,0.422910625,Tryptophan metabolism
+ECOAH9m,0.9922752350116428,"Valine, leucine, and isoleucine metabolism"
+EICOSTETCPT1,0.738197507,Fatty acid oxidation
+EICOSTETCPT2,0.738197507,Fatty acid oxidation
+ESTSULT,0.825465005,Steroid metabolism
+ETHAK,0.4763950139999999,Glycerophospholipid metabolism
+ETHMALACc,0.790479319,Fatty acid oxidation
+ETHMALCOAc,0.790479319,Fatty acid oxidation
+ETHP,0.4763753249999999,Glycerophospholipid metabolism
+ETOHMO,1.0,Glycolysis/gluconeogenesis
+ETOHtx,1.0,"Transport, peroxisomal"
+FACOAL140i,0.738197507,Fatty acid oxidation
+FACOAL150,0.738197507,Fatty acid oxidation
+FACOAL160i,0.738197507,Fatty acid oxidation
+FACOAL161,0.738197507,Fatty acid oxidation
+FACOAL170,0.738197507,Fatty acid oxidation
+FACOAL180i,0.738197507,Fatty acid oxidation
+FACOAL1812,0.4802635,Fatty acid oxidation
+FACOAL1813,0.738197507,Fatty acid oxidation
+FACOAL181i,0.738197507,Fatty acid oxidation
+FACOAL1821,0.738197452,Fatty acid oxidation
+FACOAL1822,0.738197507,Fatty acid oxidation
+FACOAL1831,0.738197507,Fatty acid oxidation
+FACOAL1832,0.738197507,Fatty acid oxidation
+FACOAL184,0.738197507,Fatty acid oxidation
+FACOAL191,0.738197507,Fatty acid oxidation
+FACOAL200,0.738197507,Fatty acid oxidation
+FACOAL203,0.738197507,Fatty acid oxidation
+FACOAL204,0.738197507,Fatty acid oxidation
+FACOAL2042,0.738197507,Fatty acid oxidation
+FACOAL205,0.738197507,Fatty acid oxidation
+FACOAL224,0.738197507,Fatty acid oxidation
+FACOAL2251,0.738197507,Fatty acid oxidation
+FACOAL2252,0.738197507,Fatty acid oxidation
+FACOAL226,0.73819713,Fatty acid oxidation
+FACOAL240,0.738197507,Fatty acid oxidation
+FACOAL241,0.738197507,Fatty acid oxidation
+FACOAL244_1,0.738197507,Fatty acid oxidation
+FACOAL245_1,0.738197507,Fatty acid oxidation
+FACOAL245_2,0.738197507,Fatty acid oxidation
+FACOAL246_1,0.738197507,Fatty acid oxidation
+FACOAL260,0.738197507,Fatty acid oxidation
+FACOAL40im,0.999998289,Fatty acid oxidation
+FADDP,0.738197507,Vitamin B2 metabolism
+FADDPle,0.869098753,Vitamin B2 metabolism
+FALDtm,0.8258354134546484,"Transport, mitochondrial"
+FAOXC10C10OHm,0.4763950139999999,Fatty acid oxidation
+FAOXC10C8m,0.4763950139999999,Fatty acid oxidation
+FAOXC121C101m,0.4801967474814401,Fatty acid oxidation
+FAOXC12C10m,0.4763950139999999,Fatty acid oxidation
+FAOXC12C12OHm,0.4763950139999999,Fatty acid oxidation
+FAOXC12DCTc,0.738197507,Fatty acid oxidation
+FAOXC12DCc,0.738197507,Fatty acid oxidation
+FAOXC12DCx,0.738197507,Fatty acid oxidation
+FAOXC140,0.67346998959437,Fatty acid oxidation
+FAOXC141C121m,0.4801967474814401,Fatty acid oxidation
+FAOXC14C12m,0.738191681,Fatty acid oxidation
+FAOXC14C14OHm,0.738191681,Fatty acid oxidation
+FAOXC15ATPx,0.738197507,Fatty acid oxidation
+FAOXC160,0.6613762865475966,Fatty acid oxidation
+FAOXC16080m,0.7097511034524825,Fatty acid oxidation
+FAOXC161802m,0.738775992326902,Fatty acid oxidation
+FAOXC16180m,0.4801967474814401,Fatty acid oxidation
+FAOXC161C141m,0.4801967474814401,Fatty acid oxidation
+FAOXC16BRx,0.738197507,Fatty acid oxidation
+FAOXC16C14m,0.738191681,Fatty acid oxidation
+FAOXC180,0.73819168,Fatty acid oxidation
+FAOXC1811601m,0.7097957866677209,Fatty acid oxidation
+FAOXC1811602m,0.52718747,Fatty acid oxidation
+FAOXC1811603m,0.5270552116981925,Fatty acid oxidation
+FAOXC18280m,0.48010344,Fatty acid oxidation
+FAOXC200180m,0.738196947,Fatty acid oxidation
+FAOXC2031836m,0.738197507,Fatty acid oxidation
+FAOXC204184m,0.738197507,Fatty acid oxidation
+FAOXC2242046m,0.738197507,Fatty acid oxidation
+FAOXC22C20x,0.42309736,Fatty acid oxidation
+FAOXC22OHC22r,0.4229967899999999,Fatty acid oxidation
+FAOXC4C2m,0.8254084930000001,Fatty acid oxidation
+FAOXC4C4DCc,0.4672356142847437,Fatty acid oxidation
+FAOXC5C5OHm,0.9995993549779644,Fatty acid oxidation
+FAOXC61C4m,0.7904798749999999,Fatty acid oxidation
+FAOXC61C4x,0.422910625,Fatty acid oxidation
+FAOXC6C4m,0.82880687,Fatty acid oxidation
+FAOXC6C4x,0.422910625,Fatty acid oxidation
+FAOXC80,0.738775992326902,Fatty acid oxidation
+FAOXC8C6m,0.8254084930000001,Fatty acid oxidation
+FAOXC8C6x,0.422910625,Fatty acid oxidation
+FAOXOHC22C22DCc,0.4229967899999999,Fatty acid oxidation
+FAOXTC101TC102m,0.52704186,Fatty acid oxidation
+FAOXTC102C101m,0.52704186,Fatty acid oxidation
+FAOXTC122TC101m,0.52704186,Fatty acid oxidation
+FAOXTC122m,0.52704186,Fatty acid oxidation
+FAOXTC142TC122m,0.52704186,Fatty acid oxidation
+FAOXTC162TC142m,0.52704186,Fatty acid oxidation
+FAOXTC182TC162m,0.42282177,Fatty acid oxidation
+FAS100COA,0.4763950139999999,Fatty acid synthesis
+FAS120COA,0.4763950139999999,Fatty acid synthesis
+FAS140COA,0.4763950139999999,Fatty acid synthesis
+FAS160COA,0.4763950139999999,Fatty acid synthesis
+FAS180,0.4763950139999999,Fatty acid synthesis
+FAS180COA,0.4763950139999999,Fatty acid synthesis
+FAS80COA_L,0.7381975076309013,Fatty acid synthesis
+FBA2,0.4700073559999999,Fructose and mannose metabolism
+FBA4,0.8253488720000001,Glyoxylate and dicarboxylate metabolism
+FBP,0.4763950139999999,Glycolysis/gluconeogenesis
+FBP26,0.4763950139999999,Fructose and mannose metabolism
+FDH,0.913235691,Fatty acid oxidation
+FKYNH,0.998806447471154,Tryptophan metabolism
+FMNAT,0.738197507,Vitamin B2 metabolism
+FORTHFC,0.9998801729984422,"Transport, mitochondrial"
+FORt2m,0.919871005,"Transport, mitochondrial"
+FPGS,0.6587983380000001,Folate metabolism
+FPGS2,0.7587983380000001,Folate metabolism
+FPGS2m,0.7587983380000001,Folate metabolism
+FPGS3,0.825465005,Folate metabolism
+FPGS3m,0.825465005,Folate metabolism
+FPGSm,0.69163951,Folate metabolism
+FTHFL,0.919871005,Folate metabolism
+FTHFLm,0.919871005,Folate metabolism
+FUMAC,0.99246484,Tyrosine metabolism
+FVSGLUChc,0.775597863,Drug metabolism
+FVShc,0.775597863,Drug metabolism
+FVSteb,0.4763950139999999,Drug metabolism
+FldAct,0.905410961,Miscellaneous
+G14T18g,0.7044395846430334,Keratan sulfate synthesis
+G14T19g,0.7044395846430334,Keratan sulfate synthesis
+G14T20g,0.7044395846430334,Keratan sulfate synthesis
+G14T21g,0.7044395846430334,Keratan sulfate synthesis
+G14T2g,0.7081407006654742,Keratan sulfate synthesis
+G14T3g,0.7081407006654742,Keratan sulfate synthesis
+G14T4g,0.7081407006654742,Keratan sulfate synthesis
+G14T5g,0.7081407006654742,Keratan sulfate synthesis
+G3PD2m,0.4763950139999999,Glycolysis/gluconeogenesis
+G5SADs,0.4763950139999999,Urea cycle
+G5SDym,0.4763950139999999,Urea cycle
+G6PDA,0.475852846,Aminosugar metabolism
+G6PPer,0.4763950139999999,Glycolysis/gluconeogenesis
+GAL3ST11,0.9063630740398728,Sphingolipid metabolism
+GALASE16ly,0.7081407006654742,Keratan sulfate degradation
+GALASE17ly,0.7081407006654742,Keratan sulfate degradation
+GALASE18ly,0.7081407006654742,Keratan sulfate degradation
+GALASE19ly,0.602266156402766,Keratan sulfate degradation
+GALASE20ly,0.7044395846430334,Keratan sulfate degradation
+GALC,0.8952790027905579,Sphingolipid metabolism
+GALGT1,0.6862512472232961,Sphingolipid metabolism
+GALGT2,0.6862512472232961,Sphingolipid metabolism
+GALGT3,0.7011916674462374,Sphingolipid metabolism
+GALK,0.7381843770000001,Galactose metabolism
+GALNACT1g,0.784682224336666,Chondroitin synthesis
+GALNACT2g,0.784682224336666,Chondroitin synthesis
+GALNACT3g,0.784682224336666,Chondroitin synthesis
+GALNACT4g,0.8256951406141888,Chondroitin synthesis
+GALNACT5g,0.8383687264472093,Chondroitin synthesis
+GALNTg,0.602266156402766,O-glycan metabolism
+GALOR,0.8230428086876935,Galactose metabolism
+GALSIDEter,0.8952790027905579,"Transport, endoplasmic reticular"
+GALSIDEtg,0.8094951251572909,"Transport, golgi apparatus"
+GALSIDEtn,0.8952790027905579,"Transport, nuclear"
+GALT2g,0.784682224336666,Chondroitin synthesis
+GALTg,0.784682224336666,Chondroitin synthesis
+GALtly,0.738197507,"Transport, lysosomal"
+GARFT,0.9969524097163082,Purine synthesis
+GBA,0.738197507,Sphingolipid metabolism
+GBA2e,0.738197507,Sphingolipid metabolism
+GBAl,0.8952790027905579,Sphingolipid metabolism
+GBGT1,0.602266156402766,Sphingolipid metabolism
+GCALDD,0.540396905,Glyoxylate and dicarboxylate metabolism
+GCALDDm,0.5404632659999999,Glyoxylate and dicarboxylate metabolism
+GD1Atg,0.8610089223633481,"Transport, golgi apparatus"
+GD1Btl,0.869098753,"Transport, lysosomal"
+GD1Ctg,0.6862512472232961,"Transport, golgi apparatus"
+GD3tlc,0.869098753,"Transport, lysosomal"
+GF6PTA,0.475852846,Aminosugar metabolism
+GGLUCT,0.4763950139999999,Glutathione metabolism
+GGNG,0.8484301366515699,Starch and sucrose metabolism
+GGT_L,0.8606380651102518,N-glycan synthesis
+GGTe_1,0.825465005,Tyrosine metabolism
+GLA2l,0.738197507,Sphingolipid metabolism
+GLACO,0.869011654,Vitamin C metabolism
+GLAl,0.738197507,Sphingolipid metabolism
+GLB1,0.738197507,Sphingolipid metabolism
+GLBRAN,0.8484301366515699,Starch and sucrose metabolism
+GLCAASE1ly,0.8535839109661102,Heparan sulfate degradation
+GLCAASE4ly,0.784682224336666,Chondroitin sulfate degradation
+GLCAASE5ly,0.784682224336666,Chondroitin sulfate degradation
+GLCAASE6ly,0.8256951406141888,Chondroitin sulfate degradation
+GLCAASE7ly,0.8383718503227625,Chondroitin sulfate degradation
+GLCAASE8ly,0.900435258,Hyaluronan metabolism
+GLCAASE9ly,0.900435258,Hyaluronan metabolism
+GLCAE1g,0.8161628383661337,Chondroitin synthesis
+GLCAE2g,0.853566958348397,Chondroitin synthesis
+GLCAT2g,0.784682224336666,Chondroitin synthesis
+GLCAT3g,0.784682224336666,Chondroitin synthesis
+GLCAT4g,0.8256951406141888,Chondroitin synthesis
+GLCAT5g,0.8383687264472093,Chondroitin synthesis
+GLCAT6g,0.853566958348397,Chondroitin synthesis
+GLCAT7g,0.853566958348397,Chondroitin synthesis
+GLCAT8g,0.853566958348397,Chondroitin synthesis
+GLCAT9g,0.853566958348397,Chondroitin synthesis
+GLCATg,0.784682224336666,Chondroitin synthesis
+GLCNACASE1ly,0.8535839109661102,Heparan sulfate degradation
+GLCNACASE2ly,0.8535839109661102,Heparan sulfate degradation
+GLCNACASE3ly,0.8535839109661102,Heparan sulfate degradation
+GLCNACASE4ly,0.8535839109661102,Heparan sulfate degradation
+GLCNACASE5ly,0.8535839109661102,Heparan sulfate degradation
+GLCNACDASg,0.853566958348397,Chondroitin synthesis
+GLCNACT1g,0.853566958348397,Chondroitin synthesis
+GLCNACT2g,0.853566958348397,Chondroitin synthesis
+GLCNACT3g,0.853566958348397,Chondroitin synthesis
+GLCNACT4g,0.853566958348397,Chondroitin synthesis
+GLCNACT5g,0.853566958348397,Chondroitin synthesis
+GLCURtly,0.9004352569999999,"Transport, lysosomal"
+GLCtg,0.6513902780214893,"Transport, golgi apparatus"
+GLCtly,0.894155662,"Transport, lysosomal"
+GLGNS1,0.8484301366515699,Starch and sucrose metabolism
+GLNHISHISr,0.9434231300945056,Peptide metabolism
+GLNHISLYSr,0.9009913506760486,Peptide metabolism
+GLNLYSLYSr,0.8994177675447014,Peptide metabolism
+GLNLYSTRPr,0.9672594280793128,Peptide metabolism
+GLNS,0.4763950139999999,Glutamate metabolism
+GLNTRPGLUr,0.97271619328661,Peptide metabolism
+GLNTYRLEUr,0.8221134596934421,Peptide metabolism
+GLNtm,0.475852846,"Transport, mitochondrial"
+GLPASE1,0.8484301366515699,Starch and sucrose metabolism
+GLPASE2,0.8484301366515699,Starch and sucrose metabolism
+GLU5Km,0.4763950139999999,Urea cycle
+GLU5SAtmc,0.4763950139999999,"Transport, mitochondrial"
+GLUARGLEUr,0.7162528621176378,Peptide metabolism
+GLUASNLEUr,0.8108351967546252,Peptide metabolism
+GLUCYS,0.738197507,Glutathione metabolism
+GLUDC,0.497033703,Glutamate metabolism
+GLUILELYSr,0.892410555777991,Peptide metabolism
+GLULEUr,0.9054176207058792,Peptide metabolism
+GLUMETHISr,0.8280504947179208,Peptide metabolism
+GLUMETr,0.8280504947179208,Peptide metabolism
+GLUNm,0.475852846,Glutamate metabolism
+GLUPRT,0.9969524097163082,Purine synthesis
+GLUTACOAm,0.999669731,Lysine metabolism
+GLUTCOADHm,0.999669731,Tryptophan metabolism
+GLUTCONm,0.999669731,Lysine metabolism
+GLUTCONtm,0.999669731,"Transport, mitochondrial"
+GLUTHRLYSr,0.8919393494141554,Peptide metabolism
+GLUTHRr,0.9459696874623018,Peptide metabolism
+GLUTRPALAr,0.9781729469000476,Peptide metabolism
+GLYBtm,0.925585365,"Transport, mitochondrial"
+GLYC3PFADm,0.4763950139999999,Oxidative phosphorylation
+GLYCK2,0.4763950139999999,Glyoxylate and dicarboxylate metabolism
+GLYCLTtm,0.5404632659999999,"Transport, mitochondrial"
+GLYCtm,0.8951539740000001,"Transport, mitochondrial"
+GLYHISASNr,0.9151354234021896,Peptide metabolism
+GLYHISLYSr,0.9151354234021896,Peptide metabolism
+GLYK,0.8951539740000001,Glycerophospholipid metabolism
+GLYKm,0.8951539740000001,Glycerophospholipid metabolism
+GLYLYSPHEr,0.8658898529156248,Peptide metabolism
+GLYNATm,0.9657131350159364,Phenylalanine metabolism
+GLYOX,0.738197507,Pyruvate metabolism
+GLYOXm,0.738197507,Pyruvate metabolism
+GLYPHEHYc,0.9781729469000476,Pentose phosphate pathway
+GLYTYRLYSr,0.8658898529156248,Peptide metabolism
+GLYVALHISr,0.929279527849502,Peptide metabolism
+GLZABCteb,0.4763950139999999,Drug metabolism
+GLZtd,0.4763950139999999,Drug metabolism
+GMPS2,0.8252842819999999,Nucleotide interconversion
+GMPtg,0.7376458364318493,"Transport, golgi apparatus"
+GMPtn,0.738197507,"Transport, nuclear"
+GNDc,0.674491761,Pentose phosphate pathway
+GNMT,0.7959484579999999,"Glycine, serine, alanine, and threonine metabolism"
+GPAM_hs,0.8952789972403449,Triacylglycerol synthesis
+GPDDA1,0.8976026150436683,Glycerophospholipid metabolism
+GPDDACHOL,0.8976026150436683,Glycerophospholipid metabolism
+GQ1Btg,0.7011916674462374,"Transport, golgi apparatus"
+GRTT,0.8610711865716203,Cholesterol metabolism
+GRTTx,0.8610711865716203,Cholesterol metabolism
+GSNtl,0.4763950139999999,"Transport, lysosomal"
+GT1Atg,0.825465004,"Transport, golgi apparatus"
+GTHRDt,0.4763950139999999,Glutathione metabolism
+GTHS,0.738197507,Glutathione metabolism
+GTMLTe,0.4763950139999999,Glutathione metabolism
+GUACYC,0.738197507,Nucleotide interconversion
+GUAPRT,0.476395009,Nucleotide salvage pathway
+GUR1PP,0.842918504,Pentose phosphate pathway
+GluForTx,0.9998801729984422,Histidine metabolism
+H2Otg,0.4763950139999999,"Transport, golgi apparatus"
+HACD1m,0.825219133,Tryptophan metabolism
+HACD1x,0.422910625,Tryptophan metabolism
+HAS1,0.9002527382335306,Hyaluronan metabolism
+HAS2,0.900435258,Hyaluronan metabolism
+HAtly,0.900435258,"Transport, lysosomal"
+HBZOPT10m,0.9886972598869724,Ubiquinone synthesis
+HC02195te,0.4763950139999999,Bile acid synthesis
+HC02196te,0.4763950139999999,Bile acid synthesis
+HC02197c,0.825465005,Bile acid synthesis
+HC02198c,1.0,Bile acid synthesis
+HDCA24GSc,1.0,Bile acid synthesis
+HDCA24GSr,1.0,Bile acid synthesis
+HDCA6GSc,1.0,Bile acid synthesis
+HDCA6GSr,1.0,Bile acid synthesis
+HDCAc,0.476383361,Fatty acid oxidation
+HEX1,0.470141989,Glycolysis/gluconeogenesis
+HEX10,1.0,Aminosugar metabolism
+HEX4,1.0,Fructose and mannose metabolism
+HEX7,0.4700073559999999,Fructose and mannose metabolism
+HEXA1l,0.9040738151857928,Sphingolipid metabolism
+HEXA2l,0.869098753,Sphingolipid metabolism
+HEXAHBl,0.8958311721557799,Sphingolipid metabolism
+HEXCOAACBP,0.766222145,Fatty acid oxidation
+HGNTOR,0.99246484,Tyrosine metabolism
+HISARGCYSr,0.7270063813257939,Peptide metabolism
+HISARGSERr,0.8868472044903417,Peptide metabolism
+HISASPr,0.9434236022451707,Peptide metabolism
+HISCYSCYSr,0.4540140065339524,Peptide metabolism
+HISD,0.9998801729984422,Histidine metabolism
+HISDC,0.97171180780073,Histidine metabolism
+HISGLNALAr,0.9151354234021896,Peptide metabolism
+HISGLUGLNr,0.9151354234021896,Peptide metabolism
+HISGLUr,0.9434236022451707,Peptide metabolism
+HISGLYLYSr,0.9151354234021896,Peptide metabolism
+HISHISLYSr,0.9434231300945056,Peptide metabolism
+HISLYSALAr,0.9151354234021896,Peptide metabolism
+HISLYSGLUr,0.9151354234021896,Peptide metabolism
+HISLYSILEr,0.9151354234021896,Peptide metabolism
+HISLYSTHRr,0.9151354234021896,Peptide metabolism
+HISLYSVALr,0.9151354234021896,Peptide metabolism
+HISMETGLNr,0.8280504947179208,Peptide metabolism
+HISMETr,0.8280504947179208,Peptide metabolism
+HISPHEARGr,0.8868472044903417,Peptide metabolism
+HISPROLYSr,0.9151354234021896,Peptide metabolism
+HISTASE,0.97171180780073,Histidine metabolism
+HISTRPHISr,0.9563458938000952,Peptide metabolism
+HKYNH,0.9987170222060148,Tryptophan metabolism
+HMCARNc,0.9434236022451707,Histidine metabolism
+HMCRNc,0.899417413431786,Lysine metabolism
+HMR_0156,0.999998289,Fatty acid synthesis
+HMR_0168,0.738197507,Fatty acid synthesis
+HMR_0188,0.738197507,Fatty acid synthesis
+HMR_0189,0.73811274,Fatty acid oxidation
+HMR_0192,0.738197507,Fatty acid synthesis
+HMR_0193,0.738197507,Fatty acid oxidation
+HMR_0197,0.73811274,Fatty acid oxidation
+HMR_0200,0.738197507,Fatty acid synthesis
+HMR_0201,0.73811274,Fatty acid oxidation
+HMR_0204,0.738197507,Fatty acid synthesis
+HMR_0206,0.738197507,Fatty acid oxidation
+HMR_0209,0.738197507,Fatty acid synthesis
+HMR_0210,0.738197507,Fatty acid oxidation
+HMR_0214,0.738197507,Fatty acid oxidation
+HMR_0230,0.738157187,Fatty acid oxidation
+HMR_0233,0.738197507,Fatty acid synthesis
+HMR_0234,0.738191681,Fatty acid oxidation
+HMR_0238,0.738197507,Fatty acid oxidation
+HMR_0241,0.738197507,Fatty acid synthesis
+HMR_0242,0.738197507,Fatty acid oxidation
+HMR_0245,0.738197507,Fatty acid synthesis
+HMR_0246,0.738197507,Fatty acid oxidation
+HMR_0255,0.738197507,Fatty acid synthesis
+HMR_0256,0.738157187,Fatty acid oxidation
+HMR_0259,0.738197507,Fatty acid synthesis
+HMR_0260,0.738197507,Fatty acid oxidation
+HMR_0267,0.738197507,Fatty acid synthesis
+HMR_0268,0.738153059,Fatty acid oxidation
+HMR_0271,0.42299947,Fatty acid synthesis
+HMR_0276,0.738197507,Fatty acid oxidation
+HMR_0279,0.738197507,Fatty acid synthesis
+HMR_0280,0.738197507,Fatty acid oxidation
+HMR_0289,0.738197507,Fatty acid synthesis
+HMR_0290,0.738197507,Fatty acid oxidation
+HMR_0293,0.738197507,Fatty acid synthesis
+HMR_0297,0.738197507,Fatty acid synthesis
+HMR_0298,0.738197507,Fatty acid oxidation
+HMR_0301,0.738197507,Fatty acid synthesis
+HMR_0302,0.738197507,Fatty acid oxidation
+HMR_0305,0.738197507,Fatty acid synthesis
+HMR_0306,0.738197507,Fatty acid oxidation
+HMR_0309,0.738197507,Fatty acid synthesis
+HMR_0310,0.738197507,Fatty acid oxidation
+HMR_0319,0.738197507,Fatty acid synthesis
+HMR_0323,0.738197507,Fatty acid synthesis
+HMR_0324,0.738197507,Fatty acid oxidation
+HMR_0327,0.738197507,Fatty acid synthesis
+HMR_0328,0.738197507,Fatty acid oxidation
+HMR_0342,0.7381975,Fatty acid oxidation
+HMR_0345,0.738197507,Fatty acid synthesis
+HMR_0346,0.738197507,Fatty acid oxidation
+HMR_0350,0.738197507,Fatty acid oxidation
+HMR_0354,0.738197507,Fatty acid oxidation
+HMR_0358,0.738197507,Fatty acid oxidation
+HMR_0362,0.738197507,Fatty acid oxidation
+HMR_0366,0.738197507,Fatty acid oxidation
+HMR_0370,0.738197507,Fatty acid oxidation
+HMR_0374,0.738197507,Fatty acid oxidation
+HMR_0378,0.738197507,Fatty acid oxidation
+HMR_0381,0.738197507,Fatty acid synthesis
+HMR_0382,0.738197507,Fatty acid oxidation
+HMR_0385,0.738197507,Fatty acid synthesis
+HMR_0386,0.738197507,Fatty acid oxidation
+HMR_0389,0.738197507,Fatty acid synthesis
+HMR_0390,0.738197507,Fatty acid oxidation
+HMR_0393,0.738197507,Fatty acid synthesis
+HMR_0394,0.738197507,Fatty acid oxidation
+HMR_0398,0.738197507,Fatty acid oxidation
+HMR_0402,0.738197507,Fatty acid oxidation
+HMR_0406,0.738197507,Fatty acid oxidation
+HMR_0410,0.4763950139999999,Fatty acid oxidation
+HMR_0414,0.738197507,Fatty acid oxidation
+HMR_0418,0.738197507,Fatty acid oxidation
+HMR_0422,0.738197507,Fatty acid oxidation
+HMR_0426,0.738197507,Fatty acid oxidation
+HMR_0429,0.738197507,Fatty acid synthesis
+HMR_0430,0.738197507,Fatty acid oxidation
+HMR_0433,0.738197507,Fatty acid synthesis
+HMR_0434,0.738197507,Fatty acid oxidation
+HMR_0437,0.738197507,Fatty acid synthesis
+HMR_0438,0.738197507,Fatty acid oxidation
+HMR_0593,0.738197507,Glycerophospholipid metabolism
+HMR_0597,0.825465005,Glycerophospholipid metabolism
+HMR_0598,0.825458442,Glycerophospholipid metabolism
+HMR_0601,0.738197507,Glycerophospholipid metabolism
+HMR_0614,0.825458442,Glycerophospholipid metabolism
+HMR_0625,0.825465005,Glycerophospholipid metabolism
+HMR_0629,0.825465005,Glycerophospholipid metabolism
+HMR_0642,0.825458442,Glycerophospholipid metabolism
+HMR_0647,0.476375279,Glycerophospholipid metabolism
+HMR_0653,0.4763950139999999,Glycerophospholipid metabolism
+HMR_0654,0.4763950139999999,Glycerophospholipid metabolism
+HMR_0657,0.4763950139999999,Glycerophospholipid metabolism
+HMR_0672,0.738197507,Glycerophospholipid metabolism
+HMR_0678,0.738197507,Glycerophospholipid metabolism
+HMR_0750,0.4763950139999999,Sphingolipid metabolism
+HMR_0753,0.738197507,Sphingolipid metabolism
+HMR_0758,0.4763950139999999,Sphingolipid metabolism
+HMR_0761,0.738197507,Sphingolipid metabolism
+HMR_0763,0.738197506,Sphingolipid metabolism
+HMR_0765,0.738197507,Sphingolipid metabolism
+HMR_0767,0.4763950139999999,Sphingolipid metabolism
+HMR_0775,0.4763950139999999,Sphingolipid metabolism
+HMR_0783,0.4763950139999999,Sphingolipid metabolism
+HMR_0793,0.8952790027905579,Glycosphingolipid metabolism
+HMR_0795,0.7381876629999999,Sphingolipid metabolism
+HMR_0803,0.738197507,Glycosphingolipid metabolism
+HMR_0805,0.738197507,Glycosphingolipid metabolism
+HMR_0806,0.9066782584996056,Glycosphingolipid metabolism
+HMR_0807,0.738197507,Glycosphingolipid metabolism
+HMR_0808,0.825465005,Glycosphingolipid metabolism
+HMR_0810,0.738197507,Glycosphingolipid metabolism
+HMR_0811,0.738197507,Glycosphingolipid metabolism
+HMR_0815,0.738197507,Glycosphingolipid metabolism
+HMR_0816,0.738197507,Glycosphingolipid metabolism
+HMR_0817,0.869098753,Glycosphingolipid metabolism
+HMR_0819,0.738197507,Glycosphingolipid metabolism
+HMR_0820,0.738197507,Glycosphingolipid metabolism
+HMR_0821,0.738197507,Glycosphingolipid metabolism
+HMR_0822,0.8958311721557799,Glycosphingolipid metabolism
+HMR_0823,0.869098753,Glycosphingolipid metabolism
+HMR_0824,0.738197507,Glycosphingolipid metabolism
+HMR_0825,0.738197507,Glycosphingolipid metabolism
+HMR_0827,0.738197507,Glycosphingolipid metabolism
+HMR_0828,0.738197507,Glycosphingolipid metabolism
+HMR_0829,0.738197507,Glycosphingolipid metabolism
+HMR_0830,0.738197507,Glycosphingolipid metabolism
+HMR_0831,0.8838135463541666,"Transport, lysosomal"
+HMR_0835,0.9040738151857928,Glycosphingolipid metabolism
+HMR_0836,0.9040738151857928,Glycosphingolipid metabolism
+HMR_0837,0.738197507,Glycosphingolipid metabolism
+HMR_0839,0.8690987530654506,Glycosphingolipid metabolism
+HMR_0841,0.9058786351298111,Glycosphingolipid metabolism
+HMR_0842,0.869098753,Glycosphingolipid metabolism
+HMR_0843,0.869098753,Glycosphingolipid metabolism
+HMR_0844,0.738197507,Glycosphingolipid metabolism
+HMR_0846,0.738197507,Glycosphingolipid metabolism
+HMR_0847,0.738197507,Glycosphingolipid metabolism
+HMR_0849,0.738197507,Glycosphingolipid metabolism
+HMR_0851,0.869098753,Glycosphingolipid metabolism
+HMR_0852,0.738197507,Glycosphingolipid metabolism
+HMR_0853,0.869098753,Glycosphingolipid metabolism
+HMR_0854,0.8690987530654506,Glycosphingolipid metabolism
+HMR_0912,0.738197507,Glycosphingolipid metabolism
+HMR_0913,0.738197507,"Transport, lysosomal"
+HMR_1465,0.8610711865716203,Cholesterol metabolism
+HMR_1467,0.8610711865716203,Cholesterol metabolism
+HMR_1470,0.7730968300000001,Cholesterol metabolism
+HMR_1473,0.7730968300000001,Cholesterol metabolism
+HMR_1629,0.4742535300575279,"Transport, peroxisomal"
+HMR_1631,0.4742535300575279,"Transport, endoplasmic reticular"
+HMR_1665,0.738197507,"Transport, peroxisomal"
+HMR_1666,0.738197507,"Transport, mitochondrial"
+HMR_1838,1.0,Bile acid synthesis
+HMR_1847,0.825465005,Bile acid synthesis
+HMR_1916,0.4763950139999999,"Transport, golgi apparatus"
+HMR_1962,0.825465005,Androgen and estrogen synthesis and metabolism
+HMR_2016,0.4763950139999999,Androgen and estrogen synthesis and metabolism
+HMR_2018,0.4763950139999999,Androgen and estrogen synthesis and metabolism
+HMR_2190,0.4763950139999999,Fatty acid synthesis
+HMR_2193,0.4763950139999999,Fatty acid synthesis
+HMR_2210,0.738196947,Fatty acid synthesis
+HMR_2211,0.8503725682124817,Fatty acid synthesis
+HMR_2215,0.7723203346021769,Fatty acid synthesis
+HMR_2217,0.7723203346021769,Fatty acid synthesis
+HMR_2218,0.7723203346021769,Fatty acid synthesis
+HMR_2219,0.7723203346021769,Fatty acid synthesis
+HMR_2259,0.738197507,Fatty acid synthesis
+HMR_2260,0.738197507,Fatty acid synthesis
+HMR_2261,0.738197507,Fatty acid synthesis
+HMR_2262,0.738197507,Fatty acid synthesis
+HMR_2263,0.738197507,Fatty acid synthesis
+HMR_2264,0.738197507,Fatty acid synthesis
+HMR_2265,0.738197507,Fatty acid synthesis
+HMR_2266,0.738197507,Fatty acid synthesis
+HMR_2342,0.738197507,Fatty acid synthesis
+HMR_2343,0.738197507,Fatty acid synthesis
+HMR_2344,0.738197507,Fatty acid synthesis
+HMR_2345,0.738197507,Fatty acid synthesis
+HMR_2347,0.42299947,Fatty acid synthesis
+HMR_2348,0.42299947,Fatty acid synthesis
+HMR_2349,0.42299947,Fatty acid synthesis
+HMR_2350,0.42299947,Fatty acid synthesis
+HMR_2353,0.4802635,Fatty acid synthesis
+HMR_2354,0.4802635,Fatty acid synthesis
+HMR_2355,0.4802635,Fatty acid synthesis
+HMR_2356,0.4802635,Fatty acid synthesis
+HMR_2361,0.42282177,Fatty acid synthesis
+HMR_2362,0.42282177,Fatty acid synthesis
+HMR_2363,0.42282177,Fatty acid synthesis
+HMR_2364,0.42282177,Fatty acid synthesis
+HMR_2374,0.738197507,Fatty acid synthesis
+HMR_2376,0.738197507,Fatty acid synthesis
+HMR_2391,0.738197507,Fatty acid synthesis
+HMR_2611,0.6710114329756458,Fatty acid oxidation
+HMR_2613,0.6890190358509903,"Transport, mitochondrial"
+HMR_2620,0.8136899063636364,Fatty acid oxidation
+HMR_2621,0.8136899063636364,"Transport, mitochondrial"
+HMR_2622,0.8136899063636364,"Transport, mitochondrial"
+HMR_2633,0.7503713572727273,Fatty acid oxidation
+HMR_2635,0.8136585795630857,"Transport, mitochondrial"
+HMR_2659,0.6278523105148491,"Transport, mitochondrial"
+HMR_2660,0.7030481336363636,Fatty acid oxidation
+HMR_2661,0.7030481336363636,"Transport, mitochondrial"
+HMR_2662,0.7030481336363636,"Transport, mitochondrial"
+HMR_2668,0.6614284208442414,"Transport, mitochondrial"
+HMR_2669,0.62795638,Fatty acid oxidation
+HMR_2670,0.62795638,"Transport, mitochondrial"
+HMR_2671,0.62795638,"Transport, mitochondrial"
+HMR_2681,0.738197507,Fatty acid oxidation
+HMR_2682,0.738197507,"Transport, mitochondrial"
+HMR_2683,0.738197507,"Transport, mitochondrial"
+HMR_2687,0.6742415700000001,Fatty acid oxidation
+HMR_2688,0.6742415700000001,"Transport, mitochondrial"
+HMR_2689,0.6742415700000001,"Transport, mitochondrial"
+HMR_2690,0.6525270499999999,Fatty acid oxidation
+HMR_2691,0.6525270499999999,"Transport, mitochondrial"
+HMR_2692,0.6525270499999999,"Transport, mitochondrial"
+HMR_2693,0.4529580399999999,Fatty acid oxidation
+HMR_2695,0.4529580399999999,"Transport, mitochondrial"
+HMR_2697,0.4529580399999999,"Transport, mitochondrial"
+HMR_2699,0.738197507,Fatty acid oxidation
+HMR_2700,0.738197507,"Transport, mitochondrial"
+HMR_2701,0.738197507,"Transport, mitochondrial"
+HMR_2703,0.7381974829999999,"Transport, mitochondrial"
+HMR_2704,0.7381974829999999,"Transport, mitochondrial"
+HMR_2705,0.738197507,Fatty acid oxidation
+HMR_2706,0.738197507,"Transport, mitochondrial"
+HMR_2707,0.738197507,"Transport, mitochondrial"
+HMR_2708,0.7102844899999999,Fatty acid oxidation
+HMR_2709,0.7102844899999999,"Transport, mitochondrial"
+HMR_2710,0.7102844899999999,"Transport, mitochondrial"
+HMR_2857,0.738197507,"Transport, endoplasmic reticular"
+HMR_2859,0.738197507,"Transport, endoplasmic reticular"
+HMR_2942,0.738197507,Fatty acid synthesis
+HMR_2943,0.738197507,Fatty acid synthesis
+HMR_2944,0.738197507,Fatty acid synthesis
+HMR_2945,0.738197507,Fatty acid synthesis
+HMR_2946,0.738197507,Fatty acid synthesis
+HMR_2947,0.738197507,Fatty acid synthesis
+HMR_2948,0.738197507,Fatty acid synthesis
+HMR_2951,0.738197507,Fatty acid synthesis
+HMR_2954,0.738197507,Fatty acid synthesis
+HMR_2955,0.738197507,Fatty acid synthesis
+HMR_2956,0.738197507,Fatty acid synthesis
+HMR_2957,0.738197507,Fatty acid synthesis
+HMR_2961,0.738197507,Fatty acid synthesis
+HMR_2962,0.738197507,Fatty acid synthesis
+HMR_2963,0.738197507,Fatty acid synthesis
+HMR_2964,0.738197507,Fatty acid synthesis
+HMR_2965,0.738197507,Fatty acid synthesis
+HMR_2966,0.738197507,Fatty acid synthesis
+HMR_2967,0.738197507,Fatty acid synthesis
+HMR_2968,0.738197507,Fatty acid synthesis
+HMR_2969,0.738197507,Fatty acid synthesis
+HMR_2970,0.738197507,Fatty acid synthesis
+HMR_2971,0.738197507,Fatty acid synthesis
+HMR_2972,0.738197507,Fatty acid synthesis
+HMR_2973,0.738197507,Fatty acid synthesis
+HMR_2974,0.738197507,Fatty acid synthesis
+HMR_2975,0.738197507,Fatty acid synthesis
+HMR_2976,0.738197507,Fatty acid synthesis
+HMR_2977,0.738197507,Fatty acid synthesis
+HMR_2978,0.738197507,Fatty acid synthesis
+HMR_2979,0.738197507,Fatty acid synthesis
+HMR_2980,0.738197507,Fatty acid synthesis
+HMR_2982,0.738197507,Fatty acid synthesis
+HMR_2983,0.738197507,Fatty acid synthesis
+HMR_2985,0.738197507,Fatty acid synthesis
+HMR_2986,0.738197507,Fatty acid synthesis
+HMR_2988,0.738197507,Fatty acid synthesis
+HMR_2989,0.738197507,Fatty acid synthesis
+HMR_2990,0.738197507,Fatty acid synthesis
+HMR_2994,0.738197507,Fatty acid synthesis
+HMR_2998,0.738197507,Fatty acid synthesis
+HMR_2999,0.738197507,Fatty acid synthesis
+HMR_3001,0.738197507,Fatty acid synthesis
+HMR_3002,0.738197507,Fatty acid synthesis
+HMR_3003,0.738197507,Fatty acid synthesis
+HMR_3066,0.42309736,Fatty acid oxidation
+HMR_3067,0.42309736,Fatty acid oxidation
+HMR_3068,0.42309736,Fatty acid oxidation
+HMR_3069,0.42309736,Fatty acid oxidation
+HMR_3094,0.422910625,Fatty acid oxidation
+HMR_3095,0.422910625,Fatty acid oxidation
+HMR_3096,0.422910625,Fatty acid oxidation
+HMR_3097,0.422910625,Fatty acid oxidation
+HMR_3098,0.422910625,Fatty acid oxidation
+HMR_3099,0.422910625,Fatty acid oxidation
+HMR_3100,0.422910625,Fatty acid oxidation
+HMR_3101,0.422910625,Fatty acid oxidation
+HMR_3102,0.422910625,Fatty acid oxidation
+HMR_3107,0.7381974829999999,Fatty acid oxidation
+HMR_3108,0.7381974829999999,Fatty acid oxidation
+HMR_3109,0.7381974829999999,Fatty acid oxidation
+HMR_3110,0.7381974829999999,Fatty acid oxidation
+HMR_3111,0.738196947,Fatty acid oxidation
+HMR_3112,0.738196947,Fatty acid oxidation
+HMR_3113,0.738196947,Fatty acid oxidation
+HMR_3114,0.738196947,Fatty acid oxidation
+HMR_3115,0.4763950139999999,Fatty acid oxidation
+HMR_3116,0.47638336,Fatty acid oxidation
+HMR_3117,0.47638336,Fatty acid oxidation
+HMR_3118,0.47638336,Fatty acid oxidation
+HMR_3121,0.4763950139999999,Fatty acid oxidation
+HMR_3128,0.4763950139999999,Fatty acid oxidation
+HMR_3135,0.4763950139999999,Fatty acid oxidation
+HMR_3142,0.4763950139999999,Fatty acid oxidation
+HMR_3149,0.4763950139999999,Fatty acid oxidation
+HMR_3156,0.4763950139999999,Fatty acid oxidation
+HMR_3170,0.738197507,Fatty acid oxidation
+HMR_3171,0.738197507,Fatty acid oxidation
+HMR_3172,0.738197507,Fatty acid oxidation
+HMR_3173,0.738197507,Fatty acid oxidation
+HMR_3174,0.738197507,Fatty acid oxidation
+HMR_3175,0.738197507,Fatty acid oxidation
+HMR_3176,0.738197507,Fatty acid oxidation
+HMR_3177,0.738197507,Fatty acid oxidation
+HMR_3218,0.738197507,Fatty acid oxidation
+HMR_3219,0.738197507,Fatty acid oxidation
+HMR_3220,0.738197507,Fatty acid oxidation
+HMR_3221,0.738197507,Fatty acid oxidation
+HMR_3222,0.738197507,Fatty acid oxidation
+HMR_3223,0.738197507,Fatty acid oxidation
+HMR_3224,0.738197507,Fatty acid oxidation
+HMR_3225,0.738197507,Fatty acid oxidation
+HMR_3230,0.86905637,Fatty acid oxidation
+HMR_3231,0.86905637,Fatty acid oxidation
+HMR_3232,0.86905637,Fatty acid oxidation
+HMR_3233,0.86905637,Fatty acid oxidation
+HMR_3234,0.782313326758139,Fatty acid oxidation
+HMR_3235,0.782313326758139,Fatty acid oxidation
+HMR_3236,0.782313326758139,Fatty acid oxidation
+HMR_3237,0.782313326758139,Fatty acid oxidation
+HMR_3240,0.738197507,Fatty acid oxidation
+HMR_3241,0.738197507,Fatty acid oxidation
+HMR_3242,0.738197507,Fatty acid oxidation
+HMR_3243,0.738197507,Fatty acid oxidation
+HMR_3398,0.6890190358509903,Fatty acid oxidation
+HMR_3406,0.6278523105148491,Fatty acid oxidation
+HMR_3407,0.6614284208442414,Fatty acid oxidation
+HMR_3408,0.62795638,Fatty acid oxidation
+HMR_3409,0.59938095,Fatty acid oxidation
+HMR_3411,0.6742415700000001,Fatty acid oxidation
+HMR_3413,0.6525270499999999,Fatty acid oxidation
+HMR_3414,0.4529580399999999,Fatty acid oxidation
+HMR_3416,0.7102844899999999,Fatty acid oxidation
+HMR_3448,0.738197507,Fatty acid synthesis
+HMR_3449,0.738197507,Fatty acid synthesis
+HMR_3450,0.738197507,Fatty acid synthesis
+HMR_3451,0.738197507,Fatty acid synthesis
+HMR_3491,0.738197507,Fatty acid oxidation
+HMR_3625,0.738197507,Cholesterol metabolism
+HMR_3626,0.738197507,Cholesterol metabolism
+HMR_3627,0.738197507,Cholesterol metabolism
+HMR_3628,0.738197507,Cholesterol metabolism
+HMR_3629,0.738197507,Cholesterol metabolism
+HMR_3630,0.738197507,Cholesterol metabolism
+HMR_3631,0.738197507,Cholesterol metabolism
+HMR_3633,0.738197507,Cholesterol metabolism
+HMR_3635,0.738197507,Cholesterol metabolism
+HMR_3636,0.738197507,Cholesterol metabolism
+HMR_3637,0.738197507,Cholesterol metabolism
+HMR_3639,0.738197507,Cholesterol metabolism
+HMR_3640,0.738197507,Cholesterol metabolism
+HMR_3642,0.738197507,Cholesterol metabolism
+HMR_3644,0.738197507,Cholesterol metabolism
+HMR_3645,0.738197507,Cholesterol metabolism
+HMR_3646,0.738197507,Cholesterol metabolism
+HMR_3647,0.738197507,Cholesterol metabolism
+HMR_3648,0.738197507,Cholesterol metabolism
+HMR_3649,0.738197507,Cholesterol metabolism
+HMR_3650,0.738197507,Cholesterol metabolism
+HMR_3651,0.738197507,Cholesterol metabolism
+HMR_3652,0.738197507,Cholesterol metabolism
+HMR_3654,0.738197507,Cholesterol metabolism
+HMR_3655,0.738197507,Cholesterol metabolism
+HMR_3656,0.738197507,Cholesterol metabolism
+HMR_3657,0.738197507,Cholesterol metabolism
+HMR_3658,0.738197507,Cholesterol metabolism
+HMR_3659,0.738197507,Cholesterol metabolism
+HMR_3660,0.738197507,Cholesterol metabolism
+HMR_3662,0.738197507,Cholesterol metabolism
+HMR_3663,0.738197507,Cholesterol metabolism
+HMR_3664,0.738197507,Cholesterol metabolism
+HMR_3665,0.738197507,Cholesterol metabolism
+HMR_3666,0.738197507,Cholesterol metabolism
+HMR_3667,0.738197507,Cholesterol metabolism
+HMR_3668,0.738197507,Cholesterol metabolism
+HMR_3669,0.738197507,Cholesterol metabolism
+HMR_3670,0.738197507,Cholesterol metabolism
+HMR_3675,0.738197507,Cholesterol metabolism
+HMR_3677,0.738197507,Cholesterol metabolism
+HMR_3678,0.738197507,Cholesterol metabolism
+HMR_3679,0.738197507,Cholesterol metabolism
+HMR_3680,0.738197507,Cholesterol metabolism
+HMR_3681,0.738197507,Cholesterol metabolism
+HMR_3682,0.738197507,Cholesterol metabolism
+HMR_3684,0.738197507,Cholesterol metabolism
+HMR_3685,0.738197507,Cholesterol metabolism
+HMR_3686,0.738197507,Cholesterol metabolism
+HMR_3687,0.738197507,Cholesterol metabolism
+HMR_3688,0.738197507,Cholesterol metabolism
+HMR_3689,0.738197507,Cholesterol metabolism
+HMR_3690,0.738197507,Cholesterol metabolism
+HMR_3692,0.738197507,Cholesterol metabolism
+HMR_3694,0.738197507,Cholesterol metabolism
+HMR_3695,0.738197507,Cholesterol metabolism
+HMR_3696,0.738197507,Cholesterol metabolism
+HMR_3698,0.738197507,Cholesterol metabolism
+HMR_3699,0.738197507,Cholesterol metabolism
+HMR_3701,0.738197507,Cholesterol metabolism
+HMR_3703,0.738197507,Cholesterol metabolism
+HMR_3704,0.738197507,Cholesterol metabolism
+HMR_3705,0.738197507,Cholesterol metabolism
+HMR_3706,0.738197507,Cholesterol metabolism
+HMR_3707,0.738197507,Cholesterol metabolism
+HMR_3708,0.738197507,Cholesterol metabolism
+HMR_3709,0.738197507,Cholesterol metabolism
+HMR_3710,0.738197507,Cholesterol metabolism
+HMR_3711,0.738197507,Cholesterol metabolism
+HMR_3713,0.738197507,Cholesterol metabolism
+HMR_3714,0.738197507,Cholesterol metabolism
+HMR_3715,0.738197507,Cholesterol metabolism
+HMR_3716,0.738197507,Cholesterol metabolism
+HMR_3717,0.738197507,Cholesterol metabolism
+HMR_3718,0.738197507,Cholesterol metabolism
+HMR_3719,0.738197507,Cholesterol metabolism
+HMR_3721,0.738197507,Cholesterol metabolism
+HMR_3722,0.738197507,Cholesterol metabolism
+HMR_3723,0.738197507,Cholesterol metabolism
+HMR_3724,0.738197507,Cholesterol metabolism
+HMR_3725,0.738197507,Cholesterol metabolism
+HMR_3726,0.738197507,Cholesterol metabolism
+HMR_3727,0.738197507,Cholesterol metabolism
+HMR_3728,0.738197507,Cholesterol metabolism
+HMR_3729,0.738197507,Cholesterol metabolism
+HMR_3734,0.738197507,Cholesterol metabolism
+HMR_3736,0.738197507,Cholesterol metabolism
+HMR_3737,0.738197507,Cholesterol metabolism
+HMR_3738,0.738197507,Cholesterol metabolism
+HMR_3739,0.738197507,Cholesterol metabolism
+HMR_3740,0.738197507,Cholesterol metabolism
+HMR_3741,0.738197507,Cholesterol metabolism
+HMR_3832,0.7380684750000001,Arginine and proline metabolism
+HMR_3915,0.825393206,Methionine and cysteine metabolism
+HMR_3966,0.738197507,Nucleotide metabolism
+HMR_4078,0.8028547500000001,Beta-Alanine metabolism
+HMR_4079,0.8028540599999999,Beta-Alanine metabolism
+HMR_4124,0.7693023827570696,Aminosugar metabolism
+HMR_4263,0.738197507,NAD metabolism
+HMR_4270,0.4763950139999999,NAD metabolism
+HMR_4284,0.999771130992905,"Glycine, serine, alanine, and threonine metabolism"
+HMR_4422,0.849351612,Arginine and proline metabolism
+HMR_4664,0.4763950139999999,Purine synthesis
+HMR_4696,0.913261125,"Glycine, serine, alanine, and threonine metabolism"
+HMR_4701,0.7954199439999999,Methionine and cysteine metabolism
+HMR_4702,0.99246484,Tyrosine metabolism
+HMR_4831,1.0,Galactose metabolism
+HMR_5101,0.475852846,"Transport, mitochondrial"
+HMR_5387,0.4119291247521818,Methionine and cysteine metabolism
+HMR_5389,0.4119291247521818,Methionine and cysteine metabolism
+HMR_6385,0.738197507,"Transport, endoplasmic reticular"
+HMR_6515,0.999814295,Methionine and cysteine metabolism
+HMR_6549,0.4763950139999999,Inositol phosphate metabolism
+HMR_6550,0.4763950139999999,Inositol phosphate metabolism
+HMR_6558,0.4763950139999999,Inositol phosphate metabolism
+HMR_6564,0.4763950139999999,Inositol phosphate metabolism
+HMR_6566,0.4763950139999999,Inositol phosphate metabolism
+HMR_6572,0.8036663101793069,Inositol phosphate metabolism
+HMR_6580,0.4763950139999999,Inositol phosphate metabolism
+HMR_6584,0.4763950139999999,Inositol phosphate metabolism
+HMR_6595,0.4763950139999999,Inositol phosphate metabolism
+HMR_6728,0.99623242,Phenylalanine metabolism
+HMR_6729,0.99623242,Phenylalanine metabolism
+HMR_6747,0.9909455565412092,Phenylalanine metabolism
+HMR_6755,0.99246484,Phenylalanine metabolism
+HMR_6782,0.9994616333959432,Phenylalanine metabolism
+HMR_6784,0.9993702491130956,Phenylalanine metabolism
+HMR_6785,0.9993702491130956,Phenylalanine metabolism
+HMR_6786,0.9993702491130956,Phenylalanine metabolism
+HMR_6826,0.8254649893161652,Phenylalanine metabolism
+HMR_6834,0.8254649893161652,Phenylalanine metabolism
+HMR_6838,0.825465005,Phenylalanine metabolism
+HMR_6839,0.825465005,Phenylalanine metabolism
+HMR_6844,0.825465005,Phenylalanine metabolism
+HMR_6850,0.825465005,Phenylalanine metabolism
+HMR_6874,0.99623242,Phenylalanine metabolism
+HMR_6907,0.9886972598869724,Ubiquinone synthesis
+HMR_6908,0.9886972598869724,Ubiquinone synthesis
+HMR_6909,0.9886972598869724,Ubiquinone synthesis
+HMR_6910,0.9886972598869724,Ubiquinone synthesis
+HMR_7198,0.7167457310199549,"Transport, lysosomal"
+HMR_7255,0.8633043603823307,N-glycan metabolism
+HMR_7256,0.8633044000285166,N-glycan metabolism
+HMR_7257,0.73819751,"Transport, endoplasmic reticular"
+HMR_7278,0.738197507,N-glycan metabolism
+HMR_7628,0.99709526,Phenylalanine metabolism
+HMR_7652,0.4763950139999999,Inositol phosphate metabolism
+HMR_7711,0.4763950139999999,"Transport, lysosomal"
+HMR_7715,0.4763950139999999,"Transport, lysosomal"
+HMR_7720,0.4763950139999999,"Transport, lysosomal"
+HMR_7724,0.476389899,"Transport, lysosomal"
+HMR_7727,0.4763950139999999,"Transport, lysosomal"
+HMR_7755,0.825465005,Glycerophospholipid metabolism
+HMR_7756,0.99709526,Phenylalanine metabolism
+HMR_7758,0.7333285345209134,"Transport, mitochondrial"
+HMR_7944,0.825465005,"Transport, endoplasmic reticular"
+HMR_8084,0.738197507,"Transport, golgi apparatus"
+HMR_8086,0.738197507,"Transport, golgi apparatus"
+HMR_8505,0.738197507,"Transport, mitochondrial"
+HMR_8510,0.738197507,"Transport, mitochondrial"
+HMR_8562,0.9945432380132188,"Transport, mitochondrial"
+HMR_8582,0.999442223,Starch and sucrose metabolism
+HMR_8585,0.8707994102968034,Starch and sucrose metabolism
+HMR_8588,0.9988688896159132,"Transport, lysosomal"
+HMR_8776,0.5404632659999999,"Transport, mitochondrial"
+HMR_9019,0.738197507,"Transport, mitochondrial"
+HMR_9174,1.0,"Transport, mitochondrial"
+HMR_9177,0.4763950139999999,"Transport, endoplasmic reticular"
+HMR_9627,0.738197507,"Transport, endoplasmic reticular"
+HMR_9634,0.8256683067991758,"Transport, endoplasmic reticular"
+HMR_9665,0.738197507,"Transport, golgi apparatus"
+HMR_9674,0.476394964,"Transport, nuclear"
+HMR_9676,0.9945432380132188,"Transport, mitochondrial"
+HMR_9678,0.476383361,"Transport, peroxisomal"
+HMR_9797,0.738192075,Purine catabolism
+HMR_9802,0.475852846,Glutamate metabolism
+HMR_9803,0.4763950139999999,Propanoate metabolism
+HMR_9804,0.4763950139999999,Propanoate metabolism
+HMR_9805,0.9030376083697694,Glycerophospholipid metabolism
+HPDCACRNCPT1,0.7381974102961392,Fatty acid oxidation
+HPDCACRNCPT2,0.7381974102961392,Fatty acid oxidation
+HPYRDC,0.5404632659999999,Glyoxylate and dicarboxylate metabolism
+HPYRDCm,0.5404632659999999,Glyoxylate and dicarboxylate metabolism
+HPYRR2x,0.4763950139999999,Glyoxylate and dicarboxylate metabolism
+HS1ly,0.8535839109661102,Heparan sulfate degradation
+HS2ly,0.8535839109661102,Heparan sulfate degradation
+HS3ly,0.8535839109661102,Heparan sulfate degradation
+HS4ly,0.8535839109661102,Heparan sulfate degradation
+HSAT1ly,0.8535839109661102,Heparan sulfate degradation
+HSAT2ly,0.8535839109661102,Heparan sulfate degradation
+HSAT3ly,0.8535839109661102,Heparan sulfate degradation
+HSAT4ly,0.8535839109661102,Heparan sulfate degradation
+HSPASEly,0.8535839109661102,Heparan sulfate degradation
+HSPGtly,0.8535839109661102,"Transport, lysosomal"
+HXANtx,0.99018417,"Transport, peroxisomal"
+HXAt1,0.766222145,"Transport, mitochondrial"
+HXCOAm,0.766222145,Fatty acid oxidation
+HXPRT,0.476395009,Nucleotide salvage pathway
+HYPOE,0.4763950139999999,Vitamin B6 metabolism
+HYPTROXe,1.0,Methionine and cysteine metabolism
+Htg,0.4757668464115171,"Transport, golgi apparatus"
+IBUPGLUCtchep,0.4763950139999999,Drug metabolism
+IBUPGLUCtpvb,0.4763950139999999,Drug metabolism
+IBUP_Stbc,0.4763950139999999,Drug metabolism
+IDOAASE1ly,0.8535839109661102,Heparan sulfate degradation
+IDOAASE2ly,0.8535839109661102,Heparan sulfate degradation
+IDOAASE3ly,0.8535839109661102,Heparan sulfate degradation
+IDOAASE4ly,0.8161628383661337,Chondroitin sulfate degradation
+IDOURtly,0.8535839126720455,"Transport, lysosomal"
+ILEARGILEr,0.9193075817699838,Peptide metabolism
+ILEASNHISr,0.9151354234021896,Peptide metabolism
+ILEASPr,0.9462052905885994,Peptide metabolism
+ILEGLNGLUr,0.892410555777991,Peptide metabolism
+ILEGLYARGr,0.8386158717657983,Peptide metabolism
+ILEPROLYSr,0.892410555777991,Peptide metabolism
+ILESERARGr,0.8386158717657983,Peptide metabolism
+ILETRPTYRr,0.9781729469000476,Peptide metabolism
+IMACTD,0.97171180780073,Histidine metabolism
+IMPC,0.9968461778964286,Purine synthesis
+IMPD,0.4763950139999999,Nucleotide interconversion
+INSK,0.476395009,Purine synthesis
+IPDDIx,0.8610711865716203,Cholesterol metabolism
+IPDPtx,0.7905580060418884,"Transport, peroxisomal"
+ISOBUTtm,0.964946952704915,"Transport, mitochondrial"
+IZPN,0.9998801729984422,Histidine metabolism
+KAS8,0.7381975082618025,Fatty acid synthesis
+KDNH,0.756287640319522,Aminosugar metabolism
+KHK,0.4700073559999999,Fructose and mannose metabolism
+KHK2,0.8253488720000001,Glyoxylate and dicarboxylate metabolism
+KSII_CORE2tly,0.7081407006654742,"Transport, lysosomal"
+KSII_CORE4tly,0.7044395846430334,"Transport, lysosomal"
+KYN,0.9945432380132188,Tryptophan metabolism
+KYN3OX,0.9987170222060148,Tryptophan metabolism
+LACZe,0.82545744,Galactose metabolism
+LANOSTtr,0.7730968300000001,"Transport, endoplasmic reticular"
+LAPCOAe,1.0,CoA catabolism
+LAPCOAl,0.4763950139999999,CoA catabolism
+LCA24GSc,1.0,Bile acid synthesis
+LCA24GSr,1.0,Bile acid synthesis
+LCA3GSc,1.0,Bile acid synthesis
+LCA3GSr,1.0,Bile acid synthesis
+LCADi,0.738197507,Pyruvate metabolism
+LCADi_D,0.738197507,Pyruvate metabolism
+LCADim,0.738197507,Pyruvate metabolism
+LCASULT,1.0,Bile acid synthesis
+LCAT23e,0.4696671233369208,Cholesterol metabolism
+LCYSTCBOXL,0.99962859,Taurine and hypotaurine metabolism
+LEUALAARGr,0.7162528621176378,Peptide metabolism
+LEUASNASPr,0.8108351967546252,Peptide metabolism
+LEUASPLYSr,0.8658898529156248,Peptide metabolism
+LEULEUTRPr,0.9781729469000476,Peptide metabolism
+LEUPROARGr,0.7162528621176378,Peptide metabolism
+LEUPROr,0.9054176207058792,Peptide metabolism
+LEUSERTRPr,0.9781729469000476,Peptide metabolism
+LEUTRPARGr,0.9618026751099756,Peptide metabolism
+LEUTRPr,0.9836297140396564,Peptide metabolism
+LEUTYRTYRr,0.9332925631330212,Peptide metabolism
+LEUVALr,0.9298939054098302,Peptide metabolism
+LFORKYNHYD,0.9945432380132188,Tryptophan metabolism
+LGNCCOAtcx,0.4763950139999999,"Transport, peroxisomal"
+LGNCCOAtx,0.4567265245454545,"Transport, peroxisomal"
+LHCYSTIN,0.8280531646838506,Methionine and cysteine metabolism
+LINKDEG1ly,0.8535839109661102,Heparan sulfate degradation
+LINKDEG2ly,0.784682224336666,Chondroitin sulfate degradation
+LINKDEG3ly,0.784682224336666,Chondroitin sulfate degradation
+LINKDEG4ly,0.8383718503227625,Chondroitin sulfate degradation
+LNELDCCPT1,0.42282177,Fatty acid oxidation
+LNELDCCPT2,0.42282177,Fatty acid oxidation
+LNLNCGCPT2,0.7380135253942138,Fatty acid oxidation
+LNSTLSr,0.7730968300000001,Cholesterol metabolism
+LPASE,0.9030376411449412,Glycerophospholipid metabolism
+LPCOXp,0.99715959,Lysine metabolism
+LPIPECOLtx,0.9664724711439286,"Transport, peroxisomal"
+LPS,0.738197507,Triacylglycerol synthesis
+LPS2,0.738197507,Triacylglycerol synthesis
+LPS2e,0.738197507,Fatty acid oxidation
+LPS3,0.8952789972403449,Triacylglycerol synthesis
+LPS3e,0.8952789972403449,Fatty acid oxidation
+LRAT,0.9030376411449412,Vitamin A metabolism
+LRAT1,0.9030376411449412,Vitamin A metabolism
+LRAT2,0.9030376411449412,Vitamin A metabolism
+LSTNtu,0.4763950139999999,Drug metabolism
+LTDCL,0.9945432380132188,Tryptophan metabolism
+LVACLAChep,0.738197507,Drug metabolism
+LVSTACIDhep,0.738197507,Drug metabolism
+LVSTPGPtu,0.4763950139999999,Drug metabolism
+LVSTtu,0.4763950139999999,Drug metabolism
+LYSARGLEUr,0.7653073534126326,Peptide metabolism
+LYSCYSHISr,0.7270063813257939,Peptide metabolism
+LYSGLNPHEr,0.8323623755071929,Peptide metabolism
+LYSGLUGLUr,0.8658898529156248,Peptide metabolism
+LYSLYSLYSr,0.9329451783631344,Peptide metabolism
+LYSOXp,0.9972695117829466,Lysine metabolism
+LYSPHEILEr,0.892410555777991,Peptide metabolism
+LYSTRPARGr,0.9563458938000952,Peptide metabolism
+LYSTYRILEr,0.892410555777991,Peptide metabolism
+LYSVALPHEr,0.8658898529156248,Peptide metabolism
+LYSVALTRPr,0.97271619328661,Peptide metabolism
+LYStip,0.9972695117829466,"Transport, peroxisomal"
+LYStn,0.738197507,"Transport, nuclear"
+MACACI,0.99246484,Tyrosine metabolism
+MACOXO,0.97171180780073,Histidine metabolism
+MALT,0.999442223,Starch and sucrose metabolism
+MALTe,0.999442223,Starch and sucrose metabolism
+MALTly,0.998884446,Starch and sucrose metabolism
+MAN6PI,0.9148395807771666,Fructose and mannose metabolism
+MAOLNOR,0.99246484,Tyrosine metabolism
+MAOX,0.99058105,Tyrosine metabolism
+MCCCrm,0.9995993549779644,"Valine, leucine, and isoleucine metabolism"
+MCD,0.4763950139999999,Fatty acid oxidation
+MCDm,0.4763950139999999,Fatty acid oxidation
+MCDp,0.4763950139999999,Fatty acid oxidation
+MCITS,0.6715945182602158,Propanoate metabolism
+MDRPD,0.4119291247521818,Arginine and proline metabolism
+MDZtd,0.4763950139999999,Drug metabolism
+MDZtu,0.4763950139999999,Drug metabolism
+ME1m,0.4763950139999999,Pyruvate metabolism
+ME2,0.4763950139999999,Pyruvate metabolism
+ME2m,0.4763950139999999,Pyruvate metabolism
+MELATN23DOX,0.9890864760264376,Tryptophan metabolism
+MERACMPtep,0.738197507,Drug metabolism
+MERACMPthc,0.738197507,Drug metabolism
+MESCOALm,1.0,C5-branched dibasic acid metabolism
+METARGLEUr,0.8280504947179208,Peptide metabolism
+METASNTYRr,0.8280504947179208,Peptide metabolism
+METAT,0.8254491439999999,Methionine and cysteine metabolism
+METDECARc,0.8280504947179208,Methionine and cysteine metabolism
+METGLNTYRr,0.8280504947179208,Peptide metabolism
+METGLYARGr,0.8280504947179208,Peptide metabolism
+METHISLYSr,0.8280504947179208,Peptide metabolism
+METHSUCC,0.790479319,Fatty acid oxidation
+METHSUCCOAc,0.790479319,Fatty acid oxidation
+METMETILEr,0.8280531646838506,Peptide metabolism
+METPHEARGr,0.8280504947179208,Peptide metabolism
+METS,0.825465005,Methionine and cysteine metabolism
+METTRANSc,0.8280504947179208,Methionine and cysteine metabolism
+METTRPPHEr,0.8946796465096357,Peptide metabolism
+MEVK1c,0.825465005,Squalene and cholesterol synthesis
+MEVK1x,0.7381975076309013,Cholesterol metabolism
+MGACONm,1.0,C5-branched dibasic acid metabolism
+MGSA,0.738197507,Pyruvate metabolism
+MGSA2,0.738197507,Pyruvate metabolism
+MHGLZABCt,0.4763950139999999,Drug metabolism
+MHGLZtev,0.4763950139999999,Drug metabolism
+MHISOR,0.97171180780073,Histidine metabolism
+MI1345PP,0.4763950139999999,Inositol phosphate metabolism
+MI134P4P,0.738197482,Inositol phosphate metabolism
+MI134PP,0.738197482,Inositol phosphate metabolism
+MI13PP,0.738197482,Inositol phosphate metabolism
+MI145PK,0.4763950139999999,Inositol phosphate metabolism
+MI145PP,0.488197212,Inositol phosphate metabolism
+MI14P4P,0.476394964,Inositol phosphate metabolism
+MI14PP,0.476394964,Inositol phosphate metabolism
+MI14Ptn,0.476394964,"Transport, nuclear"
+MI1PP,0.4763949609999999,Inositol phosphate metabolism
+MI1PS,0.8036734930028163,Inositol phosphate metabolism
+MI1P_Dtn,0.476394964,"Transport, nuclear"
+MI34PP,0.738197482,Inositol phosphate metabolism
+MI3PP,0.7381974800000001,Inositol phosphate metabolism
+MI4PP,0.476394964,Inositol phosphate metabolism
+MINOHPtn,0.4763950139999999,"Transport, nuclear"
+MMCDm,0.48972126,"Valine, leucine, and isoleucine metabolism"
+MMSAD1m,0.48972126,"Valine, leucine, and isoleucine metabolism"
+MMSAD3m,0.4763847839999999,Propanoate metabolism
+MOGAT,0.738197507,Triacylglycerol synthesis
+MTAP,0.4119291247521818,Arginine and proline metabolism
+MTRI,0.4119291247521818,Arginine and proline metabolism
+N3Tg,0.7081407006654742,O-glycan metabolism
+N4Tg,0.602266156402766,O-glycan metabolism
+NACHEX1ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEX23ly,0.7081407006654742,Keratan sulfate degradation
+NACHEX24ly,0.7081407006654742,Keratan sulfate degradation
+NACHEX25ly,0.7081407006654742,Keratan sulfate degradation
+NACHEX26ly,0.7044395846430334,Keratan sulfate degradation
+NACHEX27ly,0.900435258,Hyaluronan metabolism
+NACHEX2ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEX3ly,0.8161628383661337,Chondroitin sulfate degradation
+NACHEX4ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEX5ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEX6ly,0.8256951406141888,Chondroitin sulfate degradation
+NACHEX7ly,0.8256951406141888,Chondroitin sulfate degradation
+NACHEX8ly,0.8383718503227625,Chondroitin sulfate degradation
+NACHEX9ly,0.8383718503227625,Chondroitin sulfate degradation
+NACHEXA1ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEXA20ly,0.7081407006654742,Keratan sulfate degradation
+NACHEXA21ly,0.7081407006654742,Keratan sulfate degradation
+NACHEXA22ly,0.7044395846430334,Keratan sulfate degradation
+NACHEXA2ly,0.8161628383661337,Chondroitin sulfate degradation
+NACHEXA3ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEXA4ly,0.784682224336666,Chondroitin sulfate degradation
+NACHEXA5ly,0.8256951406141888,Chondroitin sulfate degradation
+NACHEXA6ly,0.8256951406141888,Chondroitin sulfate degradation
+NACHEXA7ly,0.8383718503227625,Chondroitin sulfate degradation
+NACHEXA8ly,0.8383718503227625,Chondroitin sulfate degradation
+NACVANALAm,0.955528375422014,Tyrosine metabolism
+NACVANALAtm,0.955528375422014,"Transport, mitochondrial"
+NADK,0.4763950139999999,NAD metabolism
+NADN,0.825465005,NAD metabolism
+NADNe,1.0,NAD metabolism
+NADPN,0.8707991643255628,NAD metabolism
+NADPNe,1.0,NAD metabolism
+NADS2,0.475852846,NAD metabolism
+NAGA2ly,0.602266156402766,Keratan sulfate degradation
+NAGAlby,0.5757505668296171,Sphingolipid metabolism
+NAGAly,0.602266156402766,Sphingolipid metabolism
+NAGLCAly,0.602266156402766,Keratan sulfate degradation
+NBAHH_ir,0.738197507,Beta-Alanine metabolism
+NDP3ex,1.0,Nucleotide interconversion
+NDP6,0.4763950139999999,Nucleotide interconversion
+NDP7er,0.4763950139999999,Nucleotide interconversion
+NDP7ex,0.825465005,Nucleotide interconversion
+NDP7g,0.5757505648322542,Nucleotide interconversion
+NDP8,0.4763950139999999,Nucleotide interconversion
+NDP8ex,0.825465005,Nucleotide interconversion
+NDPK3m,0.738197507,Nucleotide interconversion
+NDPK4m,0.4763950079999999,Nucleotide interconversion
+NDPK5m,0.4763950139999999,Nucleotide interconversion
+NDPK7m,0.8707991643255628,Nucleotide interconversion
+NDPK8m,0.4763950079999999,Nucleotide interconversion
+NEU11l,0.9040738151857928,Sphingolipid metabolism
+NEU21,0.738197507,Sphingolipid metabolism
+NEU22,0.738197507,Sphingolipid metabolism
+NEU23,0.738197507,Sphingolipid metabolism
+NEU24,0.738197507,Sphingolipid metabolism
+NEU25,0.738197507,Sphingolipid metabolism
+NEU310e,0.8958311721557799,Sphingolipid metabolism
+NEU33e,0.85768520623126,Sphingolipid metabolism
+NEU34e,0.85768520623126,Sphingolipid metabolism
+NEU36e,0.85768520623126,Sphingolipid metabolism
+NEU39e,0.8958311721557799,Sphingolipid metabolism
+NH4tr,0.8231999409999999,"Transport, endoplasmic reticular"
+NICRNTtn,0.738197507,"Transport, nuclear"
+NMNS,0.4763950139999999,NAD metabolism
+NNATn,0.738197507,NAD metabolism
+NNATr,0.738197507,NAD metabolism
+NNDPR,0.9945432380132188,NAD metabolism
+NNMT,0.9880555642071824,NAD metabolism
+NORANMT,0.991282917048149,Tyrosine metabolism
+NRVNCCOAtx,0.4628729154803522,"Transport, peroxisomal"
+NRVNCCOAtxc,0.4763950139999999,"Transport, peroxisomal"
+NT5C,0.4763950139999999,NAD metabolism
+NTD1,0.4763950139999999,Pyrimidine catabolism
+NTD10,0.4763950139999999,Nucleotide interconversion
+NTD11,0.4763950139999999,Purine catabolism
+NTD1m,0.4763950139999999,Nucleotide interconversion
+NTD2,0.4763950139999999,Pyrimidine catabolism
+NTD2e,0.825465005,Nucleotide interconversion
+NTD2l,0.4763950139999999,Pyrimidine catabolism
+NTD3,0.4763950139999999,Pyrimidine catabolism
+NTD4,0.4763950139999999,Pyrimidine catabolism
+NTD4l,0.4763950139999999,Pyrimidine catabolism
+NTD5,0.476389899,Pyrimidine catabolism
+NTD5_a,0.4763950139999999,Vitamin B2 metabolism
+NTD5l,0.476389899,Pyrimidine catabolism
+NTD5m,0.476389899,Nucleotide interconversion
+NTD6,0.4763950139999999,Nucleotide interconversion
+NTD7,0.4763950139999999,Nucleotide interconversion
+NTD7e,0.825465005,Nucleotide interconversion
+NTD7l,0.4763950139999999,Purine catabolism
+NTD8,0.4763950139999999,Nucleotide interconversion
+NTD9,0.4763950139999999,Nucleotide interconversion
+NTD9e,1.0,Nucleotide interconversion
+NTD9l,0.4763950139999999,Purine catabolism
+NTP3e,1.0,Nucleotide interconversion
+OAADC,0.4763950139999999,Miscellaneous
+OCBTm,0.996218831,Urea cycle
+OCOAT1m,0.4763950139999999,"Valine, leucine, and isoleucine metabolism"
+OCT11EFATP,0.4802635,Fatty acid oxidation
+OIVD1m,0.9995993549779644,"Valine, leucine, and isoleucine metabolism"
+OIVD2m,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+OIVD3m,0.9997721289933916,"Valine, leucine, and isoleucine metabolism"
+OMHDOCOSACTD,0.4229967899999999,Fatty acid oxidation
+OMPDC,0.4837150516151082,Pyrimidine synthesis
+OPAHir,0.4763950139999999,Glutathione metabolism
+ORNDC,0.849351612,Urea cycle
+ORPT,0.4837150516151082,Pyrimidine synthesis
+P5CRm,0.4763950139999999,Arginine and proline metabolism
+P5CRxm,0.4763950139999999,Arginine and proline metabolism
+PACALDtm,0.9657131350159364,"Transport, mitochondrial"
+PACCOAL,0.9657131350159364,Phenylalanine metabolism
+PACCOALm,0.9657131350159364,Phenylalanine metabolism
+PAFHe,0.4763950139999999,Glycerophospholipid metabolism
+PAN4PP,0.4763950139999999,CoA catabolism
+PAN4PPe,1.0,CoA synthesis
+PAPStg,0.9063630740398728,"Transport, golgi apparatus"
+PAPtg,0.9063630740398728,"Transport, golgi apparatus"
+PA_HStg,0.825458442,"Transport, golgi apparatus"
+PA_HStm,0.7381975072523604,"Transport, mitochondrial"
+PA_HStn,0.4763950139999999,"Transport, nuclear"
+PCFLOPm,0.6072962606963518,"Transport, mitochondrial"
+PCHOLP_hs,0.825458442,Glycerophospholipid metabolism
+PCHOLPg_hs,0.825458442,Glycerophospholipid metabolism
+PCHOLPm_hs,0.7381975076309013,Glycerophospholipid metabolism
+PCHOLPr_hs,0.825458442,Glycerophospholipid metabolism
+PCHOL_HSter,0.6190938316547735,"Transport, endoplasmic reticular"
+PCHOL_HStg,0.7381876609999999,"Transport, golgi apparatus"
+PCHOL_HStn,0.7381876629999999,"Transport, nuclear"
+PCLAD,0.9986131299861314,Tryptophan metabolism
+PDE1,0.738197507,Nucleotide interconversion
+PDE1g,0.738197507,Nucleotide interconversion
+PDE4,0.738197507,Nucleotide interconversion
+PDE4g,0.738197507,Nucleotide interconversion
+PDE4n,0.738197507,Nucleotide interconversion
+PDX5PO,0.9999054606785468,Vitamin B6 metabolism
+PDXPP,0.4763950139999999,Vitamin B6 metabolism
+PEAMNO,0.99854763,Phenylalanine metabolism
+PEFLIPm,0.4763950139999999,"Transport, mitochondrial"
+PEPCK,0.4763950139999999,Glycolysis/gluconeogenesis
+PEPCKm,0.4763950139999999,Glycolysis/gluconeogenesis
+PETHCT,0.7381876110000001,Glycerophospholipid metabolism
+PETOHMm_hs,0.6072962606963518,Glycerophospholipid metabolism
+PE_HStm,0.5287555126942488,"Transport, mitochondrial"
+PFK26,0.4763950139999999,Fructose and mannose metabolism
+PGLc,0.674491761,Pentose phosphate pathway
+PHACCOAGLNAC,0.9314262700318724,Phenylalanine metabolism
+PHACGLYc,0.9657131350159364,"Valine, leucine, and isoleucine metabolism"
+PHCRMter,0.5271146600000001,"Transport, endoplasmic reticular"
+PHCRMtg,0.5271146600000001,"Transport, golgi apparatus"
+PHEACGLYtm,0.9657131350159364,"Transport, mitochondrial"
+PHEASNMETr,0.8280504947179208,Peptide metabolism
+PHEASPr,0.9314262700318724,Peptide metabolism
+PHEGLNPHEr,0.9314262538433064,Peptide metabolism
+PHELEUASPr,0.8971394050478088,Peptide metabolism
+PHELEUHISr,0.929279527849502,Peptide metabolism
+PHELEUr,0.9314262700318724,Peptide metabolism
+PHELYSALAr,0.8658898529156248,Peptide metabolism
+PHELYSPROr,0.8658898529156248,Peptide metabolism
+PHEPHEASNr,0.9314262538433064,Peptide metabolism
+PHEPHETHRr,0.9485697025239044,Peptide metabolism
+PHEPHEr,0.9657131350159364,Peptide metabolism
+PHEPROARGr,0.7942788100956175,Peptide metabolism
+PHESERTRPr,0.9781729469000476,Peptide metabolism
+PHETHPTOX2,0.99709526,Phenylalanine metabolism
+PHETHRLYSr,0.8919393494141554,Peptide metabolism
+PHETRPLEUr,0.9781729469000476,Peptide metabolism
+PHETYRGLNr,0.9110567298467208,Peptide metabolism
+PHETYRLYSr,0.9110567298467208,Peptide metabolism
+PHETYRr,0.955528375422014,Peptide metabolism
+PHLAC,0.9995883392402396,Phenylalanine metabolism
+PHSGPL11c,0.5271146600000001,Sphingolipid metabolism
+PHSPHINGStg,0.5271146600000001,"Transport, golgi apparatus"
+PHSPHINGStr,0.5271146600000001,"Transport, endoplasmic reticular"
+PHYCBOXL,0.99854763,Phenylalanine metabolism
+PI345P3P,0.4763950139999999,Inositol phosphate metabolism
+PI345P3Pn,0.4763950139999999,Inositol phosphate metabolism
+PI345P5P,0.4763950139999999,Inositol phosphate metabolism
+PI345P5Pn,0.4763950139999999,Inositol phosphate metabolism
+PI34P3Pn,0.4763950139999999,Inositol phosphate metabolism
+PI34P4Pn,0.4763950139999999,Inositol phosphate metabolism
+PI34P5K,0.4763950139999999,Inositol phosphate metabolism
+PI34P5Kn,0.4763950139999999,Inositol phosphate metabolism
+PI3P3Pn,0.4763950139999999,Inositol phosphate metabolism
+PI3P4K,0.4763950139999999,Inositol phosphate metabolism
+PI3P4Kn,0.4763950139999999,Inositol phosphate metabolism
+PI3P5K,0.4763950139999999,Inositol phosphate metabolism
+PI45P3K,0.4763950139999999,Inositol phosphate metabolism
+PI45P3Kn,0.4763950139999999,Inositol phosphate metabolism
+PI45PLC,0.488197212,Inositol phosphate metabolism
+PI4P3K,0.4763950139999999,Inositol phosphate metabolism
+PI4P3Kn,0.4763950139999999,Inositol phosphate metabolism
+PI4P5K,0.4763950139999999,Glycerophospholipid metabolism
+PI4P5Kn,0.4763950139999999,Inositol phosphate metabolism
+PI4PLC,0.476394964,Inositol phosphate metabolism
+PI4PLCn,0.476394964,Inositol phosphate metabolism
+PI5P3K,0.4763950139999999,Inositol phosphate metabolism
+PI5P4K,0.4763950139999999,Inositol phosphate metabolism
+PI5P4Kn,0.4763950139999999,Inositol phosphate metabolism
+PIK3,0.4763950139999999,Inositol phosphate metabolism
+PIK3n,0.4763950139999999,Inositol phosphate metabolism
+PIK4,0.4763950139999999,Glycerophospholipid metabolism
+PIK4n,0.4763950139999999,Inositol phosphate metabolism
+PIK5,0.4763950139999999,Inositol phosphate metabolism
+PIK5n,0.4763950139999999,Inositol phosphate metabolism
+PIPLC,0.476394964,Inositol phosphate metabolism
+PIPLCn,0.476394964,Inositol phosphate metabolism
+PItg,0.4763950139999999,"Transport, golgi apparatus"
+PLA2_2,0.9030376411449412,Glycerophospholipid metabolism
+PLA2_2e,0.9030376411449412,Glycerophospholipid metabolism
+PMEVKc,0.825465005,Squalene and cholesterol synthesis
+PMEVKx,0.7381975076309013,Cholesterol metabolism
+PMI12346PH,0.4763950139999999,Inositol phosphate metabolism
+PMI12346PHn,0.4763950139999999,Inositol phosphate metabolism
+PNTEH,0.99596511,CoA catabolism
+PNTK,0.996595724888418,CoA synthesis
+PPA,0.4763944739999999,Oxidative phosphorylation
+PPAP,0.476394964,Triacylglycerol synthesis
+PPAer,0.4763944739999999,Miscellaneous
+PPAm,0.4763944739999999,Oxidative phosphorylation
+PPAn,0.4763944739999999,Miscellaneous
+PPAtm,0.738197507,"Transport, mitochondrial"
+PPCDC,0.996595724888418,CoA synthesis
+PPD2CSPp,0.9972695117829466,Lysine metabolism
+PPItx,0.4921316713333333,"Transport, peroxisomal"
+PPMI12346Ptn,0.4763950139999999,"Transport, nuclear"
+PPNCL3,0.996595724888418,CoA synthesis
+PPOR,0.99709526,Phenylalanine metabolism
+PRAGSr,0.9969524097163082,Purine synthesis
+PRASCS,0.9969524097163082,Purine synthesis
+PRFGS,0.9969524097163082,Purine synthesis
+PRGNLONESULT,0.825465005,Steroid metabolism
+PRISTCOAtcx,0.4763950139999999,"Transport, peroxisomal"
+PROD2m,0.475965155,Arginine and proline metabolism
+PROGLULYSr,0.8658898529156248,Peptide metabolism
+PROHISTYRr,0.929279527849502,Peptide metabolism
+PROHISr,0.9434236022451707,Peptide metabolism
+PROLEUARGr,0.7162528621176378,Peptide metabolism
+PROLYSPROr,0.8658898529156248,Peptide metabolism
+PROPHEr,0.9314262700318724,Peptide metabolism
+PROTEIN_BS,0.4479607481687944,Protein formation
+PROTRPLYSr,0.97271619328661,Peptide metabolism
+PROTRPTHRr,0.9781729469000476,Peptide metabolism
+PROVALGLNr,0.8597877777190213,Peptide metabolism
+PROtm,0.475965155,"Transport, mitochondrial"
+PRPPS,0.4763950139999999,Pentose phosphate pathway
+PSDm_hs,0.738197507,Glycerophospholipid metabolism
+PSDm_hsc,0.4763950139999999,Glycerophospholipid metabolism
+PSFLIPm,0.738197507,"Transport, mitochondrial"
+PTE2x,0.476383361,Fatty acid oxidation
+PTE3x,0.738197507,Fatty acid oxidation
+PTE4x,0.738197507,Fatty acid oxidation
+PTPAT,0.738197507,CoA synthesis
+PTVSTATPtu,0.4763950139999999,Drug metabolism
+PTVSTGLUChc,0.7755978619999999,Drug metabolism
+PTVSTLAChc,0.7755978619999999,Drug metabolism
+PTVSThc,0.7755978619999999,Drug metabolism
+PUNP6,0.7367863870094783,Purine catabolism
+PVSATPtu,0.4763950139999999,Drug metabolism
+PVSGLUCteb,0.4763950139999999,Drug metabolism
+PVSGLUCtev,0.4763950139999999,Drug metabolism
+PYDAMK,0.4763950139999999,Vitamin B6 metabolism
+PYDXDH,0.9999054606785468,Vitamin B6 metabolism
+PYDXK,0.4763950139999999,Vitamin B6 metabolism
+PYDXNK,0.4763950139999999,Vitamin B6 metabolism
+PYDXPP,0.4763950139999999,Vitamin B6 metabolism
+QUILSYN,0.9945432380132188,Tryptophan metabolism
+RBFK,0.4763950139999999,Vitamin B2 metabolism
+RE0452M,0.4769976281785106,Pyrimidine synthesis
+RE0453M,0.4769976271341041,Pyrimidine synthesis
+RE0549C,0.9945432380132188,Tryptophan metabolism
+RE0565C,0.738191681,Fatty acid synthesis
+RE0566C,0.738191681,Fatty acid synthesis
+RE0567C,0.738191681,Fatty acid synthesis
+RE0568C,0.738191681,Fatty acid synthesis
+RE0569C,0.738196947,Fatty acid synthesis
+RE0570C,0.738196947,Fatty acid synthesis
+RE0571C,0.738196947,Fatty acid synthesis
+RE0574C,0.8503725682124817,Fatty acid synthesis
+RE0575C,0.8503725682124817,Fatty acid synthesis
+RE0576C,0.8503725682124817,Fatty acid synthesis
+RE0577C,0.7381908292262712,Fatty acid synthesis
+RE0579C,0.7381974734034328,Fatty acid synthesis
+RE0581C,0.4763950139999999,Fatty acid synthesis
+RE0691C,0.4125979316678104,Urea cycle
+RE0908C,0.825465005,Tyrosine metabolism
+RE0912C,0.825465005,Tyrosine metabolism
+RE0915E,0.999992213,Starch and sucrose metabolism
+RE0916C,0.825465005,Tyrosine metabolism
+RE0918C,0.825465005,Tyrosine metabolism
+RE0926E,0.999992213,Starch and sucrose metabolism
+RE0935E,0.999992213,Starch and sucrose metabolism
+RE0944E,0.999992213,Starch and sucrose metabolism
+RE1099C,0.8251703342090132,Steroid metabolism
+RE1254C,0.99715959,Lysine metabolism
+RE1266C,0.99599355,"Valine, leucine, and isoleucine metabolism"
+RE1441R,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE1447M,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE1448R,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE1530M,0.4769976331249365,Pyrimidine synthesis
+RE1711C,0.9945432380132188,Tryptophan metabolism
+RE1807M,0.4742535300575279,Bile acid synthesis
+RE1834C,0.738197507,Bile acid synthesis
+RE1834M,0.738197507,Bile acid synthesis
+RE1834X,0.738197507,Bile acid synthesis
+RE1835C,0.738197507,Bile acid synthesis
+RE1897C,0.4125979316678104,Urea cycle
+RE1898C,0.4125979316678104,Urea cycle
+RE1915C,0.8252006608975075,Tyrosine metabolism
+RE1916C,0.825465005,Tyrosine metabolism
+RE1918C,0.9963782225816676,Tyrosine metabolism
+RE1919C,0.955528375422014,Tyrosine metabolism
+RE1921C,0.955528375422014,Tyrosine metabolism
+RE1923C,0.9963782225816676,Tyrosine metabolism
+RE1925C,0.9933019366912144,Tyrosine metabolism
+RE1933C,0.8280504947179208,Methionine and cysteine metabolism
+RE1957R,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE2111M,0.9527088103529396,"Glycine, serine, alanine, and threonine metabolism"
+RE2122C,0.99811621,Tyrosine metabolism
+RE2130C,0.955528375422014,Tyrosine metabolism
+RE2404C,0.775597863,Miscellaneous
+RE2405C,0.775597863,Miscellaneous
+RE2427M,0.9527088103529396,"Glycine, serine, alanine, and threonine metabolism"
+RE2428M,0.9731026452942996,"Glycine, serine, alanine, and threonine metabolism"
+RE2429M,0.964946952704915,"Glycine, serine, alanine, and threonine metabolism"
+RE2439C,0.9687177103231556,Tryptophan metabolism
+RE2541C,0.775597863,Miscellaneous
+RE2562C,0.9945432380132188,Tryptophan metabolism
+RE2636C,1.0,Bile acid synthesis
+RE2636R,1.0,Bile acid synthesis
+RE2637C,1.0,Bile acid synthesis
+RE2637X,1.0,Bile acid synthesis
+RE2638C,1.0,Bile acid synthesis
+RE2649M,0.738197507,Bile acid synthesis
+RE2666C,0.738197507,Glycosphingolipid metabolism
+RE2666G,0.6513902780214893,Glycosphingolipid metabolism
+RE2677C,0.8952790027905579,Glycosphingolipid metabolism
+RE2677G,0.8256951380120633,Glycosphingolipid metabolism
+RE2677N,0.8952790027905579,Glycosphingolipid metabolism
+RE2677R,0.8952790027905579,Glycosphingolipid metabolism
+RE2717L,0.738197507,Glycosphingolipid metabolism
+RE2759X,0.738197507,Fatty acid oxidation
+RE2888C,0.5334052418626621,Purine catabolism
+RE2912M,0.738197507,Fatty acid oxidation
+RE2972M,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE3009C,0.825462616,Methionine and cysteine metabolism
+RE3074X,0.738197507,Fatty acid oxidation
+RE3079X,0.738197507,Fatty acid oxidation
+RE3095C,0.955528375422014,Tyrosine metabolism
+RE3103C,0.738197507,Fatty acid oxidation
+RE3104C,0.738197507,Fatty acid oxidation
+RE3106C,0.738197507,Fatty acid oxidation
+RE3110C,0.738197507,Fatty acid oxidation
+RE3112C,0.738197507,Fatty acid oxidation
+RE3113C,0.738197507,Fatty acid oxidation
+RE3114R,0.738197507,Fatty acid oxidation
+RE3132R,0.738197507,Fatty acid oxidation
+RE3146R,0.738197507,Fatty acid oxidation
+RE3151C,0.738197507,Fatty acid oxidation
+RE3152C,0.738197507,Fatty acid oxidation
+RE3153C,0.738197507,Fatty acid oxidation
+RE3160R,0.738197507,Fatty acid oxidation
+RE3201C,0.955528375422014,Tyrosine metabolism
+RE3218C,0.8251703342090132,Androgen and estrogen synthesis and metabolism
+RE3224C,0.738197507,Fatty acid synthesis
+RE3225C,0.738197507,Fatty acid synthesis
+RE3226C,0.4801176924615043,Fatty acid synthesis
+RE3227C,0.738197507,Fatty acid synthesis
+RE3228C,0.738197507,Fatty acid synthesis
+RE3229C,0.738197507,Fatty acid synthesis
+RE3230C,0.738197507,Fatty acid synthesis
+RE3231C,0.738197507,Fatty acid synthesis
+RE3232C,0.738197507,Fatty acid synthesis
+RE3234C,0.4801176924615043,Fatty acid synthesis
+RE3235C,0.4801176924615043,Fatty acid synthesis
+RE3236C,0.4801176924615043,Fatty acid synthesis
+RE3237C,0.738197453,Fatty acid synthesis
+RE3238C,0.738197507,Fatty acid synthesis
+RE3239C,0.7381974280128751,Fatty acid synthesis
+RE3241C,0.738197507,Fatty acid synthesis
+RE3242C,0.738197507,Fatty acid synthesis
+RE3243C,0.738197507,Fatty acid synthesis
+RE3244C,0.738197507,Fatty acid synthesis
+RE3268R,0.4763950139999999,Phosphatidylinositol phosphate metabolism
+RE3301C,0.825458442,Glycerophospholipid metabolism
+RE3381C,0.775597863,Miscellaneous
+RE3628M,0.4804826997653145,Fatty acid oxidation
+RETFA,0.738197507,Vitamin A metabolism
+RETH,0.738197507,Vitamin A metabolism
+RETH1,0.9030376411449412,Vitamin A metabolism
+RETH2,0.9030376411449412,Vitamin A metabolism
+RETHe,0.738197507,Vitamin A metabolism
+RNMK,0.4763950139999999,NAD metabolism
+RSVATPtu,0.4763950139999999,Drug metabolism
+RSVGLUChc,0.7755978619999999,Drug metabolism
+RSVLAChv,0.7755978619999999,Drug metabolism
+RSVLACitr,0.7755978619999999,Drug metabolism
+RSVSPONhc,0.7755978619999999,Drug metabolism
+RSVhc,0.7755978619999999,Drug metabolism
+RSVitr,0.7755978619999999,Drug metabolism
+R_group_phosphotase_1,0.73819745,Miscellaneous
+R_group_phosphotase_2,0.738197507,Miscellaneous
+R_group_phosphotase_3,0.738197507,Miscellaneous
+Rtotalter,0.738197506476395,"Transport, endoplasmic reticular"
+Rtotaltg,0.738197506476395,"Transport, golgi apparatus"
+Rtotaltl,0.8952790027905579,"Transport, lysosomal"
+S23T2g,0.7081407006654742,Keratan sulfate synthesis
+S23T4g,0.7044395846430334,Keratan sulfate synthesis
+S2T1g,0.8256951406141888,Chondroitin synthesis
+S2T2g,0.8256951406141888,Chondroitin synthesis
+S2T3g,0.8161628383661337,Chondroitin synthesis
+S2T4g,0.853566958348397,Chondroitin synthesis
+S2TASE1ly,0.8535839109661102,Heparan sulfate degradation
+S2TASE2ly,0.8535839109661102,Heparan sulfate degradation
+S2TASE3ly,0.8161628383661337,Chondroitin sulfate degradation
+S2TASE4ly,0.8256951406141888,Chondroitin sulfate degradation
+S2TASE5ly,0.8256951406141888,Chondroitin sulfate degradation
+S3T1g,0.853566958348397,Chondroitin synthesis
+S3T2g,0.853566958348397,Chondroitin synthesis
+S3T3g,0.853566958348397,Chondroitin synthesis
+S3TASE1ly,0.8535839109661102,Heparan sulfate degradation
+S3TASE2ly,0.8535839109661102,Heparan sulfate degradation
+S3TASE3ly,0.8535839109661102,Heparan sulfate degradation
+S4T1g,0.784682224336666,Chondroitin synthesis
+S4T2g,0.784682224336666,Chondroitin synthesis
+S4T3g,0.8383687264472093,Chondroitin synthesis
+S4T4g,0.8383687264472093,Chondroitin synthesis
+S4T5g,0.8383687264472093,Chondroitin synthesis
+S4T6g,0.8161628383661337,Chondroitin synthesis
+S4TASE1ly,0.784682224336666,Chondroitin sulfate degradation
+S4TASE2ly,0.784682224336666,Chondroitin sulfate degradation
+S4TASE3ly,0.8161628383661337,Chondroitin sulfate degradation
+S4TASE4ly,0.8383718503227625,Chondroitin sulfate degradation
+S4TASE5ly,0.8383718503227625,Chondroitin sulfate degradation
+S6T16g,0.7044395846430334,Keratan sulfate synthesis
+S6T17g,0.7044395846430334,Keratan sulfate synthesis
+S6T18g,0.7044395846430334,Keratan sulfate synthesis
+S6T19g,0.784682224336666,Chondroitin synthesis
+S6T1g,0.7081407006654742,Keratan sulfate synthesis
+S6T20g,0.784682224336666,Chondroitin synthesis
+S6T21g,0.8256951406141888,Chondroitin synthesis
+S6T22g,0.8383687264472093,Chondroitin synthesis
+S6T23g,0.8383687264472093,Chondroitin synthesis
+S6T24g,0.8383687264472093,Chondroitin synthesis
+S6T25g,0.853566958348397,Chondroitin synthesis
+S6T2g,0.7081407006654742,Keratan sulfate synthesis
+S6T3g,0.7081407006654742,Keratan sulfate synthesis
+S6TASE1ly,0.8535839109661102,Heparan sulfate degradation
+S6TASE22ly,0.7081407006654742,Keratan sulfate degradation
+S6TASE23ly,0.7081407006654742,Keratan sulfate degradation
+S6TASE24ly,0.7081407006654742,Keratan sulfate degradation
+S6TASE25ly,0.7044395846430334,Keratan sulfate degradation
+S6TASE26ly,0.7044395846430334,Keratan sulfate degradation
+S6TASE2ly,0.8535839109661102,Heparan sulfate degradation
+S6TASE3ly,0.8535839109661102,Heparan sulfate degradation
+S6TASE4ly,0.784682224336666,Chondroitin sulfate degradation
+S6TASE5ly,0.784682224336666,Chondroitin sulfate degradation
+S6TASE6ly,0.8256951406141888,Chondroitin sulfate degradation
+S6TASE7ly,0.8256951406141888,Chondroitin sulfate degradation
+S6TASE8ly,0.8383718503227625,Chondroitin sulfate degradation
+S6TASE9ly,0.8383718503227625,Chondroitin sulfate degradation
+SACCD3m,0.9997159589832416,Lysine metabolism
+SACCRP_Lte,0.9329449422878574,"Transport, mitochondrial"
+SADT,0.825462616,Nucleotide interconversion
+SALMCOM,0.9927564452329674,Tyrosine metabolism
+SALMCOM2,0.991282917048149,Tyrosine metabolism
+SAMHISTA,0.97171180780073,Histidine metabolism
+SARCStm,0.869044905,"Transport, mitochondrial"
+SARDHm,0.869044905,Urea cycle
+SBCOAACOTx,0.738197507,Fatty acid oxidation
+SBPP1er,0.4763950139999999,Sphingolipid metabolism
+SBPP3er,0.4763950139999999,Sphingolipid metabolism
+SBTD_D2,0.470141989,Fructose and mannose metabolism
+SCP21cx,0.4763950139999999,"Transport, peroxisomal"
+SCP21x,0.4763950139999999,"Transport, peroxisomal"
+SEBACACT,0.738197507,Fatty acid oxidation
+SEBACIDtx,0.738197507,Fatty acid oxidation
+SEBCOACROT,0.738197507,Fatty acid oxidation
+SEBCOAPET,0.738197507,Fatty acid oxidation
+SERARGTRPr,0.9618026751099756,Peptide metabolism
+SERHL,0.4763950139999999,"Glycine, serine, alanine, and threonine metabolism"
+SERLYSHISr,0.9151354234021896,Peptide metabolism
+SERPHELYSr,0.8658898529156248,Peptide metabolism
+SERPT,0.8254084926508171,Sphingolipid metabolism
+SERTRPHISr,0.9672594280793128,Peptide metabolism
+SFGTH,0.913243681,Tyrosine metabolism
+SGALSIDEtg,0.9063630740398728,"Transport, golgi apparatus"
+SGALSIDEtl,0.9063630740398728,"Transport, lysosomal"
+SGPL12r,0.8254611196509222,Sphingolipid metabolism
+SIAASE3ly,0.7081407006654742,Keratan sulfate degradation
+SIAASE4ly,0.7044395846430334,Keratan sulfate degradation
+SIAT9g,0.6865633846991148,Sphingolipid metabolism
+SLCBK1,0.4763950139999999,Sphingolipid metabolism
+SMPD3g,0.7381876629999999,Sphingolipid metabolism
+SMPD3l,0.9057796251082784,Sphingolipid metabolism
+SMPD4,0.8952750647905502,Sphingolipid metabolism
+SMS,0.7381876609999999,Sphingolipid metabolism
+SMS1S2,0.7381876609999999,Sphingolipid metabolism
+SMS21e,0.906542754495691,Sphingolipid metabolism
+SMSn,0.7381876629999999,Sphingolipid metabolism
+SMVACIDATPteb,0.4763950139999999,Drug metabolism
+SMVACIDhep,0.775597863,Drug metabolism
+SMVACIDitr,0.775597863,Drug metabolism
+SMVACIDtev,0.4763950139999999,Drug metabolism
+SMVGLUCLAChep,0.775597863,Drug metabolism
+SMVGLUChep,0.775597863,Drug metabolism
+SMVHYDROhep,0.738197507,Drug metabolism
+SMVLAChep,0.738197507,Drug metabolism
+SMVitr,0.775597863,Drug metabolism
+SMVtu,0.4763950139999999,Drug metabolism
+SO4tl,0.9063630740398728,"Transport, lysosomal"
+SPH1Ptr,0.4763950139999999,"Transport, endoplasmic reticular"
+SPHGNtg,0.738197506476395,"Transport, golgi apparatus"
+SPHGNtn,0.8707994102968034,"Transport, nuclear"
+SPHGNtr,0.4763950139999999,"Transport, endoplasmic reticular"
+SPHINGStg,0.82546500465093,"Transport, golgi apparatus"
+SPHINGStl,0.738197507,"Transport, lysosomal"
+SPHINGStn,0.8707994102968034,"Transport, nuclear"
+SPHINGStr,0.4763950139999999,"Transport, endoplasmic reticular"
+SPHK11,0.5271146600000001,Sphingolipid metabolism
+SPHK21c,0.4763950139999999,Sphingolipid metabolism
+SPHK21n,0.8707994102968034,Sphingolipid metabolism
+SPHK22n,0.8707994102968034,Sphingolipid metabolism
+SPHMDAc,0.8952750647905502,Sphingolipid metabolism
+SPHS1Ptr,0.4763950139999999,"Transport, endoplasmic reticular"
+SPMD3n,0.7381876629999999,Sphingolipid metabolism
+SPMS,0.4511661408256114,Urea cycle
+SPRMS,0.4202335119531364,Urea cycle
+SQLEr,0.7730968300000001,Cholesterol metabolism
+SQLtr,0.8610711865716203,"Transport, endoplasmic reticular"
+SRTNACT,0.9890864760264376,Tryptophan metabolism
+ST3GAL21g,0.6862512472232961,Sphingolipid metabolism
+ST3GAL22g,0.8610089223633481,Sphingolipid metabolism
+ST3GAL23g,0.7011916674462374,Sphingolipid metabolism
+ST6GALNAC31,0.6862512472232961,Sphingolipid metabolism
+ST8SIA12,0.7016373579084377,Sphingolipid metabolism
+ST8SIA52g,0.7011916674462374,Sphingolipid metabolism
+ST8SIA53g,0.825465004,Sphingolipid metabolism
+ST8SIA54g,0.6862512472232961,Sphingolipid metabolism
+STCOATxc,0.4763950139999999,"Transport, peroxisomal"
+STCOAtx,0.4403333891666666,"Transport, peroxisomal"
+STRDNCCPT2,0.7380135253942138,Fatty acid oxidation
+STS1,0.825465005,Steroid metabolism
+STS1r,0.825465005,Steroid metabolism
+STS2,0.825465005,Steroid metabolism
+STS2r,0.825465005,Steroid metabolism
+SUBEACtx,0.738197507,Fatty acid oxidation
+SUBERCACT,0.7328980242834218,Fatty acid oxidation
+SUBERCROT,0.7328980242834218,Fatty acid oxidation
+SUBERICACT,0.738197507,Fatty acid oxidation
+SUCACETATALTc,0.99246484,Tyrosine metabolism
+SUCACETATc,0.99246484,Tyrosine metabolism
+SUCACETOc,0.99246484,Tyrosine metabolism
+SUCCACT,0.4763950139999999,Fatty acid oxidation
+SUCCCROT,0.4672356142847437,Fatty acid oxidation
+SUCCOAPET,0.4763950139999999,Fatty acid oxidation
+SUCCtp,0.4763950139999999,"Transport, peroxisomal"
+SUCRe,0.999943238,Galactose metabolism
+SULFOX,0.4842420315408328,Methionine and cysteine metabolism
+Ser_Thrtg,0.602266156402766,"Transport, golgi apparatus"
+T4HCINNMFM,0.9994315319194492,Ubiquinone synthesis
+T4HCINNMtm,0.9994315319194492,"Transport, mitochondrial"
+TACRDtsc,0.4763950139999999,Drug metabolism
+TACRtu,0.4763950139999999,Drug metabolism
+TD2GLTRCOAm,0.999659077400244,Lysine metabolism
+TDP,0.738197507,Thiamine metabolism
+TDPm,0.738197507,Thiamine metabolism
+THBPT4ACAMDASE,0.99286539,Tetrahydrobiopterin metabolism
+THCRMtl,0.738197507,"Transport, lysosomal"
+THEXDDm,0.42282177,Fatty acid oxidation
+THEXDDtm,0.42282177,"Transport, mitochondrial"
+THMMPtm,0.738197507,"Transport, mitochondrial"
+THMP,0.738197507,Thiamine metabolism
+THMPPtm,0.738197507,"Transport, mitochondrial"
+THMTP,0.4763950139999999,Thiamine metabolism
+THMt2m,0.99717609747121,"Transport, mitochondrial"
+THP2Ctp,0.99715959,"Transport, peroxisomal"
+THRACm,0.9729848437311508,"Glycine, serine, alanine, and threonine metabolism"
+THRARGTYRr,0.8379090623869052,Peptide metabolism
+THRASNTYRr,0.8919393494141554,Peptide metabolism
+THRD_L,0.999771130992905,"Glycine, serine, alanine, and threonine metabolism"
+THRGLNGLUr,0.8919393494141554,Peptide metabolism
+THRGLNTYRr,0.8919393494141554,Peptide metabolism
+THRHISHISr,0.9504952622063874,Peptide metabolism
+THRILEARGr,0.8386158717657983,Peptide metabolism
+THRMETARGr,0.8280504947179208,Peptide metabolism
+THRPHEARGr,0.8379090623869052,Peptide metabolism
+THRSERARGr,0.8379090623869052,Peptide metabolism
+THRTHRARGr,0.918954885306368,Peptide metabolism
+THRTYRMETr,0.8280504947179208,Peptide metabolism
+THYMDtl,0.476389899,"Transport, lysosomal"
+TKT1,0.6476135608704773,Pentose phosphate pathway
+TKT2,0.6476135608704773,Pentose phosphate pathway
+TLACFVShc,0.775597863,Drug metabolism
+TMDK1,0.4763950129999999,Nucleotide interconversion
+TMDK1m,0.4763950129999999,Nucleotide interconversion
+TMDPK,0.738197507,Thiamine metabolism
+TMDPPK,0.4763950139999999,Thiamine metabolism
+TMDS,0.904691218,Nucleotide interconversion
+TREH,1.0,Starch and sucrose metabolism
+TREHe,1.0,Starch and sucrose metabolism
+TRIODTHYSULT,0.825465005,Tyrosine metabolism
+TRIPVSteb,0.4763950139999999,Drug metabolism
+TRIPVStev,0.4763950139999999,Drug metabolism
+TRPALAPROr,0.9781729469000476,Peptide metabolism
+TRPARGALAr,0.9618026751099756,Peptide metabolism
+TRPASPASPr,0.9781729469000476,Peptide metabolism
+TRPGLNGLNr,0.9672594280793128,Peptide metabolism
+TRPGLUGLYr,0.9781729469000476,Peptide metabolism
+TRPGLULEUr,0.9781729469000476,Peptide metabolism
+TRPGLUPROr,0.9781729469000476,Peptide metabolism
+TRPGLUTYRr,0.9781729469000476,Peptide metabolism
+TRPGLYASPr,0.9781729469000476,Peptide metabolism
+TRPGLYLEUr,0.9781729469000476,Peptide metabolism
+TRPGLYPHEr,0.9781729469000476,Peptide metabolism
+TRPGLYVALr,0.9781729469000476,Peptide metabolism
+TRPHISMETr,0.8946796465096357,Peptide metabolism
+TRPHYDRO2,0.9945432380132188,Tryptophan metabolism
+TRPILELYSr,0.97271619328661,Peptide metabolism
+TRPILETRPr,0.9863583917373664,Peptide metabolism
+TRPLEUVALr,0.9781729469000476,Peptide metabolism
+TRPLYSr,0.9781729469000476,Peptide metabolism
+TRPMETARGr,0.8946796465096357,Peptide metabolism
+TRPMETVALr,0.8946796465096357,Peptide metabolism
+TRPO2,0.998806447471154,Tryptophan metabolism
+TRPPHEr,0.9836297140396564,Peptide metabolism
+TRPPROGLYr,0.9781729469000476,Peptide metabolism
+TRPPROLEUr,0.9781729469000476,Peptide metabolism
+TRPPROVALr,0.9781729469000476,Peptide metabolism
+TRPSERTYRr,0.9781729469000476,Peptide metabolism
+TRPTHRGLUr,0.9781729469000476,Peptide metabolism
+TRPTHRILEr,0.9781729469000476,Peptide metabolism
+TRPTHRTYRr,0.9781729469000476,Peptide metabolism
+TRPTYRGLNr,0.97271619328661,Peptide metabolism
+TRPTYRTYRr,0.9781729469000476,Peptide metabolism
+TRPVALASPr,0.9781729469000476,Peptide metabolism
+TRYPTAOX,0.9945432380132188,Tryptophan metabolism
+TYMc,0.995811507000384,Tyrosine metabolism
+TYR3MO2,0.99623242,Tyrosine metabolism
+TYRALAPHEr,0.9332925631330212,Peptide metabolism
+TYRALAr,0.911056750844028,Peptide metabolism
+TYRARGGLUr,0.7331702525320845,Peptide metabolism
+TYRARGSERr,0.7331702525320845,Peptide metabolism
+TYRASE,0.955528375422014,Tyrosine metabolism
+TYRASPARGr,0.7331702525320845,Peptide metabolism
+TYRCBOX,0.9981891112995378,Tyrosine metabolism
+TYRCYSTHRr,0.4785834869240916,Peptide metabolism
+TYRDHINDOX,0.955528375422014,Tyrosine metabolism
+TYRDOPO,0.99811621,Tyrosine metabolism
+TYRDOPOX,0.955528375422014,Tyrosine metabolism
+TYRGLUr,0.911056750844028,Peptide metabolism
+TYRLEUARGr,0.7331702525320845,Peptide metabolism
+TYROXDAc,0.99811621,Tyrosine metabolism
+TYRPHETYRr,0.955528375422014,Peptide metabolism
+TYRTA,0.7773138314927526,Tyrosine metabolism
+TYRTAm,0.9994616333959432,Tyrosine metabolism
+TYRTHRr,0.9459696874623018,Peptide metabolism
+TYRTRPPHEr,0.9781729469000476,Peptide metabolism
+TYRTYRr,0.955528375422014,Peptide metabolism
+TYRVALMETr,0.8280504947179208,Peptide metabolism
+UAG2EMAi,0.738197507,Aminosugar metabolism
+UAG4E,0.9785702345031966,Aminosugar metabolism
+UAGALDP,0.738197507,Aminosugar metabolism
+UAGDP,0.738197507,Aminosugar metabolism
+UDPACGALtl,0.8403450731093712,"Transport, lysosomal"
+UDPDOLPT_L,0.738197507,N-glycan synthesis
+UDPG1P,0.842918504,Pentose phosphate pathway
+UDPG3DOPA,0.955528375422014,Tyrosine metabolism
+UDPG4DOPA,0.955528375422014,Tyrosine metabolism
+UDPGALt2n,0.8952790027905579,"Transport, nuclear"
+UDPGALt2r,0.738197507,"Transport, endoplasmic reticular"
+UDPGALtg,0.6513902780214893,"Transport, golgi apparatus"
+UDPGD,0.775597863,Starch and sucrose metabolism
+UDPGLCAtg,0.7846822300006709,"Transport, golgi apparatus"
+UDPGLDCg,0.784682224336666,Nucleotide sugar metabolism
+UDPGNP,0.775597863,Pentose phosphate pathway
+UDPGP,0.738197507,Starch and sucrose metabolism
+UDPXYLter,0.784682224336666,"Transport, endoplasmic reticular"
+UDPXYLtg,0.784682224336666,"Transport, golgi apparatus"
+UDPtl,0.8403450731093712,"Transport, lysosomal"
+UGALGTg,0.6513902780214893,Galactose metabolism
+UGALNACtg,0.602266156402766,"Transport, golgi apparatus"
+UGCG,0.738197507,Sphingolipid metabolism
+UGLCNACtg,0.6554174402857584,"Transport, golgi apparatus"
+UPPN,0.89516034,Pyrimidine catabolism
+URATEtx,0.998036834,"Transport, peroxisomal"
+URCN,0.9998801729984422,Histidine metabolism
+UREAtm,0.995960767,Urea cycle
+Uritl,0.4763950139999999,"Transport, lysosomal"
+VALARGGLYr,0.7896817162294907,Peptide metabolism
+VALHISASNr,0.9151354234021896,Peptide metabolism
+VALLEUPHEr,0.8971394050478088,Peptide metabolism
+VALLYSTYRr,0.8658898529156248,Peptide metabolism
+VALPHEARGr,0.7942788100956175,Peptide metabolism
+VALPROTRPr,0.9781729469000476,Peptide metabolism
+VALSERARGr,0.7896817162294907,Peptide metabolism
+VALTRPPHEr,0.9781729469000476,Peptide metabolism
+VALTRPVALr,0.9781729469000476,Peptide metabolism
+VALVALr,0.9649470707425536,Peptide metabolism
+VANILLACc,0.99811621,Tyrosine metabolism
+VANILPYRc,0.99811621,Tyrosine metabolism
+XANDp,0.998036834,Purine catabolism
+XANtx,0.998036834,"Transport, peroxisomal"
+XAO2x,0.99018417,Purine catabolism
+XAOx,0.99018417,Purine catabolism
+XOLDIOLONEt,0.4740166549173496,"Transport, endoplasmic reticular"
+XOLEST183CEH,0.4696748309216964,Cholesterol metabolism
+XOLEST183tl,0.4696748309216964,"Transport, lysosomal"
+XSERtg,0.784682224336666,"Transport, golgi apparatus"
+XYLK,0.77544855,Pentose phosphate pathway
+XYLTD_Dr,0.77544855,Pentose phosphate pathway
+XYLTer,0.784682224336666,Chondroitin synthesis
+XYLtly,0.784682224336666,"Transport, lysosomal"
+r0028,0.4763950139999999,Purine catabolism
+r0033,0.869098753,CoA synthesis
+r0034,0.996218831,Urea cycle
+r0047,0.4763950139999999,Purine catabolism
+r0051,0.612398146459983,Purine catabolism
+r0055,0.738197507,Pyruvate metabolism
+r0060,0.4763950139999999,Methionine and cysteine metabolism
+r0068,0.738197507,Miscellaneous
+r0085,0.475852846,Urea cycle
+r0086,0.475852846,Urea cycle
+r0097,0.738197507,Miscellaneous
+r0119,0.738197507,Purine catabolism
+r0127,0.82502291,Alanine and aspartate metabolism
+r0142,0.527261255,Methionine and cysteine metabolism
+r0156,0.475852846,Urea cycle
+r0157,0.475852846,Urea cycle
+r0166,0.999703434,Pyrimidine catabolism
+r0186,0.738177796,Glycerophospholipid metabolism
+r0210,0.4763950139999999,Methionine and cysteine metabolism
+r0220,0.738197507,Miscellaneous
+r0221,0.738197507,Miscellaneous
+r0239,0.9945432380132188,Tryptophan metabolism
+r0242,0.738197507,Miscellaneous
+r0245,0.8951539740000001,Glycerophospholipid metabolism
+r0246,0.912628312,Miscellaneous
+r0283,0.738197507,Beta-Alanine metabolism
+r0287,0.7904798749999999,Fatty acid oxidation
+r0301,0.738197507,Bile acid synthesis
+r0308,0.4763950139999999,Fatty acid oxidation
+r0311,0.738197507,Fatty acid oxidation
+r0318,0.738197507,Miscellaneous
+r0319,0.738197507,Miscellaneous
+r0321,0.738197507,Cholesterol metabolism
+r0339,0.4763950139999999,Miscellaneous
+r0340,0.912628312,Miscellaneous
+r0354,0.470141989,Glycolysis/gluconeogenesis
+r0355,0.470141989,Glycolysis/gluconeogenesis
+r0357,0.4700073559999999,Fructose and mannose metabolism
+r0358,0.4700073559999999,Fructose and mannose metabolism
+r0360,1.0,Fructose and mannose metabolism
+r0361,1.0,Fructose and mannose metabolism
+r0363,1.0,Aminosugar metabolism
+r0364,1.0,Aminosugar metabolism
+r0365,0.4763950139999999,Propanoate metabolism
+r0385,0.9997030349896062,Miscellaneous
+r0386,0.9995993549779644,Miscellaneous
+r0389,0.9999054606785468,Vitamin B6 metabolism
+r0390,0.7981311519382696,Miscellaneous
+r0393,0.912628312,Miscellaneous
+r0398,0.99286539,Tetrahydrobiopterin metabolism
+r0399,0.99709526,Tetrahydrobiopterin metabolism
+r0403,0.9945432380132188,Tetrahydrobiopterin metabolism
+r0433,0.4763950139999999,Fatty acid oxidation
+r0440,0.4763950139999999,Fatty acid oxidation
+r0444,0.738197507,Fatty acid oxidation
+r0451,0.999669731,Miscellaneous
+r0456,0.476395009,Nucleotide interconversion
+r0465,0.738197507,Miscellaneous
+r0466,0.738197507,Miscellaneous
+r0502,0.998036834,Purine catabolism
+r0504,0.99018417,Purine catabolism
+r0522,0.4763950139999999,Folate metabolism
+r0523,0.4763950139999999,Folate metabolism
+r0537,0.4763950139999999,Glycerophospholipid metabolism
+r0539,0.99596511,Taurine and hypotaurine metabolism
+r0541,0.9983734251727636,Tryptophan metabolism
+r0546,0.9657131350159364,Miscellaneous
+r0548,0.9657131350159364,Miscellaneous
+r0557,0.999669731,Miscellaneous
+r0558,0.99246484,Miscellaneous
+r0560,0.998537447372989,"Valine, leucine, and isoleucine metabolism"
+r0561,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+r0568,0.738197507,Glutathione metabolism
+r0573,0.738197507,Bile acid synthesis
+r0578,0.4763950139999999,CoA synthesis
+r0579,0.869098753,CoA synthesis
+r0590,0.869098753,CoA synthesis
+r0591,0.7382950976064394,CoA synthesis
+r0594,0.9997159589832416,Lysine metabolism
+r0595,0.825462616,Methionine and cysteine metabolism
+r0596,0.4763950139999999,CoA synthesis
+r0603,0.9988777353234568,"Valine, leucine, and isoleucine metabolism"
+r0604,0.9997721289933916,Miscellaneous
+r0627,0.9125208813907104,Miscellaneous
+r0639,0.476383361,Fatty acid oxidation
+r0645,0.9986131299861314,Tryptophan metabolism
+r0650,0.738197507,Bile acid synthesis
+r0651,0.738197507,Bile acid synthesis
+r0653,0.476383361,Fatty acid oxidation
+r0655,0.9980268233722868,"Valine, leucine, and isoleucine metabolism"
+r0656,0.9995993549779644,Miscellaneous
+r0666,0.9969524097163082,Purine synthesis
+r0669,0.9997030349896062,"Valine, leucine, and isoleucine metabolism"
+r0670,0.9997721289933916,Miscellaneous
+r0671,0.996595724888418,CoA synthesis
+r0707,0.8707991643255628,Miscellaneous
+r0714,0.476383361,Fatty acid oxidation
+r0716,0.476383361,Miscellaneous
+r0718,0.476383361,Fatty acid oxidation
+r0720,0.476383361,Fatty acid oxidation
+r0730,0.766222145,Fatty acid oxidation
+r0731,0.766222145,Fatty acid oxidation
+r0732,0.766222145,Fatty acid oxidation
+r0733,0.7904798749999999,Fatty acid oxidation
+r0734,0.7904798749999999,Fatty acid oxidation
+r0737,1.0,Miscellaneous
+r0739,0.4740166549173496,Bile acid synthesis
+r0779,0.9997030349896062,Miscellaneous
+r0786,0.4763950139999999,Sphingolipid metabolism
+r0787,0.4763950139999999,Sphingolipid metabolism
+r0795,0.825462616,Miscellaneous
+r0859,0.895279003,Purine catabolism
+r0886,0.738197506,"Transport, endoplasmic reticular"
+r0907,0.995960767,"Transport, mitochondrial"
+r0911,0.475965155,"Transport, mitochondrial"
+r0926,0.912628312,"Transport, mitochondrial"
+r0950,0.4763950079999999,"Transport, mitochondrial"
+r0970,0.738197507,"Transport, endoplasmic reticular"
+r0973,0.869098753,"Transport, mitochondrial"
+r0989,0.738197507,"Transport, endoplasmic reticular"
+r0994,0.738197507,"Transport, endoplasmic reticular"
+r1000,0.738197507,"Transport, endoplasmic reticular"
+r1003,0.4763950139999999,"Transport, peroxisomal"
+r1006,0.4763950139999999,"Transport, peroxisomal"
+r1014,0.4763950139999999,"Transport, peroxisomal"
+r1018,0.738197507,"Transport, endoplasmic reticular"
+r1020,0.4742535300575279,"Transport, mitochondrial"
+r1024,0.4763950139999999,"Transport, endoplasmic reticular"
+r1025,0.4763950139999999,Bile acid synthesis
+r1078,0.9994616333959432,"Transport, mitochondrial"
+r1150,0.476389899,"Transport, lysosomal"
+r1159,0.738197506,"Transport, endoplasmic reticular"
+r1164,0.476383361,Miscellaneous
+r1165,0.738197507,Miscellaneous
+r1166,0.738197507,Miscellaneous
+r1168,0.738197507,Miscellaneous
+r1169,0.738197507,Miscellaneous
+r1170,0.738197507,Miscellaneous
+r1171,0.4763950139999999,Miscellaneous
+r1172,0.476383361,Miscellaneous
+r1174,0.738197507,Miscellaneous
+r1175,0.738197507,Miscellaneous
+r1179,0.738197507,Miscellaneous
+r1181,0.738197507,Miscellaneous
+r1182,0.738197507,Miscellaneous
+r1183,0.4763950139999999,Miscellaneous
+r1251,0.738197507,Fatty acid oxidation
+r1255,0.738197507,Fatty acid oxidation
+r1257,0.738197452,Fatty acid oxidation
+r1259,0.738197507,Fatty acid oxidation
+r1260,0.738197507,Fatty acid oxidation
+r1262,0.738197507,Fatty acid oxidation
+r1382,0.8877942330553363,Folate metabolism
+r1383,0.825465005,Folate metabolism
+r1440,0.9729848437311508,"Transport, mitochondrial"
+r1457,0.4763950139999999,Sphingolipid metabolism
+r1472,0.738157187,Fatty acid oxidation
+r1474,0.738157187,Fatty acid oxidation
+r1477,0.738157187,Fatty acid oxidation
+r1481,0.738157187,Fatty acid oxidation
+r1487,0.738197507,Fatty acid oxidation
+r2497,0.4763950139999999,"Transport, peroxisomal"
+r2498,0.4763950139999999,"Transport, peroxisomal"
+r2499,0.4763950139999999,"Transport, peroxisomal"
+r2501,0.4763950139999999,"Transport, peroxisomal"
+r2502,0.4763950139999999,"Transport, peroxisomal"
+r2503,0.4763950139999999,"Transport, peroxisomal"
+r2505,0.4763950139999999,"Transport, endoplasmic reticular"
+r2514m,0.738197507,"Transport, mitochondrial"
+r2517,0.4763950139999999,"Transport, peroxisomal"
+r2518,0.4763950139999999,"Transport, peroxisomal"
+r2539,0.999483561790482,"Transport, mitochondrial"

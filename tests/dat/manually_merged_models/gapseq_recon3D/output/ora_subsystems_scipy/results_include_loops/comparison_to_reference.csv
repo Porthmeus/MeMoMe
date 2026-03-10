@@ -1,0 +1,10 @@
+file,status,n_rows_new,n_rows_ref,n_key_new,n_key_ref,missing_in_new,missing_in_ref,max_abs_diff__dependency,max_abs_diff__K_background_in_subsystem,max_abs_diff__N_background_total,max_abs_diff__k_high_in_subsystem,max_abs_diff__p_value,max_abs_diff__n_high_total,max_abs_diff__fdr_bh,max_abs_diff__enrichment
+ora_background.csv,ok,5296,5296,5296,5296,0,0,,,,,,,,
+auto_high_dependency_ge_0.4.csv,ok,2606,2606,2606,2606,0,0,0.0,,,,,,,
+auto_high_dependency_ge_0.8.csv,ok,925,925,925,925,0,0,0.0,,,,,,,
+manual_high_dependency_ge_0.4.csv,ok,2605,2605,2605,2605,0,0,0.0,,,,,,,
+manual_high_dependency_ge_0.8.csv,ok,925,925,925,925,0,0,0.0,,,,,,,
+auto_ora_ge_0.4.csv,ok,93,93,93,93,0,0,,0.0,0.0,0.0,1.3712031510237921e-11,0.0,1.0059064692313768e-11,0.0
+auto_ora_ge_0.8.csv,ok,93,93,93,93,0,0,,0.0,0.0,0.0,1.2440382057832267e-11,0.0,5.309530592967349e-12,0.0
+manual_ora_ge_0.4.csv,ok,93,93,93,93,0,0,,0.0,0.0,0.0,1.418198891656175e-11,0.0,1.0288325746898863e-11,0.0
+manual_ora_ge_0.8.csv,ok,93,93,93,93,0,0,,0.0,0.0,0.0,1.2440382057832267e-11,0.0,5.309530592967349e-12,0.0

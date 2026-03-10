@@ -1,0 +1,5297 @@
+reaction_id,subsystem
+10FTHF5GLUtl,"Transport, lysosomal"
+10FTHF5GLUtm,"Transport, mitochondrial"
+10FTHF6GLUtl,"Transport, lysosomal"
+10FTHF6GLUtm,"Transport, mitochondrial"
+10FTHF7GLUtl,"Transport, lysosomal"
+10FTHF7GLUtm,"Transport, mitochondrial"
+10FTHFtl,"Transport, lysosomal"
+10FTHFtm,"Transport, mitochondrial"
+11DOCRTSLtm,"Transport, mitochondrial"
+11DOCRTSLtr,"Transport, endoplasmic reticular"
+11DOCRTSTRNtm,"Transport, mitochondrial"
+11DOCRTSTRNtr,"Transport, endoplasmic reticular"
+12HARACHDtr,"Transport, endoplasmic reticular"
+12HTACRtep,Drug metabolism
+12HTACRtu,Drug metabolism
+13DAMPPOX,Beta-Alanine metabolism
+13DMTtep,Drug metabolism
+13DMTtu,Drug metabolism
+1513TACRtep,Drug metabolism
+1513TACRtu,Drug metabolism
+15DMTtep,Drug metabolism
+15DMTtu,Drug metabolism
+15KPROSTGF2c,Eicosanoid metabolism
+18HARACHDtr,"Transport, endoplasmic reticular"
+1PPDCRp,Lysine metabolism
+1a25DHVITD3TRn,"Transport, nuclear"
+21HPRGNLONE,Steroid metabolism
+24_25DHVITD3tm,"Transport, mitochondrial"
+24_25VITD3Hm,Vitamin D metabolism
+25HVITD3c,Vitamin D metabolism
+25HVITD3tin_m,"Transport, mitochondrial"
+25VITD3Hm,Vitamin D metabolism
+2AMACHYD,"Glycine, serine, alanine, and threonine metabolism"
+2AMACSULT,Methionine and cysteine metabolism
+2AMADPTm,Lysine metabolism
+2DR1PP,Pyrimidine catabolism
+2H3MVc,"Valine, leucine, and isoleucine metabolism"
+2HATVACIDhc,Drug metabolism
+2HATVACIDteb,Drug metabolism
+2HATVACIDtep,Drug metabolism
+2HATVACIDthc,Drug metabolism
+2HATVLAChc,Drug metabolism
+2HATVLACteb,Drug metabolism
+2HATVLACtep,Drug metabolism
+2HATVLACthc,Drug metabolism
+2HBO,Propanoate metabolism
+2HIVc,"Valine, leucine, and isoleucine metabolism"
+2M3HBUc,"Valine, leucine, and isoleucine metabolism"
+2M3HBUtm,"Transport, mitochondrial"
+2M3HVACc,Propanoate metabolism
+2M3OVACm,Propanoate metabolism
+2M3OVACtm,"Transport, mitochondrial"
+2M3OVCOAm,Propanoate metabolism
+2MOPtm,"Transport, mitochondrial"
+2OXOADOXm,Lysine metabolism
+2OXOADPTm,Tryptophan metabolism
+31DMTtep,Drug metabolism
+31DMTtu,Drug metabolism
+34DHOXPEGOX,Tyrosine metabolism
+34DHPEAR,Tyrosine metabolism
+34DHPHAMT,Tyrosine metabolism
+34DHPLACOX,Tyrosine metabolism
+34DHPLACOX_NADP_,Tyrosine metabolism
+34DHXMANDACOX,Tyrosine metabolism
+34DHXMANDACOX_NADP_,Tyrosine metabolism
+34HPLFM,Ubiquinone synthesis
+34HPLtm,"Transport, mitochondrial"
+34HPPOR,Tyrosine metabolism
+35CGMPtn,"Transport, nuclear"
+35DHPVStep,Drug metabolism
+35DHPVSthc,Drug metabolism
+3AIBTm,"Valine, leucine, and isoleucine metabolism"
+3AIB_Dtm,"Transport, mitochondrial"
+3AIBtmi,"Transport, mitochondrial"
+3DHCAS,Bile acid synthesis
+3DHCDCAS,Bile acid synthesis
+3DHDCAS,Bile acid synthesis
+3DHLCAS,Bile acid synthesis
+3DPHBH1,Ubiquinone synthesis
+3DPHBH2,Ubiquinone synthesis
+3DSPHR,Sphingolipid metabolism
+3H3MGLTc,"Valine, leucine, and isoleucine metabolism"
+3HADICOAx,Fatty acid oxidation
+3HADPACtxc,"Transport, peroxisomal"
+3HADPACx,Fatty acid oxidation
+3HAO,Tryptophan metabolism
+3HBCOAHLm,"Valine, leucine, and isoleucine metabolism"
+3HGLUTCOAm,Lysine metabolism
+3HIVAcm,"Valine, leucine, and isoleucine metabolism"
+3HIVActm,"Transport, mitochondrial"
+3HKYNAKGAT,Tryptophan metabolism
+3HLYTCL,Tyrosine metabolism
+3HMPtm,"Transport, mitochondrial"
+3HPPtm,"Transport, mitochondrial"
+3HPVSTETteb,Drug metabolism
+3HPVSTETtev,Drug metabolism
+3HPVSteb,Drug metabolism
+3HPVStep,Drug metabolism
+3HPVSthc,Drug metabolism
+3ISPVSteb,Drug metabolism
+3ISPVStep,Drug metabolism
+3ISPVSthc,Drug metabolism
+3M4HDXPAC,Tyrosine metabolism
+3MGLUTACc,"Valine, leucine, and isoleucine metabolism"
+3MGLUTACtm,"Transport, mitochondrial"
+3MGLUTRc,"Valine, leucine, and isoleucine metabolism"
+3MHISc,Histidine metabolism
+3MOBt2im,"Transport, mitochondrial"
+3MOPt2im,"Transport, mitochondrial"
+3MOX4HOXPGALDOX,Tyrosine metabolism
+3MOX4HOXPGALDOX_NADP_,Tyrosine metabolism
+3MOXTYROX,Tyrosine metabolism
+3OHGLUTACm,Lysine metabolism
+3OHGLUTACtm,"Transport, mitochondrial"
+3OHSEBACtxc,"Transport, peroxisomal"
+3OHSEBACx,Fatty acid oxidation
+3OHSEBCOAx,Fatty acid oxidation
+3OHSUBACtxc,"Transport, peroxisomal"
+3OHSUBACx,Fatty acid oxidation
+3OHSUBCOAx,Fatty acid oxidation
+3SALAASPm,"Transport, mitochondrial"
+3SALACBOXL,Taurine and hypotaurine metabolism
+3SALAOX,Taurine and hypotaurine metabolism
+3SALATAi,Methionine and cysteine metabolism
+3SALATAim,Methionine and cysteine metabolism
+3SPYRSP,Methionine and cysteine metabolism
+3SPYRSPm,Methionine and cysteine metabolism
+41R1H2MAE12BOOX,Tyrosine metabolism
+41R2A1H12BOOX,Tyrosine metabolism
+42A12BOOX,Tyrosine metabolism
+4ABUTtcn,"Transport, nuclear"
+4ABUTtm,"Transport, mitochondrial"
+4BHGLZABCt,Drug metabolism
+4BHGLZtev,Drug metabolism
+4HATVACIDhc,Drug metabolism
+4HATVACIDteb,Drug metabolism
+4HATVACIDtep,Drug metabolism
+4HATVACIDthc,Drug metabolism
+4HATVLAChc,Drug metabolism
+4HATVLACteb,Drug metabolism
+4HATVLACtep,Drug metabolism
+4HATVLACthc,Drug metabolism
+4HBZCOAFm,Ubiquinone synthesis
+4HBZFm,Ubiquinone synthesis
+4HBZtm,"Transport, mitochondrial"
+4HGLSDm,Arginine and proline metabolism
+4HOXPACDOX_NADP_,Tyrosine metabolism
+4MOPt2im,"Transport, mitochondrial"
+4MPTNLtm,"Transport, mitochondrial"
+4OHBUTm,Glutamate metabolism
+4OHBUTtmc,"Transport, mitochondrial"
+56DHPVSteb,Drug metabolism
+56DHPVStev,Drug metabolism
+56EPPVSteb,Drug metabolism
+56EPPVStev,Drug metabolism
+5ADTSTSTERONEGLCtr,"Transport, endoplasmic reticular"
+5ADTSTSTERONESULT,Steroid metabolism
+5ADTSTSTERONEtr,"Transport, endoplasmic reticular"
+5AOPtm,Heme synthesis
+5DHFtl,"Transport, lysosomal"
+5EIPENCm,Fatty acid oxidation
+5EIPENCtm,"Transport, mitochondrial"
+5HLTDL,Tryptophan metabolism
+5HOXINDACTO2OX,Tryptophan metabolism
+5HOXINOXDA,Tryptophan metabolism
+5OHHEXAc,Fatty acid oxidation
+5THFtl,"Transport, lysosomal"
+5THFtm,"Transport, mitochondrial"
+6AHGLZABCt,Drug metabolism
+6AHGLZtev,Drug metabolism
+6BHGLZABCt,Drug metabolism
+6BHGLZGLCABCt,Drug metabolism
+6BHGLZGLCtev,Drug metabolism
+6BHGLZtev,Drug metabolism
+6DHFtl,"Transport, lysosomal"
+6DHFtm,"Transport, mitochondrial"
+6EPSteb,Drug metabolism
+6EPVStep,Drug metabolism
+6EPVSthc,Drug metabolism
+6HTSTSTERONEtr,"Transport, endoplasmic reticular"
+6THFtl,"Transport, lysosomal"
+6THFtm,"Transport, mitochondrial"
+7AHGLZABCt,Drug metabolism
+7AHGLZtev,Drug metabolism
+7BHGLZABCt,Drug metabolism
+7BHGLZGLCABCt,Drug metabolism
+7BHGLZGLCtev,Drug metabolism
+7BHGLZtev,Drug metabolism
+7DHCHSTEROLtr,"Transport, endoplasmic reticular"
+7DHFtl,"Transport, lysosomal"
+7DHFtm,"Transport, mitochondrial"
+7HPVSteb,Drug metabolism
+7HPVStev,Drug metabolism
+7KLITCHOLc,Bile acid synthesis
+7OHOCTAc,Fatty acid oxidation
+7THFtl,"Transport, lysosomal"
+7THFtm,"Transport, mitochondrial"
+A4GALTc,Sphingolipid metabolism
+A4GALTg,Sphingolipid metabolism
+AACOAT,Propanoate metabolism
+AACTOOR,"Glycine, serine, alanine, and threonine metabolism"
+AACTtm,"Transport, mitochondrial"
+AASAD3m,Lysine metabolism
+AATAi,Lysine metabolism
+ABO1g,Blood group synthesis
+ABO2g,Blood group synthesis
+ABO3g,Blood group synthesis
+ABO4g,Blood group synthesis
+ABO5g,Blood group synthesis
+ABO6g,Blood group synthesis
+ABO7g,Blood group synthesis
+ABO8g,Blood group synthesis
+ABO9g,Blood group synthesis
+ABTArm,Glutamate metabolism
+ABTD,Pentose phosphate pathway
+ABTD1,Pentose phosphate pathway
+ABUTD,Beta-Alanine metabolism
+ABUTt2rL,"Transport, lysosomal"
+ACACT10m,"Valine, leucine, and isoleucine metabolism"
+ACACT1r,Tryptophan metabolism
+ACACT1rm,Tryptophan metabolism
+ACACT1x,Cholesterol metabolism
+ACACT4p,Fatty acid oxidation
+ACACT5p,Fatty acid oxidation
+ACACT6p,Fatty acid oxidation
+ACACT7p,Fatty acid oxidation
+ACACT8p,Fatty acid oxidation
+ACACT9p,Fatty acid oxidation
+ACACt2m,"Transport, mitochondrial"
+ACACtx,"Transport, peroxisomal"
+ACALDtm,"Transport, mitochondrial"
+ACALDtr,"Transport, endoplasmic reticular"
+ACALDtx,"Transport, peroxisomal"
+ACCOAC,Fatty acid oxidation
+ACCOACm,Fatty acid oxidation
+ACCOAL,Propanoate metabolism
+ACCOALm,Propanoate metabolism
+ACCOAtn,"Transport, nuclear"
+ACCOAtr,"Transport, endoplasmic reticular"
+ACER11r,Sphingolipid metabolism
+ACER22g,Sphingolipid metabolism
+ACER23g,Sphingolipid metabolism
+ACER31r,Sphingolipid metabolism
+ACETONEt2m,"Transport, mitochondrial"
+ACGAGBSIDEtg,"Transport, golgi apparatus"
+ACGAGBSIDEtl,"Transport, lysosomal"
+ACGALFUCGALACGALFUC12GAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+ACGALFUCGALACGALFUCGALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+ACGALK,Aminosugar metabolism
+ACGALK2,Aminosugar metabolism
+ACGALtlg,"Transport, golgi apparatus"
+ACGALtly,"Transport, lysosomal"
+ACGAM2E,Aminosugar metabolism
+ACGAM6PSi,Aminosugar metabolism
+ACGAMK,Aminosugar metabolism
+ACGAMPM,Aminosugar metabolism
+ACGAMtly,"Transport, lysosomal"
+ACGBGBSIDEtg,"Transport, golgi apparatus"
+ACGBGBSIDEtl,"Transport, lysosomal"
+ACGLUtm,"Transport, mitochondrial"
+ACGLYtc,"Transport, mitochondrial"
+ACGSm,Urea cycle
+ACHEe,Glycerophospholipid metabolism
+ACHtn,"Transport, nuclear"
+ACILEm,"Valine, leucine, and isoleucine metabolism"
+ACILEtm,"Transport, mitochondrial"
+ACITL,Citric acid cycle
+ACLEUm,"Valine, leucine, and isoleucine metabolism"
+ACLEUtm,"Transport, mitochondrial"
+ACLYSHYc,Lysine metabolism
+ACMPGLUTdt,Drug metabolism
+ACMPGLUTtep,Drug metabolism
+ACMPGLUTthc,Drug metabolism
+ACMPGLUtep,Drug metabolism
+ACMPGLUthc,Drug metabolism
+ACMPdt,Drug metabolism
+ACMPthc,Drug metabolism
+ACMPtu,Drug metabolism
+ACN13ACNGALGBSIDEtg,"Transport, golgi apparatus"
+ACN23ACNGALGBSIDEtg,"Transport, golgi apparatus"
+ACNACNGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+ACNACNGALGBSIDEtg,"Transport, golgi apparatus"
+ACNAM9PL,Aminosugar metabolism
+ACNAM9PL2,Aminosugar metabolism
+ACNAMPH,Aminosugar metabolism
+ACNAMlt,"Transport, lysosomal"
+ACNAMtn,"Transport, nuclear"
+ACNGALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+ACNMLr,Aminosugar metabolism
+ACOAD10m,"Valine, leucine, and isoleucine metabolism"
+ACOAD1fm,Butanoate metabolism
+ACOAD8m,"Valine, leucine, and isoleucine metabolism"
+ACOAD9m,"Valine, leucine, and isoleucine metabolism"
+ACOAHi,Pyruvate metabolism
+ACOAO7p,Fatty acid oxidation
+ACONT,Citric acid cycle
+ACONTm,Citric acid cycle
+ACOX22x,Bile acid synthesis
+ACOX2x,Bile acid synthesis
+ACP1_FMN_,Vitamin B2 metabolism
+ACRNtm,"Transport, mitochondrial"
+ACS,Glycolysis/gluconeogenesis
+ACS2,Propanoate metabolism
+ACSRTNMT,Tryptophan metabolism
+ACSm,Glycolysis/gluconeogenesis
+ACTHRtc,"Transport, mitochondrial"
+ACTLMO,Pyruvate metabolism
+ACTNMO,Pyruvate metabolism
+ACTYRm,Tyrosine metabolism
+ACTYRtc,"Transport, mitochondrial"
+ACYP,Glycolysis/gluconeogenesis
+ACt2m,"Transport, mitochondrial"
+ACtg,"Transport, golgi apparatus"
+ADA,Purine catabolism
+ADAe,Purine catabolism
+ADCim,Propanoate metabolism
+ADK1,Nucleotide interconversion
+ADK1m,Nucleotide interconversion
+ADK3,Nucleotide interconversion
+ADK3m,Nucleotide interconversion
+ADKd,Nucleotide interconversion
+ADMDC,Arginine and proline metabolism
+ADNCYC,Nucleotide interconversion
+ADNK1,Nucleotide interconversion
+ADNK1m,Nucleotide interconversion
+ADNK3,Purine synthesis
+ADNK4,Purine synthesis
+ADNtl,"Transport, lysosomal"
+ADNtm,"Transport, mitochondrial"
+ADPACDAc,Fatty acid oxidation
+ADPACtx,Fatty acid oxidation
+ADPCOACROT,Fatty acid oxidation
+ADPCOAPTE,Fatty acid oxidation
+ADPOHc,Lysine metabolism
+ADPRDP,Nucleotide interconversion
+ADPT,Nucleotide salvage pathway
+ADPtx,"Transport, peroxisomal"
+ADRNCOAtx,"Transport, peroxisomal"
+ADRNCPT1,Fatty acid oxidation
+ADRNCPT2,Fatty acid oxidation
+ADRNCRNt,Fatty acid oxidation
+ADSK,Nucleotide interconversion
+ADSL1,Nucleotide interconversion
+ADSL2,Purine synthesis
+ADSS,Nucleotide interconversion
+AG13T16g,Keratan sulfate synthesis
+AG13T17g,Keratan sulfate synthesis
+AG13T18g,Keratan sulfate synthesis
+AG13T1g,Keratan sulfate synthesis
+AG13T2g,Keratan sulfate synthesis
+AG13T3g,Keratan sulfate synthesis
+AGDC,Aminosugar metabolism
+AGMTm,Arginine and proline metabolism
+AGPAT1,Triacylglycerol synthesis
+AGPAT4,Glycerophospholipid metabolism
+AGRMtm,"Transport, mitochondrial"
+AGTim,Alanine and aspartate metabolism
+AGTix,Alanine and aspartate metabolism
+AHANDROSTANtr,"Transport, endoplasmic reticular"
+AHC,Methionine and cysteine metabolism
+AHCYStd,"Transport, mitochondrial"
+AHCYStr,"Transport, endoplasmic reticular"
+AICART,Purine synthesis
+AIRCr,Purine synthesis
+AKGDm,Citric acid cycle
+AKGMALtm,"Transport, mitochondrial"
+AKGtp,"Transport, peroxisomal"
+AKR1C1,Steroid metabolism
+AKR1C41,Bile acid synthesis
+AKR1C42,Bile acid synthesis
+AKR1D,Bile acid synthesis
+AKR1D2,Bile acid synthesis
+ALAARGCYSr,Peptide metabolism
+ALAARGGLYr,Peptide metabolism
+ALAASNLEUr,Peptide metabolism
+ALAGLYLYSr,Peptide metabolism
+ALAHISALAr,Peptide metabolism
+ALALYSTHRr,Peptide metabolism
+ALAR,Alanine and aspartate metabolism
+ALASm,"Glycine, serine, alanine, and threonine metabolism"
+ALATA_L,Glutamate metabolism
+ALCD1,Miscellaneous
+ALCD21_D,Pyruvate metabolism
+ALCD21_L,Pyruvate metabolism
+ALCD22_D,Pyruvate metabolism
+ALCD22_L,Pyruvate metabolism
+ALCD2if,Glycolysis/gluconeogenesis
+ALCD2yf,Glycolysis/gluconeogenesis
+ALDD20x,Tryptophan metabolism
+ALDD20xm,Tryptophan metabolism
+ALDD21,Fatty acid oxidation
+ALDD2x,Glycolysis/gluconeogenesis
+ALDD2xm,Glycolysis/gluconeogenesis
+ALDD2y,Glycolysis/gluconeogenesis
+ALDSTRNtm,"Transport, mitochondrial"
+ALLOP1tu,Drug metabolism
+ALLOP2tu,Drug metabolism
+ALLOPtepvb,Drug metabolism
+ALOX12,Eicosanoid metabolism
+ALOX15,Eicosanoid metabolism
+ALOX5,Eicosanoid metabolism
+ALOX52,Eicosanoid metabolism
+ALR2,Pyruvate metabolism
+ALR3,Pyruvate metabolism
+AM19CSteb,Drug metabolism
+AM1ACSteb,Drug metabolism
+AM1ACStep,Drug metabolism
+AM1ALCSteb,Drug metabolism
+AM1ALCStep,Drug metabolism
+AM1C9CSteb,Drug metabolism
+AM1C9CStev,Drug metabolism
+AM1CCSteb,Drug metabolism
+AM1CCStev,Drug metabolism
+AM1CSAtep,Drug metabolism
+AM4N9CStev,Drug metabolism
+AM4NC9CSteb,Drug metabolism
+AM4NCSteb,Drug metabolism
+AM4NCStep,Drug metabolism
+AM9CSAteb,Drug metabolism
+AM9CSAtep,Drug metabolism
+AMACR2p,Bile acid synthesis
+AMACRp,Bile acid synthesis
+AMANK,Aminosugar metabolism
+AMCOXO,Tryptophan metabolism
+AMETr,"Transport, endoplasmic reticular"
+AMETt2m,"Transport, mitochondrial"
+AMETtd,"Transport, mitochondrial"
+AMPDA,Nucleotide interconversion
+AMPTASECG,Glutathione metabolism
+AMPTASECGe,Glutathione metabolism
+AMPtp,"Transport, peroxisomal"
+AMY1e,Starch and sucrose metabolism
+AND19ONEc,Steroid metabolism
+ANDRSTANDRtr,"Transport, endoplasmic reticular"
+ANDRSTRNGLCtr,"Transport, endoplasmic reticular"
+ANDRSTRNtr,"Transport, endoplasmic reticular"
+AOBUTDsm,"Glycine, serine, alanine, and threonine metabolism"
+APAT2rm,Beta-Alanine metabolism
+APOCF,Biotin metabolism
+APOCFm,Biotin metabolism
+APOC_LYS_BTNP,Biotin metabolism
+APOC_LYS_BTNPm,Biotin metabolism
+APRTO2,Arginine and proline metabolism
+ARABR,Pentose phosphate pathway
+ARACHCOAtx,"Transport, peroxisomal"
+ARACHCPT1,Fatty acid oxidation
+ARACHCPT2,Fatty acid oxidation
+ARACHCRNt,Fatty acid oxidation
+ARACHDCOAtx,"Transport, peroxisomal"
+ARACHDtr,"Transport, endoplasmic reticular"
+ARACHETH,Glycerophospholipid metabolism
+ARGALAALAr,Peptide metabolism
+ARGALAPHEr,Peptide metabolism
+ARGALATHRr,Peptide metabolism
+ARGARGLYSr,Peptide metabolism
+ARGARGMETr,Peptide metabolism
+ARGARGr,Peptide metabolism
+ARGCYSGLYr,Peptide metabolism
+ARGCYSSERr,Peptide metabolism
+ARGDCm,Arginine and proline metabolism
+ARGGLUGLUr,Peptide metabolism
+ARGGLUPROr,Peptide metabolism
+ARGGLYGLYr,Peptide metabolism
+ARGHISTHRr,Peptide metabolism
+ARGLEUPHEr,Peptide metabolism
+ARGLYSASPr,Peptide metabolism
+ARGN,Urea cycle
+ARGNm,Urea cycle
+ARGPHEARGr,Peptide metabolism
+ARGPROMETr,Peptide metabolism
+ARGPROTHRr,Peptide metabolism
+ARGSERSERr,Peptide metabolism
+ARGSL,Alanine and aspartate metabolism
+ARGSS,Alanine and aspartate metabolism
+ARGTYRVALr,Peptide metabolism
+ARGVALCYSr,Peptide metabolism
+ARGVALTRPr,Peptide metabolism
+ARGtm,"Transport, mitochondrial"
+ARSA,Sphingolipid metabolism
+ARTCOAL1,R group synthesis
+ARTCOAL2,R group synthesis
+ARTCOAL3,R group synthesis
+ARTFR208,R group synthesis
+ASAH1,Sphingolipid metabolism
+ASCBOX,Vitamin C metabolism
+ASNASNARGr,Peptide metabolism
+ASNCYSCYSr,Peptide metabolism
+ASNMETPROr,Peptide metabolism
+ASNNm,Alanine and aspartate metabolism
+ASNPHEASPr,Peptide metabolism
+ASNPHECYSr,Peptide metabolism
+ASNS1,Alanine and aspartate metabolism
+ASNTYRGLYr,Peptide metabolism
+ASNTYRPHEr,Peptide metabolism
+ASNTYRTHRr,Peptide metabolism
+ASNtm,"Transport, mitochondrial"
+ASP1DC,Beta-Alanine metabolism
+ASPALAARGr,Peptide metabolism
+ASPASNGLUr,Peptide metabolism
+ASPCTr,Pyrimidine synthesis
+ASPGLUPROr,Peptide metabolism
+ASPGLUTRPr,Peptide metabolism
+ASPGLUm,"Transport, mitochondrial"
+ASPGLUr,Peptide metabolism
+ASPHISCYSr,Peptide metabolism
+ASPHISPROr,Peptide metabolism
+ASPLYSGLUr,Peptide metabolism
+ASPLYSHISr,Peptide metabolism
+ASPMETASPr,Peptide metabolism
+ASPNATm,Alanine and aspartate metabolism
+ASPPROLYSr,Peptide metabolism
+ASPTA,Alanine and aspartate metabolism
+ASPTAm,Alanine and aspartate metabolism
+ASPVALASNr,Peptide metabolism
+ATP1ter,"Transport, endoplasmic reticular"
+ATP2ter,"Transport, endoplasmic reticular"
+ATPH1e,Nucleotide interconversion
+ATPH2e,Nucleotide interconversion
+ATPS4mi,Oxidative phosphorylation
+ATPasel,"Transport, lysosomal"
+ATPtg,"Transport, golgi apparatus"
+ATPtm,"Transport, mitochondrial"
+ATPtn,"Transport, nuclear"
+ATPtx,"Transport, peroxisomal"
+ATVACIDMCTtu,Drug metabolism
+ATVACIDOATPtu,Drug metabolism
+ATVACIDhc,Drug metabolism
+ATVACIDhr,Drug metabolism
+ATVACIDitr,Drug metabolism
+ATVACIDtdu,Drug metabolism
+ATVACIDtu,Drug metabolism
+ATVACYLGLUChc,Drug metabolism
+ATVETHGLUChc,Drug metabolism
+ATVLACGLCURhc,Drug metabolism
+ATVLACThc,Drug metabolism
+ATVLACh2r,Drug metabolism
+ATVLAChc,Drug metabolism
+ATVLAChr,Drug metabolism
+ATVLACitr,Drug metabolism
+ATVLACtdhc,Drug metabolism
+ATVLACtu,Drug metabolism
+Am19CStev,Drug metabolism
+Am1CSAteb,Drug metabolism
+B3GALT3g,Sphingolipid metabolism
+B3GALT41g,Sphingolipid metabolism
+B3GALT42g,Sphingolipid metabolism
+B3GALT43g,Sphingolipid metabolism
+B3GALT44g,Sphingolipid metabolism
+B3GALT5g,Sphingolipid metabolism
+B3GALTg,Blood group synthesis
+B3GNT11g,Blood group synthesis
+B3GNT12g,Blood group synthesis
+B3GNT310g,Blood group synthesis
+B3GNT311g,Blood group synthesis
+B3GNT312g,Blood group synthesis
+B3GNT313g,Blood group synthesis
+B3GNT314g,Blood group synthesis
+B3GNT315g,Blood group synthesis
+B3GNT31g,Sphingolipid metabolism
+B3GNT32g,Sphingolipid metabolism
+B3GNT33g,Sphingolipid metabolism
+B3GNT34g,Sphingolipid metabolism
+B3GNT35g,Sphingolipid metabolism
+B3GNT36g,Sphingolipid metabolism
+B3GNT37g,Sphingolipid metabolism
+B3GNT39g,Sphingolipid metabolism
+B3GNT51g,Blood group synthesis
+BAAT1x,Bile acid synthesis
+BAAT2x,Bile acid synthesis
+BAAT3x,Bile acid synthesis
+BAAT4x,Bile acid synthesis
+BACCL,Biotin metabolism
+BACCLm,Biotin metabolism
+BALAtmr,"Transport, mitochondrial"
+BAMPPALDOX,Beta-Alanine metabolism
+BCDO,Vitamin A metabolism
+BDHm,Butanoate metabolism
+BETALDHxm,"Glycine, serine, alanine, and threonine metabolism"
+BGAL1e,Sphingolipid metabolism
+BGAL1l,Sphingolipid metabolism
+BGAL2l,Sphingolipid metabolism
+BGAL3l,Sphingolipid metabolism
+BHBtm,"Transport, mitochondrial"
+BHMT,"Glycine, serine, alanine, and threonine metabolism"
+BIDGLCURr,Heme degradation
+BILDGLCURtr,"Transport, endoplasmic reticular"
+BILGLCURtr,"Transport, endoplasmic reticular"
+BILIRED,Heme degradation
+BILIRUBtr,"Transport, endoplasmic reticular"
+BIOCYTtn,"Transport, nuclear"
+BPNT,Nucleotide interconversion
+BPNT2,Nucleotide interconversion
+BTND1,Biotin metabolism
+BTND1n,Biotin metabolism
+BTNDm,Biotin metabolism
+BTNPL,Biotin metabolism
+BTNPLm,Biotin metabolism
+BTNt2m,"Transport, mitochondrial"
+BTNtn,"Transport, nuclear"
+BUP2,Pyrimidine catabolism
+BUTt2m,"Transport, mitochondrial"
+C02592tx,"Transport, peroxisomal"
+C02712tm,"Transport, mitochondrial"
+C03990tr,"Transport, endoplasmic reticular"
+C03990tx,"Transport, peroxisomal"
+C05953tm,"Transport, mitochondrial"
+C10DCCACT,Fatty acid oxidation
+C10DCc,Fatty acid oxidation
+C12DCACOT,Fatty acid oxidation
+C12DCACT,Fatty acid oxidation
+C12DCTD,Fatty acid oxidation
+C140CPT1,Fatty acid oxidation
+C14825c,Fatty acid oxidation
+C14STRr,Cholesterol metabolism
+C160CPT1,Fatty acid oxidation
+C160CPT2,Fatty acid oxidation
+C160CRNt,Fatty acid oxidation
+C161CPT1,Fatty acid oxidation
+C161CPT12,Fatty acid oxidation
+C161CPT2,Fatty acid oxidation
+C161CPT22,Fatty acid oxidation
+C161CRN2t,Fatty acid oxidation
+C161CRNt,Fatty acid oxidation
+C16txc,"Transport, peroxisomal"
+C180CPT1,Fatty acid oxidation
+C180CPT2,Fatty acid oxidation
+C180CRNt,Fatty acid oxidation
+C181CPT1,Fatty acid oxidation
+C181CPT2,Fatty acid oxidation
+C181CRNt,Fatty acid oxidation
+C204CPT1,Fatty acid oxidation
+C204CPT2,Fatty acid oxidation
+C204CRNt,Fatty acid oxidation
+C226COAtx,"Transport, peroxisomal"
+C226CPT1,Fatty acid oxidation
+C226CPT2,Fatty acid oxidation
+C226CRNt,Fatty acid oxidation
+C2tcx,"Transport, peroxisomal"
+C30CPT1,Fatty acid oxidation
+C3STDH1Pr,Cholesterol metabolism
+C3STDH1r,Cholesterol metabolism
+C3STKR2r,Cholesterol metabolism
+C40CPT1,Fatty acid oxidation
+C4CRNCPT2,Fatty acid oxidation
+C4DCCACT,Fatty acid oxidation
+C4STMO1r,Cholesterol metabolism
+C4STMO2Pr,Cholesterol metabolism
+C4STMO2r,Cholesterol metabolism
+C4tcx,"Transport, peroxisomal"
+C4tmc,"Transport, mitochondrial"
+C4x,"Transport, peroxisomal"
+C60CPT1,Fatty acid oxidation
+C6COAt,"Transport, peroxisomal"
+C6CRNtcx,"Transport, peroxisomal"
+C6DCCACT,Fatty acid oxidation
+C6DCc,Fatty acid oxidation
+C80CPT1,Fatty acid oxidation
+C8DCc,Fatty acid oxidation
+C9BRxtc,"Transport, peroxisomal"
+CA24GSc,Bile acid synthesis
+CA24GSr,Bile acid synthesis
+CAPROICc,Fatty acid oxidation
+CASULT,Bile acid synthesis
+CAT2p,Glycolysis/gluconeogenesis
+CATm,ROS detoxification
+CATp,Miscellaneous
+CATr,ROS detoxification
+CBPPer,Glycolysis/gluconeogenesis
+CBPS,Pyrimidine synthesis
+CBPSam,Glutamate metabolism
+CBPter,"Transport, endoplasmic reticular"
+CBR2,Eicosanoid metabolism
+CDCA24GSc,Bile acid synthesis
+CDCA24GSr,Bile acid synthesis
+CDCA3GSc,Bile acid synthesis
+CDCA3GSr,Bile acid synthesis
+CDCA6AH,Bile acid synthesis
+CDIPTr,Glycerophospholipid metabolism
+CDPDAGtm,"Transport, mitochondrial"
+CDS,Glycerophospholipid metabolism
+CDSm,Glycerophospholipid metabolism
+CE2026tm,"Transport, mitochondrial"
+CE2176tm,"Transport, mitochondrial"
+CE4843HYDc,Fatty acid oxidation
+CE4968tm,"Transport, mitochondrial"
+CE4970tm,"Transport, mitochondrial"
+CE7081tr,"Transport, endoplasmic reticular"
+CEPTC,Glycerophospholipid metabolism
+CEPTE,Glycerophospholipid metabolism
+CERK,Sphingolipid metabolism
+CERT1gt,"Transport, golgi apparatus"
+CERT1rt,"Transport, endoplasmic reticular"
+CERT1tn,"Transport, nuclear"
+CERT2gt,"Transport, golgi apparatus"
+CERT2rt,"Transport, endoplasmic reticular"
+CH25H,Bile acid synthesis
+CHAT,Glycerophospholipid metabolism
+CHATn,Glycerophospholipid metabolism
+CHLP,Glycerophospholipid metabolism
+CHLPCTD,Glycerophospholipid metabolism
+CHLtm,"Transport, mitochondrial"
+CHOLD2m,"Glycine, serine, alanine, and threonine metabolism"
+CHOLESACATc,Cholesterol metabolism
+CHOLK,Glycerophospholipid metabolism
+CHOLPtg,"Transport, golgi apparatus"
+CHOLPtl,"Transport, lysosomal"
+CHOLPtn,"Transport, nuclear"
+CHOLtg,"Transport, golgi apparatus"
+CHOLtn,"Transport, nuclear"
+CHOLtr,"Transport, endoplasmic reticular"
+CHSTEROLSULT,Steroid metabolism
+CHSTEROLt1,"Transport, mitochondrial"
+CHSTEROLt2,"Transport, mitochondrial"
+CHSTEROLt3,"Transport, mitochondrial"
+CHSTEROLtg,"Transport, golgi apparatus"
+CHSTEROLtrc,"Transport, endoplasmic reticular"
+CITL,Citric acid cycle
+CITMCOAHm,C5-branched dibasic acid metabolism
+CITMCOALm,C5-branched dibasic acid metabolism
+CITRtm,"Transport, mitochondrial"
+CITtam,"Transport, mitochondrial"
+CITtbm,"Transport, mitochondrial"
+CK,Urea cycle
+CKc,Urea cycle
+CLPNDCOAtx,"Transport, peroxisomal"
+CLPNDCPT1,Fatty acid oxidation
+CLPNDCPT2,Fatty acid oxidation
+CLPNDCRNt,Fatty acid oxidation
+CLS_hs,Glycerophospholipid metabolism
+CMPACNAtg,"Transport, golgi apparatus"
+CMPACNAtn,"Transport, nuclear"
+CMPSAS,Aminosugar metabolism
+CMPSASn,Aminosugar metabolism
+CO2ter,"Transport, endoplasmic reticular"
+CO2tg,"Transport, golgi apparatus"
+CO2tm,"Transport, mitochondrial"
+CO2tp,"Transport, peroxisomal"
+COAtg,"Transport, golgi apparatus"
+COAtl,"Transport, lysosomal"
+COAtm,"Transport, mitochondrial"
+COAtn,"Transport, nuclear"
+COAtp,"Transport, peroxisomal"
+COAtr,"Transport, endoplasmic reticular"
+COQ3m,Ubiquinone synthesis
+COQ5m,Ubiquinone synthesis
+COQ6m,Ubiquinone synthesis
+COQ7m,Ubiquinone synthesis
+CORE2GTg,O-glycan metabolism
+CORE3GTg,O-glycan metabolism
+CORE4GTg,O-glycan metabolism
+CORE6GTg,O-glycan metabolism
+CORTSNti,"Transport, endoplasmic reticular"
+COUCOAFm,Ubiquinone synthesis
+CPPPGO,Heme synthesis
+CREATtmdiffir,Urea cycle
+CRGLZABCt,Drug metabolism
+CRGLZtev,Drug metabolism
+CRMte,Sphingolipid metabolism
+CRNCAR3tp,"Transport, peroxisomal"
+CRNCARtp,"Transport, peroxisomal"
+CRNrtx,"Transport, peroxisomal"
+CRNtim,"Transport, mitochondrial"
+CRNtx,"Transport, peroxisomal"
+CRTNsyn,Urea cycle
+CRTSLtm,"Transport, mitochondrial"
+CRTSLtr,"Transport, endoplasmic reticular"
+CRTSTRNtm,"Transport, mitochondrial"
+CRVS1tev,Drug metabolism
+CRVSATPthc,Drug metabolism
+CRVSATPtu,Drug metabolism
+CRVSM1hr,Drug metabolism
+CRVSM1teb,Drug metabolism
+CRVSM23hr,Drug metabolism
+CRVSM23teb,Drug metabolism
+CRVSM23tev,Drug metabolism
+CRVSM24teb,Drug metabolism
+CRVSM24tev,Drug metabolism
+CRVSthc,Drug metabolism
+CRVStu,Drug metabolism
+CSAPASEly,Chondroitin sulfate degradation
+CSASULPteb,Drug metabolism
+CSASULPtev,Drug metabolism
+CSAtd,Drug metabolism
+CSAtu,Drug metabolism
+CSBPASEly,Chondroitin sulfate degradation
+CSCPASEly,Chondroitin sulfate degradation
+CSDPASEly,Chondroitin sulfate degradation
+CSEPASEly,Chondroitin sulfate degradation
+CSNAT2m,Fatty acid oxidation
+CSNAT2x,Fatty acid oxidation
+CSNAT3x,Fatty acid oxidation
+CSNATer,Fatty acid oxidation
+CSNATm,Fatty acid oxidation
+CSNATp,Fatty acid oxidation
+CSNATr,Fatty acid oxidation
+CSND,Pyrimidine catabolism
+CSPG_Atly,"Transport, lysosomal"
+CSPG_Btly,"Transport, lysosomal"
+CSPG_Ctly,"Transport, lysosomal"
+CSPG_Dtly,"Transport, lysosomal"
+CSPG_Etly,"Transport, lysosomal"
+CSm,Citric acid cycle
+CTPS1,Nucleotide interconversion
+CTPS2,Pyrimidine synthesis
+CTPtn,"Transport, nuclear"
+CVM1GLUChc,Drug metabolism
+CVM23GLUChc,Drug metabolism
+CYOOm2i,Oxidative phosphorylation
+CYOOm3i,Oxidative phosphorylation
+CYOR_u10mi,Oxidative phosphorylation
+CYSASNMETr,Peptide metabolism
+CYSASPPHEr,Peptide metabolism
+CYSCYSr,Peptide metabolism
+CYSGLNMETr,Peptide metabolism
+CYSGLTH,Methionine and cysteine metabolism
+CYSGLUHISr,Peptide metabolism
+CYSGLUTRPr,Peptide metabolism
+CYSGLYPTASEe_1,Tyrosine metabolism
+CYSLEUTHRr,Peptide metabolism
+CYSO,Taurine and hypotaurine metabolism
+CYSSERMETr,Peptide metabolism
+CYSTA,Methionine and cysteine metabolism
+CYSTGL,Methionine and cysteine metabolism
+CYSTS,Methionine and cysteine metabolism
+CYSTYRASNr,Peptide metabolism
+CYTD,Pyrimidine catabolism
+CYTDK1,Nucleotide interconversion
+CYTDK2m,Nucleotide interconversion
+CYTDn,Nucleotide interconversion
+CYTDtl,"Transport, lysosomal"
+CYTDtm,"Transport, mitochondrial"
+CYTDtn,"Transport, nuclear"
+CYTK1,Nucleotide interconversion
+CYTK10,Nucleotide interconversion
+CYTK10n,Nucleotide interconversion
+CYTK11,Nucleotide interconversion
+CYTK11n,Nucleotide interconversion
+CYTK12,Nucleotide interconversion
+CYTK12n,Nucleotide interconversion
+CYTK13,Nucleotide interconversion
+CYTK13n,Nucleotide interconversion
+CYTK14,Nucleotide interconversion
+CYTK14n,Nucleotide interconversion
+CYTK1m,Nucleotide interconversion
+CYTK1n,Nucleotide interconversion
+CYTK2,Nucleotide interconversion
+CYTK2n,Nucleotide interconversion
+CYTK3,Nucleotide interconversion
+CYTK3n,Nucleotide interconversion
+CYTK4,Nucleotide interconversion
+CYTK4n,Nucleotide interconversion
+CYTK5,Nucleotide interconversion
+CYTK5n,Nucleotide interconversion
+CYTK6,Nucleotide interconversion
+CYTK6n,Nucleotide interconversion
+CYTK7,Nucleotide interconversion
+CYTK7n,Nucleotide interconversion
+CYTK8,Nucleotide interconversion
+CYTK8n,Nucleotide interconversion
+CYTK9,Nucleotide interconversion
+CYTK9n,Nucleotide interconversion
+D3AIBTm,Pyrimidine catabolism
+DACGST,Tyrosine metabolism
+DACT,Tyrosine metabolism
+DADA,Nucleotide interconversion
+DADAe,Nucleotide interconversion
+DADNK,Nucleotide interconversion
+DAGK_hs,Glycerophospholipid metabolism
+DAGKn_hs,Glycerophospholipid metabolism
+DAG_HStg,"Transport, golgi apparatus"
+DALAOXx,D-alanine metabolism
+DALAxt,D-alanine metabolism
+DASCBH,Vitamin C metabolism
+DASCBR,Vitamin C metabolism
+DATPtm,"Transport, mitochondrial"
+DATPtn,"Transport, nuclear"
+DCA24GSc,Bile acid synthesis
+DCA24GSr,Bile acid synthesis
+DCA3GSc,Bile acid synthesis
+DCA3GSr,Bile acid synthesis
+DCASULT,Bile acid synthesis
+DCATDc,Fatty acid oxidation
+DCATDr,Fatty acid oxidation
+DCHOLESTANCOAc,Bile acid synthesis
+DCIm,Fatty acid oxidation
+DCK1m,Nucleotide interconversion
+DCK1n,Nucleotide interconversion
+DCK2n,Nucleotide interconversion
+DCMPDA,Pyrimidine catabolism
+DCMPtm,"Transport, mitochondrial"
+DCSPTN1COAtx,"Transport, peroxisomal"
+DCSPTN1COAtxc,"Transport, peroxisomal"
+DCSPTN1CPT1,Fatty acid oxidation
+DCSPTN1CPT2,Fatty acid oxidation
+DCSPTN1CRNt,Fatty acid oxidation
+DCT,Tyrosine metabolism
+DCTPtm,"Transport, mitochondrial"
+DCTPtn,"Transport, nuclear"
+DCYTD,Pyrimidine catabolism
+DCYTDn,Nucleotide interconversion
+DDPGAm,Arginine and proline metabolism
+DECDPtm,"Transport, mitochondrial"
+DEDOLP1_L,N-glycan synthesis
+DEDOLP2_L,N-glycan synthesis
+DEDOLR_L,N-glycan synthesis
+DES21,Sphingolipid metabolism
+DESAT14_9,Fatty acid synthesis
+DESAT16_2,Fatty acid synthesis
+DESAT18_10,Fatty acid synthesis
+DESAT18_3,Fatty acid synthesis
+DESAT18_4,Fatty acid synthesis
+DESAT18_5,Fatty acid synthesis
+DESAT18_6,Fatty acid synthesis
+DESAT18_7,Fatty acid synthesis
+DESAT18_8,Fatty acid synthesis
+DESAT18_9,Fatty acid synthesis
+DESAT20_1,Fatty acid synthesis
+DESAT20_2,Fatty acid synthesis
+DESAT22_1p,Fatty acid synthesis
+DESAT22_2p,Fatty acid synthesis
+DGAT,Triacylglycerol synthesis
+DGCHOLtx,"Transport, peroxisomal"
+DGK1,Nucleotide interconversion
+DGK2m,Nucleotide interconversion
+DGNSKm,Nucleotide interconversion
+DGSNtm,"Transport, mitochondrial"
+DGTPtm,"Transport, mitochondrial"
+DGTPtn,"Transport, nuclear"
+DGULND,Pentose phosphate pathway
+DHAPtc,"Transport, mitochondrial"
+DHCHOLESTANATEtm,"Transport, peroxisomal"
+DHCR241r,Cholesterol metabolism
+DHCR242r,Cholesterol metabolism
+DHCR243r,Cholesterol metabolism
+DHCR71r,Cholesterol metabolism
+DHCR72r,Cholesterol metabolism
+DHCRD1,Sphingolipid metabolism
+DHCRD2,Sphingolipid metabolism
+DHCRMter,"Transport, endoplasmic reticular"
+DHCRMtg,"Transport, golgi apparatus"
+DHDPBMTm,Ubiquinone synthesis
+DHEASULT,Steroid metabolism
+DHEAtr,"Transport, endoplasmic reticular"
+DHFR,Folate metabolism
+DHFtl,"Transport, lysosomal"
+DHFtm,"Transport, mitochondrial"
+DHGLZABCt,Drug metabolism
+DHGLZtev,Drug metabolism
+DHORD9,Pyrimidine synthesis
+DHORTS,Pyrimidine synthesis
+DHPM1,Pyrimidine catabolism
+DHPM2,Pyrimidine catabolism
+DHPR,Tetrahydrobiopterin metabolism
+DHPR2,Tetrahydrobiopterin metabolism
+DIDECAETH,Glycerophospholipid metabolism
+DIDPtn,"Transport, nuclear"
+DIGALSGALSIDEtg,"Transport, golgi apparatus"
+DIGALSIDEtg,"Transport, golgi apparatus"
+DIGALSIDEtl,"Transport, lysosomal"
+DIHOLINETH,Glycerophospholipid metabolism
+DITPtn,"Transport, nuclear"
+DKMPPD,Arginine and proline metabolism
+DKMPPD2,Methionine and cysteine metabolism
+DKMPPD3,Methionine and cysteine metabolism
+DLNLCGCPT1,Fatty acid oxidation
+DLNLCGCPT2,Fatty acid oxidation
+DLNLCGCRNt,Fatty acid oxidation
+DMATT,Cholesterol metabolism
+DMATTx,Cholesterol metabolism
+DMGDHm,"Glycine, serine, alanine, and threonine metabolism"
+DMGtm,"Transport, mitochondrial"
+DMHPTCRNt,Fatty acid oxidation
+DMNONCOACRNCPT1,Fatty acid oxidation
+DMNONCRNt,Fatty acid oxidation
+DNADtn,"Transport, nuclear"
+DNDPt10m,"Transport, mitochondrial"
+DNDPt11m,"Transport, mitochondrial"
+DNDPt12m,"Transport, mitochondrial"
+DNDPt13m,"Transport, mitochondrial"
+DNDPt14m,"Transport, mitochondrial"
+DNDPt15m,"Transport, mitochondrial"
+DNDPt16m,"Transport, mitochondrial"
+DNDPt17m,"Transport, mitochondrial"
+DNDPt18m,"Transport, mitochondrial"
+DNDPt19m,"Transport, mitochondrial"
+DNDPt1m,"Transport, mitochondrial"
+DNDPt20m,"Transport, mitochondrial"
+DNDPt21m,"Transport, mitochondrial"
+DNDPt23m,"Transport, mitochondrial"
+DNDPt24m,"Transport, mitochondrial"
+DNDPt25m,"Transport, mitochondrial"
+DNDPt28m,"Transport, mitochondrial"
+DNDPt2m,"Transport, mitochondrial"
+DNDPt30m,"Transport, mitochondrial"
+DNDPt31m,"Transport, mitochondrial"
+DNDPt32m,"Transport, mitochondrial"
+DNDPt37m,"Transport, mitochondrial"
+DNDPt38m,"Transport, mitochondrial"
+DNDPt39m,"Transport, mitochondrial"
+DNDPt3m,"Transport, mitochondrial"
+DNDPt40m,"Transport, mitochondrial"
+DNDPt41m,"Transport, mitochondrial"
+DNDPt42m,"Transport, mitochondrial"
+DNDPt43m,"Transport, mitochondrial"
+DNDPt44m,"Transport, mitochondrial"
+DNDPt45m,"Transport, mitochondrial"
+DNDPt46m,"Transport, mitochondrial"
+DNDPt47m,"Transport, mitochondrial"
+DNDPt48m,"Transport, mitochondrial"
+DNDPt49m,"Transport, mitochondrial"
+DNDPt4m,"Transport, mitochondrial"
+DNDPt50m,"Transport, mitochondrial"
+DNDPt51m,"Transport, mitochondrial"
+DNDPt52m,"Transport, mitochondrial"
+DNDPt53m,"Transport, mitochondrial"
+DNDPt54m,"Transport, mitochondrial"
+DNDPt55m,"Transport, mitochondrial"
+DNDPt56m,"Transport, mitochondrial"
+DNDPt57m,"Transport, mitochondrial"
+DNDPt58m,"Transport, mitochondrial"
+DNDPt59m,"Transport, mitochondrial"
+DNDPt5m,"Transport, mitochondrial"
+DNDPt60m,"Transport, mitochondrial"
+DNDPt61m,"Transport, mitochondrial"
+DNDPt62m,"Transport, mitochondrial"
+DNDPt63m,"Transport, mitochondrial"
+DNDPt6m,"Transport, mitochondrial"
+DNDPt7m,"Transport, mitochondrial"
+DOCO13ECOAtxc,"Transport, peroxisomal"
+DOCO13EFATP,Fatty acid oxidation
+DOCOHEXETHc,Glycerophospholipid metabolism
+DOCOSACT,Fatty acid oxidation
+DOCOSACTDe,Fatty acid oxidation
+DOCOSACTDr,Fatty acid oxidation
+DOCOSADIACTD,Fatty acid oxidation
+DOCOSCOAtxc,"Transport, peroxisomal"
+DOCOSDIACTD,Fatty acid oxidation
+DOCTETETH,Glycerophospholipid metabolism
+DOGULNO1,Vitamin C metabolism
+DOLGLCP_Lter,N-glycan synthesis
+DOLGPP_Ler,N-glycan synthesis
+DOLICHOL_Lter,N-glycan synthesis
+DOLK_L,N-glycan synthesis
+DOLPGT3_Ler,N-glycan synthesis
+DOLPMT4_Ler,N-glycan synthesis
+DOPABMO,Tyrosine metabolism
+DOPACCL,Tyrosine metabolism
+DOPACHRMDC,Tyrosine metabolism
+DOPACHRMISO,Tyrosine metabolism
+DOPAMT,Tyrosine metabolism
+DOPAOQCYS,Tyrosine metabolism
+DOPAOQNOX,Tyrosine metabolism
+DOPAQNISO1,Tyrosine metabolism
+DOPASULT,Tyrosine metabolism
+DOPASULT4,Tyrosine metabolism
+DOPAc,Tyrosine metabolism
+DPCOAK,CoA synthesis
+DPCOAPPe,CoA synthesis
+DPCOAtl,"Transport, lysosomal"
+DPGM,Glycolysis/gluconeogenesis
+DPGase,Glycolysis/gluconeogenesis
+DPHMBDCm,Ubiquinone synthesis
+DPMVDc,Squalene and cholesterol synthesis
+DPMVDx,Cholesterol metabolism
+DPPS,Miscellaneous
+DRBK,Pentose phosphate pathway
+DRPA,Pentose phosphate pathway
+DSAT,Sphingolipid metabolism
+DSMSTEROLtr,"Transport, endoplasmic reticular"
+DSPVSteb,Drug metabolism
+DSPVStev,Drug metabolism
+DSREDUCr,Squalene and cholesterol synthesis
+DTDPtn,"Transport, nuclear"
+DTMPK,Nucleotide interconversion
+DTMPKm,Pyrimidine synthesis
+DTTPtm,"Transport, mitochondrial"
+DTTPtn,"Transport, nuclear"
+DUDPtn,"Transport, nuclear"
+DUMPtn,"Transport, nuclear"
+DURAD,Pyrimidine catabolism
+DURAD2,Pyrimidine catabolism
+DURIK1,Nucleotide interconversion
+DURIK1m,Nucleotide interconversion
+DURIPP,Nucleotide interconversion
+DURItn,"Transport, nuclear"
+DUTPDP,Pyrimidine catabolism
+DUTPDPm,Nucleotide interconversion
+DUTPDPn,Nucleotide interconversion
+D_LACtm,"Transport, mitochondrial"
+EANDRSTRNtr,"Transport, endoplasmic reticular"
+EBP1r,Cholesterol metabolism
+EBP2r,Cholesterol metabolism
+ECOAH12m,"Valine, leucine, and isoleucine metabolism"
+ECOAH1m,Tryptophan metabolism
+ECOAH1x,Tryptophan metabolism
+ECOAH9m,"Valine, leucine, and isoleucine metabolism"
+EHGLAT2m,Arginine and proline metabolism
+EHGLATm,Arginine and proline metabolism
+EIC21114TRc,Fatty acid oxidation
+EICOSTETCPT1,Fatty acid oxidation
+EICOSTETCPT2,Fatty acid oxidation
+EICOSTETCRNt,Fatty acid oxidation
+ELAIDCPT1,Fatty acid oxidation
+ELAIDCPT2,Fatty acid oxidation
+ELAIDCRNt,Fatty acid oxidation
+ENO,Glycolysis/gluconeogenesis
+ESTR2r,Steroid metabolism
+ESTRADIOLGLCtr,"Transport, endoplasmic reticular"
+ESTRADIOLtr,"Transport, endoplasmic reticular"
+ESTRIOLGLCtr,"Transport, endoplasmic reticular"
+ESTRIOLtr,"Transport, endoplasmic reticular"
+ESTRONEGLCtr,"Transport, endoplasmic reticular"
+ESTRONEtr,"Transport, endoplasmic reticular"
+ESTRr,Steroid metabolism
+ESTSULT,Steroid metabolism
+ETF,Fatty acid oxidation
+ETFQO,Fatty acid oxidation
+ETHAK,Glycerophospholipid metabolism
+ETHMALACc,Fatty acid oxidation
+ETHMALCOAc,Fatty acid oxidation
+ETHP,Glycerophospholipid metabolism
+ETOHMO,Glycolysis/gluconeogenesis
+ETOHtx,"Transport, peroxisomal"
+F1Atg,"Transport, golgi apparatus"
+FACOAL140i,Fatty acid oxidation
+FACOAL150,Fatty acid oxidation
+FACOAL160i,Fatty acid oxidation
+FACOAL161,Fatty acid oxidation
+FACOAL170,Fatty acid oxidation
+FACOAL180i,Fatty acid oxidation
+FACOAL1812,Fatty acid oxidation
+FACOAL1813,Fatty acid oxidation
+FACOAL181i,Fatty acid oxidation
+FACOAL1821,Fatty acid oxidation
+FACOAL1822,Fatty acid oxidation
+FACOAL1831,Fatty acid oxidation
+FACOAL1832,Fatty acid oxidation
+FACOAL184,Fatty acid oxidation
+FACOAL191,Fatty acid oxidation
+FACOAL200,Fatty acid oxidation
+FACOAL203,Fatty acid oxidation
+FACOAL204,Fatty acid oxidation
+FACOAL2042,Fatty acid oxidation
+FACOAL205,Fatty acid oxidation
+FACOAL224,Fatty acid oxidation
+FACOAL2251,Fatty acid oxidation
+FACOAL2252,Fatty acid oxidation
+FACOAL226,Fatty acid oxidation
+FACOAL240,Fatty acid oxidation
+FACOAL241,Fatty acid oxidation
+FACOAL244_1,Fatty acid oxidation
+FACOAL245_1,Fatty acid oxidation
+FACOAL245_2,Fatty acid oxidation
+FACOAL246_1,Fatty acid oxidation
+FACOAL260,Fatty acid oxidation
+FACOAL40im,Fatty acid oxidation
+FACOAL80i,Fatty acid oxidation
+FADDP,Vitamin B2 metabolism
+FADDPle,Vitamin B2 metabolism
+FADH2ETC,Oxidative phosphorylation
+FADH2tru,"Transport, endoplasmic reticular"
+FADH2tx,"Transport, peroxisomal"
+FADtru,"Transport, endoplasmic reticular"
+FADtx,"Transport, peroxisomal"
+FAEL183,Fatty acid synthesis
+FAEL184,Fatty acid synthesis
+FAEL204,Fatty acid synthesis
+FAEL205,Fatty acid synthesis
+FAH1,Cytochrome metabolism
+FAH2,Cytochrome metabolism
+FAH3,Cytochrome metabolism
+FALDH,Tyrosine metabolism
+FALDtly,"Transport, lysosomal"
+FALDtm,"Transport, mitochondrial"
+FAOXC101C102m,Fatty acid oxidation
+FAOXC101C102x,Fatty acid oxidation
+FAOXC101C8m,Fatty acid oxidation
+FAOXC101C8x,Fatty acid oxidation
+FAOXC101x,Fatty acid oxidation
+FAOXC102C101m,Fatty acid oxidation
+FAOXC102C101x,Fatty acid oxidation
+FAOXC102C103m,Fatty acid oxidation
+FAOXC102C103x,Fatty acid oxidation
+FAOXC102C81m,Fatty acid oxidation
+FAOXC102C81x,Fatty acid oxidation
+FAOXC102m,Fatty acid oxidation
+FAOXC102x,Fatty acid oxidation
+FAOXC103C102m,Fatty acid oxidation
+FAOXC103C102x,Fatty acid oxidation
+FAOXC10C10OHm,Fatty acid oxidation
+FAOXC10C8m,Fatty acid oxidation
+FAOXC10C8x,Fatty acid oxidation
+FAOXC10DCC8DCx,Fatty acid oxidation
+FAOXC11C9m,Fatty acid oxidation
+FAOXC121C101m,Fatty acid oxidation
+FAOXC121C10x,Fatty acid oxidation
+FAOXC121x,Fatty acid oxidation
+FAOXC122C101m,Fatty acid oxidation
+FAOXC122m,Fatty acid oxidation
+FAOXC122x,Fatty acid oxidation
+FAOXC123C102m,Fatty acid oxidation
+FAOXC123C102x,Fatty acid oxidation
+FAOXC123m,Fatty acid oxidation
+FAOXC123x,Fatty acid oxidation
+FAOXC12C10m,Fatty acid oxidation
+FAOXC12C10x,Fatty acid oxidation
+FAOXC12C12OHm,Fatty acid oxidation
+FAOXC12DCC10DCx,Fatty acid oxidation
+FAOXC12DCTc,Fatty acid oxidation
+FAOXC12DCc,Fatty acid oxidation
+FAOXC12DCx,Fatty acid oxidation
+FAOXC13C11m,Fatty acid oxidation
+FAOXC140,Fatty acid oxidation
+FAOXC141C121m,Fatty acid oxidation
+FAOXC141C121x,Fatty acid oxidation
+FAOXC142C122m,Fatty acid oxidation
+FAOXC142C122x,Fatty acid oxidation
+FAOXC143C123m,Fatty acid oxidation
+FAOXC143C123x,Fatty acid oxidation
+FAOXC14C12m,Fatty acid oxidation
+FAOXC14C12x,Fatty acid oxidation
+FAOXC14C14OHm,Fatty acid oxidation
+FAOXC14DCC12DCx,Fatty acid oxidation
+FAOXC150m,Fatty acid oxidation
+FAOXC15ATPx,Fatty acid oxidation
+FAOXC15C13m,Fatty acid oxidation
+FAOXC160,Fatty acid oxidation
+FAOXC16080m,Fatty acid oxidation
+FAOXC16080x,Fatty acid oxidation
+FAOXC161802m,Fatty acid oxidation
+FAOXC16180m,Fatty acid oxidation
+FAOXC161C141m,Fatty acid oxidation
+FAOXC161C141x,Fatty acid oxidation
+FAOXC162C142m,Fatty acid oxidation
+FAOXC163C142x,Fatty acid oxidation
+FAOXC163C143m,Fatty acid oxidation
+FAOXC163C164Gm,Fatty acid oxidation
+FAOXC163C164x,Fatty acid oxidation
+FAOXC163GC142m,Fatty acid oxidation
+FAOXC163Gm,Fatty acid oxidation
+FAOXC163x,Fatty acid oxidation
+FAOXC164C143m,Fatty acid oxidation
+FAOXC164C143x,Fatty acid oxidation
+FAOXC164C163x,Fatty acid oxidation
+FAOXC164C165m,Fatty acid oxidation
+FAOXC164C165x,Fatty acid oxidation
+FAOXC164GC163m,Fatty acid oxidation
+FAOXC164m,Fatty acid oxidation
+FAOXC164x,Fatty acid oxidation
+FAOXC165C164m,Fatty acid oxidation
+FAOXC165C164x,Fatty acid oxidation
+FAOXC16BRx,Fatty acid oxidation
+FAOXC16C14m,Fatty acid oxidation
+FAOXC16C14x,Fatty acid oxidation
+FAOXC16DCC14DCx,Fatty acid oxidation
+FAOXC16DCr,Fatty acid oxidation
+FAOXC16OHC16r,Fatty acid oxidation
+FAOXC170m,Fatty acid oxidation
+FAOXC17C15m,Fatty acid oxidation
+FAOXC180,Fatty acid oxidation
+FAOXC180x,Fatty acid oxidation
+FAOXC1811601m,Fatty acid oxidation
+FAOXC1811602m,Fatty acid oxidation
+FAOXC1811603m,Fatty acid oxidation
+FAOXC181C161m,Fatty acid oxidation
+FAOXC181C161x,Fatty acid oxidation
+FAOXC182806m,Fatty acid oxidation
+FAOXC18280m,Fatty acid oxidation
+FAOXC182C162m,Fatty acid oxidation
+FAOXC183803m,Fatty acid oxidation
+FAOXC183806m,Fatty acid oxidation
+FAOXC183806x,Fatty acid oxidation
+FAOXC183C163Gm,Fatty acid oxidation
+FAOXC183C163m,Fatty acid oxidation
+FAOXC18480m,Fatty acid oxidation
+FAOXC18480x,Fatty acid oxidation
+FAOXC184C163m,Fatty acid oxidation
+FAOXC184C163x,Fatty acid oxidation
+FAOXC184C164m,Fatty acid oxidation
+FAOXC184C164x,Fatty acid oxidation
+FAOXC184m,Fatty acid oxidation
+FAOXC184x,Fatty acid oxidation
+FAOXC185C164m,Fatty acid oxidation
+FAOXC185m,Fatty acid oxidation
+FAOXC200180m,Fatty acid oxidation
+FAOXC200180x,Fatty acid oxidation
+FAOXC201C181x,Fatty acid oxidation
+FAOXC2031836m,Fatty acid oxidation
+FAOXC204,Fatty acid oxidation
+FAOXC204184m,Fatty acid oxidation
+FAOXC204C184m,Fatty acid oxidation
+FAOXC204C205x,Fatty acid oxidation
+FAOXC2051843m,Fatty acid oxidation
+FAOXC2051843x,Fatty acid oxidation
+FAOXC205C184x,Fatty acid oxidation
+FAOXC205C185m,Fatty acid oxidation
+FAOXC221C201x,Fatty acid oxidation
+FAOXC2242046m,Fatty acid oxidation
+FAOXC2242046x,Fatty acid oxidation
+FAOXC2251836m,Fatty acid oxidation
+FAOXC2251836x,Fatty acid oxidation
+FAOXC2252053m,Fatty acid oxidation
+FAOXC2252053x,Fatty acid oxidation
+FAOXC225C204m,Fatty acid oxidation
+FAOXC225C204x,Fatty acid oxidation
+FAOXC225C226m,Fatty acid oxidation
+FAOXC225C226x,Fatty acid oxidation
+FAOXC225m,Fatty acid oxidation
+FAOXC225x,Fatty acid oxidation
+FAOXC226,Fatty acid oxidation
+FAOXC226205m,Fatty acid oxidation
+FAOXC226205x,Fatty acid oxidation
+FAOXC226C205m,Fatty acid oxidation
+FAOXC226C225m,Fatty acid oxidation
+FAOXC226C225x,Fatty acid oxidation
+FAOXC226C227m,Fatty acid oxidation
+FAOXC226m,Fatty acid oxidation
+FAOXC227C226m,Fatty acid oxidation
+FAOXC22C20x,Fatty acid oxidation
+FAOXC22C22DCHYr,Fatty acid oxidation
+FAOXC22OHC22r,Fatty acid oxidation
+FAOXC240200x,Fatty acid oxidation
+FAOXC241181x,Fatty acid oxidation
+FAOXC241C221x,Fatty acid oxidation
+FAOXC24C22x,Fatty acid oxidation
+FAOXC260240x,Fatty acid oxidation
+FAOXC4C2m,Fatty acid oxidation
+FAOXC4C4DCc,Fatty acid oxidation
+FAOXC5C3x,Fatty acid oxidation
+FAOXC5C5OHm,Fatty acid oxidation
+FAOXC61C4m,Fatty acid oxidation
+FAOXC61C4x,Fatty acid oxidation
+FAOXC61m,Fatty acid oxidation
+FAOXC61x,Fatty acid oxidation
+FAOXC6C4m,Fatty acid oxidation
+FAOXC6C4x,Fatty acid oxidation
+FAOXC6DCC4DCx,Fatty acid oxidation
+FAOXC7C5m,Fatty acid oxidation
+FAOXC80,Fatty acid oxidation
+FAOXC81C61m,Fatty acid oxidation
+FAOXC81C61x,Fatty acid oxidation
+FAOXC8C6m,Fatty acid oxidation
+FAOXC8C6x,Fatty acid oxidation
+FAOXC8DCC6DCx,Fatty acid oxidation
+FAOXC9C7m,Fatty acid oxidation
+FAOXMC10OHMC10r,Fatty acid oxidation
+FAOXOHC16C16DCc,Fatty acid oxidation
+FAOXOHC22C22DCc,Fatty acid oxidation
+FAOXOHMC10DC10c,Fatty acid oxidation
+FAOXTC101TC102m,Fatty acid oxidation
+FAOXTC102C101m,Fatty acid oxidation
+FAOXTC122TC101m,Fatty acid oxidation
+FAOXTC122m,Fatty acid oxidation
+FAOXTC142TC122m,Fatty acid oxidation
+FAOXTC162TC142m,Fatty acid oxidation
+FAOXTC182TC162m,Fatty acid oxidation
+FAS100COA,Fatty acid synthesis
+FAS120COA,Fatty acid synthesis
+FAS140COA,Fatty acid synthesis
+FAS160COA,Fatty acid synthesis
+FAS180,Fatty acid synthesis
+FAS180COA,Fatty acid synthesis
+FAS80COA_L,Fatty acid synthesis
+FBA,Glycolysis/gluconeogenesis
+FBA2,Fructose and mannose metabolism
+FBA4,Glyoxylate and dicarboxylate metabolism
+FBP,Glycolysis/gluconeogenesis
+FBP26,Fructose and mannose metabolism
+FCLTc,Heme synthesis
+FCLTm,Heme synthesis
+FDH,Fatty acid oxidation
+FE2tm,"Transport, mitochondrial"
+FE3R2e,Heme synthesis
+FERO,Vitamin B2 metabolism
+FKYNH,Tryptophan metabolism
+FMNAT,Vitamin B2 metabolism
+FOAXC122C101x,Fatty acid oxidation
+FOLR2,Folate metabolism
+FORTHFC,"Transport, mitochondrial"
+FORt2m,"Transport, mitochondrial"
+FORtr,"Transport, endoplasmic reticular"
+FPGS,Folate metabolism
+FPGS2,Folate metabolism
+FPGS2m,Folate metabolism
+FPGS3,Folate metabolism
+FPGS3m,Folate metabolism
+FPGS4,Folate metabolism
+FPGS4m,Folate metabolism
+FPGS5,Folate metabolism
+FPGS5m,Folate metabolism
+FPGS6,Folate metabolism
+FPGS6m,Folate metabolism
+FPGS7,Folate metabolism
+FPGS7m,Folate metabolism
+FPGS8,Folate metabolism
+FPGS8m,Folate metabolism
+FPGS9,Folate metabolism
+FPGS9m,Folate metabolism
+FPGSm,Folate metabolism
+FRDPtc,"Transport, peroxisomal"
+FRDPtcr,"Transport, endoplasmic reticular"
+FRDPtr,"Transport, peroxisomal"
+FT,N-glycan synthesis
+FTHFDH,Folate metabolism
+FTHFL,Folate metabolism
+FTHFLm,Folate metabolism
+FUC13GALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUC14GALACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCACGALFUCGALACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCACNGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCACNGALACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCFUC12GAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCFUC132GALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCFUCFUCGALACGLC13GALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCFUCFUCGALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCFUCGALACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCGALFUCGALACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+FUCGALGBSIDEtg,"Transport, golgi apparatus"
+FUM,Citric acid cycle
+FUMAC,Tyrosine metabolism
+FUMSO3tm,"Transport, mitochondrial"
+FUMSO4tm,"Transport, mitochondrial"
+FUMTSULtm,"Transport, mitochondrial"
+FUMm,Citric acid cycle
+FUMtm,"Transport, mitochondrial"
+FUT11g,Sphingolipid metabolism
+FUT12g,Blood group synthesis
+FUT14g,Blood group synthesis
+FUT15g,Blood group synthesis
+FUT16g,Blood group synthesis
+FUT17g,Blood group synthesis
+FUT18g,Blood group synthesis
+FUT32g,Blood group synthesis
+FUT33g,Blood group synthesis
+FUT34g,Blood group synthesis
+FUT35g,Blood group synthesis
+FUT910g,Blood group synthesis
+FUT911g,Blood group synthesis
+FUT91g,Blood group synthesis
+FUT92g,Blood group synthesis
+FUT93g,Blood group synthesis
+FUT94g,Blood group synthesis
+FUT95g,Blood group synthesis
+FUT96g,Blood group synthesis
+FUT97g,Blood group synthesis
+FUT98g,Blood group synthesis
+FUT99g,Blood group synthesis
+FVSGLUChc,Drug metabolism
+FVShc,Drug metabolism
+FVSteb,Drug metabolism
+FVStep,Drug metabolism
+FVStu,Drug metabolism
+FldAct,Miscellaneous
+G14T18g,Keratan sulfate synthesis
+G14T19g,Keratan sulfate synthesis
+G14T20g,Keratan sulfate synthesis
+G14T21g,Keratan sulfate synthesis
+G14T2g,Keratan sulfate synthesis
+G14T3g,Keratan sulfate synthesis
+G14T4g,Keratan sulfate synthesis
+G14T5g,Keratan sulfate synthesis
+G3PD1,Glycerophospholipid metabolism
+G3PD2m,Glycolysis/gluconeogenesis
+G5SADrm,Arginine and proline metabolism
+G5SADs,Urea cycle
+G5SDym,Urea cycle
+G6PDA,Aminosugar metabolism
+G6PDH1rer,Pentose phosphate pathway
+G6PDH2c,Pentose phosphate pathway
+G6PDH2r,Pentose phosphate pathway
+G6PDH2rer,Pentose phosphate pathway
+G6PPer,Glycolysis/gluconeogenesis
+G6Pter,"Transport, endoplasmic reticular"
+GACMTRc,Urea cycle
+GAL3ST11,Sphingolipid metabolism
+GAL3ST12,Sphingolipid metabolism
+GALACGLCGALGBSIDEtg,"Transport, golgi apparatus"
+GALASE16ly,Keratan sulfate degradation
+GALASE17ly,Keratan sulfate degradation
+GALASE18ly,Keratan sulfate degradation
+GALASE19ly,Keratan sulfate degradation
+GALASE20ly,Keratan sulfate degradation
+GALC,Sphingolipid metabolism
+GALFUC12GAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+GALFUCGALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+GALGALFUCFUCGALACGLCGALACGLCGAL14ACGLCGALGLUSIDEtg,"Transport, golgi apparatus"
+GALGALGALTHCRMtg,"Transport, golgi apparatus"
+GALGLUSIDEtg,"Transport, golgi apparatus"
+GALGLUSIDEtl,"Transport, lysosomal"
+GALGT1,Sphingolipid metabolism
+GALGT2,Sphingolipid metabolism
+GALGT3,Sphingolipid metabolism
+GALGT4,Sphingolipid metabolism
+GALK,Galactose metabolism
+GALNACT1g,Chondroitin synthesis
+GALNACT2g,Chondroitin synthesis
+GALNACT3g,Chondroitin synthesis
+GALNACT4g,Chondroitin synthesis
+GALNACT5g,Chondroitin synthesis
+GALNTg,O-glycan metabolism
+GALOR,Galactose metabolism
+GALSIDEter,"Transport, endoplasmic reticular"
+GALSIDEtg,"Transport, golgi apparatus"
+GALSIDEtl,"Transport, lysosomal"
+GALSIDEtn,"Transport, nuclear"
+GALT,Galactose metabolism
+GALT2g,Chondroitin synthesis
+GALTg,Chondroitin synthesis
+GALU,Galactose metabolism
+GALtly,"Transport, lysosomal"
+GAO1,Sphingolipid metabolism
+GAO1g,Sphingolipid metabolism
+GAO2,Sphingolipid metabolism
+GAO2g,Sphingolipid metabolism
+GAPD,Glycolysis/gluconeogenesis
+GARFT,Purine synthesis
+GBA,Sphingolipid metabolism
+GBA2e,Sphingolipid metabolism
+GBAl,Sphingolipid metabolism
+GBGT1,Sphingolipid metabolism
+GBSIDEtl,"Transport, lysosomal"
+GCALDD,Glyoxylate and dicarboxylate metabolism
+GCALDDm,Glyoxylate and dicarboxylate metabolism
+GCASULT,Bile acid synthesis
+GCC2am,"Glycine, serine, alanine, and threonine metabolism"
+GCC2bim,"Glycine, serine, alanine, and threonine metabolism"
+GCC2cm,"Glycine, serine, alanine, and threonine metabolism"
+GCCam,"Glycine, serine, alanine, and threonine metabolism"
+GCCbim,"Glycine, serine, alanine, and threonine metabolism"
+GCCcm,"Glycine, serine, alanine, and threonine metabolism"
+GCDCASULT,Bile acid synthesis
+GCHOLAtx,"Transport, peroxisomal"
+GCNTg,Blood group synthesis
+GD1Atg,"Transport, golgi apparatus"
+GD1Atn,"Transport, nuclear"
+GD1B2tg,"Transport, golgi apparatus"
+GD1Btl,"Transport, lysosomal"
+GD1Ctg,"Transport, golgi apparatus"
+GD3tlc,"Transport, lysosomal"
+GD3tm,"Transport, mitochondrial"
+GDA1tn,"Transport, nuclear"
+GDCASULT,Bile acid synthesis
+GDPFUCtg,"Transport, golgi apparatus"
+GDPtg,"Transport, golgi apparatus"
+GF6PTA,Aminosugar metabolism
+GFUCS,Fructose and mannose metabolism
+GGH_10FTHF5GLUl,Folate metabolism
+GGH_10FTHF6GLUl,Folate metabolism
+GGH_10FTHF7GLUl,Folate metabolism
+GGH_5DHFl,Folate metabolism
+GGH_5THFl,Folate metabolism
+GGH_6DHFl,Folate metabolism
+GGH_6THFl,Folate metabolism
+GGH_7DHFl,Folate metabolism
+GGH_7THFl,Folate metabolism
+GGLUCT,Glutathione metabolism
+GGNG,Starch and sucrose metabolism
+GGT5r,Eicosanoid metabolism
+GGT6,Eicosanoid metabolism
+GGT_L,N-glycan synthesis
+GGTe_1,Tyrosine metabolism
+GHMT2r,"Glycine, serine, alanine, and threonine metabolism"
+GHMT2rm,"Glycine, serine, alanine, and threonine metabolism"
+GK1,Nucleotide interconversion
+GLA2l,Sphingolipid metabolism
+GLACO,Vitamin C metabolism
+GLACter,"Transport, endoplasmic reticular"
+GLAl,Sphingolipid metabolism
+GLB1,Sphingolipid metabolism
+GLBRAN,Starch and sucrose metabolism
+GLCAASE1ly,Heparan sulfate degradation
+GLCAASE4ly,Chondroitin sulfate degradation
+GLCAASE5ly,Chondroitin sulfate degradation
+GLCAASE6ly,Chondroitin sulfate degradation
+GLCAASE7ly,Chondroitin sulfate degradation
+GLCAASE8ly,Hyaluronan metabolism
+GLCAASE9ly,Hyaluronan metabolism
+GLCAE1g,Chondroitin synthesis
+GLCAE2g,Chondroitin synthesis
+GLCAT2g,Chondroitin synthesis
+GLCAT3g,Chondroitin synthesis
+GLCAT4g,Chondroitin synthesis
+GLCAT5g,Chondroitin synthesis
+GLCAT6g,Chondroitin synthesis
+GLCAT7g,Chondroitin synthesis
+GLCAT8g,Chondroitin synthesis
+GLCAT9g,Chondroitin synthesis
+GLCATg,Chondroitin synthesis
+GLCNACASE1ly,Heparan sulfate degradation
+GLCNACASE2ly,Heparan sulfate degradation
+GLCNACASE3ly,Heparan sulfate degradation
+GLCNACASE4ly,Heparan sulfate degradation
+GLCNACASE5ly,Heparan sulfate degradation
+GLCNACDASg,Chondroitin synthesis
+GLCNACT1g,Chondroitin synthesis
+GLCNACT2g,Chondroitin synthesis
+GLCNACT3g,Chondroitin synthesis
+GLCNACT4g,Chondroitin synthesis
+GLCNACT5g,Chondroitin synthesis
+GLCURter,"Transport, endoplasmic reticular"
+GLCURtly,"Transport, lysosomal"
+GLCter,"Transport, endoplasmic reticular"
+GLCtg,"Transport, golgi apparatus"
+GLCtly,"Transport, lysosomal"
+GLDBRAN,Starch and sucrose metabolism
+GLGNS1,Starch and sucrose metabolism
+GLNASNGLNr,Peptide metabolism
+GLNHISHISr,Peptide metabolism
+GLNHISLYSr,Peptide metabolism
+GLNLASEer,Vitamin C metabolism
+GLNLYSLYSr,Peptide metabolism
+GLNLYSTRPr,Peptide metabolism
+GLNPROGLUr,Peptide metabolism
+GLNS,Glutamate metabolism
+GLNTRPGLUr,Peptide metabolism
+GLNTYRLEUr,Peptide metabolism
+GLNtm,"Transport, mitochondrial"
+GLPASE1,Starch and sucrose metabolism
+GLPASE2,Starch and sucrose metabolism
+GLRASE,Vitamin C metabolism
+GLU5Km,Urea cycle
+GLU5SAtmc,"Transport, mitochondrial"
+GLUARGLEUr,Peptide metabolism
+GLUASNLEUr,Peptide metabolism
+GLUCYS,Glutathione metabolism
+GLUDC,Glutamate metabolism
+GLUDxm,Glutamate metabolism
+GLUDym,Glutamate metabolism
+GLUGLUr,Peptide metabolism
+GLUILELYSr,Peptide metabolism
+GLULEUr,Peptide metabolism
+GLUMETHISr,Peptide metabolism
+GLUMETr,Peptide metabolism
+GLUNm,Glutamate metabolism
+GLUPRT,Purine synthesis
+GLUTACOAm,Lysine metabolism
+GLUTCOADHm,Tryptophan metabolism
+GLUTCONm,Lysine metabolism
+GLUTCONtm,"Transport, mitochondrial"
+GLUTHRLYSr,Peptide metabolism
+GLUTHRr,Peptide metabolism
+GLUTRPALAr,Peptide metabolism
+GLUt2m,"Transport, mitochondrial"
+GLUt7l,"Transport, lysosomal"
+GLUtr,"Transport, endoplasmic reticular"
+GLXO1,Glyoxylate and dicarboxylate metabolism
+GLXO2p,Glyoxylate and dicarboxylate metabolism
+GLXtm,"Transport, mitochondrial"
+GLXtp,"Transport, peroxisomal"
+GLYACm,"Glycine, serine, alanine, and threonine metabolism"
+GLYAMDTRc,Urea cycle
+GLYATm,"Glycine, serine, alanine, and threonine metabolism"
+GLYBtm,"Transport, mitochondrial"
+GLYC3PFADm,Oxidative phosphorylation
+GLYC3Ptm,"Transport, mitochondrial"
+GLYCK2,Glyoxylate and dicarboxylate metabolism
+GLYCLTDy,Glyoxylate and dicarboxylate metabolism
+GLYCLTDym,Glyoxylate and dicarboxylate metabolism
+GLYCLTtm,"Transport, mitochondrial"
+GLYCLTtp,"Transport, peroxisomal"
+GLYCTO1p,Glyoxylate and dicarboxylate metabolism
+GLYCtm,"Transport, mitochondrial"
+GLYHISASNr,Peptide metabolism
+GLYHISLYSr,Peptide metabolism
+GLYK,Glycerophospholipid metabolism
+GLYKm,Glycerophospholipid metabolism
+GLYLYSCYSr,Peptide metabolism
+GLYLYSPHEr,Peptide metabolism
+GLYNATm,Phenylalanine metabolism
+GLYOX,Pyruvate metabolism
+GLYOXm,Pyruvate metabolism
+GLYOp,"Glycine, serine, alanine, and threonine metabolism"
+GLYPHEHYc,Pentose phosphate pathway
+GLYTYRLYSr,Peptide metabolism
+GLYVALHISr,Peptide metabolism
+GLYtm,"Transport, mitochondrial"
+GLYtp,"Transport, peroxisomal"
+GLZABCteb,Drug metabolism
+GLZtd,Drug metabolism
+GMAND,Fructose and mannose metabolism
+GMPS2,Nucleotide interconversion
+GMPtg,"Transport, golgi apparatus"
+GMPtn,"Transport, nuclear"
+GND,Pentose phosphate pathway
+GNDc,Pentose phosphate pathway
+GNDer,Pentose phosphate pathway
+GNMT,"Glycine, serine, alanine, and threonine metabolism"
+GP1CALPHAtg,"Transport, golgi apparatus"
+GP1Ctg,"Transport, golgi apparatus"
+GPAM_hs,Triacylglycerol synthesis
+GPDDA1,Glycerophospholipid metabolism
+GPDDACHOL,Glycerophospholipid metabolism
+GQ1BALPHAtg,"Transport, golgi apparatus"
+GQ1Btg,"Transport, golgi apparatus"
+GRTT,Cholesterol metabolism
+GRTTx,Cholesterol metabolism
+GSNtl,"Transport, lysosomal"
+GT1Atg,"Transport, golgi apparatus"
+GTHDH,Vitamin C metabolism
+GTHO,Glutamate metabolism
+GTHOm,Glutamate metabolism
+GTHP,Glutathione metabolism
+GTHPe,Glutathione metabolism
+GTHPm,Glutathione metabolism
+GTHRDt,Glutathione metabolism
+GTHRDtr,"Transport, endoplasmic reticular"
+GTHS,Glutathione metabolism
+GTMLTe,Glutathione metabolism
+GTPCI,Tetrahydrobiopterin metabolism
+GUACYC,Nucleotide interconversion
+GUAD,Purine catabolism
+GUAPRT,Nucleotide salvage pathway
+GUDCASULT,Bile acid synthesis
+GULLACter,"Transport, endoplasmic reticular"
+GULN3D,Pentose phosphate pathway
+GULNDer,Pentose phosphate pathway
+GULNter,"Transport, endoplasmic reticular"
+GUR1PP,Pentose phosphate pathway
+GluForTx,Histidine metabolism
+H2CO3D,Miscellaneous
+H2CO3Dm,Miscellaneous
+H2O2itr,Drug metabolism
+H2O2syn,Tyrosine metabolism
+H2O2tly,"Transport, lysosomal"
+H2O2tm,"Transport, mitochondrial"
+H2O2tn,"Transport, nuclear"
+H2O2tp,"Transport, peroxisomal"
+H2Oter,"Transport, endoplasmic reticular"
+H2Otg,"Transport, golgi apparatus"
+H2Otly,"Transport, lysosomal"
+H2Otm,"Transport, mitochondrial"
+H2Otn,"Transport, nuclear"
+H2Otp,"Transport, peroxisomal"
+HACD1m,Tryptophan metabolism
+HACD1x,Tryptophan metabolism
+HACD9m,"Valine, leucine, and isoleucine metabolism"
+HAS1,Hyaluronan metabolism
+HAS2,Hyaluronan metabolism
+HAtly,"Transport, lysosomal"
+HBZOPT10m,Ubiquinone synthesis
+HC02020tr,"Transport, endoplasmic reticular"
+HC02194c,Bile acid synthesis
+HC02195c,Bile acid synthesis
+HC02195te,Bile acid synthesis
+HC02196c,Bile acid synthesis
+HC02196te,Bile acid synthesis
+HC02197c,Bile acid synthesis
+HC02198c,Bile acid synthesis
+HCA24GSc,Bile acid synthesis
+HCA24GSr,Bile acid synthesis
+HCA6GSc,Bile acid synthesis
+HCA6GSr,Bile acid synthesis
+HDCA24GSc,Bile acid synthesis
+HDCA24GSr,Bile acid synthesis
+HDCA6GSc,Bile acid synthesis
+HDCA6GSr,Bile acid synthesis
+HDCAc,Fatty acid oxidation
+HDCAter,"Transport, endoplasmic reticular"
+HDD2COAtx,"Transport, peroxisomal"
+HEPDECETH,Glycerophospholipid metabolism
+HESTRATRIOLtr,"Transport, endoplasmic reticular"
+HEX1,Glycolysis/gluconeogenesis
+HEX10,Aminosugar metabolism
+HEX4,Fructose and mannose metabolism
+HEX7,Fructose and mannose metabolism
+HEXA1l,Sphingolipid metabolism
+HEXA2l,Sphingolipid metabolism
+HEXAHBl,Sphingolipid metabolism
+HEXCCOAtx,"Transport, peroxisomal"
+HEXCOAACBP,Fatty acid oxidation
+HEXDECEETH,Glycerophospholipid metabolism
+HEXDIACtr,Fatty acid oxidation
+HEXDICOAACBPx,Fatty acid oxidation
+HEXDTRm,Fatty acid oxidation
+HEXDTRtm,"Transport, mitochondrial"
+HEXGLYc,"Glycine, serine, alanine, and threonine metabolism"
+HGNTOR,Tyrosine metabolism
+HIBDm,"Valine, leucine, and isoleucine metabolism"
+HISARGCYSr,Peptide metabolism
+HISARGSERr,Peptide metabolism
+HISASPr,Peptide metabolism
+HISCYSCYSr,Peptide metabolism
+HISD,Histidine metabolism
+HISDC,Histidine metabolism
+HISGLNALAr,Peptide metabolism
+HISGLUGLNr,Peptide metabolism
+HISGLUr,Peptide metabolism
+HISGLYLYSr,Peptide metabolism
+HISHISLYSr,Peptide metabolism
+HISLYSALAr,Peptide metabolism
+HISLYSGLUr,Peptide metabolism
+HISLYSILEr,Peptide metabolism
+HISLYSTHRr,Peptide metabolism
+HISLYSVALr,Peptide metabolism
+HISMETGLNr,Peptide metabolism
+HISMETr,Peptide metabolism
+HISPHEARGr,Peptide metabolism
+HISPROLYSr,Peptide metabolism
+HISTASE,Histidine metabolism
+HISTRPHISr,Peptide metabolism
+HKYNH,Tryptophan metabolism
+HMBS,Heme synthesis
+HMCARNc,Histidine metabolism
+HMCRNc,Lysine metabolism
+HMGCOASi,Cholesterol metabolism
+HMGCOASim,Cholesterol metabolism
+HMGCOAtm,"Transport, mitochondrial"
+HMGCOAtx,"Transport, peroxisomal"
+HMGLm,Cholesterol metabolism
+HMGLx,Cholesterol metabolism
+HMR_0020,"Transport, endoplasmic reticular"
+HMR_0156,Fatty acid synthesis
+HMR_0157,"Transport, mitochondrial"
+HMR_0168,Fatty acid synthesis
+HMR_0177,Fatty acid synthesis
+HMR_0178,"Transport, mitochondrial"
+HMR_0180,Fatty acid synthesis
+HMR_0182,"Transport, mitochondrial"
+HMR_0188,Fatty acid synthesis
+HMR_0189,Fatty acid oxidation
+HMR_0192,Fatty acid synthesis
+HMR_0193,Fatty acid oxidation
+HMR_0197,Fatty acid oxidation
+HMR_0200,Fatty acid synthesis
+HMR_0201,Fatty acid oxidation
+HMR_0204,Fatty acid synthesis
+HMR_0206,Fatty acid oxidation
+HMR_0209,Fatty acid synthesis
+HMR_0210,Fatty acid oxidation
+HMR_0214,Fatty acid oxidation
+HMR_0230,Fatty acid oxidation
+HMR_0233,Fatty acid synthesis
+HMR_0234,Fatty acid oxidation
+HMR_0238,Fatty acid oxidation
+HMR_0241,Fatty acid synthesis
+HMR_0242,Fatty acid oxidation
+HMR_0245,Fatty acid synthesis
+HMR_0246,Fatty acid oxidation
+HMR_0255,Fatty acid synthesis
+HMR_0256,Fatty acid oxidation
+HMR_0259,Fatty acid synthesis
+HMR_0260,Fatty acid oxidation
+HMR_0267,Fatty acid synthesis
+HMR_0268,Fatty acid oxidation
+HMR_0271,Fatty acid synthesis
+HMR_0272,Fatty acid oxidation
+HMR_0276,Fatty acid oxidation
+HMR_0279,Fatty acid synthesis
+HMR_0280,Fatty acid oxidation
+HMR_0289,Fatty acid synthesis
+HMR_0290,Fatty acid oxidation
+HMR_0293,Fatty acid synthesis
+HMR_0297,Fatty acid synthesis
+HMR_0298,Fatty acid oxidation
+HMR_0301,Fatty acid synthesis
+HMR_0302,Fatty acid oxidation
+HMR_0305,Fatty acid synthesis
+HMR_0306,Fatty acid oxidation
+HMR_0309,Fatty acid synthesis
+HMR_0310,Fatty acid oxidation
+HMR_0319,Fatty acid synthesis
+HMR_0323,Fatty acid synthesis
+HMR_0324,Fatty acid oxidation
+HMR_0327,Fatty acid synthesis
+HMR_0328,Fatty acid oxidation
+HMR_0342,Fatty acid oxidation
+HMR_0345,Fatty acid synthesis
+HMR_0346,Fatty acid oxidation
+HMR_0350,Fatty acid oxidation
+HMR_0354,Fatty acid oxidation
+HMR_0358,Fatty acid oxidation
+HMR_0362,Fatty acid oxidation
+HMR_0366,Fatty acid oxidation
+HMR_0370,Fatty acid oxidation
+HMR_0374,Fatty acid oxidation
+HMR_0378,Fatty acid oxidation
+HMR_0381,Fatty acid synthesis
+HMR_0382,Fatty acid oxidation
+HMR_0385,Fatty acid synthesis
+HMR_0386,Fatty acid oxidation
+HMR_0389,Fatty acid synthesis
+HMR_0390,Fatty acid oxidation
+HMR_0393,Fatty acid synthesis
+HMR_0394,Fatty acid oxidation
+HMR_0398,Fatty acid oxidation
+HMR_0402,Fatty acid oxidation
+HMR_0406,Fatty acid oxidation
+HMR_0410,Fatty acid oxidation
+HMR_0414,Fatty acid oxidation
+HMR_0418,Fatty acid oxidation
+HMR_0422,Fatty acid oxidation
+HMR_0426,Fatty acid oxidation
+HMR_0429,Fatty acid synthesis
+HMR_0430,Fatty acid oxidation
+HMR_0433,Fatty acid synthesis
+HMR_0434,Fatty acid oxidation
+HMR_0437,Fatty acid synthesis
+HMR_0438,Fatty acid oxidation
+HMR_0467,"Transport, endoplasmic reticular"
+HMR_0478,Glycerophospholipid metabolism
+HMR_0482,Glycerophospholipid metabolism
+HMR_0582,Glycerophospholipid metabolism
+HMR_0586,Glycerophospholipid metabolism
+HMR_0587,"Transport, mitochondrial"
+HMR_0593,Glycerophospholipid metabolism
+HMR_0597,Glycerophospholipid metabolism
+HMR_0598,Glycerophospholipid metabolism
+HMR_0601,Glycerophospholipid metabolism
+HMR_0614,Glycerophospholipid metabolism
+HMR_0625,Glycerophospholipid metabolism
+HMR_0629,Glycerophospholipid metabolism
+HMR_0634,Glycerophospholipid metabolism
+HMR_0641,Glycerophospholipid metabolism
+HMR_0642,Glycerophospholipid metabolism
+HMR_0647,Glycerophospholipid metabolism
+HMR_0653,Glycerophospholipid metabolism
+HMR_0654,Glycerophospholipid metabolism
+HMR_0657,Glycerophospholipid metabolism
+HMR_0672,Glycerophospholipid metabolism
+HMR_0678,Glycerophospholipid metabolism
+HMR_0750,Sphingolipid metabolism
+HMR_0753,Sphingolipid metabolism
+HMR_0758,Sphingolipid metabolism
+HMR_0761,Sphingolipid metabolism
+HMR_0763,Sphingolipid metabolism
+HMR_0765,Sphingolipid metabolism
+HMR_0767,Sphingolipid metabolism
+HMR_0769,"Transport, lysosomal"
+HMR_0771,"Transport, endoplasmic reticular"
+HMR_0775,Sphingolipid metabolism
+HMR_0783,Sphingolipid metabolism
+HMR_0793,Glycosphingolipid metabolism
+HMR_0795,Sphingolipid metabolism
+HMR_0803,Glycosphingolipid metabolism
+HMR_0805,Glycosphingolipid metabolism
+HMR_0806,Glycosphingolipid metabolism
+HMR_0807,Glycosphingolipid metabolism
+HMR_0808,Glycosphingolipid metabolism
+HMR_0809,Glycosphingolipid metabolism
+HMR_0810,Glycosphingolipid metabolism
+HMR_0811,Glycosphingolipid metabolism
+HMR_0812,Glycosphingolipid metabolism
+HMR_0814,Glycosphingolipid metabolism
+HMR_0815,Glycosphingolipid metabolism
+HMR_0816,Glycosphingolipid metabolism
+HMR_0817,Glycosphingolipid metabolism
+HMR_0819,Glycosphingolipid metabolism
+HMR_0820,Glycosphingolipid metabolism
+HMR_0821,Glycosphingolipid metabolism
+HMR_0822,Glycosphingolipid metabolism
+HMR_0823,Glycosphingolipid metabolism
+HMR_0824,Glycosphingolipid metabolism
+HMR_0825,Glycosphingolipid metabolism
+HMR_0827,Glycosphingolipid metabolism
+HMR_0828,Glycosphingolipid metabolism
+HMR_0829,Glycosphingolipid metabolism
+HMR_0830,Glycosphingolipid metabolism
+HMR_0831,"Transport, lysosomal"
+HMR_0835,Glycosphingolipid metabolism
+HMR_0836,Glycosphingolipid metabolism
+HMR_0837,Glycosphingolipid metabolism
+HMR_0839,Glycosphingolipid metabolism
+HMR_0841,Glycosphingolipid metabolism
+HMR_0842,Glycosphingolipid metabolism
+HMR_0843,Glycosphingolipid metabolism
+HMR_0844,Glycosphingolipid metabolism
+HMR_0846,Glycosphingolipid metabolism
+HMR_0847,Glycosphingolipid metabolism
+HMR_0848,Glycosphingolipid metabolism
+HMR_0849,Glycosphingolipid metabolism
+HMR_0851,Glycosphingolipid metabolism
+HMR_0852,Glycosphingolipid metabolism
+HMR_0853,Glycosphingolipid metabolism
+HMR_0854,Glycosphingolipid metabolism
+HMR_0855,Glycosphingolipid metabolism
+HMR_0859,Glycosphingolipid metabolism
+HMR_0860,Glycosphingolipid metabolism
+HMR_0864,Glycosphingolipid metabolism
+HMR_0867,Glycosphingolipid metabolism
+HMR_0868,Glycosphingolipid metabolism
+HMR_0870,Glycosphingolipid metabolism
+HMR_0873,Glycosphingolipid metabolism
+HMR_0875,Glycosphingolipid metabolism
+HMR_0876,Glycosphingolipid metabolism
+HMR_0877,Glycosphingolipid metabolism
+HMR_0878,Glycosphingolipid metabolism
+HMR_0889,Glycosphingolipid metabolism
+HMR_0890,Glycosphingolipid metabolism
+HMR_0906,Glycosphingolipid metabolism
+HMR_0907,Glycosphingolipid metabolism
+HMR_0908,Glycosphingolipid metabolism
+HMR_0909,Glycosphingolipid metabolism
+HMR_0910,Glycosphingolipid metabolism
+HMR_0911,Glycosphingolipid metabolism
+HMR_0912,Glycosphingolipid metabolism
+HMR_0913,"Transport, lysosomal"
+HMR_0942,Arachidonic acid metabolism
+HMR_0946,Arachidonic acid metabolism
+HMR_0950,Arachidonic acid metabolism
+HMR_0954,Arachidonic acid metabolism
+HMR_0960,Arachidonic acid metabolism
+HMR_0962,"Transport, mitochondrial"
+HMR_0963,Arachidonic acid metabolism
+HMR_0966,"Transport, endoplasmic reticular"
+HMR_0979,Arachidonic acid metabolism
+HMR_0980,Arachidonic acid metabolism
+HMR_0981,Arachidonic acid metabolism
+HMR_0984,"Transport, nuclear"
+HMR_0985,Arachidonic acid metabolism
+HMR_0986,Arachidonic acid metabolism
+HMR_0987,Arachidonic acid metabolism
+HMR_1030,Arachidonic acid metabolism
+HMR_1033,Arachidonic acid metabolism
+HMR_1037,Arachidonic acid metabolism
+HMR_1039,Arachidonic acid metabolism
+HMR_1077,Arachidonic acid metabolism
+HMR_1081,Leukotriene metabolism
+HMR_1084,Leukotriene metabolism
+HMR_1085,Leukotriene metabolism
+HMR_1095,"Transport, nuclear"
+HMR_1102,Leukotriene metabolism
+HMR_1104,"Transport, peroxisomal"
+HMR_1126,Leukotriene metabolism
+HMR_1127,Leukotriene metabolism
+HMR_1129,Leukotriene metabolism
+HMR_1135,"Transport, peroxisomal"
+HMR_1242,"Transport, peroxisomal"
+HMR_1243,"Transport, mitochondrial"
+HMR_1280,Leukotriene metabolism
+HMR_1283,"Transport, peroxisomal"
+HMR_1284,"Transport, mitochondrial"
+HMR_1305,Eicosanoid metabolism
+HMR_1306,"Transport, endoplasmic reticular"
+HMR_1307,Eicosanoid metabolism
+HMR_1311,"Transport, endoplasmic reticular"
+HMR_1312,Eicosanoid metabolism
+HMR_1315,Eicosanoid metabolism
+HMR_1316,"Transport, endoplasmic reticular"
+HMR_1317,Eicosanoid metabolism
+HMR_1318,Eicosanoid metabolism
+HMR_1321,Eicosanoid metabolism
+HMR_1325,Eicosanoid metabolism
+HMR_1329,Eicosanoid metabolism
+HMR_1331,"Transport, endoplasmic reticular"
+HMR_1332,Eicosanoid metabolism
+HMR_1373,Eicosanoid metabolism
+HMR_1388,Eicosanoid metabolism
+HMR_1390,Eicosanoid metabolism
+HMR_1392,"Transport, endoplasmic reticular"
+HMR_1465,Cholesterol metabolism
+HMR_1467,Cholesterol metabolism
+HMR_1470,Cholesterol metabolism
+HMR_1473,Cholesterol metabolism
+HMR_1477,Cholesterol metabolism
+HMR_1478,Cholesterol metabolism
+HMR_1479,Cholesterol metabolism
+HMR_1484,Cholesterol metabolism
+HMR_1490,Cholesterol metabolism
+HMR_1493,Cholesterol metabolism
+HMR_1494,Cholesterol metabolism
+HMR_1495,Cholesterol metabolism
+HMR_1496,Cholesterol metabolism
+HMR_1500,Cholesterol metabolism
+HMR_1502,Cholesterol metabolism
+HMR_1503,Cholesterol metabolism
+HMR_1504,Cholesterol metabolism
+HMR_1505,Cholesterol metabolism
+HMR_1509,Cholesterol metabolism
+HMR_1512,Cholesterol metabolism
+HMR_1516,Cholesterol metabolism
+HMR_1526,Cholesterol metabolism
+HMR_1532,N-glycan metabolism
+HMR_1536,Cholesterol metabolism
+HMR_1538,Cholesterol metabolism
+HMR_1539,Cholesterol metabolism
+HMR_1540,Cholesterol metabolism
+HMR_1543,Cholesterol metabolism
+HMR_1544,Cholesterol metabolism
+HMR_1545,Cholesterol metabolism
+HMR_1546,Cholesterol metabolism
+HMR_1547,Cholesterol metabolism
+HMR_1548,Cholesterol metabolism
+HMR_1549,Cholesterol metabolism
+HMR_1550,Cholesterol metabolism
+HMR_1551,Cholesterol metabolism
+HMR_1552,Cholesterol metabolism
+HMR_1557,Cholesterol metabolism
+HMR_1558,Cholesterol metabolism
+HMR_1565,Cholesterol metabolism
+HMR_1620,"Transport, mitochondrial"
+HMR_1623,"Transport, peroxisomal"
+HMR_1627,Bile acid synthesis
+HMR_1629,"Transport, peroxisomal"
+HMR_1630,"Transport, mitochondrial"
+HMR_1631,"Transport, endoplasmic reticular"
+HMR_1635,Bile acid synthesis
+HMR_1637,Bile acid synthesis
+HMR_1644,Steroid metabolism
+HMR_1651,Steroid metabolism
+HMR_1653,Bile acid synthesis
+HMR_1665,"Transport, peroxisomal"
+HMR_1666,"Transport, mitochondrial"
+HMR_1681,Bile acid synthesis
+HMR_1685,Bile acid synthesis
+HMR_1701,"Transport, peroxisomal"
+HMR_1706,Bile acid synthesis
+HMR_1735,Bile acid synthesis
+HMR_1737,Bile acid synthesis
+HMR_1738,Bile acid synthesis
+HMR_1739,Bile acid synthesis
+HMR_1740,Bile acid synthesis
+HMR_1741,Bile acid synthesis
+HMR_1742,Bile acid synthesis
+HMR_1743,Bile acid synthesis
+HMR_1744,"Transport, mitochondrial"
+HMR_1745,"Transport, mitochondrial"
+HMR_1746,Bile acid synthesis
+HMR_1747,Bile acid synthesis
+HMR_1748,Bile acid synthesis
+HMR_1749,Bile acid synthesis
+HMR_1750,Bile acid synthesis
+HMR_1751,Bile acid synthesis
+HMR_1752,"Transport, mitochondrial"
+HMR_1753,"Transport, mitochondrial"
+HMR_1754,Bile acid synthesis
+HMR_1756,Bile acid synthesis
+HMR_1758,"Transport, peroxisomal"
+HMR_1759,"Transport, peroxisomal"
+HMR_1760,Bile acid synthesis
+HMR_1761,Bile acid synthesis
+HMR_1762,Bile acid synthesis
+HMR_1764,"Transport, mitochondrial"
+HMR_1765,Bile acid synthesis
+HMR_1766,Bile acid synthesis
+HMR_1767,Bile acid synthesis
+HMR_1768,Bile acid synthesis
+HMR_1769,Bile acid synthesis
+HMR_1770,Bile acid synthesis
+HMR_1771,Bile acid synthesis
+HMR_1781,Bile acid synthesis
+HMR_1783,Bile acid synthesis
+HMR_1785,Bile acid synthesis
+HMR_1786,Bile acid synthesis
+HMR_1807,Bile acid synthesis
+HMR_1834,Bile acid synthesis
+HMR_1838,Bile acid synthesis
+HMR_1847,Bile acid synthesis
+HMR_1916,"Transport, golgi apparatus"
+HMR_1927,Steroid metabolism
+HMR_1928,Steroid metabolism
+HMR_1929,Steroid metabolism
+HMR_1940,Steroid metabolism
+HMR_1941,Steroid metabolism
+HMR_1944,Androgen and estrogen synthesis and metabolism
+HMR_1948,Steroid metabolism
+HMR_1949,Steroid metabolism
+HMR_1958,Androgen and estrogen synthesis and metabolism
+HMR_1962,Androgen and estrogen synthesis and metabolism
+HMR_1967,Androgen and estrogen synthesis and metabolism
+HMR_1968,Androgen and estrogen synthesis and metabolism
+HMR_1970,Androgen and estrogen synthesis and metabolism
+HMR_1971,Androgen and estrogen synthesis and metabolism
+HMR_1976,Androgen and estrogen synthesis and metabolism
+HMR_1979,Steroid metabolism
+HMR_1980,Steroid metabolism
+HMR_1981,Steroid metabolism
+HMR_1982,Androgen and estrogen synthesis and metabolism
+HMR_1983,Androgen and estrogen synthesis and metabolism
+HMR_1988,Steroid metabolism
+HMR_1989,Steroid metabolism
+HMR_1990,Steroid metabolism
+HMR_1991,Steroid metabolism
+HMR_1992,Steroid metabolism
+HMR_1993,Steroid metabolism
+HMR_1996,Steroid metabolism
+HMR_2002,Steroid metabolism
+HMR_2007,Steroid metabolism
+HMR_2010,Steroid metabolism
+HMR_2011,Steroid metabolism
+HMR_2014,Androgen and estrogen synthesis and metabolism
+HMR_2016,Androgen and estrogen synthesis and metabolism
+HMR_2018,Androgen and estrogen synthesis and metabolism
+HMR_2029,Androgen and estrogen synthesis and metabolism
+HMR_2041,Steroid metabolism
+HMR_2087,"Transport, lysosomal"
+HMR_2088,Androgen and estrogen synthesis and metabolism
+HMR_2089,Androgen and estrogen synthesis and metabolism
+HMR_2090,"Transport, lysosomal"
+HMR_2114,Vitamin D metabolism
+HMR_2127,"Transport, mitochondrial"
+HMR_2190,Fatty acid synthesis
+HMR_2193,Fatty acid synthesis
+HMR_2210,Fatty acid synthesis
+HMR_2211,Fatty acid synthesis
+HMR_2215,Fatty acid synthesis
+HMR_2217,Fatty acid synthesis
+HMR_2218,Fatty acid synthesis
+HMR_2219,Fatty acid synthesis
+HMR_2259,Fatty acid synthesis
+HMR_2260,Fatty acid synthesis
+HMR_2261,Fatty acid synthesis
+HMR_2262,Fatty acid synthesis
+HMR_2263,Fatty acid synthesis
+HMR_2264,Fatty acid synthesis
+HMR_2265,Fatty acid synthesis
+HMR_2266,Fatty acid synthesis
+HMR_2267,Fatty acid synthesis
+HMR_2268,Fatty acid synthesis
+HMR_2269,Fatty acid synthesis
+HMR_2270,Fatty acid synthesis
+HMR_2281,Fatty acid synthesis
+HMR_2282,Fatty acid synthesis
+HMR_2284,Fatty acid synthesis
+HMR_2286,Fatty acid synthesis
+HMR_2287,Fatty acid synthesis
+HMR_2288,Fatty acid synthesis
+HMR_2289,Fatty acid synthesis
+HMR_2292,Fatty acid synthesis
+HMR_2293,Fatty acid synthesis
+HMR_2294,Fatty acid synthesis
+HMR_2295,Fatty acid synthesis
+HMR_2296,Fatty acid synthesis
+HMR_2332,Fatty acid synthesis
+HMR_2334,Fatty acid synthesis
+HMR_2336,Fatty acid synthesis
+HMR_2338,Fatty acid synthesis
+HMR_2342,Fatty acid synthesis
+HMR_2343,Fatty acid synthesis
+HMR_2344,Fatty acid synthesis
+HMR_2345,Fatty acid synthesis
+HMR_2347,Fatty acid synthesis
+HMR_2348,Fatty acid synthesis
+HMR_2349,Fatty acid synthesis
+HMR_2350,Fatty acid synthesis
+HMR_2353,Fatty acid synthesis
+HMR_2354,Fatty acid synthesis
+HMR_2355,Fatty acid synthesis
+HMR_2356,Fatty acid synthesis
+HMR_2359,Fatty acid synthesis
+HMR_2361,Fatty acid synthesis
+HMR_2362,Fatty acid synthesis
+HMR_2363,Fatty acid synthesis
+HMR_2364,Fatty acid synthesis
+HMR_2365,Fatty acid synthesis
+HMR_2368,Fatty acid synthesis
+HMR_2374,Fatty acid synthesis
+HMR_2376,Fatty acid synthesis
+HMR_2380,Fatty acid synthesis
+HMR_2391,Fatty acid synthesis
+HMR_2393,Fatty acid synthesis
+HMR_2395,Fatty acid synthesis
+HMR_2433,Fatty acid synthesis
+HMR_2434,Fatty acid synthesis
+HMR_2435,Fatty acid synthesis
+HMR_2436,Fatty acid synthesis
+HMR_2440,Linoleate metabolism
+HMR_2457,Linoleate metabolism
+HMR_2472,Fatty acid synthesis
+HMR_2484,Fatty acid synthesis
+HMR_2495,Fatty acid synthesis
+HMR_2530,Fatty acid synthesis
+HMR_2533,Fatty acid synthesis
+HMR_2535,Fatty acid synthesis
+HMR_2537,Fatty acid synthesis
+HMR_2540,Fatty acid synthesis
+HMR_2541,Fatty acid synthesis
+HMR_2542,Fatty acid synthesis
+HMR_2543,Fatty acid synthesis
+HMR_2558,Fatty acid synthesis
+HMR_2560,Fatty acid synthesis
+HMR_2569,"Transport, endoplasmic reticular"
+HMR_2571,Fatty acid synthesis
+HMR_2581,Fatty acid synthesis
+HMR_2585,"Transport, nuclear"
+HMR_2602,Fatty acid oxidation
+HMR_2603,"Transport, mitochondrial"
+HMR_2604,"Transport, mitochondrial"
+HMR_2608,Fatty acid oxidation
+HMR_2609,"Transport, mitochondrial"
+HMR_2610,"Transport, mitochondrial"
+HMR_2611,Fatty acid oxidation
+HMR_2612,"Transport, mitochondrial"
+HMR_2613,"Transport, mitochondrial"
+HMR_2620,Fatty acid oxidation
+HMR_2621,"Transport, mitochondrial"
+HMR_2622,"Transport, mitochondrial"
+HMR_2624,"Transport, mitochondrial"
+HMR_2633,Fatty acid oxidation
+HMR_2634,"Transport, mitochondrial"
+HMR_2635,"Transport, mitochondrial"
+HMR_2644,"Transport, mitochondrial"
+HMR_2648,Fatty acid oxidation
+HMR_2649,"Transport, mitochondrial"
+HMR_2650,"Transport, mitochondrial"
+HMR_2651,Fatty acid oxidation
+HMR_2652,"Transport, mitochondrial"
+HMR_2653,"Transport, mitochondrial"
+HMR_2655,"Transport, mitochondrial"
+HMR_2657,Fatty acid oxidation
+HMR_2659,"Transport, mitochondrial"
+HMR_2660,Fatty acid oxidation
+HMR_2661,"Transport, mitochondrial"
+HMR_2662,"Transport, mitochondrial"
+HMR_2666,Fatty acid oxidation
+HMR_2667,"Transport, mitochondrial"
+HMR_2668,"Transport, mitochondrial"
+HMR_2669,Fatty acid oxidation
+HMR_2670,"Transport, mitochondrial"
+HMR_2671,"Transport, mitochondrial"
+HMR_2673,"Transport, mitochondrial"
+HMR_2675,Fatty acid oxidation
+HMR_2676,"Transport, mitochondrial"
+HMR_2677,"Transport, mitochondrial"
+HMR_2679,"Transport, mitochondrial"
+HMR_2681,Fatty acid oxidation
+HMR_2682,"Transport, mitochondrial"
+HMR_2683,"Transport, mitochondrial"
+HMR_2684,Fatty acid oxidation
+HMR_2685,"Transport, mitochondrial"
+HMR_2686,"Transport, mitochondrial"
+HMR_2687,Fatty acid oxidation
+HMR_2688,"Transport, mitochondrial"
+HMR_2689,"Transport, mitochondrial"
+HMR_2690,Fatty acid oxidation
+HMR_2691,"Transport, mitochondrial"
+HMR_2692,"Transport, mitochondrial"
+HMR_2693,Fatty acid oxidation
+HMR_2695,"Transport, mitochondrial"
+HMR_2697,"Transport, mitochondrial"
+HMR_2699,Fatty acid oxidation
+HMR_2700,"Transport, mitochondrial"
+HMR_2701,"Transport, mitochondrial"
+HMR_2702,Fatty acid oxidation
+HMR_2703,"Transport, mitochondrial"
+HMR_2704,"Transport, mitochondrial"
+HMR_2705,Fatty acid oxidation
+HMR_2706,"Transport, mitochondrial"
+HMR_2707,"Transport, mitochondrial"
+HMR_2708,Fatty acid oxidation
+HMR_2709,"Transport, mitochondrial"
+HMR_2710,"Transport, mitochondrial"
+HMR_2711,Fatty acid oxidation
+HMR_2712,"Transport, mitochondrial"
+HMR_2713,"Transport, mitochondrial"
+HMR_2715,"Transport, mitochondrial"
+HMR_2718,"Transport, mitochondrial"
+HMR_2722,"Transport, mitochondrial"
+HMR_2727,"Transport, mitochondrial"
+HMR_2731,"Transport, mitochondrial"
+HMR_2733,Fatty acid oxidation
+HMR_2734,"Transport, mitochondrial"
+HMR_2735,"Transport, mitochondrial"
+HMR_2736,Fatty acid oxidation
+HMR_2737,"Transport, mitochondrial"
+HMR_2738,"Transport, mitochondrial"
+HMR_2739,Fatty acid oxidation
+HMR_2740,"Transport, mitochondrial"
+HMR_2741,"Transport, mitochondrial"
+HMR_2744,"Transport, mitochondrial"
+HMR_2748,"Transport, mitochondrial"
+HMR_2753,"Transport, mitochondrial"
+HMR_2757,"Transport, mitochondrial"
+HMR_2760,"Transport, mitochondrial"
+HMR_2764,"Transport, mitochondrial"
+HMR_2768,Fatty acid oxidation
+HMR_2769,"Transport, mitochondrial"
+HMR_2770,"Transport, mitochondrial"
+HMR_2771,Fatty acid oxidation
+HMR_2772,"Transport, mitochondrial"
+HMR_2773,"Transport, mitochondrial"
+HMR_2774,Fatty acid oxidation
+HMR_2775,"Transport, mitochondrial"
+HMR_2776,"Transport, mitochondrial"
+HMR_2817,"Transport, endoplasmic reticular"
+HMR_2819,"Transport, endoplasmic reticular"
+HMR_2821,"Transport, endoplasmic reticular"
+HMR_2827,"Transport, endoplasmic reticular"
+HMR_2851,"Transport, endoplasmic reticular"
+HMR_2852,"Transport, endoplasmic reticular"
+HMR_2857,"Transport, endoplasmic reticular"
+HMR_2859,"Transport, endoplasmic reticular"
+HMR_2861,"Transport, endoplasmic reticular"
+HMR_2862,"Transport, endoplasmic reticular"
+HMR_2865,"Transport, endoplasmic reticular"
+HMR_2866,"Transport, endoplasmic reticular"
+HMR_2884,"Transport, endoplasmic reticular"
+HMR_2886,"Transport, endoplasmic reticular"
+HMR_2888,"Transport, endoplasmic reticular"
+HMR_2890,"Transport, endoplasmic reticular"
+HMR_2942,Fatty acid synthesis
+HMR_2943,Fatty acid synthesis
+HMR_2944,Fatty acid synthesis
+HMR_2945,Fatty acid synthesis
+HMR_2946,Fatty acid synthesis
+HMR_2947,Fatty acid synthesis
+HMR_2948,Fatty acid synthesis
+HMR_2951,Fatty acid synthesis
+HMR_2954,Fatty acid synthesis
+HMR_2955,Fatty acid synthesis
+HMR_2956,Fatty acid synthesis
+HMR_2957,Fatty acid synthesis
+HMR_2961,Fatty acid synthesis
+HMR_2962,Fatty acid synthesis
+HMR_2963,Fatty acid synthesis
+HMR_2964,Fatty acid synthesis
+HMR_2965,Fatty acid synthesis
+HMR_2966,Fatty acid synthesis
+HMR_2967,Fatty acid synthesis
+HMR_2968,Fatty acid synthesis
+HMR_2969,Fatty acid synthesis
+HMR_2970,Fatty acid synthesis
+HMR_2971,Fatty acid synthesis
+HMR_2972,Fatty acid synthesis
+HMR_2973,Fatty acid synthesis
+HMR_2974,Fatty acid synthesis
+HMR_2975,Fatty acid synthesis
+HMR_2976,Fatty acid synthesis
+HMR_2977,Fatty acid synthesis
+HMR_2978,Fatty acid synthesis
+HMR_2979,Fatty acid synthesis
+HMR_2980,Fatty acid synthesis
+HMR_2982,Fatty acid synthesis
+HMR_2983,Fatty acid synthesis
+HMR_2985,Fatty acid synthesis
+HMR_2986,Fatty acid synthesis
+HMR_2988,Fatty acid synthesis
+HMR_2989,Fatty acid synthesis
+HMR_2990,Fatty acid synthesis
+HMR_2994,Fatty acid synthesis
+HMR_2998,Fatty acid synthesis
+HMR_2999,Fatty acid synthesis
+HMR_3001,Fatty acid synthesis
+HMR_3002,Fatty acid synthesis
+HMR_3003,Fatty acid synthesis
+HMR_3018,"Transport, peroxisomal"
+HMR_3021,"Transport, peroxisomal"
+HMR_3023,"Transport, peroxisomal"
+HMR_3053,Fatty acid oxidation
+HMR_3056,Fatty acid oxidation
+HMR_3057,Fatty acid oxidation
+HMR_3058,Fatty acid oxidation
+HMR_3059,Fatty acid oxidation
+HMR_3062,Fatty acid oxidation
+HMR_3063,Fatty acid oxidation
+HMR_3064,Fatty acid oxidation
+HMR_3065,Fatty acid oxidation
+HMR_3066,Fatty acid oxidation
+HMR_3067,Fatty acid oxidation
+HMR_3068,Fatty acid oxidation
+HMR_3069,Fatty acid oxidation
+HMR_3070,Fatty acid oxidation
+HMR_3071,Fatty acid oxidation
+HMR_3072,Fatty acid oxidation
+HMR_3073,Fatty acid oxidation
+HMR_3074,Fatty acid oxidation
+HMR_3075,Fatty acid oxidation
+HMR_3076,Fatty acid oxidation
+HMR_3094,Fatty acid oxidation
+HMR_3095,Fatty acid oxidation
+HMR_3096,Fatty acid oxidation
+HMR_3097,Fatty acid oxidation
+HMR_3098,Fatty acid oxidation
+HMR_3099,Fatty acid oxidation
+HMR_3100,Fatty acid oxidation
+HMR_3101,Fatty acid oxidation
+HMR_3102,Fatty acid oxidation
+HMR_3106,"Transport, peroxisomal"
+HMR_3107,Fatty acid oxidation
+HMR_3108,Fatty acid oxidation
+HMR_3109,Fatty acid oxidation
+HMR_3110,Fatty acid oxidation
+HMR_3111,Fatty acid oxidation
+HMR_3112,Fatty acid oxidation
+HMR_3113,Fatty acid oxidation
+HMR_3114,Fatty acid oxidation
+HMR_3115,Fatty acid oxidation
+HMR_3116,Fatty acid oxidation
+HMR_3117,Fatty acid oxidation
+HMR_3118,Fatty acid oxidation
+HMR_3121,Fatty acid oxidation
+HMR_3128,Fatty acid oxidation
+HMR_3135,Fatty acid oxidation
+HMR_3142,Fatty acid oxidation
+HMR_3149,Fatty acid oxidation
+HMR_3156,Fatty acid oxidation
+HMR_3170,Fatty acid oxidation
+HMR_3171,Fatty acid oxidation
+HMR_3172,Fatty acid oxidation
+HMR_3173,Fatty acid oxidation
+HMR_3174,Fatty acid oxidation
+HMR_3175,Fatty acid oxidation
+HMR_3176,Fatty acid oxidation
+HMR_3177,Fatty acid oxidation
+HMR_3178,Fatty acid oxidation
+HMR_3179,Fatty acid oxidation
+HMR_3180,Fatty acid oxidation
+HMR_3181,Fatty acid oxidation
+HMR_3182,Fatty acid oxidation
+HMR_3183,Fatty acid oxidation
+HMR_3184,Fatty acid oxidation
+HMR_3185,Fatty acid oxidation
+HMR_3186,Fatty acid oxidation
+HMR_3187,Fatty acid oxidation
+HMR_3188,Fatty acid oxidation
+HMR_3189,Fatty acid oxidation
+HMR_3190,Fatty acid oxidation
+HMR_3191,Fatty acid oxidation
+HMR_3192,Fatty acid oxidation
+HMR_3193,Fatty acid oxidation
+HMR_3194,Fatty acid oxidation
+HMR_3195,Fatty acid oxidation
+HMR_3196,Fatty acid oxidation
+HMR_3197,Fatty acid oxidation
+HMR_3198,Fatty acid oxidation
+HMR_3199,Fatty acid oxidation
+HMR_3200,Fatty acid oxidation
+HMR_3201,Fatty acid oxidation
+HMR_3202,Fatty acid oxidation
+HMR_3203,Fatty acid oxidation
+HMR_3204,Fatty acid oxidation
+HMR_3205,Fatty acid oxidation
+HMR_3218,Fatty acid oxidation
+HMR_3219,Fatty acid oxidation
+HMR_3220,Fatty acid oxidation
+HMR_3221,Fatty acid oxidation
+HMR_3222,Fatty acid oxidation
+HMR_3223,Fatty acid oxidation
+HMR_3224,Fatty acid oxidation
+HMR_3225,Fatty acid oxidation
+HMR_3229,Fatty acid oxidation
+HMR_3230,Fatty acid oxidation
+HMR_3231,Fatty acid oxidation
+HMR_3232,Fatty acid oxidation
+HMR_3233,Fatty acid oxidation
+HMR_3234,Fatty acid oxidation
+HMR_3235,Fatty acid oxidation
+HMR_3236,Fatty acid oxidation
+HMR_3237,Fatty acid oxidation
+HMR_3240,Fatty acid oxidation
+HMR_3241,Fatty acid oxidation
+HMR_3242,Fatty acid oxidation
+HMR_3243,Fatty acid oxidation
+HMR_3244,Fatty acid oxidation
+HMR_3245,Fatty acid oxidation
+HMR_3246,Fatty acid oxidation
+HMR_3247,Fatty acid oxidation
+HMR_3296,Fatty acid oxidation
+HMR_3321,Fatty acid oxidation
+HMR_3322,Fatty acid oxidation
+HMR_3326,Fatty acid oxidation
+HMR_3327,Fatty acid oxidation
+HMR_3328,Fatty acid oxidation
+HMR_3329,Fatty acid oxidation
+HMR_3330,Fatty acid oxidation
+HMR_3331,Fatty acid oxidation
+HMR_3332,Fatty acid oxidation
+HMR_3333,Fatty acid oxidation
+HMR_3334,Fatty acid oxidation
+HMR_3335,Fatty acid oxidation
+HMR_3336,Fatty acid oxidation
+HMR_3337,Fatty acid oxidation
+HMR_3338,Fatty acid oxidation
+HMR_3339,Fatty acid oxidation
+HMR_3340,Fatty acid oxidation
+HMR_3341,Fatty acid oxidation
+HMR_3342,Fatty acid oxidation
+HMR_3343,Fatty acid oxidation
+HMR_3344,Fatty acid oxidation
+HMR_3345,Fatty acid oxidation
+HMR_3346,Fatty acid oxidation
+HMR_3347,Fatty acid oxidation
+HMR_3348,Fatty acid oxidation
+HMR_3349,Fatty acid oxidation
+HMR_3350,Fatty acid oxidation
+HMR_3351,Fatty acid oxidation
+HMR_3352,Fatty acid oxidation
+HMR_3353,Fatty acid oxidation
+HMR_3396,Fatty acid oxidation
+HMR_3397,Fatty acid oxidation
+HMR_3398,Fatty acid oxidation
+HMR_3406,Fatty acid oxidation
+HMR_3407,Fatty acid oxidation
+HMR_3408,Fatty acid oxidation
+HMR_3409,Fatty acid oxidation
+HMR_3411,Fatty acid oxidation
+HMR_3413,Fatty acid oxidation
+HMR_3414,Fatty acid oxidation
+HMR_3416,Fatty acid oxidation
+HMR_3421,Fatty acid oxidation
+HMR_3422,Fatty acid oxidation
+HMR_3423,Fatty acid oxidation
+HMR_3424,Fatty acid oxidation
+HMR_3425,Fatty acid oxidation
+HMR_3426,Fatty acid oxidation
+HMR_3427,Fatty acid oxidation
+HMR_3428,Fatty acid oxidation
+HMR_3429,Fatty acid oxidation
+HMR_3431,Fatty acid oxidation
+HMR_3432,Fatty acid oxidation
+HMR_3433,Fatty acid oxidation
+HMR_3446,Fatty acid synthesis
+HMR_3447,Fatty acid synthesis
+HMR_3448,Fatty acid synthesis
+HMR_3449,Fatty acid synthesis
+HMR_3450,Fatty acid synthesis
+HMR_3451,Fatty acid synthesis
+HMR_3452,Fatty acid synthesis
+HMR_3453,Fatty acid synthesis
+HMR_3454,Fatty acid synthesis
+HMR_3455,Fatty acid synthesis
+HMR_3456,Fatty acid synthesis
+HMR_3457,Fatty acid synthesis
+HMR_3475,Fatty acid oxidation
+HMR_3491,Fatty acid oxidation
+HMR_3520,"Transport, mitochondrial"
+HMR_3597,"Transport, lysosomal"
+HMR_3625,Cholesterol metabolism
+HMR_3626,Cholesterol metabolism
+HMR_3627,Cholesterol metabolism
+HMR_3628,Cholesterol metabolism
+HMR_3629,Cholesterol metabolism
+HMR_3630,Cholesterol metabolism
+HMR_3631,Cholesterol metabolism
+HMR_3633,Cholesterol metabolism
+HMR_3635,Cholesterol metabolism
+HMR_3636,Cholesterol metabolism
+HMR_3637,Cholesterol metabolism
+HMR_3639,Cholesterol metabolism
+HMR_3640,Cholesterol metabolism
+HMR_3642,Cholesterol metabolism
+HMR_3644,Cholesterol metabolism
+HMR_3645,Cholesterol metabolism
+HMR_3646,Cholesterol metabolism
+HMR_3647,Cholesterol metabolism
+HMR_3648,Cholesterol metabolism
+HMR_3649,Cholesterol metabolism
+HMR_3650,Cholesterol metabolism
+HMR_3651,Cholesterol metabolism
+HMR_3652,Cholesterol metabolism
+HMR_3653,Cholesterol metabolism
+HMR_3654,Cholesterol metabolism
+HMR_3655,Cholesterol metabolism
+HMR_3656,Cholesterol metabolism
+HMR_3657,Cholesterol metabolism
+HMR_3658,Cholesterol metabolism
+HMR_3659,Cholesterol metabolism
+HMR_3660,Cholesterol metabolism
+HMR_3662,Cholesterol metabolism
+HMR_3663,Cholesterol metabolism
+HMR_3664,Cholesterol metabolism
+HMR_3665,Cholesterol metabolism
+HMR_3666,Cholesterol metabolism
+HMR_3667,Cholesterol metabolism
+HMR_3668,Cholesterol metabolism
+HMR_3669,Cholesterol metabolism
+HMR_3670,Cholesterol metabolism
+HMR_3675,Cholesterol metabolism
+HMR_3677,Cholesterol metabolism
+HMR_3678,Cholesterol metabolism
+HMR_3679,Cholesterol metabolism
+HMR_3680,Cholesterol metabolism
+HMR_3681,Cholesterol metabolism
+HMR_3682,Cholesterol metabolism
+HMR_3684,Cholesterol metabolism
+HMR_3685,Cholesterol metabolism
+HMR_3686,Cholesterol metabolism
+HMR_3687,Cholesterol metabolism
+HMR_3688,Cholesterol metabolism
+HMR_3689,Cholesterol metabolism
+HMR_3690,Cholesterol metabolism
+HMR_3692,Cholesterol metabolism
+HMR_3694,Cholesterol metabolism
+HMR_3695,Cholesterol metabolism
+HMR_3696,Cholesterol metabolism
+HMR_3698,Cholesterol metabolism
+HMR_3699,Cholesterol metabolism
+HMR_3701,Cholesterol metabolism
+HMR_3703,Cholesterol metabolism
+HMR_3704,Cholesterol metabolism
+HMR_3705,Cholesterol metabolism
+HMR_3706,Cholesterol metabolism
+HMR_3707,Cholesterol metabolism
+HMR_3708,Cholesterol metabolism
+HMR_3709,Cholesterol metabolism
+HMR_3710,Cholesterol metabolism
+HMR_3711,Cholesterol metabolism
+HMR_3712,Cholesterol metabolism
+HMR_3713,Cholesterol metabolism
+HMR_3714,Cholesterol metabolism
+HMR_3715,Cholesterol metabolism
+HMR_3716,Cholesterol metabolism
+HMR_3717,Cholesterol metabolism
+HMR_3718,Cholesterol metabolism
+HMR_3719,Cholesterol metabolism
+HMR_3721,Cholesterol metabolism
+HMR_3722,Cholesterol metabolism
+HMR_3723,Cholesterol metabolism
+HMR_3724,Cholesterol metabolism
+HMR_3725,Cholesterol metabolism
+HMR_3726,Cholesterol metabolism
+HMR_3727,Cholesterol metabolism
+HMR_3728,Cholesterol metabolism
+HMR_3729,Cholesterol metabolism
+HMR_3734,Cholesterol metabolism
+HMR_3736,Cholesterol metabolism
+HMR_3737,Cholesterol metabolism
+HMR_3738,Cholesterol metabolism
+HMR_3739,Cholesterol metabolism
+HMR_3740,Cholesterol metabolism
+HMR_3741,Cholesterol metabolism
+HMR_3831,Glutamate metabolism
+HMR_3832,Arginine and proline metabolism
+HMR_3855,Pyruvate metabolism
+HMR_3859,Pyruvate metabolism
+HMR_3864,"Transport, mitochondrial"
+HMR_3867,"Transport, peroxisomal"
+HMR_3915,Methionine and cysteine metabolism
+HMR_3953,"Transport, endoplasmic reticular"
+HMR_3966,Nucleotide metabolism
+HMR_3996,Methionine and cysteine metabolism
+HMR_4078,Beta-Alanine metabolism
+HMR_4079,Beta-Alanine metabolism
+HMR_4124,Aminosugar metabolism
+HMR_4182,Pyrimidine synthesis
+HMR_4261,NAD metabolism
+HMR_4263,NAD metabolism
+HMR_4266,"Transport, mitochondrial"
+HMR_4270,NAD metabolism
+HMR_4278,NAD metabolism
+HMR_4284,"Glycine, serine, alanine, and threonine metabolism"
+HMR_4343,Pyrimidine synthesis
+HMR_4422,Arginine and proline metabolism
+HMR_4592,Pentose phosphate pathway
+HMR_4630,Cholesterol metabolism
+HMR_4664,Purine synthesis
+HMR_4672,Pyrimidine synthesis
+HMR_4696,"Glycine, serine, alanine, and threonine metabolism"
+HMR_4700,"Glycine, serine, alanine, and threonine metabolism"
+HMR_4701,Methionine and cysteine metabolism
+HMR_4702,Tyrosine metabolism
+HMR_4756,"Transport, mitochondrial"
+HMR_4757,Heme synthesis
+HMR_4764,Heme synthesis
+HMR_4771,Heme synthesis
+HMR_4772,Heme synthesis
+HMR_4776,Arginine and proline metabolism
+HMR_4777,Arginine and proline metabolism
+HMR_4782,Arginine and proline metabolism
+HMR_4783,Arginine and proline metabolism
+HMR_4790,"Transport, peroxisomal"
+HMR_4816,Tetrahydrobiopterin metabolism
+HMR_4831,Galactose metabolism
+HMR_4957,"Transport, mitochondrial"
+HMR_4964,"Transport, mitochondrial"
+HMR_5101,"Transport, mitochondrial"
+HMR_5249,"Transport, lysosomal"
+HMR_5301,Purine synthesis
+HMR_5387,Methionine and cysteine metabolism
+HMR_5389,Methionine and cysteine metabolism
+HMR_5390,Methionine and cysteine metabolism
+HMR_5420,"Transport, mitochondrial"
+HMR_6385,"Transport, endoplasmic reticular"
+HMR_6500,Vitamin E metabolism
+HMR_6511,Vitamin B2 metabolism
+HMR_6515,Methionine and cysteine metabolism
+HMR_6545,Inositol phosphate metabolism
+HMR_6549,Inositol phosphate metabolism
+HMR_6550,Inositol phosphate metabolism
+HMR_6558,Inositol phosphate metabolism
+HMR_6564,Inositol phosphate metabolism
+HMR_6566,Inositol phosphate metabolism
+HMR_6572,Inositol phosphate metabolism
+HMR_6580,Inositol phosphate metabolism
+HMR_6583,Inositol phosphate metabolism
+HMR_6584,Inositol phosphate metabolism
+HMR_6595,Inositol phosphate metabolism
+HMR_6607,Purine catabolism
+HMR_6611,Purine catabolism
+HMR_6617,"Transport, nuclear"
+HMR_6619,"Transport, nuclear"
+HMR_6629,"Transport, endoplasmic reticular"
+HMR_6632,Vitamin A metabolism
+HMR_6633,Vitamin A metabolism
+HMR_6647,Vitamin A metabolism
+HMR_6672,Vitamin A metabolism
+HMR_6728,Phenylalanine metabolism
+HMR_6729,Phenylalanine metabolism
+HMR_6747,Phenylalanine metabolism
+HMR_6755,Phenylalanine metabolism
+HMR_6770,Phenylalanine metabolism
+HMR_6782,Phenylalanine metabolism
+HMR_6784,Phenylalanine metabolism
+HMR_6785,Phenylalanine metabolism
+HMR_6786,Phenylalanine metabolism
+HMR_6790,Phenylalanine metabolism
+HMR_6826,Phenylalanine metabolism
+HMR_6834,Phenylalanine metabolism
+HMR_6838,Phenylalanine metabolism
+HMR_6839,Phenylalanine metabolism
+HMR_6844,Phenylalanine metabolism
+HMR_6850,Phenylalanine metabolism
+HMR_6854,Phenylalanine metabolism
+HMR_6874,Phenylalanine metabolism
+HMR_6876,Phenylalanine metabolism
+HMR_6907,Ubiquinone synthesis
+HMR_6908,Ubiquinone synthesis
+HMR_6909,Ubiquinone synthesis
+HMR_6910,Ubiquinone synthesis
+HMR_6986,"Transport, peroxisomal"
+HMR_7197,O-glycan metabolism
+HMR_7198,"Transport, lysosomal"
+HMR_7199,"Transport, lysosomal"
+HMR_7255,N-glycan metabolism
+HMR_7256,N-glycan metabolism
+HMR_7257,"Transport, endoplasmic reticular"
+HMR_7278,N-glycan metabolism
+HMR_7431,"Transport, golgi apparatus"
+HMR_7432,"Transport, golgi apparatus"
+HMR_7628,Phenylalanine metabolism
+HMR_7652,Inositol phosphate metabolism
+HMR_7703,"Glycine, serine, alanine, and threonine metabolism"
+HMR_7711,"Transport, lysosomal"
+HMR_7712,"Transport, nuclear"
+HMR_7715,"Transport, lysosomal"
+HMR_7720,"Transport, lysosomal"
+HMR_7724,"Transport, lysosomal"
+HMR_7727,"Transport, lysosomal"
+HMR_7748,Glycolysis/gluconeogenesis
+HMR_7749,Glycolysis/gluconeogenesis
+HMR_7755,Glycerophospholipid metabolism
+HMR_7756,Phenylalanine metabolism
+HMR_7757,"Transport, mitochondrial"
+HMR_7758,"Transport, mitochondrial"
+HMR_7944,"Transport, endoplasmic reticular"
+HMR_7947,"Transport, endoplasmic reticular"
+HMR_7949,"Transport, endoplasmic reticular"
+HMR_8084,"Transport, golgi apparatus"
+HMR_8086,"Transport, golgi apparatus"
+HMR_8271,Blood group synthesis
+HMR_8287,Blood group synthesis
+HMR_8418,"Transport, mitochondrial"
+HMR_8475,"Transport, mitochondrial"
+HMR_8476,"Transport, nuclear"
+HMR_8501,Pyruvate metabolism
+HMR_8505,"Transport, mitochondrial"
+HMR_8510,"Transport, mitochondrial"
+HMR_8562,"Transport, mitochondrial"
+HMR_8580,Starch and sucrose metabolism
+HMR_8582,Starch and sucrose metabolism
+HMR_8585,Starch and sucrose metabolism
+HMR_8588,"Transport, lysosomal"
+HMR_8590,"Transport, lysosomal"
+HMR_8776,"Transport, mitochondrial"
+HMR_9019,"Transport, mitochondrial"
+HMR_9174,"Transport, mitochondrial"
+HMR_9177,"Transport, endoplasmic reticular"
+HMR_9179,"Transport, peroxisomal"
+HMR_9626,"Transport, endoplasmic reticular"
+HMR_9627,"Transport, endoplasmic reticular"
+HMR_9628,"Transport, endoplasmic reticular"
+HMR_9634,"Transport, endoplasmic reticular"
+HMR_9665,"Transport, golgi apparatus"
+HMR_9669,"Transport, golgi apparatus"
+HMR_9670,"Transport, golgi apparatus"
+HMR_9671,"Transport, golgi apparatus"
+HMR_9674,"Transport, nuclear"
+HMR_9676,"Transport, mitochondrial"
+HMR_9678,"Transport, peroxisomal"
+HMR_9679,"Transport, peroxisomal"
+HMR_9680,"Transport, peroxisomal"
+HMR_9716,"Transport, endoplasmic reticular"
+HMR_9719,Fatty acid oxidation
+HMR_9797,Purine catabolism
+HMR_9802,Glutamate metabolism
+HMR_9803,Propanoate metabolism
+HMR_9804,Propanoate metabolism
+HMR_9805,Glycerophospholipid metabolism
+HOXG,Heme degradation
+HPDCACRNCPT1,Fatty acid oxidation
+HPDCACRNCPT2,Fatty acid oxidation
+HPDCACRNt,Fatty acid oxidation
+HPDECECOAm,Fatty acid oxidation
+HPDECEm,Fatty acid oxidation
+HPDECEtm,"Transport, mitochondrial"
+HPETFABP1tc,"Transport, endoplasmic reticular"
+HPYRDC,Glyoxylate and dicarboxylate metabolism
+HPYRDCm,Glyoxylate and dicarboxylate metabolism
+HPYRR2x,Glyoxylate and dicarboxylate metabolism
+HPYRRy,Glyoxylate and dicarboxylate metabolism
+HPYRtp,"Transport, peroxisomal"
+HRETNtn,"Transport, nuclear"
+HS1ly,Heparan sulfate degradation
+HS2ly,Heparan sulfate degradation
+HS3ly,Heparan sulfate degradation
+HS4ly,Heparan sulfate degradation
+HSAT1ly,Heparan sulfate degradation
+HSAT2ly,Heparan sulfate degradation
+HSAT3ly,Heparan sulfate degradation
+HSAT4ly,Heparan sulfate degradation
+HSD11B1r,Steroid metabolism
+HSD11B2r,Steroid metabolism
+HSD17B1,Steroid metabolism
+HSD17B2r,Steroid metabolism
+HSD17B3r,Steroid metabolism
+HSD17B42x,Bile acid synthesis
+HSD17B4x,Bile acid synthesis
+HSD17B7r,Steroid metabolism
+HSD17B8r,Steroid metabolism
+HSD17B9r,Steroid metabolism
+HSD3A1r,Steroid metabolism
+HSD3A2r,Steroid metabolism
+HSD3B11,Steroid metabolism
+HSD3B11r,Steroid metabolism
+HSD3B12r,Steroid metabolism
+HSD3B13,Steroid metabolism
+HSD3B13r,Steroid metabolism
+HSD3B2r,Steroid metabolism
+HSD3B3r,Steroid metabolism
+HSD3B7P,Bile acid synthesis
+HSPASEly,Heparan sulfate degradation
+HSPGtly,"Transport, lysosomal"
+HXANtx,"Transport, peroxisomal"
+HXAt1,"Transport, mitochondrial"
+HXAt2,"Transport, peroxisomal"
+HXCOAc,Fatty acid oxidation
+HXCOAm,Fatty acid oxidation
+HXCOAtx,"Transport, peroxisomal"
+HXCOAx,Fatty acid oxidation
+HXPRT,Nucleotide salvage pathway
+HYPOE,Vitamin B6 metabolism
+HYPTROX,Taurine and hypotaurine metabolism
+HYPTROXe,Methionine and cysteine metabolism
+Htg,"Transport, golgi apparatus"
+Htmi,"Transport, mitochondrial"
+Htr,"Transport, endoplasmic reticular"
+Htx,"Transport, peroxisomal"
+IBUPGLUCtchep,Drug metabolism
+IBUPGLUCtpvb,Drug metabolism
+IBUP_Rtdhep,Drug metabolism
+IBUP_Rtdu,Drug metabolism
+IBUP_Stbc,Drug metabolism
+IBUP_Stdhep,Drug metabolism
+IBUP_Stdu,Drug metabolism
+ICDHxm,Citric acid cycle
+ICDHy,Citric acid cycle
+ICDHyp,Citric acid cycle
+ICDHyrm,Citric acid cycle
+IDHPOXOX2b,Tyrosine metabolism
+IDHPOXOX3,Tyrosine metabolism
+IDHPOXOX4,Tyrosine metabolism
+IDHPOXOXb,Tyrosine metabolism
+IDOAASE1ly,Heparan sulfate degradation
+IDOAASE2ly,Heparan sulfate degradation
+IDOAASE3ly,Heparan sulfate degradation
+IDOAASE4ly,Chondroitin sulfate degradation
+IDOURtly,"Transport, lysosomal"
+IDPtn,"Transport, nuclear"
+ILEARGILEr,Peptide metabolism
+ILEASNHISr,Peptide metabolism
+ILEASPr,Peptide metabolism
+ILEGLNGLUr,Peptide metabolism
+ILEGLYARGr,Peptide metabolism
+ILEPROLYSr,Peptide metabolism
+ILESERARGr,Peptide metabolism
+ILETA,"Valine, leucine, and isoleucine metabolism"
+ILETAm,"Valine, leucine, and isoleucine metabolism"
+ILETRPTYRr,Peptide metabolism
+ILEt5m,"Transport, mitochondrial"
+IMACTD,Histidine metabolism
+IMPC,Purine synthesis
+IMPD,Nucleotide interconversion
+INOSTO,Inositol phosphate metabolism
+INSK,Purine synthesis
+IPDDI,Squalene and cholesterol synthesis
+IPDDIx,Cholesterol metabolism
+IPDPtx,"Transport, peroxisomal"
+ISOBUTtm,"Transport, mitochondrial"
+ITCOAL1m,C5-branched dibasic acid metabolism
+ITCOALm,C5-branched dibasic acid metabolism
+ITPtn,"Transport, nuclear"
+IZPN,Histidine metabolism
+KAS8,Fatty acid synthesis
+KDNH,Aminosugar metabolism
+KHK,Fructose and mannose metabolism
+KHK2,Glyoxylate and dicarboxylate metabolism
+KSII_CORE2tly,"Transport, lysosomal"
+KSII_CORE4tly,"Transport, lysosomal"
+KYN,Tryptophan metabolism
+KYN3OX,Tryptophan metabolism
+KYNAKGAT,Tryptophan metabolism
+KYNATESYN,Tryptophan metabolism
+Kt3g,"Transport, golgi apparatus"
+LACLt,"Transport, peroxisomal"
+LACROX,Tyrosine metabolism
+LACZe,Galactose metabolism
+LALDO,Pyruvate metabolism
+LANOSTtr,"Transport, endoplasmic reticular"
+LAPCOAe,CoA catabolism
+LAPCOAl,CoA catabolism
+LCA24GSc,Bile acid synthesis
+LCA24GSr,Bile acid synthesis
+LCA3GSc,Bile acid synthesis
+LCA3GSr,Bile acid synthesis
+LCADi,Pyruvate metabolism
+LCADi_D,Pyruvate metabolism
+LCADim,Pyruvate metabolism
+LCASULT,Bile acid synthesis
+LCAT10e,Cholesterol metabolism
+LCAT11e,Cholesterol metabolism
+LCAT12e,Cholesterol metabolism
+LCAT13e,Cholesterol metabolism
+LCAT14e,Cholesterol metabolism
+LCAT15e,Cholesterol metabolism
+LCAT16e,Cholesterol metabolism
+LCAT17e,Cholesterol metabolism
+LCAT18e,Cholesterol metabolism
+LCAT19e,Cholesterol metabolism
+LCAT1e,Fatty acid oxidation
+LCAT20e,Cholesterol metabolism
+LCAT21e,Cholesterol metabolism
+LCAT22e,Cholesterol metabolism
+LCAT23e,Cholesterol metabolism
+LCAT25e,Cholesterol metabolism
+LCAT27e,Cholesterol metabolism
+LCAT29e,Cholesterol metabolism
+LCAT2e,Cholesterol metabolism
+LCAT30e,Cholesterol metabolism
+LCAT31e,Cholesterol metabolism
+LCAT32e,Cholesterol metabolism
+LCAT33e,Cholesterol metabolism
+LCAT34e,Cholesterol metabolism
+LCAT35e,Cholesterol metabolism
+LCAT36e,Cholesterol metabolism
+LCAT37e,Cholesterol metabolism
+LCAT38e,Cholesterol metabolism
+LCAT39e,Cholesterol metabolism
+LCAT3e,Cholesterol metabolism
+LCAT40e,Cholesterol metabolism
+LCAT41e,Cholesterol metabolism
+LCAT42e,Cholesterol metabolism
+LCAT43e,Cholesterol metabolism
+LCAT44e,Cholesterol metabolism
+LCAT45e,Cholesterol metabolism
+LCAT46e,Cholesterol metabolism
+LCAT47e,Cholesterol metabolism
+LCAT48e,Cholesterol metabolism
+LCAT49e,Cholesterol metabolism
+LCAT4e,Cholesterol metabolism
+LCAT50e,Cholesterol metabolism
+LCAT51e,Cholesterol metabolism
+LCAT52e,Cholesterol metabolism
+LCAT53e,Cholesterol metabolism
+LCAT54e,Cholesterol metabolism
+LCAT55e,Cholesterol metabolism
+LCAT56e,Cholesterol metabolism
+LCAT57e,Cholesterol metabolism
+LCAT5e,Cholesterol metabolism
+LCAT6e,Cholesterol metabolism
+LCAT7e,Cholesterol metabolism
+LCAT8e,Cholesterol metabolism
+LCAT9e,Cholesterol metabolism
+LCYSTAT,Methionine and cysteine metabolism
+LCYSTCBOXL,Taurine and hypotaurine metabolism
+LDH_D,Pyruvate metabolism
+LDH_L,Glycolysis/gluconeogenesis
+LDH_Lm,Pyruvate metabolism
+LEUALAARGr,Peptide metabolism
+LEUASNASPr,Peptide metabolism
+LEUASPLYSr,Peptide metabolism
+LEUKTRA4tr,"Transport, endoplasmic reticular"
+LEUKTRB4tr,"Transport, endoplasmic reticular"
+LEUKTRD4tr,"Transport, endoplasmic reticular"
+LEULEUTRPr,Peptide metabolism
+LEUPROARGr,Peptide metabolism
+LEUPROr,Peptide metabolism
+LEUSERTRPr,Peptide metabolism
+LEUTA,"Valine, leucine, and isoleucine metabolism"
+LEUTAm,"Valine, leucine, and isoleucine metabolism"
+LEUTRPARGr,Peptide metabolism
+LEUTRPr,Peptide metabolism
+LEUTYRTYRr,Peptide metabolism
+LEUVALr,Peptide metabolism
+LEUt5m,"Transport, mitochondrial"
+LFORKYNHYD,Tryptophan metabolism
+LGNCCOAtcx,"Transport, peroxisomal"
+LGNCCOAtx,"Transport, peroxisomal"
+LGTHL,Pyruvate metabolism
+LHCYSTIN,Methionine and cysteine metabolism
+LINKDEG1ly,Heparan sulfate degradation
+LINKDEG2ly,Chondroitin sulfate degradation
+LINKDEG3ly,Chondroitin sulfate degradation
+LINKDEG4ly,Chondroitin sulfate degradation
+LNELDCCPT1,Fatty acid oxidation
+LNELDCCPT2,Fatty acid oxidation
+LNELDCCRNt,Fatty acid oxidation
+LNLCCPT1,Fatty acid oxidation
+LNLCCPT2,Fatty acid oxidation
+LNLCCRNt,Fatty acid oxidation
+LNLNCACPT1,Fatty acid oxidation
+LNLNCACPT2,Fatty acid oxidation
+LNLNCACRNt,Fatty acid oxidation
+LNLNCGCPT1,Fatty acid oxidation
+LNLNCGCPT2,Fatty acid oxidation
+LNLNCGCRNt,Fatty acid oxidation
+LNS14DM,Cholesterol metabolism
+LNSTLSr,Cholesterol metabolism
+LPASE,Glycerophospholipid metabolism
+LPCOXp,Lysine metabolism
+LPIPECOLtx,"Transport, peroxisomal"
+LPS,Triacylglycerol synthesis
+LPS2,Triacylglycerol synthesis
+LPS2e,Fatty acid oxidation
+LPS3,Triacylglycerol synthesis
+LPS3e,Fatty acid oxidation
+LPS4e,Triacylglycerol synthesis
+LPS5e,Glycerophospholipid metabolism
+LPS6e,Glycerophospholipid metabolism
+LPS7e,Glycerophospholipid metabolism
+LRAT,Vitamin A metabolism
+LRAT1,Vitamin A metabolism
+LRAT2,Vitamin A metabolism
+LST4EXPTDhc,Drug metabolism
+LST4EXPthc,Drug metabolism
+LSTNM7TDhc,Drug metabolism
+LSTNM7thc,Drug metabolism
+LSTNRATt,Drug metabolism
+LSTNtd,Drug metabolism
+LSTNtu,Drug metabolism
+LSTO1r,Cholesterol metabolism
+LSTO2r,Cholesterol metabolism
+LTA4H,Eicosanoid metabolism
+LTC4CP,Eicosanoid metabolism
+LTC4Sr,Eicosanoid metabolism
+LTD4DP,Eicosanoid metabolism
+LTDCL,Tryptophan metabolism
+LTHSTRLtr,"Transport, endoplasmic reticular"
+LVACLAChep,Drug metabolism
+LVSTACIDhep,Drug metabolism
+LVSTPGPtu,Drug metabolism
+LVSTtu,Drug metabolism
+LYSACm,Lysine metabolism
+LYSARGLEUr,Peptide metabolism
+LYSCYSHISr,Peptide metabolism
+LYSGLNPHEr,Peptide metabolism
+LYSGLUGLUr,Peptide metabolism
+LYSLYSLYSr,Peptide metabolism
+LYSOXp,Lysine metabolism
+LYSPHEILEr,Peptide metabolism
+LYSTRPARGr,Peptide metabolism
+LYSTYRILEr,Peptide metabolism
+LYSVALPHEr,Peptide metabolism
+LYSVALTRPr,Peptide metabolism
+LYStip,"Transport, peroxisomal"
+LYStm,"Transport, mitochondrial"
+LYStn,"Transport, nuclear"
+L_LACDcm,Pyruvate metabolism
+L_LACtcm,"Transport, mitochondrial"
+L_LACtm,"Transport, mitochondrial"
+MACACI,Tyrosine metabolism
+MACOXO,Histidine metabolism
+MAGLINL_HSe,Glycerophospholipid metabolism
+MAGOLE_HSe,Glycerophospholipid metabolism
+MALOAtm,"Transport, mitochondrial"
+MALSO3tm,"Transport, mitochondrial"
+MALSO4tm,"Transport, mitochondrial"
+MALT,Starch and sucrose metabolism
+MALTSULtm,"Transport, mitochondrial"
+MALTe,Starch and sucrose metabolism
+MALTly,Starch and sucrose metabolism
+MAL_Ltx,"Transport, peroxisomal"
+MALtm,"Transport, mitochondrial"
+MAN1PT2,Fructose and mannose metabolism
+MAN6PI,Fructose and mannose metabolism
+MAOLNOR,Tyrosine metabolism
+MAOX,Tyrosine metabolism
+MCCCrm,"Valine, leucine, and isoleucine metabolism"
+MCD,Fatty acid oxidation
+MCDm,Fatty acid oxidation
+MCDp,Fatty acid oxidation
+MCITS,Propanoate metabolism
+MCLACCYSR,Methionine and cysteine metabolism
+MCLOR,Methionine and cysteine metabolism
+MDH,Citric acid cycle
+MDHm,Citric acid cycle
+MDHx,Citric acid cycle
+MDRPD,Arginine and proline metabolism
+MDZtd,Drug metabolism
+MDZtu,Drug metabolism
+ME1m,Pyruvate metabolism
+ME2,Pyruvate metabolism
+ME2m,Pyruvate metabolism
+MECOALm,C5-branched dibasic acid metabolism
+MECOAS1m,C5-branched dibasic acid metabolism
+MELATN23DOX,Tryptophan metabolism
+MELATNOX,Tryptophan metabolism
+MEOHtly,"Transport, lysosomal"
+MERACMPtep,Drug metabolism
+MERACMPthc,Drug metabolism
+MESCOALm,C5-branched dibasic acid metabolism
+METARGLEUr,Peptide metabolism
+METASNTYRr,Peptide metabolism
+METAT,Methionine and cysteine metabolism
+METDECARc,Methionine and cysteine metabolism
+METGLNTYRr,Peptide metabolism
+METGLYARGr,Peptide metabolism
+METHISLYSr,Peptide metabolism
+METHSUCC,Fatty acid oxidation
+METHSUCCOAc,Fatty acid oxidation
+METMETILEr,Peptide metabolism
+METPHEARGr,Peptide metabolism
+METS,Methionine and cysteine metabolism
+METTRANSc,Methionine and cysteine metabolism
+METTRPPHEr,Peptide metabolism
+MEVK1c,Squalene and cholesterol synthesis
+MEVK1x,Cholesterol metabolism
+MGACONm,C5-branched dibasic acid metabolism
+MGCHrm,"Valine, leucine, and isoleucine metabolism"
+MGSA,Pyruvate metabolism
+MGSA2,Pyruvate metabolism
+MHGLZABCt,Drug metabolism
+MHGLZtev,Drug metabolism
+MHISOR,Histidine metabolism
+MI1345PP,Inositol phosphate metabolism
+MI134P4P,Inositol phosphate metabolism
+MI134PP,Inositol phosphate metabolism
+MI13PP,Inositol phosphate metabolism
+MI145PK,Inositol phosphate metabolism
+MI145PP,Inositol phosphate metabolism
+MI14P4P,Inositol phosphate metabolism
+MI14PP,Inositol phosphate metabolism
+MI14Ptn,"Transport, nuclear"
+MI1PP,Inositol phosphate metabolism
+MI1PS,Inositol phosphate metabolism
+MI1P_Dtn,"Transport, nuclear"
+MI34PP,Inositol phosphate metabolism
+MI3PP,Inositol phosphate metabolism
+MI4PP,Inositol phosphate metabolism
+MINOHPtn,"Transport, nuclear"
+MLTG1,Starch and sucrose metabolism
+MLTG1e,Starch and sucrose metabolism
+MLTG1ly,Starch and sucrose metabolism
+MLTHFtm,"Transport, mitochondrial"
+MMALtm,"Transport, mitochondrial"
+MMCDm,"Valine, leucine, and isoleucine metabolism"
+MMEm,"Valine, leucine, and isoleucine metabolism"
+MMMm,"Valine, leucine, and isoleucine metabolism"
+MMSAD1m,"Valine, leucine, and isoleucine metabolism"
+MMSAD3m,Propanoate metabolism
+MMTSADm,"Valine, leucine, and isoleucine metabolism"
+MOGAT,Triacylglycerol synthesis
+MTAP,Arginine and proline metabolism
+MTHFC,Folate metabolism
+MTHFCm,Folate metabolism
+MTHFD,Folate metabolism
+MTHFD2,Folate metabolism
+MTHFD2m,Folate metabolism
+MTHFDm,Folate metabolism
+MTHFR3,Folate metabolism
+MTRI,Arginine and proline metabolism
+MVLACc,Cholesterol metabolism
+MYELIN_HSSYN,Glycerophospholipid metabolism
+N3Tg,O-glycan metabolism
+N4Tg,O-glycan metabolism
+NABTNO,Arginine and proline metabolism
+NACASPAH,Alanine and aspartate metabolism
+NACASPtm,"Transport, mitochondrial"
+NACCYStm,"Transport, mitochondrial"
+NACHEX1ly,Chondroitin sulfate degradation
+NACHEX23ly,Keratan sulfate degradation
+NACHEX24ly,Keratan sulfate degradation
+NACHEX25ly,Keratan sulfate degradation
+NACHEX26ly,Keratan sulfate degradation
+NACHEX27ly,Hyaluronan metabolism
+NACHEX2ly,Chondroitin sulfate degradation
+NACHEX3ly,Chondroitin sulfate degradation
+NACHEX4ly,Chondroitin sulfate degradation
+NACHEX5ly,Chondroitin sulfate degradation
+NACHEX6ly,Chondroitin sulfate degradation
+NACHEX7ly,Chondroitin sulfate degradation
+NACHEX8ly,Chondroitin sulfate degradation
+NACHEX9ly,Chondroitin sulfate degradation
+NACHEXA1ly,Chondroitin sulfate degradation
+NACHEXA20ly,Keratan sulfate degradation
+NACHEXA21ly,Keratan sulfate degradation
+NACHEXA22ly,Keratan sulfate degradation
+NACHEXA2ly,Chondroitin sulfate degradation
+NACHEXA3ly,Chondroitin sulfate degradation
+NACHEXA4ly,Chondroitin sulfate degradation
+NACHEXA5ly,Chondroitin sulfate degradation
+NACHEXA6ly,Chondroitin sulfate degradation
+NACHEXA7ly,Chondroitin sulfate degradation
+NACHEXA8ly,Chondroitin sulfate degradation
+NACVANALAm,Tyrosine metabolism
+NACVANALAtm,"Transport, mitochondrial"
+NADH2_u10mi,Oxidative phosphorylation
+NADHtpu,"Transport, peroxisomal"
+NADHtru,"Transport, endoplasmic reticular"
+NADK,NAD metabolism
+NADN,NAD metabolism
+NADNe,NAD metabolism
+NADPHtru,"Transport, endoplasmic reticular"
+NADPHtxu,"Transport, peroxisomal"
+NADPN,NAD metabolism
+NADPNe,NAD metabolism
+NADPQNOXR,Tyrosine metabolism
+NADPtru,"Transport, endoplasmic reticular"
+NADPtxu,"Transport, peroxisomal"
+NADQNOXR,Tyrosine metabolism
+NADS2,NAD metabolism
+NADtm,"Transport, mitochondrial"
+NADtn,"Transport, nuclear"
+NADtru,"Transport, endoplasmic reticular"
+NADtx,"Transport, peroxisomal"
+NAGA2ly,Keratan sulfate degradation
+NAGAlby,Sphingolipid metabolism
+NAGAly,Sphingolipid metabolism
+NAGLCAly,Keratan sulfate degradation
+NAt3_1g,"Transport, golgi apparatus"
+NAtx,"Transport, peroxisomal"
+NBAHH_ir,Beta-Alanine metabolism
+NDP3ex,Nucleotide interconversion
+NDP6,Nucleotide interconversion
+NDP7er,Nucleotide interconversion
+NDP7ex,Nucleotide interconversion
+NDP7g,Nucleotide interconversion
+NDP8,Nucleotide interconversion
+NDP8ex,Nucleotide interconversion
+NDPK1,Nucleotide interconversion
+NDPK10,Nucleotide interconversion
+NDPK10n,Nucleotide interconversion
+NDPK1m,Nucleotide interconversion
+NDPK1n,Nucleotide interconversion
+NDPK2,Nucleotide interconversion
+NDPK2n,Nucleotide interconversion
+NDPK3,Nucleotide interconversion
+NDPK3m,Nucleotide interconversion
+NDPK3n,Nucleotide interconversion
+NDPK4,Nucleotide interconversion
+NDPK4m,Nucleotide interconversion
+NDPK4n,Nucleotide interconversion
+NDPK5,Nucleotide interconversion
+NDPK5m,Nucleotide interconversion
+NDPK5n,Nucleotide interconversion
+NDPK6,Nucleotide interconversion
+NDPK6m,Nucleotide interconversion
+NDPK6n,Nucleotide interconversion
+NDPK7,Nucleotide interconversion
+NDPK7m,Nucleotide interconversion
+NDPK7n,Nucleotide interconversion
+NDPK8,Nucleotide interconversion
+NDPK8m,Nucleotide interconversion
+NDPK8n,Nucleotide interconversion
+NDPK9,Nucleotide interconversion
+NDPK9n,Nucleotide interconversion
+NEU11l,Sphingolipid metabolism
+NEU21,Sphingolipid metabolism
+NEU22,Sphingolipid metabolism
+NEU23,Sphingolipid metabolism
+NEU24,Sphingolipid metabolism
+NEU25,Sphingolipid metabolism
+NEU310e,Sphingolipid metabolism
+NEU33e,Sphingolipid metabolism
+NEU34e,Sphingolipid metabolism
+NEU36e,Sphingolipid metabolism
+NEU38n,Sphingolipid metabolism
+NEU39e,Sphingolipid metabolism
+NH4tn,"Transport, nuclear"
+NH4tp,"Transport, peroxisomal"
+NH4tr,"Transport, endoplasmic reticular"
+NICRNS,NAD metabolism
+NICRNTtn,"Transport, nuclear"
+NMNATm,NAD metabolism
+NMNATn,NAD metabolism
+NMNATr,NAD metabolism
+NMNS,NAD metabolism
+NMNtn,"Transport, nuclear"
+NNATn,NAD metabolism
+NNATr,NAD metabolism
+NNDPR,NAD metabolism
+NNMT,NAD metabolism
+NORANMT,Tyrosine metabolism
+NOS1,Arginine and proline metabolism
+NOS2,Arginine and proline metabolism
+NP1,NAD metabolism
+NRPPHRSULT,Tyrosine metabolism
+NRVNCCOAtx,"Transport, peroxisomal"
+NRVNCCOAtxc,"Transport, peroxisomal"
+NT5C,NAD metabolism
+NTD1,Pyrimidine catabolism
+NTD10,Nucleotide interconversion
+NTD11,Purine catabolism
+NTD1m,Nucleotide interconversion
+NTD2,Pyrimidine catabolism
+NTD2e,Nucleotide interconversion
+NTD2l,Pyrimidine catabolism
+NTD3,Pyrimidine catabolism
+NTD4,Pyrimidine catabolism
+NTD4l,Pyrimidine catabolism
+NTD5,Pyrimidine catabolism
+NTD5_a,Vitamin B2 metabolism
+NTD5l,Pyrimidine catabolism
+NTD5m,Nucleotide interconversion
+NTD6,Nucleotide interconversion
+NTD7,Nucleotide interconversion
+NTD7e,Nucleotide interconversion
+NTD7l,Purine catabolism
+NTD8,Nucleotide interconversion
+NTD9,Nucleotide interconversion
+NTD9e,Nucleotide interconversion
+NTD9l,Purine catabolism
+NTP3e,Nucleotide interconversion
+O16G2e,Starch and sucrose metabolism
+O2Stm,"Transport, mitochondrial"
+O2Stn,"Transport, nuclear"
+O2Stx,"Transport, peroxisomal"
+O2ter,"Transport, endoplasmic reticular"
+O2tm,"Transport, mitochondrial"
+O2tn,"Transport, nuclear"
+O2tp,"Transport, peroxisomal"
+OAADC,Miscellaneous
+OAGD3tg,"Transport, golgi apparatus"
+OAGT3tg,"Transport, golgi apparatus"
+OBDHc,"Glycine, serine, alanine, and threonine metabolism"
+OCBTm,Urea cycle
+OCCOAtm,"Transport, mitochondrial"
+OCCOAtx,"Transport, peroxisomal"
+OCD11COACPT1,Fatty acid oxidation
+OCD11CRNCACT,Fatty acid oxidation
+OCD11CRNCPT2,Fatty acid oxidation
+OCDEAFABP1tc,"Transport, endoplasmic reticular"
+OCOAT1m,"Valine, leucine, and isoleucine metabolism"
+OCT11EFATP,Fatty acid oxidation
+ODECOAtx,"Transport, peroxisomal"
+OIVD1m,"Valine, leucine, and isoleucine metabolism"
+OIVD2m,"Valine, leucine, and isoleucine metabolism"
+OIVD3m,"Valine, leucine, and isoleucine metabolism"
+OLEETH,Glycerophospholipid metabolism
+OMHDEACIDTD,Fatty acid oxidation
+OMHDOCOSACTD,Fatty acid oxidation
+OMHPALTD,Fatty acid oxidation
+OMPDC,Pyrimidine synthesis
+OPAHir,Glutathione metabolism
+ORETNF,Vitamin A metabolism
+ORETNF2,Vitamin A metabolism
+ORETNtn,"Transport, nuclear"
+ORETNtn2,"Transport, nuclear"
+ORNDC,Urea cycle
+ORNTArm,Urea cycle
+ORN_Dtx,"Transport, peroxisomal"
+ORNt3m,"Transport, mitochondrial"
+ORNt4m,"Transport, mitochondrial"
+ORPT,Pyrimidine synthesis
+OXAtp,"Transport, peroxisomal"
+OXYPtepv,Drug metabolism
+OXYPthc,Drug metabolism
+P45011A1m,Steroid metabolism
+P45011B11m,Steroid metabolism
+P45011B12m,Steroid metabolism
+P45011B21m,Steroid metabolism
+P45017A1r,Steroid metabolism
+P45017A2r,Steroid metabolism
+P45017A3r,Steroid metabolism
+P45017A4r,Steroid metabolism
+P45019A1r,Steroid metabolism
+P45019A2r,Steroid metabolism
+P4501B1r,Steroid metabolism
+P45021A1r,Steroid metabolism
+P45021A2r,Steroid metabolism
+P45027A11m,Bile acid synthesis
+P45027A12m,Bile acid synthesis
+P45027A13m,Bile acid synthesis
+P45027A14m,Bile acid synthesis
+P45027A15m,Bile acid synthesis
+P45027A16m,Bile acid synthesis
+P45027A1m,Bile acid synthesis
+P45039A1r,Bile acid synthesis
+P4503A43r,Steroid metabolism
+P4503A7r,Steroid metabolism
+P45046A1r,Bile acid synthesis
+P4504B1r,Eicosanoid metabolism
+P4504F121r,Eicosanoid metabolism
+P4504F122r,Eicosanoid metabolism
+P4504F81r,Eicosanoid metabolism
+P4507A1r,Bile acid synthesis
+P4507B11r,Bile acid synthesis
+P4507B12r,Bile acid synthesis
+P4508B11r,Bile acid synthesis
+P4508B13r,Bile acid synthesis
+P450LTB4r,Eicosanoid metabolism
+P450SCC1m,Cholesterol metabolism
+P5CDm,Glutamate metabolism
+P5CR,Arginine and proline metabolism
+P5CRm,Arginine and proline metabolism
+P5CRxm,Arginine and proline metabolism
+PACALDtm,"Transport, mitochondrial"
+PACCOAL,Phenylalanine metabolism
+PACCOALm,Phenylalanine metabolism
+PAFH,Glycerophospholipid metabolism
+PAFHe,Glycerophospholipid metabolism
+PAFS,Glycerophospholipid metabolism
+PAIL45P_HStn,"Transport, nuclear"
+PAIL4P_HStn,"Transport, nuclear"
+PAILAR_HSPLA2,Glycerophospholipid metabolism
+PAILPALM_HSPLA2,Glycerophospholipid metabolism
+PAIL_HStn,"Transport, nuclear"
+PAN4PP,CoA catabolism
+PAN4PPe,CoA synthesis
+PAPStg,"Transport, golgi apparatus"
+PAPtg,"Transport, golgi apparatus"
+PA_HSter,"Transport, endoplasmic reticular"
+PA_HStg,"Transport, golgi apparatus"
+PA_HStm,"Transport, mitochondrial"
+PA_HStn,"Transport, nuclear"
+PCFLOPm,"Transport, mitochondrial"
+PCHOL2LINL_HSPLA2,Glycerophospholipid metabolism
+PCHOL2OLE_HSPLA2,Glycerophospholipid metabolism
+PCHOL2PALM_HSPLA2,Glycerophospholipid metabolism
+PCHOL2STE_HSPLA2,Glycerophospholipid metabolism
+PCHOLAR_HSPLA2,Glycerophospholipid metabolism
+PCHOLDEIC_HSPLA2,Glycerophospholipid metabolism
+PCHOLDET_HSPLA2,Glycerophospholipid metabolism
+PCHOLDOC_HSPLA2,Glycerophospholipid metabolism
+PCHOLHEP_HSPLA2,Glycerophospholipid metabolism
+PCHOLLINL_HSPLA2,Glycerophospholipid metabolism
+PCHOLMYR_HSPLA2,Glycerophospholipid metabolism
+PCHOLN15_HSPLA2,Glycerophospholipid metabolism
+PCHOLN1836_HSPLA2,Glycerophospholipid metabolism
+PCHOLN183_HSPLA2,Glycerophospholipid metabolism
+PCHOLN19_HSPLA2,Glycerophospholipid metabolism
+PCHOLN201_HSPLA2,Glycerophospholipid metabolism
+PCHOLN203_HSPLA2,Glycerophospholipid metabolism
+PCHOLN204_HSPLA2,Glycerophospholipid metabolism
+PCHOLN205_HSPLA2,Glycerophospholipid metabolism
+PCHOLN224_HSPLA2,Glycerophospholipid metabolism
+PCHOLN2254_HSPLA2,Glycerophospholipid metabolism
+PCHOLN225_HSPLA2,Glycerophospholipid metabolism
+PCHOLN226_HSPLA2,Glycerophospholipid metabolism
+PCHOLN24_HSPLA2,Glycerophospholipid metabolism
+PCHOLN261_HSPLA2,Glycerophospholipid metabolism
+PCHOLN281_HSPLA2,Glycerophospholipid metabolism
+PCHOLN28_HSPLA2,Glycerophospholipid metabolism
+PCHOLOLE_HSPLA2,Glycerophospholipid metabolism
+PCHOLPALME_HSPLA2,Glycerophospholipid metabolism
+PCHOLPALM_HSPLA2,Glycerophospholipid metabolism
+PCHOLP_hs,Glycerophospholipid metabolism
+PCHOLPg_hs,Glycerophospholipid metabolism
+PCHOLPm_hs,Glycerophospholipid metabolism
+PCHOLPr_hs,Glycerophospholipid metabolism
+PCHOLSTE_HSPLA2,Glycerophospholipid metabolism
+PCHOL_HSter,"Transport, endoplasmic reticular"
+PCHOL_HStg,"Transport, golgi apparatus"
+PCHOL_HStn,"Transport, nuclear"
+PCLAD,Tryptophan metabolism
+PCREATtmdiffir,Urea cycle
+PCRNtc,Fatty acid oxidation
+PCRNtm,Fatty acid oxidation
+PCm,Pyruvate metabolism
+PDE1,Nucleotide interconversion
+PDE1g,Nucleotide interconversion
+PDE4,Nucleotide interconversion
+PDE4g,Nucleotide interconversion
+PDE4n,Nucleotide interconversion
+PDHm,Glycolysis/gluconeogenesis
+PDX5PO,Vitamin B6 metabolism
+PDXPP,Vitamin B6 metabolism
+PE203_HSPLA2,Glycerophospholipid metabolism
+PE224_HSPLA2,Glycerophospholipid metabolism
+PE226_HSPLA2,Glycerophospholipid metabolism
+PE2LINL_HSPLA2,Glycerophospholipid metabolism
+PEAMNO,Phenylalanine metabolism
+PEAR_HSPLA2,Glycerophospholipid metabolism
+PEDH12_HSPLA2,Glycerophospholipid metabolism
+PEDH13_HSPLA2,Glycerophospholipid metabolism
+PEDH14_HSPLA2,Glycerophospholipid metabolism
+PEDH15_HSPLA2,Glycerophospholipid metabolism
+PEDH161_HSPLA2,Glycerophospholipid metabolism
+PEDH17_HSPLA2,Glycerophospholipid metabolism
+PEDH203_HSPLA2,Glycerophospholipid metabolism
+PEFLIPm,"Transport, mitochondrial"
+PEHSFABPe,"Transport, endoplasmic reticular"
+PELINETH,Glycerophospholipid metabolism
+PELINL_HSPLA2,Glycerophospholipid metabolism
+PENDECAETH,Glycerophospholipid metabolism
+PEOLE_HSPLA2,Glycerophospholipid metabolism
+PEPALM,Glycerophospholipid metabolism
+PEPALM_HSPLA2,Glycerophospholipid metabolism
+PEPCK,Glycolysis/gluconeogenesis
+PEPCKm,Glycolysis/gluconeogenesis
+PETHCT,Glycerophospholipid metabolism
+PETOHMm_hs,Glycerophospholipid metabolism
+PETOHMr_hs,Glycerophospholipid metabolism
+PE_HSter,"Transport, endoplasmic reticular"
+PE_HStm,"Transport, mitochondrial"
+PFK,Glycolysis/gluconeogenesis
+PFK26,Fructose and mannose metabolism
+PGCD,"Glycine, serine, alanine, and threonine metabolism"
+PGDI,Eicosanoid metabolism
+PGDIr,Eicosanoid metabolism
+PGESr,Eicosanoid metabolism
+PGI,Glycolysis/gluconeogenesis
+PGISr,Eicosanoid metabolism
+PGK,Glycolysis/gluconeogenesis
+PGL,Pentose phosphate pathway
+PGLYCtm,"Transport, mitochondrial"
+PGLc,Pentose phosphate pathway
+PGLer,Pentose phosphate pathway
+PGM,Glycolysis/gluconeogenesis
+PGMT,Glycolysis/gluconeogenesis
+PGPPT,Glycerophospholipid metabolism
+PGPP_hs,Glycerophospholipid metabolism
+PGPP_hsc,Glycerophospholipid metabolism
+PGP_hs_tm,"Transport, mitochondrial"
+PGS,Eicosanoid metabolism
+PGSr,Eicosanoid metabolism
+PHACCOAGLNAC,Phenylalanine metabolism
+PHACGLYc,"Valine, leucine, and isoleucine metabolism"
+PHCDm,Arginine and proline metabolism
+PHCHGSm,Arginine and proline metabolism
+PHCRMter,"Transport, endoplasmic reticular"
+PHCRMtg,"Transport, golgi apparatus"
+PHEACGLYtm,"Transport, mitochondrial"
+PHEASNMETr,Peptide metabolism
+PHEASPr,Peptide metabolism
+PHEGLNPHEr,Peptide metabolism
+PHELEUASPr,Peptide metabolism
+PHELEUHISr,Peptide metabolism
+PHELEUr,Peptide metabolism
+PHELYSALAr,Peptide metabolism
+PHELYSPROr,Peptide metabolism
+PHEMEtm,"Transport, mitochondrial"
+PHEPHEASNr,Peptide metabolism
+PHEPHETHRr,Peptide metabolism
+PHEPHEr,Peptide metabolism
+PHEPROARGr,Peptide metabolism
+PHESERTRPr,Peptide metabolism
+PHETA1,Phenylalanine metabolism
+PHETA1m,Phenylalanine metabolism
+PHETHPTOX2,Phenylalanine metabolism
+PHETHRLYSr,Peptide metabolism
+PHETRPLEUr,Peptide metabolism
+PHETYRGLNr,Peptide metabolism
+PHETYRLYSr,Peptide metabolism
+PHETYRr,Peptide metabolism
+PHLAC,Phenylalanine metabolism
+PHPYRtm,"Transport, mitochondrial"
+PHSGPL11c,Sphingolipid metabolism
+PHSPHINGStg,"Transport, golgi apparatus"
+PHSPHINGStr,"Transport, endoplasmic reticular"
+PHYCBOXL,Phenylalanine metabolism
+PI345P3P,Inositol phosphate metabolism
+PI345P3Pn,Inositol phosphate metabolism
+PI345P5P,Inositol phosphate metabolism
+PI345P5Pn,Inositol phosphate metabolism
+PI34P3Pn,Inositol phosphate metabolism
+PI34P4Pn,Inositol phosphate metabolism
+PI34P5K,Inositol phosphate metabolism
+PI34P5Kn,Inositol phosphate metabolism
+PI3P3Pn,Inositol phosphate metabolism
+PI3P4K,Inositol phosphate metabolism
+PI3P4Kn,Inositol phosphate metabolism
+PI3P5K,Inositol phosphate metabolism
+PI45P3K,Inositol phosphate metabolism
+PI45P3Kn,Inositol phosphate metabolism
+PI45P4P,Inositol phosphate metabolism
+PI45P5P,Inositol phosphate metabolism
+PI45P5Pn,Inositol phosphate metabolism
+PI45PLC,Inositol phosphate metabolism
+PI4P3K,Inositol phosphate metabolism
+PI4P3Kn,Inositol phosphate metabolism
+PI4P5K,Glycerophospholipid metabolism
+PI4P5Kn,Inositol phosphate metabolism
+PI4PLC,Inositol phosphate metabolism
+PI4PLCn,Inositol phosphate metabolism
+PI4PP,Inositol phosphate metabolism
+PI5P3K,Inositol phosphate metabolism
+PI5P4K,Inositol phosphate metabolism
+PI5P4Kn,Inositol phosphate metabolism
+PIK3,Inositol phosphate metabolism
+PIK3n,Inositol phosphate metabolism
+PIK4,Glycerophospholipid metabolism
+PIK4n,Inositol phosphate metabolism
+PIK5,Inositol phosphate metabolism
+PIK5n,Inositol phosphate metabolism
+PIPLC,Inositol phosphate metabolism
+PIPLCn,Inositol phosphate metabolism
+PIter,"Transport, endoplasmic reticular"
+PItg,"Transport, golgi apparatus"
+PItn,"Transport, nuclear"
+PItx,"Transport, peroxisomal"
+PLA2_2,Glycerophospholipid metabolism
+PLA2_2e,Glycerophospholipid metabolism
+PMANM,Fructose and mannose metabolism
+PMEVKc,Squalene and cholesterol synthesis
+PMEVKx,Cholesterol metabolism
+PMI12346PH,Inositol phosphate metabolism
+PMI12346PHn,Inositol phosphate metabolism
+PMTCOAFABP1tc,"Transport, endoplasmic reticular"
+PMTCOAtx,"Transport, peroxisomal"
+PNP,NAD metabolism
+PNTEH,CoA catabolism
+PNTK,CoA synthesis
+PPA,Oxidative phosphorylation
+PPA2,Miscellaneous
+PPAP,Triacylglycerol synthesis
+PPAer,Miscellaneous
+PPAm,Oxidative phosphorylation
+PPAn,Miscellaneous
+PPAtm,"Transport, mitochondrial"
+PPBNGS,Heme synthesis
+PPCDC,CoA synthesis
+PPD2CSPp,Lysine metabolism
+PPDOy,Pyruvate metabolism
+PPIOGLYc,"Glycine, serine, alanine, and threonine metabolism"
+PPIOGLYtm,"Transport, mitochondrial"
+PPItm,"Transport, mitochondrial"
+PPItr,"Transport, endoplasmic reticular"
+PPItx,"Transport, peroxisomal"
+PPM,Pentose phosphate pathway
+PPMI12346Ptn,"Transport, nuclear"
+PPNCL3,CoA synthesis
+PPOR,Phenylalanine metabolism
+PPPG9tm,Heme synthesis
+PPPGOc,Heme synthesis
+PPPGOm,Heme synthesis
+PRAGSr,Purine synthesis
+PRASCS,Purine synthesis
+PRDX,Miscellaneous
+PRDXl,Miscellaneous
+PRFGS,Purine synthesis
+PRGNLONESULT,Steroid metabolism
+PRGNLONEtm,"Transport, mitochondrial"
+PRGNLONEtr,"Transport, endoplasmic reticular"
+PRISTANALtx,"Transport, peroxisomal"
+PRISTCOAtcx,"Transport, peroxisomal"
+PRISTCOAtx,"Transport, peroxisomal"
+PRISTtx,"Transport, peroxisomal"
+PROARGASPr,Peptide metabolism
+PROARGCYSr,Peptide metabolism
+PROASNCYSr,Peptide metabolism
+PROCYSr,Peptide metabolism
+PROD2,Arginine and proline metabolism
+PROD2m,Arginine and proline metabolism
+PROGLNPROr,Peptide metabolism
+PROGLULYSr,Peptide metabolism
+PROHISTYRr,Peptide metabolism
+PROHISr,Peptide metabolism
+PROLEUARGr,Peptide metabolism
+PROLYSPROr,Peptide metabolism
+PROPHEr,Peptide metabolism
+PROPROARGr,Peptide metabolism
+PROPROPROr,Peptide metabolism
+PROSTGE2t2m,"Transport, mitochondrial"
+PROSTGE2t2r,"Transport, endoplasmic reticular"
+PROSTGI2tr,"Transport, endoplasmic reticular"
+PROTEIN_BS,Protein formation
+PROTRPLYSr,Peptide metabolism
+PROTRPTHRr,Peptide metabolism
+PROVALGLNr,Peptide metabolism
+PROtm,"Transport, mitochondrial"
+PRPPS,Pentose phosphate pathway
+PSDm_hs,Glycerophospholipid metabolism
+PSDm_hsc,Glycerophospholipid metabolism
+PSERT,"Glycine, serine, alanine, and threonine metabolism"
+PSFLIPm,"Transport, mitochondrial"
+PSP_L,"Glycine, serine, alanine, and threonine metabolism"
+PSSA1_hs,Glycerophospholipid metabolism
+PSSA2_hs,Glycerophospholipid metabolism
+PTDCACRNCPT1,Fatty acid oxidation
+PTDCACRNCPT2,Fatty acid oxidation
+PTDCACRNt,Fatty acid oxidation
+PTE2x,Fatty acid oxidation
+PTE3x,Fatty acid oxidation
+PTE4x,Fatty acid oxidation
+PTHPS,Tetrahydrobiopterin metabolism
+PTPAT,CoA synthesis
+PTRCAT1,Arginine and proline metabolism
+PTRCOX1,Arginine and proline metabolism
+PTVSTATPtu,Drug metabolism
+PTVSTGLUChc,Drug metabolism
+PTVSTLAChc,Drug metabolism
+PTVSThc,Drug metabolism
+PTVSTtep,Drug metabolism
+PTVSTtu,Drug metabolism
+PUNP1,Nucleotide interconversion
+PUNP2,Purine catabolism
+PUNP3,Purine catabolism
+PUNP4,Purine catabolism
+PUNP5,Purine catabolism
+PUNP6,Purine catabolism
+PUNP7,Nucleotide interconversion
+PVD3,Vitamin D metabolism
+PVSATPtu,Drug metabolism
+PVSGLUCteb,Drug metabolism
+PVSGLUCtev,Drug metabolism
+PVSHtu,Drug metabolism
+PVSOATPtu,Drug metabolism
+PVStep,Drug metabolism
+PYDAMK,Vitamin B6 metabolism
+PYDXDH,Vitamin B6 metabolism
+PYDXK,Vitamin B6 metabolism
+PYDXNK,Vitamin B6 metabolism
+PYDXPP,Vitamin B6 metabolism
+PYK,Glycolysis/gluconeogenesis
+PYNP2r,Pyrimidine catabolism
+PYRt2m,"Transport, mitochondrial"
+PYRt2p,D-alanine metabolism
+QUILSYN,Tryptophan metabolism
+RADH,Vitamin A metabolism
+RADH2,Vitamin A metabolism
+RADH3,Vitamin A metabolism
+RADH4,Vitamin A metabolism
+RAHY,Vitamin A metabolism
+RAI1,Vitamin A metabolism
+RAI2,Vitamin A metabolism
+RAI3,Vitamin A metabolism
+RAI4,Vitamin A metabolism
+RAtn,"Transport, nuclear"
+RAtn3,"Transport, nuclear"
+RBFK,Vitamin B2 metabolism
+RDH1,Vitamin A metabolism
+RDH1a,Vitamin A metabolism
+RDH2,Vitamin A metabolism
+RDH2a,Vitamin A metabolism
+RDH3,Vitamin A metabolism
+RDH3a,Vitamin A metabolism
+RDH4,Vitamin A metabolism
+RE0124C,Pentose phosphate pathway
+RE0344C,Fatty acid synthesis
+RE0383C,Miscellaneous
+RE0452M,Pyrimidine synthesis
+RE0453C,Pyrimidine synthesis
+RE0453M,Pyrimidine synthesis
+RE0453N,Pyrimidine synthesis
+RE0456N,Pyrimidine synthesis
+RE0512M,Fatty acid oxidation
+RE0512X,Fatty acid oxidation
+RE0549C,Tryptophan metabolism
+RE0565C,Fatty acid synthesis
+RE0566C,Fatty acid synthesis
+RE0567C,Fatty acid synthesis
+RE0568C,Fatty acid synthesis
+RE0569C,Fatty acid synthesis
+RE0570C,Fatty acid synthesis
+RE0571C,Fatty acid synthesis
+RE0574C,Fatty acid synthesis
+RE0575C,Fatty acid synthesis
+RE0576C,Fatty acid synthesis
+RE0577C,Fatty acid synthesis
+RE0578C,Fatty acid synthesis
+RE0579C,Fatty acid synthesis
+RE0581C,Fatty acid synthesis
+RE0583C,Fatty acid synthesis
+RE0688E,Urea cycle
+RE0689E,Urea cycle
+RE0690E,Urea cycle
+RE0691C,Urea cycle
+RE0827E,Urea cycle
+RE0828E,Urea cycle
+RE0830C,Tetrahydrobiopterin metabolism
+RE0830N,Tetrahydrobiopterin metabolism
+RE0908C,Tyrosine metabolism
+RE0912C,Tyrosine metabolism
+RE0915C,Starch and sucrose metabolism
+RE0915E,Starch and sucrose metabolism
+RE0916C,Tyrosine metabolism
+RE0918C,Tyrosine metabolism
+RE0926E,Starch and sucrose metabolism
+RE0935E,Starch and sucrose metabolism
+RE0944E,Starch and sucrose metabolism
+RE1077C,Eicosanoid metabolism
+RE1096C,Steroid metabolism
+RE1099C,Steroid metabolism
+RE1100C,Steroid metabolism
+RE1100R,Steroid metabolism
+RE1134C,Steroid metabolism
+RE1135C,Steroid metabolism
+RE1135R,Steroid metabolism
+RE1233C,Tryptophan metabolism
+RE1234C,Urea cycle
+RE1235C,Urea cycle
+RE1254C,Lysine metabolism
+RE1266C,"Valine, leucine, and isoleucine metabolism"
+RE1303C,Vitamin D metabolism
+RE1342C,Fructose and mannose metabolism
+RE1441R,Phosphatidylinositol phosphate metabolism
+RE1447M,Phosphatidylinositol phosphate metabolism
+RE1447N,Phosphatidylinositol phosphate metabolism
+RE1448N,Phosphatidylinositol phosphate metabolism
+RE1448R,Phosphatidylinositol phosphate metabolism
+RE1516M,Fatty acid oxidation
+RE1516X,Fatty acid oxidation
+RE1517M,Fatty acid oxidation
+RE1517X,Fatty acid oxidation
+RE1518M,Fatty acid oxidation
+RE1518X,Fatty acid oxidation
+RE1519X,Fatty acid oxidation
+RE1520M,Fatty acid oxidation
+RE1520X,Fatty acid oxidation
+RE1521M,Fatty acid oxidation
+RE1521X,Fatty acid oxidation
+RE1522M,Fatty acid oxidation
+RE1522X,Fatty acid oxidation
+RE1523M,Fatty acid oxidation
+RE1523X,Fatty acid oxidation
+RE1525M,Fatty acid oxidation
+RE1525X,Fatty acid oxidation
+RE1526M,Fatty acid oxidation
+RE1526X,Fatty acid oxidation
+RE1527M,Fatty acid oxidation
+RE1527X,Fatty acid oxidation
+RE1530C,Pyrimidine synthesis
+RE1530M,Pyrimidine synthesis
+RE1531M,Fatty acid oxidation
+RE1531X,Fatty acid oxidation
+RE1532M,Fatty acid oxidation
+RE1532X,Fatty acid oxidation
+RE1533M,Fatty acid oxidation
+RE1533X,Fatty acid oxidation
+RE1534M,Fatty acid oxidation
+RE1534X,Fatty acid oxidation
+RE1573M,Fatty acid oxidation
+RE1573X,Fatty acid oxidation
+RE1587C,Androgen and estrogen synthesis and metabolism
+RE1630C,Androgen and estrogen synthesis and metabolism
+RE1632C,Androgen and estrogen synthesis and metabolism
+RE1709C,Tetrahydrobiopterin metabolism
+RE1709N,Tetrahydrobiopterin metabolism
+RE1711C,Tryptophan metabolism
+RE1796M,Bile acid synthesis
+RE1796R,Bile acid synthesis
+RE1803C,Bile acid synthesis
+RE1804C,Bile acid synthesis
+RE1804M,Bile acid synthesis
+RE1807C,Bile acid synthesis
+RE1807M,Bile acid synthesis
+RE1810M,Bile acid synthesis
+RE1826C,Bile acid synthesis
+RE1834C,Bile acid synthesis
+RE1834M,Bile acid synthesis
+RE1834X,Bile acid synthesis
+RE1835C,Bile acid synthesis
+RE1836C,Bile acid synthesis
+RE1836X,Bile acid synthesis
+RE1845C,Bile acid synthesis
+RE1845X,Bile acid synthesis
+RE1846C,Bile acid synthesis
+RE1897C,Urea cycle
+RE1898C,Urea cycle
+RE1901R,Vitamin A metabolism
+RE1903R,Vitamin A metabolism
+RE1915C,Tyrosine metabolism
+RE1916C,Tyrosine metabolism
+RE1918C,Tyrosine metabolism
+RE1919C,Tyrosine metabolism
+RE1921C,Tyrosine metabolism
+RE1923C,Tyrosine metabolism
+RE1925C,Tyrosine metabolism
+RE1933C,Methionine and cysteine metabolism
+RE1957R,Phosphatidylinositol phosphate metabolism
+RE1978C,Eicosanoid metabolism
+RE2030M,Methionine and cysteine metabolism
+RE2034C,Urea cycle
+RE2069C,Eicosanoid metabolism
+RE2078M,Eicosanoid metabolism
+RE2079R,Eicosanoid metabolism
+RE2080C,Eicosanoid metabolism
+RE2111M,"Glycine, serine, alanine, and threonine metabolism"
+RE2112C,Bile acid synthesis
+RE2112R,Bile acid synthesis
+RE2122C,Tyrosine metabolism
+RE2130C,Tyrosine metabolism
+RE2147C,Vitamin A metabolism
+RE2154C,Miscellaneous
+RE2155C,Miscellaneous
+RE2223M,Methionine and cysteine metabolism
+RE2235C,Androgen and estrogen synthesis and metabolism
+RE2235R,Androgen and estrogen synthesis and metabolism
+RE2240C,Vitamin D metabolism
+RE2296C,Tyrosine metabolism
+RE2327C,Vitamin E metabolism
+RE2346C,Linoleate metabolism
+RE2349C,Tryptophan metabolism
+RE2386C,Androgen and estrogen synthesis and metabolism
+RE2404C,Miscellaneous
+RE2405C,Miscellaneous
+RE2407C,Cholesterol metabolism
+RE2410C,Cholesterol metabolism
+RE2426C,Tryptophan metabolism
+RE2427M,"Glycine, serine, alanine, and threonine metabolism"
+RE2428M,"Glycine, serine, alanine, and threonine metabolism"
+RE2429M,"Glycine, serine, alanine, and threonine metabolism"
+RE2439C,Tryptophan metabolism
+RE2526C,Miscellaneous
+RE2541C,Miscellaneous
+RE2562C,Tryptophan metabolism
+RE2563C,Arachidonic acid metabolism
+RE2605C,Purine catabolism
+RE2624M,Fatty acid oxidation
+RE2624X,Fatty acid oxidation
+RE2625C,Bile acid synthesis
+RE2625M,Bile acid synthesis
+RE2626C,Bile acid synthesis
+RE2626M,Bile acid synthesis
+RE2635C,Bile acid synthesis
+RE2635R,Bile acid synthesis
+RE2636C,Bile acid synthesis
+RE2636R,Bile acid synthesis
+RE2637C,Bile acid synthesis
+RE2637X,Bile acid synthesis
+RE2638C,Bile acid synthesis
+RE2640C,Methionine and cysteine metabolism
+RE2644C,Urea cycle
+RE2649C,Bile acid synthesis
+RE2649M,Bile acid synthesis
+RE2651R,Vitamin A metabolism
+RE2655R,Vitamin A metabolism
+RE2658C,Vitamin A metabolism
+RE2658R,Vitamin A metabolism
+RE2659R,Vitamin A metabolism
+RE2660C,Tetrahydrobiopterin metabolism
+RE2660N,Tetrahydrobiopterin metabolism
+RE2666C,Glycosphingolipid metabolism
+RE2666G,Glycosphingolipid metabolism
+RE2675C,Sphingolipid metabolism
+RE2675C2,Glycosphingolipid metabolism
+RE2677C,Glycosphingolipid metabolism
+RE2677G,Glycosphingolipid metabolism
+RE2677N,Glycosphingolipid metabolism
+RE2677R,Glycosphingolipid metabolism
+RE2717L,Glycosphingolipid metabolism
+RE2759X,Fatty acid oxidation
+RE2766C,Steroid metabolism
+RE2799C,Eicosanoid metabolism
+RE2814M,Bile acid synthesis
+RE2814R,Bile acid synthesis
+RE2888C,Purine catabolism
+RE2898C,Vitamin C metabolism
+RE2912M,Fatty acid oxidation
+RE2954C,Pyrimidine synthesis
+RE2958C,Eicosanoid metabolism
+RE2972M,Phosphatidylinositol phosphate metabolism
+RE2973N,Phosphatidylinositol phosphate metabolism
+RE2974N,Phosphatidylinositol phosphate metabolism
+RE2985M,Fatty acid oxidation
+RE2985X,Fatty acid oxidation
+RE2986X,Fatty acid oxidation
+RE2987X,Fatty acid oxidation
+RE2988X,Fatty acid oxidation
+RE2989X,Fatty acid oxidation
+RE2990X,Fatty acid oxidation
+RE2991X,Fatty acid oxidation
+RE2992M,Fatty acid oxidation
+RE2992X,Fatty acid oxidation
+RE2993X,Fatty acid oxidation
+RE2994X,Fatty acid oxidation
+RE2996X,Fatty acid oxidation
+RE2997X,Fatty acid oxidation
+RE2998M,Fatty acid oxidation
+RE2999M,Fatty acid oxidation
+RE3000M,Fatty acid oxidation
+RE3001M,Fatty acid oxidation
+RE3002X,Fatty acid oxidation
+RE3003M,Fatty acid oxidation
+RE3004M,Fatty acid oxidation
+RE3005M,Fatty acid oxidation
+RE3006M,Fatty acid oxidation
+RE3009C,Methionine and cysteine metabolism
+RE3010C,Eicosanoid metabolism
+RE3010M,Eicosanoid metabolism
+RE3010X,Eicosanoid metabolism
+RE3011M,Eicosanoid metabolism
+RE3011R,Eicosanoid metabolism
+RE3012C,Eicosanoid metabolism
+RE3012M,Eicosanoid metabolism
+RE3012R,Eicosanoid metabolism
+RE3013C,Androgen and estrogen synthesis and metabolism
+RE3014R,Eicosanoid metabolism
+RE3015R,Eicosanoid metabolism
+RE3016R,Eicosanoid metabolism
+RE3017R,Eicosanoid metabolism
+RE3033C,Arachidonic acid metabolism
+RE3036C,Arachidonic acid metabolism
+RE3038C,Arachidonic acid metabolism
+RE3040C,Arachidonic acid metabolism
+RE3041C,Arachidonic acid metabolism
+RE3044C,Arachidonic acid metabolism
+RE3050R,Vitamin A metabolism
+RE3051C,Heme synthesis
+RE3052C,Heme synthesis
+RE3073X,Fatty acid oxidation
+RE3074X,Fatty acid oxidation
+RE3079X,Fatty acid oxidation
+RE3095C,Tyrosine metabolism
+RE3103C,Fatty acid oxidation
+RE3104C,Fatty acid oxidation
+RE3106C,Fatty acid oxidation
+RE3108C,Androgen and estrogen synthesis and metabolism
+RE3110C,Fatty acid oxidation
+RE3112C,Fatty acid oxidation
+RE3113C,Fatty acid oxidation
+RE3114R,Fatty acid oxidation
+RE3119C,Fatty acid oxidation
+RE3120C,Fatty acid oxidation
+RE3121C,Fatty acid oxidation
+RE3122C,Fatty acid oxidation
+RE3132R,Fatty acid oxidation
+RE3134C,Cholesterol metabolism
+RE3136C,Cholesterol metabolism
+RE3146R,Fatty acid oxidation
+RE3151C,Fatty acid oxidation
+RE3152C,Fatty acid oxidation
+RE3153C,Fatty acid oxidation
+RE3154C,Fatty acid oxidation
+RE3160R,Fatty acid oxidation
+RE3161C,Fatty acid oxidation
+RE3162C,Fatty acid oxidation
+RE3163C,Fatty acid oxidation
+RE3164C,Fatty acid oxidation
+RE3165C,Fatty acid oxidation
+RE3166C,Fatty acid oxidation
+RE3167C,Fatty acid oxidation
+RE3168C,Fatty acid oxidation
+RE3169C,Fatty acid oxidation
+RE3170C,Fatty acid oxidation
+RE3171C,Fatty acid oxidation
+RE3172C,Fatty acid oxidation
+RE3173C,Fatty acid oxidation
+RE3174C,Fatty acid oxidation
+RE3175C,Fatty acid oxidation
+RE3176C,Fatty acid oxidation
+RE3180C,Cholesterol metabolism
+RE3181C,Cholesterol metabolism
+RE3198C,Tyrosine metabolism
+RE3201C,Tyrosine metabolism
+RE3218C,Androgen and estrogen synthesis and metabolism
+RE3220C,Androgen and estrogen synthesis and metabolism
+RE3224C,Fatty acid synthesis
+RE3225C,Fatty acid synthesis
+RE3226C,Fatty acid synthesis
+RE3227C,Fatty acid synthesis
+RE3228C,Fatty acid synthesis
+RE3229C,Fatty acid synthesis
+RE3230C,Fatty acid synthesis
+RE3231C,Fatty acid synthesis
+RE3232C,Fatty acid synthesis
+RE3234C,Fatty acid synthesis
+RE3235C,Fatty acid synthesis
+RE3236C,Fatty acid synthesis
+RE3237C,Fatty acid synthesis
+RE3238C,Fatty acid synthesis
+RE3239C,Fatty acid synthesis
+RE3241C,Fatty acid synthesis
+RE3242C,Fatty acid synthesis
+RE3243C,Fatty acid synthesis
+RE3244C,Fatty acid synthesis
+RE3245C,Fatty acid synthesis
+RE3247M,Fatty acid oxidation
+RE3247X,Fatty acid oxidation
+RE3251C,Bile acid synthesis
+RE3251M,Bile acid synthesis
+RE3252C,Bile acid synthesis
+RE3258C,Linoleate metabolism
+RE3259C,Linoleate metabolism
+RE3268R,Phosphatidylinositol phosphate metabolism
+RE3269C,Phosphatidylinositol phosphate metabolism
+RE3270C,Phosphatidylinositol phosphate metabolism
+RE3272N,Phosphatidylinositol phosphate metabolism
+RE3273C,Phosphatidylinositol phosphate metabolism
+RE3273R,Phosphatidylinositol phosphate metabolism
+RE3286C,Arachidonic acid metabolism
+RE3287C,Arachidonic acid metabolism
+RE3288C,Arachidonic acid metabolism
+RE3289C,Arachidonic acid metabolism
+RE3301C,Glycerophospholipid metabolism
+RE3307C,Eicosanoid metabolism
+RE3346C,Bile acid synthesis
+RE3346M,Bile acid synthesis
+RE3347C,Vitamin B2 metabolism
+RE3352C,Purine catabolism
+RE3367E,Urea cycle
+RE3381C,Miscellaneous
+RE3411C,Linoleate metabolism
+RE3413C,Linoleate metabolism
+RE3417C,Linoleate metabolism
+RE3420C,Linoleate metabolism
+RE3421R,Eicosanoid metabolism
+RE3422C,Eicosanoid metabolism
+RE3423C,Eicosanoid metabolism
+RE3430C,Eicosanoid metabolism
+RE3430M,Eicosanoid metabolism
+RE3430X,Eicosanoid metabolism
+RE3431C,Eicosanoid metabolism
+RE3432C,Eicosanoid metabolism
+RE3432M,Eicosanoid metabolism
+RE3432X,Eicosanoid metabolism
+RE3434C,Eicosanoid metabolism
+RE3435C,Eicosanoid metabolism
+RE3436C,Eicosanoid metabolism
+RE3437C,Eicosanoid metabolism
+RE3470C,Arachidonic acid metabolism
+RE3470M,Arachidonic acid metabolism
+RE3475C,Arachidonic acid metabolism
+RE3476C,Arachidonic acid metabolism
+RE3476M,Arachidonic acid metabolism
+RE3477C1,Eicosanoid metabolism
+RE3485C,Eicosanoid metabolism
+RE3486C,Eicosanoid metabolism
+RE3488C,Eicosanoid metabolism
+RE3488R,Eicosanoid metabolism
+RE3490C,Eicosanoid metabolism
+RE3491C,Eicosanoid metabolism
+RE3493C,Eicosanoid metabolism
+RE3496C,Eicosanoid metabolism
+RE3513C,Arachidonic acid metabolism
+RE3513R,Arachidonic acid metabolism
+RE3520E,Arachidonic acid metabolism
+RE3524R,Eicosanoid metabolism
+RE3525C,Arachidonic acid metabolism
+RE3525M,Arachidonic acid metabolism
+RE3525R,Arachidonic acid metabolism
+RE3526C,Arachidonic acid metabolism
+RE3526M,Arachidonic acid metabolism
+RE3556C,Eicosanoid metabolism
+RE3565C,Eicosanoid metabolism
+RE3566C,Eicosanoid metabolism
+RE3567C,Eicosanoid metabolism
+RE3568C,Eicosanoid metabolism
+RE3570C,Eicosanoid metabolism
+RE3587C,Eicosanoid metabolism
+RE3597C,Eicosanoid metabolism
+RE3597M,Eicosanoid metabolism
+RE3597X,Eicosanoid metabolism
+RE3624M,Fatty acid oxidation
+RE3626M,Fatty acid oxidation
+RE3628M,Fatty acid oxidation
+RE3629C,Histidine metabolism
+RE3630C,Histidine metabolism
+RE3637C,Heme synthesis
+RETFA,Vitamin A metabolism
+RETH,Vitamin A metabolism
+RETH1,Vitamin A metabolism
+RETH1e,Vitamin A metabolism
+RETH2,Vitamin A metabolism
+RETH2e,Vitamin A metabolism
+RETHe,Vitamin A metabolism
+RETI1,Vitamin A metabolism
+RETI2,Vitamin A metabolism
+RETI3,Vitamin A metabolism
+RETNGLCt2,"Transport, endoplasmic reticular"
+RETNGLCt2r,"Transport, endoplasmic reticular"
+RETNGLCtr,"Transport, endoplasmic reticular"
+RETNtr,"Transport, endoplasmic reticular"
+RETNtr2,"Transport, endoplasmic reticular"
+RNDR1,Nucleotide interconversion
+RNDR2,Nucleotide interconversion
+RNDR3,Nucleotide interconversion
+RNDR4,Nucleotide interconversion
+RNMK,NAD metabolism
+RPE,Pentose phosphate pathway
+RPEc,Pentose phosphate pathway
+RPI,Pentose phosphate pathway
+RSVATPtu,Drug metabolism
+RSVGLUChc,Drug metabolism
+RSVLAChv,Drug metabolism
+RSVLACitr,Drug metabolism
+RSVSPONhc,Drug metabolism
+RSVhc,Drug metabolism
+RSVitr,Drug metabolism
+RSVtev,Drug metabolism
+RSVtu,Drug metabolism
+R_group_phosphotase_1,Miscellaneous
+R_group_phosphotase_2,Miscellaneous
+R_group_phosphotase_3,Miscellaneous
+Rtotalter,"Transport, endoplasmic reticular"
+Rtotaltg,"Transport, golgi apparatus"
+Rtotaltl,"Transport, lysosomal"
+S23T2g,Keratan sulfate synthesis
+S23T4g,Keratan sulfate synthesis
+S2T1g,Chondroitin synthesis
+S2T2g,Chondroitin synthesis
+S2T3g,Chondroitin synthesis
+S2T4g,Chondroitin synthesis
+S2TASE1ly,Heparan sulfate degradation
+S2TASE2ly,Heparan sulfate degradation
+S2TASE3ly,Chondroitin sulfate degradation
+S2TASE4ly,Chondroitin sulfate degradation
+S2TASE5ly,Chondroitin sulfate degradation
+S3T1g,Chondroitin synthesis
+S3T2g,Chondroitin synthesis
+S3T3g,Chondroitin synthesis
+S3TASE1ly,Heparan sulfate degradation
+S3TASE2ly,Heparan sulfate degradation
+S3TASE3ly,Heparan sulfate degradation
+S4T1g,Chondroitin synthesis
+S4T2g,Chondroitin synthesis
+S4T3g,Chondroitin synthesis
+S4T4g,Chondroitin synthesis
+S4T5g,Chondroitin synthesis
+S4T6g,Chondroitin synthesis
+S4TASE1ly,Chondroitin sulfate degradation
+S4TASE2ly,Chondroitin sulfate degradation
+S4TASE3ly,Chondroitin sulfate degradation
+S4TASE4ly,Chondroitin sulfate degradation
+S4TASE5ly,Chondroitin sulfate degradation
+S6T16g,Keratan sulfate synthesis
+S6T17g,Keratan sulfate synthesis
+S6T18g,Keratan sulfate synthesis
+S6T19g,Chondroitin synthesis
+S6T1g,Keratan sulfate synthesis
+S6T20g,Chondroitin synthesis
+S6T21g,Chondroitin synthesis
+S6T22g,Chondroitin synthesis
+S6T23g,Chondroitin synthesis
+S6T24g,Chondroitin synthesis
+S6T25g,Chondroitin synthesis
+S6T2g,Keratan sulfate synthesis
+S6T3g,Keratan sulfate synthesis
+S6TASE1ly,Heparan sulfate degradation
+S6TASE22ly,Keratan sulfate degradation
+S6TASE23ly,Keratan sulfate degradation
+S6TASE24ly,Keratan sulfate degradation
+S6TASE25ly,Keratan sulfate degradation
+S6TASE26ly,Keratan sulfate degradation
+S6TASE2ly,Heparan sulfate degradation
+S6TASE3ly,Heparan sulfate degradation
+S6TASE4ly,Chondroitin sulfate degradation
+S6TASE5ly,Chondroitin sulfate degradation
+S6TASE6ly,Chondroitin sulfate degradation
+S6TASE7ly,Chondroitin sulfate degradation
+S6TASE8ly,Chondroitin sulfate degradation
+S6TASE9ly,Chondroitin sulfate degradation
+SACCD3m,Lysine metabolism
+SACCD4m,Lysine metabolism
+SACCRP_Lte,"Transport, mitochondrial"
+SADT,Nucleotide interconversion
+SALMCOM,Tyrosine metabolism
+SALMCOM2,Tyrosine metabolism
+SAMHISTA,Histidine metabolism
+SARCOXp,"Glycine, serine, alanine, and threonine metabolism"
+SARCStm,"Transport, mitochondrial"
+SARCStp,"Transport, peroxisomal"
+SARDHm,Urea cycle
+SBCOAACOTx,Fatty acid oxidation
+SBPP1er,Sphingolipid metabolism
+SBPP3er,Sphingolipid metabolism
+SBTD_D2,Fructose and mannose metabolism
+SBTR,Fructose and mannose metabolism
+SCP21cx,"Transport, peroxisomal"
+SCP21x,"Transport, peroxisomal"
+SCP22x,"Transport, peroxisomal"
+SCP2x,Bile acid synthesis
+SCPx,Bile acid synthesis
+SEBACACT,Fatty acid oxidation
+SEBACIDtx,Fatty acid oxidation
+SEBCOACROT,Fatty acid oxidation
+SEBCOAPET,Fatty acid oxidation
+SERARGALAr,Peptide metabolism
+SERARGTRPr,Peptide metabolism
+SERCYSARGr,Peptide metabolism
+SERGLYGLUr,Peptide metabolism
+SERHL,"Glycine, serine, alanine, and threonine metabolism"
+SERLYSHISr,Peptide metabolism
+SERPHELYSr,Peptide metabolism
+SERPT,Sphingolipid metabolism
+SERTRPHISr,Peptide metabolism
+SERtp,"Transport, peroxisomal"
+SFCYSc,Methionine and cysteine metabolism
+SFGTH,Tyrosine metabolism
+SGALSIDEtg,"Transport, golgi apparatus"
+SGALSIDEtl,"Transport, lysosomal"
+SGPL12r,Sphingolipid metabolism
+SIAASE3ly,Keratan sulfate degradation
+SIAASE4ly,Keratan sulfate degradation
+SIAT4Bg,Sphingolipid metabolism
+SIAT9g,Sphingolipid metabolism
+SLCBK1,Sphingolipid metabolism
+SLDt,Methionine and cysteine metabolism
+SLDx,Methionine and cysteine metabolism
+SMPD3g,Sphingolipid metabolism
+SMPD3l,Sphingolipid metabolism
+SMPD4,Sphingolipid metabolism
+SMS,Sphingolipid metabolism
+SMS1,Glycerophospholipid metabolism
+SMS10,Glycerophospholipid metabolism
+SMS11,Glycerophospholipid metabolism
+SMS12,Glycerophospholipid metabolism
+SMS13,Glycerophospholipid metabolism
+SMS14,Glycerophospholipid metabolism
+SMS15,Glycerophospholipid metabolism
+SMS16,Glycerophospholipid metabolism
+SMS1S2,Sphingolipid metabolism
+SMS2,Glycerophospholipid metabolism
+SMS21e,Sphingolipid metabolism
+SMS3,Glycerophospholipid metabolism
+SMS4,Glycerophospholipid metabolism
+SMS5,Glycerophospholipid metabolism
+SMS6,Glycerophospholipid metabolism
+SMS7,Glycerophospholipid metabolism
+SMS8,Glycerophospholipid metabolism
+SMS9,Glycerophospholipid metabolism
+SMSn,Sphingolipid metabolism
+SMVACIDATPteb,Drug metabolism
+SMVACIDhep,Drug metabolism
+SMVACIDitr,Drug metabolism
+SMVACIDtev,Drug metabolism
+SMVGLUCLAChep,Drug metabolism
+SMVGLUChep,Drug metabolism
+SMVHYDROhep,Drug metabolism
+SMVLAChep,Drug metabolism
+SMVitr,Drug metabolism
+SMVthep,Drug metabolism
+SMVtu,Drug metabolism
+SMVtv,Drug metabolism
+SO4tl,"Transport, lysosomal"
+SOAT12,Cholesterol metabolism
+SPH1Ptr,"Transport, endoplasmic reticular"
+SPHGNtg,"Transport, golgi apparatus"
+SPHGNtn,"Transport, nuclear"
+SPHGNtr,"Transport, endoplasmic reticular"
+SPHINGStg,"Transport, golgi apparatus"
+SPHINGStl,"Transport, lysosomal"
+SPHINGStn,"Transport, nuclear"
+SPHINGStr,"Transport, endoplasmic reticular"
+SPHK11,Sphingolipid metabolism
+SPHK21c,Sphingolipid metabolism
+SPHK21n,Sphingolipid metabolism
+SPHK22n,Sphingolipid metabolism
+SPHMDAc,Sphingolipid metabolism
+SPHMYLNtg,"Transport, golgi apparatus"
+SPHMYLNtl,"Transport, lysosomal"
+SPHS1Ptr,"Transport, endoplasmic reticular"
+SPMD3n,Sphingolipid metabolism
+SPMDOX,Beta-Alanine metabolism
+SPMS,Urea cycle
+SPODM,ROS detoxification
+SPODMe,ROS detoxification
+SPODMm,ROS detoxification
+SPODMn,ROS detoxification
+SPODMx,ROS detoxification
+SPR,Tetrahydrobiopterin metabolism
+SPRMS,Urea cycle
+SPTix,"Glycine, serine, alanine, and threonine metabolism"
+SQLEr,Cholesterol metabolism
+SQLSr,Cholesterol metabolism
+SQLtr,"Transport, endoplasmic reticular"
+SR5AR2r,Steroid metabolism
+SR5ARr,Steroid metabolism
+SRTNACT,Tryptophan metabolism
+ST3GAL21g,Sphingolipid metabolism
+ST3GAL22g,Sphingolipid metabolism
+ST3GAL23g,Sphingolipid metabolism
+ST3GAL31g,Blood group synthesis
+ST3GAL61g,Blood group synthesis
+ST3GAL62g,Blood group synthesis
+ST6GALNAC21,Sphingolipid metabolism
+ST6GALNAC22,Sphingolipid metabolism
+ST6GALNAC23,Sphingolipid metabolism
+ST6GALNAC24,Sphingolipid metabolism
+ST6GALNAC25,Sphingolipid metabolism
+ST6GALNAC26,Sphingolipid metabolism
+ST6GALNAC27,Sphingolipid metabolism
+ST6GALNAC28,Sphingolipid metabolism
+ST6GALNAC31,Sphingolipid metabolism
+ST6GALNAC62,Sphingolipid metabolism
+ST8SIA11,Sphingolipid metabolism
+ST8SIA12,Sphingolipid metabolism
+ST8SIA51g,Sphingolipid metabolism
+ST8SIA52g,Sphingolipid metabolism
+ST8SIA53g,Sphingolipid metabolism
+ST8SIA54g,Sphingolipid metabolism
+ST8SIA55g,Sphingolipid metabolism
+ST8SIA56g,Blood group synthesis
+STCOATxc,"Transport, peroxisomal"
+STCOAtx,"Transport, peroxisomal"
+STEETH,Glycerophospholipid metabolism
+STRDNCCOAtxc,"Transport, peroxisomal"
+STRDNCCPT1,Fatty acid oxidation
+STRDNCCPT2,Fatty acid oxidation
+STRDNCCRNt,Fatty acid oxidation
+STS1,Steroid metabolism
+STS1r,Steroid metabolism
+STS2,Steroid metabolism
+STS2r,Steroid metabolism
+SUBEACtx,Fatty acid oxidation
+SUBERCACT,Fatty acid oxidation
+SUBERCROT,Fatty acid oxidation
+SUBERICACT,Fatty acid oxidation
+SUBGLYc,"Glycine, serine, alanine, and threonine metabolism"
+SUCACETATALTc,Tyrosine metabolism
+SUCACETATc,Tyrosine metabolism
+SUCACETOc,Tyrosine metabolism
+SUCCACT,Fatty acid oxidation
+SUCCCROT,Fatty acid oxidation
+SUCCOAPET,Fatty acid oxidation
+SUCCt2m,"Transport, mitochondrial"
+SUCCtp,"Transport, peroxisomal"
+SUCD1m,Citric acid cycle
+SUCOAS1m,Citric acid cycle
+SUCOASm,Citric acid cycle
+SUCRe,Galactose metabolism
+SUCSALtm,"Transport, mitochondrial"
+SULFOX,Methionine and cysteine metabolism
+Ser_Thrtg,"Transport, golgi apparatus"
+T4HCINNMFM,Ubiquinone synthesis
+T4HCINNMtm,"Transport, mitochondrial"
+TACRDtsc,Drug metabolism
+TACRtu,Drug metabolism
+TALA,Pentose phosphate pathway
+TAURtcx,Taurine and hypotaurine metabolism
+TCASULT,Bile acid synthesis
+TCDCA6AH,Bile acid synthesis
+TCDCASULT,Bile acid synthesis
+TCHOLAtx,"Transport, peroxisomal"
+TD2GLTRCOAm,Lysine metabolism
+TDCASULT,Bile acid synthesis
+TDCHOLAtx,"Transport, peroxisomal"
+TDCRNe,Fatty acid oxidation
+TDP,Thiamine metabolism
+TDPm,Thiamine metabolism
+TETDECAETH,Glycerophospholipid metabolism
+TETPENT3COAtm,"Transport, mitochondrial"
+TETPENT3CPT1,Fatty acid oxidation
+TETPENT3CPT2,Fatty acid oxidation
+TETPENT3CRNt,Fatty acid oxidation
+TETPENT6COAtm,"Transport, mitochondrial"
+TETPENT6CPT1,Fatty acid oxidation
+TETPENT6CPT2,Fatty acid oxidation
+TETPENT6CRNt,Fatty acid oxidation
+TETTET6COAtm,"Transport, mitochondrial"
+TETTET6CPT1,Fatty acid oxidation
+TETTET6CPT2,Fatty acid oxidation
+TETTET6CRNt,Fatty acid oxidation
+THBPT4ACAMDASE,Tetrahydrobiopterin metabolism
+THCHOLSTOICtm,"Transport, peroxisomal"
+THCRMtl,"Transport, lysosomal"
+THD1m,NAD metabolism
+THEXDDm,Fatty acid oxidation
+THEXDDtm,"Transport, mitochondrial"
+THFtl,"Transport, lysosomal"
+THFtm,"Transport, mitochondrial"
+THMMPtm,"Transport, mitochondrial"
+THMP,Thiamine metabolism
+THMPPtm,"Transport, mitochondrial"
+THMTP,Thiamine metabolism
+THMt2m,"Transport, mitochondrial"
+THP2Ctp,"Transport, peroxisomal"
+THRACm,"Glycine, serine, alanine, and threonine metabolism"
+THRARGTYRr,Peptide metabolism
+THRASNTYRr,Peptide metabolism
+THRD_L,"Glycine, serine, alanine, and threonine metabolism"
+THRGLNGLUr,Peptide metabolism
+THRGLNTYRr,Peptide metabolism
+THRHISHISr,Peptide metabolism
+THRILEARGr,Peptide metabolism
+THRMETARGr,Peptide metabolism
+THRPHEARGr,Peptide metabolism
+THRSERARGr,Peptide metabolism
+THRTHRARGr,Peptide metabolism
+THRTYRMETr,Peptide metabolism
+THYMDtl,"Transport, lysosomal"
+THYMDtm,"Transport, mitochondrial"
+THYPX,Tyrosine metabolism
+TIGGLYc,"Glycine, serine, alanine, and threonine metabolism"
+TIGGLYtm,"Transport, mitochondrial"
+TKT1,Pentose phosphate pathway
+TKT2,Pentose phosphate pathway
+TLACFVShc,Drug metabolism
+TMDK1,Nucleotide interconversion
+TMDK1m,Nucleotide interconversion
+TMDOATPtsc,Drug metabolism
+TMDOATtev,Drug metabolism
+TMDOATthc,Drug metabolism
+TMDPK,Thiamine metabolism
+TMDPP,Pyrimidine catabolism
+TMDPPK,Thiamine metabolism
+TMDS,Nucleotide interconversion
+TMDtd,Drug metabolism
+TMNDNCCOAtx,"Transport, peroxisomal"
+TMNDNCCPT1,Fatty acid oxidation
+TMNDNCCPT2,Fatty acid oxidation
+TMNDNCCRNt,Fatty acid oxidation
+TPI,Glycolysis/gluconeogenesis
+TRDR,Nucleotide interconversion
+TRDR2,Miscellaneous
+TRDR3,Miscellaneous
+TREH,Starch and sucrose metabolism
+TREHe,Starch and sucrose metabolism
+TRIDECETH,Glycerophospholipid metabolism
+TRIODTHYSULT,Tyrosine metabolism
+TRIOK,Fructose and mannose metabolism
+TRIPVSteb,Drug metabolism
+TRIPVStev,Drug metabolism
+TRPALAPROr,Peptide metabolism
+TRPARGALAr,Peptide metabolism
+TRPASPASPr,Peptide metabolism
+TRPGLNGLNr,Peptide metabolism
+TRPGLUGLYr,Peptide metabolism
+TRPGLULEUr,Peptide metabolism
+TRPGLUPROr,Peptide metabolism
+TRPGLUTYRr,Peptide metabolism
+TRPGLYASPr,Peptide metabolism
+TRPGLYLEUr,Peptide metabolism
+TRPGLYPHEr,Peptide metabolism
+TRPGLYVALr,Peptide metabolism
+TRPHISMETr,Peptide metabolism
+TRPHYDRO2,Tryptophan metabolism
+TRPILELYSr,Peptide metabolism
+TRPILETRPr,Peptide metabolism
+TRPLEUVALr,Peptide metabolism
+TRPLYSr,Peptide metabolism
+TRPMETARGr,Peptide metabolism
+TRPMETVALr,Peptide metabolism
+TRPO2,Tryptophan metabolism
+TRPPHEr,Peptide metabolism
+TRPPROGLYr,Peptide metabolism
+TRPPROLEUr,Peptide metabolism
+TRPPROVALr,Peptide metabolism
+TRPSERTYRr,Peptide metabolism
+TRPTHRGLUr,Peptide metabolism
+TRPTHRILEr,Peptide metabolism
+TRPTHRTYRr,Peptide metabolism
+TRPTYRGLNr,Peptide metabolism
+TRPTYRTYRr,Peptide metabolism
+TRPVALASPr,Peptide metabolism
+TRYPTAOX,Tryptophan metabolism
+TS3,Vitamin D metabolism
+TSTSTERONEGLCtr,"Transport, endoplasmic reticular"
+TSTSTERONESULT,Steroid metabolism
+TSTSTERONEtr,"Transport, endoplasmic reticular"
+TTDCEAc,Fatty acid oxidation
+TTDCPT2,Fatty acid oxidation
+TTDCRNt,Fatty acid oxidation
+TUDCASULT,Bile acid synthesis
+TXA2tr,"Transport, endoplasmic reticular"
+TXASr,Eicosanoid metabolism
+TXB2c,Eicosanoid metabolism
+TYMSULT,Tyrosine metabolism
+TYMc,Tyrosine metabolism
+TYR3MO2,Tyrosine metabolism
+TYRALAPHEr,Peptide metabolism
+TYRALAr,Peptide metabolism
+TYRARGGLUr,Peptide metabolism
+TYRARGSERr,Peptide metabolism
+TYRASE,Tyrosine metabolism
+TYRASPARGr,Peptide metabolism
+TYRCBOX,Tyrosine metabolism
+TYRCYSGLYr,Peptide metabolism
+TYRCYSTHRr,Peptide metabolism
+TYRDHINDOX,Tyrosine metabolism
+TYRDOPO,Tyrosine metabolism
+TYRDOPO3,Tyrosine metabolism
+TYRDOPOX,Tyrosine metabolism
+TYRGLUr,Peptide metabolism
+TYRLEUARGr,Peptide metabolism
+TYROXDAc,Tyrosine metabolism
+TYRPHETYRr,Peptide metabolism
+TYRTA,Tyrosine metabolism
+TYRTAm,Tyrosine metabolism
+TYRTHRr,Peptide metabolism
+TYRTRPPHEr,Peptide metabolism
+TYRTYRr,Peptide metabolism
+TYRVALMETr,Peptide metabolism
+UAG2EMAi,Aminosugar metabolism
+UAG4E,Aminosugar metabolism
+UAGALDP,Aminosugar metabolism
+UAGDP,Aminosugar metabolism
+UDCASULT,Bile acid synthesis
+UDPACGALtl,"Transport, lysosomal"
+UDPDOLPT_L,N-glycan synthesis
+UDPG1P,Pentose phosphate pathway
+UDPG3DOPA,Tyrosine metabolism
+UDPG4DOPA,Tyrosine metabolism
+UDPG4E,Galactose metabolism
+UDPGALt2n,"Transport, nuclear"
+UDPGALt2r,"Transport, endoplasmic reticular"
+UDPGALtg,"Transport, golgi apparatus"
+UDPGD,Starch and sucrose metabolism
+UDPGLCAter,"Transport, endoplasmic reticular"
+UDPGLCAtg,"Transport, golgi apparatus"
+UDPGLCter,"Transport, endoplasmic reticular"
+UDPGLDCg,Nucleotide sugar metabolism
+UDPGNP,Pentose phosphate pathway
+UDPGP,Starch and sucrose metabolism
+UDPXYLter,"Transport, endoplasmic reticular"
+UDPXYLtg,"Transport, golgi apparatus"
+UDPtl,"Transport, lysosomal"
+UGALGTg,Galactose metabolism
+UGALNACtg,"Transport, golgi apparatus"
+UGCG,Sphingolipid metabolism
+UGLCNACtg,"Transport, golgi apparatus"
+UGLT,Galactose metabolism
+UGT1A10c,Heme degradation
+UGT1A10r,Steroid metabolism
+UGT1A1r,Steroid metabolism
+UGT1A2r,Steroid metabolism
+UGT1A3r,Steroid metabolism
+UGT1A4r,Steroid metabolism
+UGT1A5r,Vitamin A metabolism
+UGT1A5r2,Vitamin A metabolism
+UGT1A6r,Steroid metabolism
+UGT1A8r,Steroid metabolism
+UGT1A9r,Steroid metabolism
+UMPK,Nucleotide interconversion
+UMPK2,Nucleotide interconversion
+UMPK2n,Nucleotide interconversion
+UMPK3,Nucleotide interconversion
+UMPK3n,Nucleotide interconversion
+UMPK4,Nucleotide interconversion
+UMPK4n,Nucleotide interconversion
+UMPK5,Nucleotide interconversion
+UMPK5n,Nucleotide interconversion
+UMPK6,Nucleotide interconversion
+UMPK6n,Nucleotide interconversion
+UMPK7,Nucleotide interconversion
+UMPK7n,Nucleotide interconversion
+UMPKn,Nucleotide interconversion
+UMPtr,"Transport, endoplasmic reticular"
+UNK3r,Methionine and cysteine metabolism
+UPP3S,Heme synthesis
+UPPDC1,Heme synthesis
+UPPN,Pyrimidine catabolism
+URATEtx,"Transport, peroxisomal"
+URCN,Histidine metabolism
+UREAtm,Urea cycle
+URIDK2m,Nucleotide interconversion
+URIDK3,Nucleotide interconversion
+URIK1,Pyrimidine synthesis
+URIK3,Pyrimidine synthesis
+UROLACer,Vitamin C metabolism
+URSCHOLCOAc,Bile acid synthesis
+UTPtn,"Transport, nuclear"
+Uritl,"Transport, lysosomal"
+Uritn,"Transport, nuclear"
+VALARGGLYr,Peptide metabolism
+VALHISASNr,Peptide metabolism
+VALLEUPHEr,Peptide metabolism
+VALLYSTYRr,Peptide metabolism
+VALPHEARGr,Peptide metabolism
+VALPROTRPr,Peptide metabolism
+VALSERARGr,Peptide metabolism
+VALTA,"Valine, leucine, and isoleucine metabolism"
+VALTAm,"Valine, leucine, and isoleucine metabolism"
+VALTRPPHEr,Peptide metabolism
+VALTRPVALr,Peptide metabolism
+VALVALr,Peptide metabolism
+VALt5m,"Transport, mitochondrial"
+VANILLACc,Tyrosine metabolism
+VANILPYRc,Tyrosine metabolism
+VD3,Vitamin D metabolism
+VLCS2p,Bile acid synthesis
+VLCS2r,Bile acid synthesis
+VLCSp,Bile acid synthesis
+VLCSr,Bile acid synthesis
+WHARACHDtr,"Transport, endoplasmic reticular"
+WHTSTSTERONEtr,"Transport, endoplasmic reticular"
+XANDp,Purine catabolism
+XANtx,"Transport, peroxisomal"
+XAO2x,Purine catabolism
+XAOx,Purine catabolism
+XOL24OHtr,"Transport, endoplasmic reticular"
+XOL25OHtr,"Transport, endoplasmic reticular"
+XOL27OHtm,"Transport, mitochondrial"
+XOL27OHtmc,"Transport, mitochondrial"
+XOL7AH2tm,"Transport, mitochondrial"
+XOL7AONEtr,"Transport, endoplasmic reticular"
+XOLDIOLONEt,"Transport, endoplasmic reticular"
+XOLEST183CEH,Cholesterol metabolism
+XOLEST183tl,"Transport, lysosomal"
+XOLTRI24tc,"Transport, endoplasmic reticular"
+XOLTRI25tc,"Transport, endoplasmic reticular"
+XOLTRI27tc,"Transport, endoplasmic reticular"
+XOLTRIOLtm,"Transport, mitochondrial"
+XSERtg,"Transport, golgi apparatus"
+XYLK,Pentose phosphate pathway
+XYLTD_Dr,Pentose phosphate pathway
+XYLTer,Chondroitin synthesis
+XYLUR,Pentose phosphate pathway
+XYLtly,"Transport, lysosomal"
+q10h2tc,"Transport, mitochondrial"
+q10tm,"Transport, mitochondrial"
+r0002,"Transport, endoplasmic reticular"
+r0009,Purine catabolism
+r0016,Miscellaneous
+r0021,Glutathione metabolism
+r0022,Glutathione metabolism
+r0023,Miscellaneous
+r0024,Arginine and proline metabolism
+r0027,Methionine and cysteine metabolism
+r0028,Purine catabolism
+r0033,CoA synthesis
+r0034,Urea cycle
+r0047,Purine catabolism
+r0051,Purine catabolism
+r0055,Pyruvate metabolism
+r0060,Methionine and cysteine metabolism
+r0062,Pyruvate metabolism
+r0068,Miscellaneous
+r0074,Urea cycle
+r0081,Citric acid cycle
+r0082,Miscellaneous
+r0083,Miscellaneous
+r0084,Miscellaneous
+r0085,Urea cycle
+r0086,Urea cycle
+r0097,Miscellaneous
+r0113,Aminosugar metabolism
+r0119,Purine catabolism
+r0122,Glycolysis/gluconeogenesis
+r0127,Alanine and aspartate metabolism
+r0129,Glutathione metabolism
+r0130,Glutathione metabolism
+r0142,Methionine and cysteine metabolism
+r0145,Arginine and proline metabolism
+r0153,Glycolysis/gluconeogenesis
+r0156,Urea cycle
+r0157,Urea cycle
+r0160,"Glycine, serine, alanine, and threonine metabolism"
+r0165,Glycolysis/gluconeogenesis
+r0166,Pyrimidine catabolism
+r0170,Cholesterol metabolism
+r0173,Glycolysis/gluconeogenesis
+r0178,Glutamate metabolism
+r0179,Glutamate metabolism
+r0186,Glycerophospholipid metabolism
+r0191,Fructose and mannose metabolism
+r0193,Methionine and cysteine metabolism
+r0196,Miscellaneous
+r0202,Glycolysis/gluconeogenesis
+r0202m,Glycerophospholipid metabolism
+r0205,Oxidative phosphorylation
+r0208,Fructose and mannose metabolism
+r0210,Methionine and cysteine metabolism
+r0220,Miscellaneous
+r0221,Miscellaneous
+r0224,Folate metabolism
+r0226,Folate metabolism
+r0236,Pyrimidine catabolism
+r0239,Tryptophan metabolism
+r0242,Miscellaneous
+r0245,Glycerophospholipid metabolism
+r0246,Miscellaneous
+r0249,Pentose phosphate pathway
+r0276,Purine catabolism
+r0280,Glycolysis/gluconeogenesis
+r0281,Methionine and cysteine metabolism
+r0283,Beta-Alanine metabolism
+r0287,Fatty acid oxidation
+r0301,Bile acid synthesis
+r0308,Fatty acid oxidation
+r0309,Fatty acid oxidation
+r0310,Fatty acid oxidation
+r0311,Fatty acid oxidation
+r0317,Miscellaneous
+r0318,Miscellaneous
+r0319,Miscellaneous
+r0321,Cholesterol metabolism
+r0330,Pyrimidine catabolism
+r0331,Pyrimidine catabolism
+r0339,Miscellaneous
+r0340,Miscellaneous
+r0345,Nucleotide interconversion
+r0354,Glycolysis/gluconeogenesis
+r0355,Glycolysis/gluconeogenesis
+r0357,Fructose and mannose metabolism
+r0358,Fructose and mannose metabolism
+r0360,Fructose and mannose metabolism
+r0361,Fructose and mannose metabolism
+r0363,Aminosugar metabolism
+r0364,Aminosugar metabolism
+r0365,Propanoate metabolism
+r0377,Pyrimidine catabolism
+r0381,Taurine and hypotaurine metabolism
+r0383,Miscellaneous
+r0385,Miscellaneous
+r0386,Miscellaneous
+r0389,Vitamin B6 metabolism
+r0390,Miscellaneous
+r0391,NAD metabolism
+r0392,Miscellaneous
+r0393,Miscellaneous
+r0394,Nucleotide interconversion
+r0395,Nucleotide interconversion
+r0398,Tetrahydrobiopterin metabolism
+r0399,Tetrahydrobiopterin metabolism
+r0402,Tetrahydrobiopterin metabolism
+r0403,Tetrahydrobiopterin metabolism
+r0407,Miscellaneous
+r0408,Miscellaneous
+r0409,Miscellaneous
+r0413,Glycolysis/gluconeogenesis
+r0422,Miscellaneous
+r0423,Miscellaneous
+r0424,Miscellaneous
+r0425,Miscellaneous
+r0426,Miscellaneous
+r0431,Fatty acid oxidation
+r0432,Fatty acid oxidation
+r0433,Fatty acid oxidation
+r0434,Fatty acid oxidation
+r0437,Fatty acid oxidation
+r0438,Fatty acid oxidation
+r0440,Fatty acid oxidation
+r0441,Fatty acid oxidation
+r0443,Fatty acid oxidation
+r0444,Fatty acid oxidation
+r0450,Lysine metabolism
+r0451,Miscellaneous
+r0456,Nucleotide interconversion
+r0463,Cholesterol metabolism
+r0465,Miscellaneous
+r0466,Miscellaneous
+r0470,Nucleotide interconversion
+r0472,Nucleotide interconversion
+r0474,Nucleotide interconversion
+r0475,Nucleotide interconversion
+r0480,Glycerophospholipid metabolism
+r0483,Pyrimidine catabolism
+r0488,Cholesterol metabolism
+r0502,Purine catabolism
+r0504,Purine catabolism
+r0509,Citric acid cycle
+r0510,Miscellaneous
+r0511,Miscellaneous
+r0512,Folate metabolism
+r0514,Folate metabolism
+r0517,Miscellaneous
+r0522,Folate metabolism
+r0523,Folate metabolism
+r0525,Lysine metabolism
+r0527,NAD metabolism
+r0531,Nucleotide interconversion
+r0537,Glycerophospholipid metabolism
+r0539,Taurine and hypotaurine metabolism
+r0541,Tryptophan metabolism
+r0545,Phenylalanine metabolism
+r0546,Miscellaneous
+r0547,Phenylalanine metabolism
+r0548,Miscellaneous
+r0552,"Glycine, serine, alanine, and threonine metabolism"
+r0553,"Glycine, serine, alanine, and threonine metabolism"
+r0555,Miscellaneous
+r0557,Miscellaneous
+r0558,Miscellaneous
+r0560,"Valine, leucine, and isoleucine metabolism"
+r0561,"Valine, leucine, and isoleucine metabolism"
+r0568,Glutathione metabolism
+r0570,Pentose phosphate pathway
+r0571,"Valine, leucine, and isoleucine metabolism"
+r0573,Bile acid synthesis
+r0575,Cholesterol metabolism
+r0578,CoA synthesis
+r0579,CoA synthesis
+r0584,NAD metabolism
+r0590,CoA synthesis
+r0591,CoA synthesis
+r0594,Lysine metabolism
+r0595,Methionine and cysteine metabolism
+r0596,CoA synthesis
+r0603,"Valine, leucine, and isoleucine metabolism"
+r0604,Miscellaneous
+r0610,Miscellaneous
+r0611,Miscellaneous
+r0615,Arginine and proline metabolism
+r0616,Arginine and proline metabolism
+r0617,Arginine and proline metabolism
+r0618,Arginine and proline metabolism
+r0627,Miscellaneous
+r0629,Bile acid synthesis
+r0630,Bile acid synthesis
+r0633,Fatty acid oxidation
+r0634,Fatty acid oxidation
+r0636,Fatty acid oxidation
+r0637,Fatty acid oxidation
+r0638,Fatty acid oxidation
+r0639,Fatty acid oxidation
+r0641,Fatty acid oxidation
+r0642,Miscellaneous
+r0643,"Valine, leucine, and isoleucine metabolism"
+r0645,Tryptophan metabolism
+r0647,Tryptophan metabolism
+r0650,Bile acid synthesis
+r0651,Bile acid synthesis
+r0652,Fatty acid oxidation
+r0653,Fatty acid oxidation
+r0655,"Valine, leucine, and isoleucine metabolism"
+r0656,Miscellaneous
+r0660,Fatty acid oxidation
+r0661,Fatty acid oxidation
+r0666,Purine synthesis
+r0669,"Valine, leucine, and isoleucine metabolism"
+r0670,Miscellaneous
+r0671,CoA synthesis
+r0672,Bile acid synthesis
+r0673,Tetrahydrobiopterin metabolism
+r0686,Arginine and proline metabolism
+r0688,Bile acid synthesis
+r0698,Bile acid synthesis
+r0706,Bile acid synthesis
+r0707,Miscellaneous
+r0714,Fatty acid oxidation
+r0715,Fatty acid oxidation
+r0716,Miscellaneous
+r0717,Fatty acid oxidation
+r0718,Fatty acid oxidation
+r0719,Fatty acid oxidation
+r0720,Fatty acid oxidation
+r0721,Fatty acid oxidation
+r0722,Fatty acid oxidation
+r0723,Fatty acid oxidation
+r0724,Fatty acid oxidation
+r0726,Fatty acid oxidation
+r0727,Fatty acid oxidation
+r0728,Fatty acid oxidation
+r0729,Fatty acid oxidation
+r0730,Fatty acid oxidation
+r0731,Fatty acid oxidation
+r0732,Fatty acid oxidation
+r0733,Fatty acid oxidation
+r0734,Fatty acid oxidation
+r0735,Fatty acid oxidation
+r0737,Miscellaneous
+r0739,Bile acid synthesis
+r0741,Bile acid synthesis
+r0743,Bile acid synthesis
+r0744,Bile acid synthesis
+r0747,Bile acid synthesis
+r0750,Bile acid synthesis
+r0752,Miscellaneous
+r0753,Miscellaneous
+r0754,Miscellaneous
+r0755,Miscellaneous
+r0756,Miscellaneous
+r0757,Miscellaneous
+r0758,Tryptophan metabolism
+r0779,Miscellaneous
+r0781,Cholesterol metabolism
+r0782,Aminosugar metabolism
+r0783,Cholesterol metabolism
+r0784,Pentose phosphate pathway
+r0786,Sphingolipid metabolism
+r0787,Sphingolipid metabolism
+r0788,Sphingolipid metabolism
+r0789,Sphingolipid metabolism
+r0791,Fatty acid oxidation
+r0792,Folate metabolism
+r0795,Miscellaneous
+r0797,Bile acid synthesis
+r0801,"Transport, mitochondrial"
+r0809,Purine catabolism
+r0812,Purine catabolism
+r0818,Pyruvate metabolism
+r0819,"Transport, mitochondrial"
+r0821,"Transport, mitochondrial"
+r0822,"Transport, mitochondrial"
+r0826,"Transport, endoplasmic reticular"
+r0829,"Transport, mitochondrial"
+r0830,"Transport, mitochondrial"
+r0834,"Transport, mitochondrial"
+r0835,"Transport, mitochondrial"
+r0836,"Transport, mitochondrial"
+r0838,"Transport, mitochondrial"
+r0840,"Transport, endoplasmic reticular"
+r0841,"Transport, endoplasmic reticular"
+r0842,"Transport, endoplasmic reticular"
+r0845,"Transport, endoplasmic reticular"
+r0853,Purine catabolism
+r0859,Purine catabolism
+r0860,Purine catabolism
+r0885,"Transport, mitochondrial"
+r0886,"Transport, endoplasmic reticular"
+r0907,"Transport, mitochondrial"
+r0908,"Transport, endoplasmic reticular"
+r0909,"Transport, endoplasmic reticular"
+r0911,"Transport, mitochondrial"
+r0913,"Transport, mitochondrial"
+r0915,"Transport, mitochondrial"
+r0917,"Transport, mitochondrial"
+r0921,"Transport, mitochondrial"
+r0926,"Transport, mitochondrial"
+r0927,"Transport, mitochondrial"
+r0931,"Transport, endoplasmic reticular"
+r0932,"Transport, lysosomal"
+r0934,"Transport, peroxisomal"
+r0936,"Transport, endoplasmic reticular"
+r0937,"Transport, lysosomal"
+r0950,"Transport, mitochondrial"
+r0954,"Transport, peroxisomal"
+r0960,"Transport, endoplasmic reticular"
+r0962,"Transport, mitochondrial"
+r0968,"Transport, endoplasmic reticular"
+r0970,"Transport, endoplasmic reticular"
+r0973,"Transport, mitochondrial"
+r0975,"Transport, mitochondrial"
+r0983,"Transport, endoplasmic reticular"
+r0984,"Transport, lysosomal"
+r0986,"Transport, lysosomal"
+r0987,"Transport, lysosomal"
+r0989,"Transport, endoplasmic reticular"
+r0990,"Transport, peroxisomal"
+r0994,"Transport, endoplasmic reticular"
+r0995,"Transport, endoplasmic reticular"
+r0997,"Transport, peroxisomal"
+r0998,"Transport, endoplasmic reticular"
+r0999,"Transport, peroxisomal"
+r1000,"Transport, endoplasmic reticular"
+r1001,"Transport, mitochondrial"
+r1002,"Transport, endoplasmic reticular"
+r1003,"Transport, peroxisomal"
+r1005,"Transport, mitochondrial"
+r1006,"Transport, peroxisomal"
+r1007,"Transport, peroxisomal"
+r1008,"Transport, mitochondrial"
+r1011,"Transport, endoplasmic reticular"
+r1012,"Transport, peroxisomal"
+r1013,"Transport, endoplasmic reticular"
+r1014,"Transport, peroxisomal"
+r1018,"Transport, endoplasmic reticular"
+r1019,"Transport, peroxisomal"
+r1020,"Transport, mitochondrial"
+r1024,"Transport, endoplasmic reticular"
+r1025,Bile acid synthesis
+r1051,"Transport, endoplasmic reticular"
+r1052,"Transport, lysosomal"
+r1078,"Transport, mitochondrial"
+r1109,Miscellaneous
+r1117,"Transport, mitochondrial"
+r1134,Miscellaneous
+r1135,Miscellaneous
+r1146,"Transport, mitochondrial"
+r1147,"Transport, peroxisomal"
+r1148,"Transport, peroxisomal"
+r1150,"Transport, lysosomal"
+r1154,Propanoate metabolism
+r1155,"Transport, mitochondrial"
+r1156,Nucleotide interconversion
+r1159,"Transport, endoplasmic reticular"
+r1164,Miscellaneous
+r1165,Miscellaneous
+r1166,Miscellaneous
+r1167,Miscellaneous
+r1168,Miscellaneous
+r1169,Miscellaneous
+r1170,Miscellaneous
+r1171,Miscellaneous
+r1172,Miscellaneous
+r1174,Miscellaneous
+r1175,Miscellaneous
+r1177,Miscellaneous
+r1179,Miscellaneous
+r1181,Miscellaneous
+r1182,Miscellaneous
+r1183,Miscellaneous
+r1251,Fatty acid oxidation
+r1252,Fatty acid oxidation
+r1253,Fatty acid oxidation
+r1254,Fatty acid oxidation
+r1255,Fatty acid oxidation
+r1257,Fatty acid oxidation
+r1259,Fatty acid oxidation
+r1260,Fatty acid oxidation
+r1262,Fatty acid oxidation
+r1291,"Transport, mitochondrial"
+r1292,"Transport, peroxisomal"
+r1298,"Transport, lysosomal"
+r1299,"Transport, lysosomal"
+r1301,"Transport, lysosomal"
+r1302,"Transport, lysosomal"
+r1303,"Transport, endoplasmic reticular"
+r1304,"Transport, lysosomal"
+r1318,"Transport, endoplasmic reticular"
+r1364,"Transport, lysosomal"
+r1365,"Transport, lysosomal"
+r1367,"Transport, lysosomal"
+r1368,"Transport, lysosomal"
+r1377,Miscellaneous
+r1378,Miscellaneous
+r1380,Cholesterol metabolism
+r1382,Folate metabolism
+r1383,Folate metabolism
+r1384,Nucleotide interconversion
+r1391,Miscellaneous
+r1392,Miscellaneous
+r1400,Fatty acid oxidation
+r1401,Fatty acid oxidation
+r1418,Miscellaneous
+r1427,"Transport, mitochondrial"
+r1428,"Transport, peroxisomal"
+r1429,"Transport, peroxisomal"
+r1434,"Transport, mitochondrial"
+r1435,"Transport, mitochondrial"
+r1436,"Transport, mitochondrial"
+r1437,"Transport, mitochondrial"
+r1440,"Transport, mitochondrial"
+r1443,Fatty acid oxidation
+r1444,Fatty acid oxidation
+r1445,Fatty acid oxidation
+r1446,Miscellaneous
+r1447,Fatty acid oxidation
+r1448,Fatty acid oxidation
+r1449,Fatty acid oxidation
+r1450,Fatty acid oxidation
+r1451,Fatty acid oxidation
+r1454,"Transport, mitochondrial"
+r1455,"Transport, mitochondrial"
+r1456,"Transport, mitochondrial"
+r1457,Sphingolipid metabolism
+r1459,"Transport, nuclear"
+r1467,"Transport, mitochondrial"
+r1468,"Transport, mitochondrial"
+r1472,Fatty acid oxidation
+r1474,Fatty acid oxidation
+r1477,Fatty acid oxidation
+r1481,Fatty acid oxidation
+r1487,Fatty acid oxidation
+r2371,"Transport, mitochondrial"
+r2372,"Transport, mitochondrial"
+r2373,"Transport, mitochondrial"
+r2374,"Transport, mitochondrial"
+r2375,"Transport, mitochondrial"
+r2376,"Transport, mitochondrial"
+r2377,"Transport, mitochondrial"
+r2378,"Transport, mitochondrial"
+r2379,"Transport, mitochondrial"
+r2380,"Transport, mitochondrial"
+r2381,"Transport, mitochondrial"
+r2382,"Transport, mitochondrial"
+r2384,"Transport, mitochondrial"
+r2385,"Transport, mitochondrial"
+r2386,"Transport, mitochondrial"
+r2387,"Transport, mitochondrial"
+r2388,"Transport, mitochondrial"
+r2389,"Transport, mitochondrial"
+r2390,"Transport, mitochondrial"
+r2391,"Transport, mitochondrial"
+r2392,"Transport, mitochondrial"
+r2393,"Transport, mitochondrial"
+r2394,"Transport, mitochondrial"
+r2395,"Transport, mitochondrial"
+r2396,"Transport, mitochondrial"
+r2397,"Transport, mitochondrial"
+r2398,"Transport, mitochondrial"
+r2399,"Transport, mitochondrial"
+r2400,"Transport, mitochondrial"
+r2401,"Transport, mitochondrial"
+r2402,"Transport, mitochondrial"
+r2403,"Transport, mitochondrial"
+r2404,"Transport, mitochondrial"
+r2405,"Transport, mitochondrial"
+r2406,"Transport, mitochondrial"
+r2407,"Transport, mitochondrial"
+r2408,"Transport, mitochondrial"
+r2409,"Transport, mitochondrial"
+r2410,"Transport, mitochondrial"
+r2411,"Transport, mitochondrial"
+r2412,"Transport, mitochondrial"
+r2413,"Transport, mitochondrial"
+r2416,"Transport, mitochondrial"
+r2419,"Transport, mitochondrial"
+r2420,"Transport, mitochondrial"
+r2425,"Transport, mitochondrial"
+r2433,"Transport, mitochondrial"
+r2434,"Transport, mitochondrial"
+r2435,"Transport, mitochondrial"
+r2436,"Transport, mitochondrial"
+r2437,"Transport, mitochondrial"
+r2438,"Transport, mitochondrial"
+r2472,"Transport, mitochondrial"
+r2473,"Transport, endoplasmic reticular"
+r2497,"Transport, peroxisomal"
+r2498,"Transport, peroxisomal"
+r2499,"Transport, peroxisomal"
+r2501,"Transport, peroxisomal"
+r2502,"Transport, peroxisomal"
+r2503,"Transport, peroxisomal"
+r2505,"Transport, endoplasmic reticular"
+r2506,"Transport, endoplasmic reticular"
+r2507,"Transport, endoplasmic reticular"
+r2508,"Transport, endoplasmic reticular"
+r2509,"Transport, endoplasmic reticular"
+r2510,"Transport, endoplasmic reticular"
+r2511,"Transport, endoplasmic reticular"
+r2512,"Transport, endoplasmic reticular"
+r2513,"Transport, endoplasmic reticular"
+r2514,"Transport, endoplasmic reticular"
+r2514m,"Transport, mitochondrial"
+r2515,"Transport, endoplasmic reticular"
+r2516,"Transport, peroxisomal"
+r2517,"Transport, peroxisomal"
+r2518,"Transport, peroxisomal"
+r2519,"Transport, endoplasmic reticular"
+r2520,"Transport, mitochondrial"
+r2521,"Transport, endoplasmic reticular"
+r2537,"Transport, endoplasmic reticular"
+r2538,"Transport, endoplasmic reticular"
+r2539,"Transport, mitochondrial"
