@@ -6,6 +6,7 @@ from __future__ import annotations
 from rdkit import Chem, RDLogger
 from Levenshtein import ratio
 from collections import namedtuple
+from pandas import isna
 
 def matchMetsByInchi(nminchi1: str,
         nminchi2: str,
@@ -15,7 +16,7 @@ def matchMetsByInchi(nminchi1: str,
         charge_neutralized_inchi2:str,
         charge1:int,
         charge2:int,
-        verbose:bool = False) -> tuple:
+        verbose:bool = False) -> tuple[bool, int]:
     ''' A combination of different matching algorithms for the Inchi-Strings, which end in a simple yes/no answer, whether the molecules are the same'''
 
     # rdkit is somewhat chatty. To supress the warning:
@@ -27,6 +28,8 @@ def matchMetsByInchi(nminchi1: str,
 #try:
     m1 = mol1
     m2 = mol2
+    if any([isna(m1), isna(m2), m1 == None, m2== None]):
+        return (False, 0)
     # check for charge differences and correct them if necessary
     chargeDiff = charge1 - charge2
     if charge1 != charge2:
@@ -43,7 +46,6 @@ def matchMetsByInchi(nminchi1: str,
         nminchi1 = "/".join([x for x in nminchi1.split("/") if not x.startswith("b")])
         nminchi2 = "/".join([x for x in nminchi2.split("/") if not x.startswith("b")])
         same = nminchi1 == nminchi2
-        #print(nminchi1, nminchi2)
     return(same, chargeDiff)
 
 

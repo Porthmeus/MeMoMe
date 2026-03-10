@@ -69,11 +69,11 @@ def _download(path: Path, URL: str):
     try:
         urllib.request.urlretrieve(URL, path)
         print("Downloading " + URL + " to " + str(path))
-    except URLError:
-        print("WARNING: Could not download " + str(path))
+    except URLError as e:
+        print(f"WARNING: Could not download {str(URL)}. Error: {e}")
 
 
-def download() -> bool:
+def download(db_url, file) -> bool:
     """
     This method creates a folder to store the databases and also downloads them
     :return:
@@ -85,11 +85,11 @@ def download() -> bool:
     # path where we want to save the downloaded files
     create_folder(database_path)
 
-    status = update_database()
+    status = update_database(db_url, file)
 
     return status
 
-def databases_available() -> bool:
+def databases_available(file) -> bool:
     """
     Method just checks if database folder is present and if all databases have been downloaded - return True if everything is in place, False, if something is missing
     """
@@ -102,12 +102,12 @@ def databases_available() -> bool:
         is_there = False
     else:
         for db in config["databases"]:
-            if not os.path.exists(Path(database_path, config["databases"][db]["file"])):
+            if not os.path.exists(Path(database_path, config["databases"][db][file])):
                 is_there = False
                 break
     return is_there
 
-def update_database() -> bool:
+def update_database(db_url, file) -> bool:
     '''Remove the databases and download them again with possible new updates'''
     # load the config yaml
     config = get_config()
@@ -117,10 +117,10 @@ def update_database() -> bool:
 
     with ThreadPoolExecutor(max_workers=8) as executor:
       for i in config["databases"]:
-          db_path = database_path.joinpath(config["databases"][i]["file"])
+          db_path = database_path.joinpath(config["databases"][i][file])
           if os.path.exists(db_path):
               os.remove(db_path)
-          executor.submit(_download, db_path, config["databases"][i]["URL"])
+          executor.submit(_download, db_path, config["databases"][i][db_url])
 
     # Wait until all downloads are finished
     executor.shutdown(wait=True)

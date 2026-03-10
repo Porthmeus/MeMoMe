@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import warnings
 from copy import deepcopy
+from pandas import isna
 
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix, validateInchi
 from src.annotation.annotateInchiRoutines import findOptimalInchi
@@ -227,11 +228,14 @@ class MeMoMetabolite():
 
     def set_inchi_string(self, new_inchi_string: str, source: str) -> int:
         """ set function for _inchi_string """
+        if new_inchi_string == None or new_inchi_string == "" or isna(new_inchi_string):
+            return 0
+
         old_inchi = deepcopy(self._inchi_string)
         
         # validate inchi string - handles also empty strings
         new_inchi_string = validateInchi(new_inchi_string)
-        
+
         if self._inchi_string is not None:
             warnings.warn("changed metbolite _inchi_string from {old} to {new}".format(old=self._inchi_string,
                                                                                        new=new_inchi_string))
@@ -245,7 +249,7 @@ class MeMoMetabolite():
         
         # handle invalid inchi strings -handles also empty strings
         new_inchi_string = validateInchi(new_inchi_string)
-        if new_inchi_string == None:
+        if new_inchi_string == None or isna(new_inchi_string) or new_inchi_string == "":
             return changed
         
         if self._inchi_string != None:
@@ -254,9 +258,6 @@ class MeMoMetabolite():
             if new is None:
                 raise NotImplementedError()
             if new != old:
-                #print(self.id) # nice feature for debugging
-                #print("OLD:",old)
-                #print("NEW:",new)
                 self._inchi_string = new
                 self._inchi_source = source
                 changed =  1
@@ -422,7 +423,6 @@ class MeMoMetabolite():
 
         # check if the IDs are the same, if not check what to do:
         if all([x == y for x, y in zip(self.get_unique_attributes(), new_metabolite.get_unique_attributes())]) != True:
-            print([x == y for x, y in zip(self.get_unique_attributes(), new_metabolite.get_unique_attributes())])
             if force == False:
                 raise ValueError("Unique attributes differ in the two metabolites {old} vs. {new}".format(
                     old=str(self.get_unique_attributes()), new=str(new_metabolite.get_unique_attributes())))
@@ -459,7 +459,6 @@ class MeMoMetabolite():
             # we can either add it on some external class or perfrom it here
             # downl_status = download()
             # if downl_status:
-            #    print("Succesfully downloaded")
 
             # series of if/else statements to handle querying all the types of
             # databases we have to retrieve the inchi string
