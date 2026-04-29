@@ -78,9 +78,9 @@ def createInchiKey2String(pbc_table: str, inchiKeys: list[str]) -> str:
     try:
         result = subprocess.run(
             ["zgrep", "-f", keys_file, pbc_table],
-            text=True,
-            capture_output=True,
-            check=True
+            text=True, # Ensures output is returned as a string
+            capture_output=True, # Captures stdout and stderr
+            check=True # Raises an error if the command fails
         )
         return result.stdout
     finally:
