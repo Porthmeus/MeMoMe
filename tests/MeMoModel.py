@@ -43,6 +43,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
           self.assertTrue(m.get_formula() is not None)
         mod.annotate()
 
+
     def test_SumFormulaAnnotationSeed_id(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
       metaboliteC: MeMoMetabolite = MeMoMetabolite()
@@ -62,10 +63,43 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       metaboliteA.annotations = {"seed.compound": ["cpd00001"]}
       metaboliteC.annotations = {"seed.compound": ["cpd00003"]}
 
+
+      # TODO WHY DOE WE NOT HAVE TO SET ANNOATION SOURCE
+
       mod = MeMoModel([metaboliteA, metaboliteC])
       handleMetabolites(mod.metabolites, DBName("ModelSeed"))
       self.assertEqual(metaboliteA._formula, "H2O")
       self.assertEqual(metaboliteC._formula, "C21H26N7O14P2")
+
+
+    def test_SumFormulaAnnotationVMH_id(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("12dihdglyc")
+      metaboliteC.set_id("12dipdglyc")
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleIDs(mod.metabolites, DBName("VMH"))
+
+      self.assertEqual(metaboliteA._formula, "C37H72O5")
+      self.assertEqual(metaboliteC._formula, "C33H64O5")
+
+
+    def test_SumFormulaAnnotationVMH_metabolite(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.annotations = {"vmhmetabolite": ["12dihdglyc"]}
+      metaboliteC.annotations = {"vmhmetabolite": ["12dipdglyc"]}
+                                 
+      metaboliteA.annotations_source = {"vmhmetabolite": ["VMH"]}
+      metaboliteC.annotations_source = {"vmhmetabolite": ["VMH"]}
+
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleMetabolites(mod.metabolites, DBName("VMH"))
+      self.assertEqual(metaboliteA._formula, "C37H72O5")
+      self.assertEqual(metaboliteC._formula, "C33H64O5")
+
 
 
     def test_MeMoModelAnnotation(self):

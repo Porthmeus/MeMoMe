@@ -91,6 +91,8 @@ def reformatVMH(vmh:pd.DataFrame = pd.DataFrame()) -> pd.DataFrame:
     dat_all["id"] = dat_all.index
     dat_all = dat_all.loc[:,["id","name","inchi","DBs"]]
     dat_all = pd.concat([dat_all, vmh], axis = 1)
+
+    dat_all = dat_all.rename(columns={"neutralFormula": "formula"})
     
     # save data
     # writeData(dat_all, db = "VMH")
