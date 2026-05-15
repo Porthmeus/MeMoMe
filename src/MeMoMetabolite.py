@@ -166,6 +166,9 @@ class MeMoMetabolite():
 
       return f"{self.__class__.__name__}(" + ", ".join(fields) + ")"
 
+    def get_formula(self):
+      return self._formula
+       
     def set_id(self, new_id: str) -> None:
         """
         set function for _id

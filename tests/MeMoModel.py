@@ -33,6 +33,15 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertIsInstance(mod, MeMoModel)
         self.assertIsInstance(mod.cobra_model, cb.Model)
 
+
+    def test_SumFormulaParsing(self):
+        # load e.coli core as a reference in two of the three supported methods
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        #ecore has annotations for ALL metabolites
+        for m in mod.metabolites:
+          self.assertTrue(m.get_formula() is not None)
+
     def test_MeMoModelAnnotation(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
         mod_path = self.dat.joinpath("e_coli_core.xml")
