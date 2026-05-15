@@ -15,7 +15,7 @@ databases:
     file: "BiGG.tsv"
     reformat: "BiGG_MMM.csv"
   VMH:
-    URL: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
+    URL: "http://49.12.211.202:7999/vmh.json"
     REFORMAT_URL: "https://zenodo.org/records/15591559/files/VMH_MMM.csv?download=1"
     file: "vmh.json"
     reformat: "VMH_MMM.csv"
