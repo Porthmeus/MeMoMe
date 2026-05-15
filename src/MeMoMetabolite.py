@@ -39,6 +39,7 @@ class MeMoMetabolite():
             _inchi_string: str|None = None,
             _inchi_source: str|None = None,
             _formula: str|None = None,
+            _formula_source: str|None = None,
             _charge: int|None = None,
             # TODO _charge_source: str|None = None,
             _pKa: dict[str,float]|None= None,
@@ -108,7 +109,9 @@ class MeMoMetabolite():
             self._formula = None
         else:
             self._formula = None
-            self.set_formula(_formula)
+            if _formula_source is None:
+              _formula_source = "model"
+            self.set_formula(_formula, _formula_source)
 
         if _inchi_string is None:
             self._inchi_string = None
@@ -241,11 +244,13 @@ class MeMoMetabolite():
         # check whethter there was acutally an addition of values
         return int(old_orig_ids != self.orig_ids)
 
-    def set_formula(self, new_formula: str) -> None:
+    def set_formula(self, new_formula: str, source: str) -> int:
         """ set function for _formula """
         if self._formula is not None:
             warnings.warn("changed metbolite _formula from {old} to {new}".format(old=self._formula, new=new_formula))
         self._formula = new_formula
+        self._formula_source = source
+        return 1
 
     def set_inchi_string(self, new_inchi_string: str, source: str) -> int:
         """ set function for _inchi_string """

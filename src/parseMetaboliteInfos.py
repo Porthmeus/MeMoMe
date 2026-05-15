@@ -81,15 +81,12 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate: bool = True) -> list:
     # read the sbml file
     reader = sbml.SBMLReader()
     doc = reader.readSBMLFromFile(modelfile)
-
     # validate if necessary
     if validate:
         validateSBML(doc, strict=False)
 
     # get the actual model and its id from the file
     mod = doc.getModel()
-    mod_id = mod.getId()
-
     # extract the metabolites 
     memoMets = parseMetaboliteInfoFromSBMLMod(model=mod)
     return memoMets

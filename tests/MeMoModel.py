@@ -1,4 +1,4 @@
-# Porthmeus
+# PorthmeusMemoMode
 # 02.08.23
 
 import unittest
@@ -11,7 +11,7 @@ import sqlite3
 from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotation.annotateAux import AnnotationResult, load_database, handleMetabolites, handleIDs
+from src.annotation.annotateAux import AnnotationResult, DBName, load_database, handleMetabolites, handleIDs
 from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
 
 print(sys.version)
@@ -41,6 +41,32 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         #ecore has annotations for ALL metabolites
         for m in mod.metabolites:
           self.assertTrue(m.get_formula() is not None)
+        mod.annotate()
+
+    def test_SumFormulaAnnotationSeed_id(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+      metaboliteC.set_id("cpd00003")
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleIDs(mod.metabolites, DBName("ModelSeed"))
+
+      self.assertEqual(metaboliteA._formula, "H2O")
+      self.assertEqual(metaboliteC._formula, "C21H26N7O14P2")
+
+
+    def test_SumFormulaAnnotationSeed_metabolite(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.annotations = {"seed.compound": ["cpd00001"]}
+      metaboliteC.annotations = {"seed.compound": ["cpd00003"]}
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleMetabolites(mod.metabolites, DBName("ModelSeed"))
+      self.assertEqual(metaboliteA._formula, "H2O")
+      self.assertEqual(metaboliteC._formula, "C21H26N7O14P2")
+
 
     def test_MeMoModelAnnotation(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
