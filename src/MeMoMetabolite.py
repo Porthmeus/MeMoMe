@@ -146,7 +146,25 @@ class MeMoMetabolite():
             if annotations_source is None:
                 annotations_source = "model"
             self.set_annotations(annotations, source = annotations_source)
+    
+    def __str__(self) -> str:
+      fields = [
+          f"id={self._id!r}",
+          f"orig_ids={self.orig_ids!r}",
+          f"model_id={self._model_id!r}",
+          f"names={self.names!r}",
+          f"names_source={self.names_source!r}",
+          f"inchi_string={self._inchi_string!r}",
+          f"inchi_source={self._inchi_source!r}",
+          f"formula={self._formula!r}",
+          f"charge={self._charge!r}",
+          f"pKa={self._pKa!r}",
+          f"pKb={self._pKb!r}",
+          f"annotations={self.annotations!r}",
+          f"annotations_source={self.annotations_source!r}",
+      ]
 
+      return f"{self.__class__.__name__}(" + ", ".join(fields) + ")"
 
     def set_id(self, new_id: str) -> None:
         """
