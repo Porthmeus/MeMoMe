@@ -17,7 +17,7 @@ from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy, copy
 from src.download_db import get_config
-from src.annotation.annotateAux import AnnotationResult, handleIDs, handleMetabolites
+from src.annotation.annotateAux import AnnotationResult, DBName, handleIDs, handleMetabolites
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -90,26 +90,19 @@ class MeMoModel:
         final_numbers = AnnotationResult(0,0,0)
         id_based_threshold = 0.8
         id_based_applied = []
-        if origin_dbs.get("ModelSEED", 0) >= id_based_threshold or origin_dbs.get("gapseq", 0) >= id_based_threshold:
-            temp_result = annotateModelSEED_id(self.metabolites, allow_missing_dbs)
-            print("ModelSEED (id):", temp_result)
-            final_numbers = final_numbers + temp_result
-            id_based_applied.append("ModelSEED")
-        if origin_dbs.get("BiGG", 0) >= id_based_threshold:
-            temp_result = annotateBiGG_id(self.metabolites, allow_missing_dbs)
-            print("BiGG (id):", temp_result)
-            final_numbers = final_numbers + temp_result
-            id_based_applied.append("BiGG")
-        if origin_dbs.get("VMH", 0) >= id_based_threshold:
-            temp_result = annotateVMH_id(self.metabolites, allow_missing_dbs)
-            print("VMH (id):", temp_result)
-            final_numbers = final_numbers + temp_result
-            id_based_applied.append("VMH")
+
+        for db_name in get_config()["databases"].keys():
+            if db_name not in ["Identifiers", "TestCase"]:
+              temp_result = handleIDs(self.metabolites, db_name, allow_missing_dbs)
+              print(f"{db_name} (id):", temp_result)
+              final_numbers = final_numbers + temp_result
+              id_based_applied.append(db_name)
+
         if not id_based_applied:
             cpd_count = sum(1 for met in self.metabolites if met._id and met._id.startswith("cpd"))
             cpd_ratio = cpd_count / len(self.metabolites) if self.metabolites else 0
             if cpd_ratio >= id_based_threshold:
-                temp_result = annotateModelSEED_id(self.metabolites, allow_missing_dbs)
+                temp_result = handleIDs(self.metabolites, DBName("ModelSeed"), allow_missing_dbs)
                 print("ModelSEED (id fallback):", temp_result)
                 final_numbers = final_numbers + temp_result
                 id_based_applied.append("ModelSEED")
@@ -127,8 +120,7 @@ class MeMoModel:
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
 
-        #self.annotated = True
-        #print("TOTAL:", final_numbers)
+       
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
