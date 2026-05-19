@@ -250,6 +250,15 @@ class MeMoMetabolite():
             warnings.warn("changed metbolite _formula from {old} to {new}".format(old=self._formula, new=new_formula))
         self._formula = new_formula
         self._formula_source = source
+        # Return one because we thats how count the added formula in the AnnotationResult
+        return 1
+
+    def add_formula(self, new_formula: str, source: str) -> int:
+        """ add function for _formula """
+        if self._formula is not None:
+            return 0
+        self._formula = new_formula
+        self._formula_source = source
         return 1
 
     def set_inchi_string(self, new_inchi_string: str, source: str) -> int:

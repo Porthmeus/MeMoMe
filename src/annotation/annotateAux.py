@@ -170,7 +170,7 @@ def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_
            new_inchis = new_inchis + x
       
       if new_formula is not None: 
-           x = met.set_formula(new_formula, source)
+           x = met.add_formula(new_formula, source)
            new_formulas = new_formulas + x
   # return the number of metabolites which got newly annotated with inchis,
   # annotations and names
@@ -230,7 +230,7 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
                 new_inchis_added = new_inchis_added + x
 
             if new_formula is not None: 
-                 x = met.set_formula(new_formula, source)
+                 x = met.add_formula(new_formula, source)
                  new_formulas_added = new_formulas_added + x
 
     anno_result = AnnotationResult(new_inchis_added, new_names_added, new_names_added, new_formulas_added)
