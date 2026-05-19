@@ -1,6 +1,7 @@
 # PorthmeusMemoMode
 # 02.08.23
 
+from os import wait
 import unittest
 import cobra as cb
 import pandas as pd
@@ -41,8 +42,27 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         #ecore has annotations for ALL metabolites
         for m in mod.metabolites:
           self.assertTrue(m.get_formula() is not None)
-        mod.annotate()
 
+
+
+    def test_SumFormulaSet(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+
+      metaboliteA.set_formula("C21H26N7O14P2", "src")
+
+      self.assertEqual(metaboliteA._formula, "C21H26N7O14P2")
+      self.assertEqual(metaboliteA._formula_source, "src")
+
+    def test_SumFormulaAdd(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+
+      self.assertEqual(metaboliteA.add_formula("C21H26N7O14P2", "src"), 1)
+      self.assertEqual(metaboliteA.add_formula("C21H26N7O14P2", "src"), 0)
+
+      self.assertEqual(metaboliteA._formula, "C21H26N7O14P2")
+      self.assertEqual(metaboliteA._formula_source, "src")
 
     def test_SumFormulaAnnotationSeed_id(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
