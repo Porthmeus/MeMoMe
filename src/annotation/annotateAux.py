@@ -71,7 +71,7 @@ def annotateEntry(entry,
         if not formula_series.empty:
           formula = str(formula_series.iloc[0])
         else:
-          formula = ""  # Fallback if it was empty or NaN
+          formula = None# Fallback if it was empty or NaN
 
     else:
       formula = None
