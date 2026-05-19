@@ -87,7 +87,7 @@ class MeMoModel:
                                   db_name = origin_db,
                                   allow_missing_dbs = allow_missing_dbs)
 
-        final_numbers = AnnotationResult(0,0,0)
+        final_numbers = AnnotationResult(0,0,0,0)
         id_based_threshold = 0.8
         id_based_applied = []
 
@@ -111,7 +111,7 @@ class MeMoModel:
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
-            anno_result= AnnotationResult(0,0,0)
+            anno_result= AnnotationResult(0,0,0,0)
             for db_name in get_config()["databases"].keys():
                 if db_name not in ["Identifiers", "TestCase"]:
                     temp_result = handleMetabolites(self.metabolites, db_name, allow_missing_dbs)
