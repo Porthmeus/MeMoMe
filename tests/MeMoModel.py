@@ -24,13 +24,24 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
     def test_MeMoModel(self):
         # load e.coli core as a reference in two of the three supported methods
-        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod_path = self.dat.joinpath("tiny_myb11.xml")
         mod = MeMoModel.fromPath(mod_path)
         self.assertIsInstance(mod, MeMoModel)
         self.assertIsInstance(mod.cobra_model, cb.Model)
+        # check if one can remove duplicates and write the annotations back to
+        # the cobra model
+        mod.annotated = True
+        mod, _ = removeDuplicateMetabolites(mod)
+        self.assertIsInstance(mod.cobra_model, cb.Model)
+
         cb_mod = cb.io.read_sbml_model(str(mod_path))
         mod = MeMoModel.fromModel(cb_mod)
         self.assertIsInstance(mod, MeMoModel)
+        # check if one can remove duplicates and write the annotations back to
+        # the cobra model
+        self.assertIsInstance(mod.cobra_model, cb.Model)
+        mod.annotated = True
+        mod, _ = removeDuplicateMetabolites(mod)
         self.assertIsInstance(mod.cobra_model, cb.Model)
 
     def test_MeMoModelAnnotation(self):

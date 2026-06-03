@@ -5,6 +5,7 @@
 Store relevant information of a SBML file in a MeMoModel
 '''
 from __future__ import annotations
+import traceback
 from pathlib import Path
 from warnings import warn
 import cobra as cb
@@ -50,6 +51,7 @@ class MeMoModel:
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
         cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
+        #metabolites = parseMetaboliteInfoFromCobra(cobra_model)
         if any([len(x) > 0 for x in errors.values() ]):
           logger.error(f"There were problems with the sbml model {sbmlfile}")
           logger.error(f"{errors}")
@@ -75,7 +77,6 @@ class MeMoModel:
     def annotate(self, allow_missing_dbs: bool = False) -> AnnotationResult:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
-
 
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
@@ -119,8 +120,8 @@ class MeMoModel:
                     anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
-
-       
+        # mark the model as annotated
+        self.annotated = True
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
@@ -132,11 +133,16 @@ class MeMoModel:
                 mod_met = self.cobra_model.metabolites.get_by_id(met_id)
                 for x in met.annotations.keys():
                     if x in mod_met.annotation.keys():
-                        mod_met.annotation[x].extend(met.annotations[x])
-                        # remove duplicates and sort list
-                        new_annolst = list(set(mod_met.annotation[x]))
-                        new_annolst.sort()
-                        mod_met.annotation[x] = new_annolst
+                        if x == "inchi":
+                            mod_met.annotation[x] = met.annotations[x]
+                        else:
+                            if type(mod_met.annotation[x]) != list:
+                                mod_met.annotation[x] = [mod_met.annotation[x]]
+                            mod_met.annotation[x].extend(met.annotations[x])
+                            # remove duplicates and sort list
+                            new_annolst = list(set(mod_met.annotation[x]))
+                            new_annolst.sort()
+                            mod_met.annotation[x] = new_annolst
                     else:
                         mod_met.annotation[x] = met.annotations[x]
                 # add the inchi string if possible
