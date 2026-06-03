@@ -1,6 +1,7 @@
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from copy import deepcopy
 
 import cobra
 import pandas as pd
@@ -37,14 +38,16 @@ def tr_reaction_prefix(reaction_id: str) -> str | None:
 class Test_ModelMerger(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory / "dat"
-    target = MeMoModel.fromPath(dat / "tiny_ecoli_keep_inchi.xml")
-    source = MeMoModel.fromPath(dat / "tiny_myb11.xml")
-    target.annotated = True
-    source.annotated = True
-    target.annotate(allow_missing_dbs=True)
-    source.annotate(allow_missing_dbs=True)
+    target_ori = MeMoModel.fromPath(dat / "tiny_ecoli_keep_inchi.xml")
+    source_ori = MeMoModel.fromPath(dat / "tiny_myb11.xml")
+    #target_ori.annotated = True
+    #source_ori.annotated = True
+    target_ori.annotate(allow_missing_dbs=True)
+    source_ori.annotate(allow_missing_dbs=True)
 
-    #def setUp(self):
+    def setUp(self):
+        self.target = self.target_ori.copy()
+        self.source = self.source_ori.copy()
 
     def test_translate_namespace_creates_translation_compartment(self):
        # self.target.annotate(allow_missing_dbs=True)

@@ -7,6 +7,7 @@ temp*
 
 # modelfiles for testing
 models/*.xml
+tests/dat/output/automatically_merged_tiny.xml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

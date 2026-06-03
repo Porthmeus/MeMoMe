@@ -419,4 +419,5 @@ class MeMoModel:
         new_model = MeMoModel(metabolites = deepcopy(self.metabolites),
                               cobra_model = self.cobra_model.copy(),
                               _id = copy(self._id))
+        new_model.annotated = self.annotated
         return(new_model)
