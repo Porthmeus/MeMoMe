@@ -21,6 +21,7 @@ from pandas import isna
 
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix, validateInchi
 from src.annotation.annotateInchiRoutines import findOptimalInchi
+from cobra.io.sbml import _f_specie
 
 class MeMoMetabolite():
     """Class for "original" as well as "inferred"  information about a metabolite.
@@ -224,6 +225,8 @@ class MeMoMetabolite():
     def set_orig_ids(self, new_orig_ids: list[str]) -> None:
         """ set function for orig_ids """
         
+        # convert the ids to the ones cobrapy uses
+        new_orig_ids = [_f_specie(x) for x in new_orig_ids]
         if self.orig_ids != []:
             warnings.warn(
                 "changed metbolite orig_ids from {old} to {new}".format(
@@ -235,6 +238,10 @@ class MeMoMetabolite():
     def add_orig_ids(self, new_orig_ids: list[str]) -> int:
         """ append new orig_ids to the list of metabolite orig_ids
         returns 1 if change has occured, else 0"""
+
+        # convert the ids to the ones cobrapy uses
+        new_orig_ids = [_f_specie(x) for x in new_orig_ids]
+
         old_orig_ids = deepcopy(self.orig_ids)
         for x in new_orig_ids:
             self.orig_ids.append(x)

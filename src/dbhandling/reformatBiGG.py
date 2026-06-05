@@ -25,13 +25,17 @@ import warnings
 
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
+from rdkit import RDLogger
+
+# Silence noisy RDKit C++ backend warnings/errors
+RDLogger.DisableLog('rdApp.*')
 
 
 def inchi_to_formula(inchi):
     """
     Convert InChI string to molecular formula using RDKit.
     """
-    if pd.isna(inchi) or inchi == "":
+    if pd.isna(inchi) or not isinstance(inchi, str) or inchi == "":
         return None
 
     try:
@@ -275,9 +279,9 @@ def reformatBiGG(
     )
 
     # --------------------------------------------------
-    # NEW: Register tqdm with pandas and calculate formulas
+    # Calculate molecular formulas with a progress bar
     # --------------------------------------------------
-    tqdm.pandas(desc="Calculating formulas")
+    tqdm.pandas(desc="Calculating BiGG formulas")
     dat_all["formula"] = dat_all["inchi"].progress_apply(
         inchi_to_formula
     )

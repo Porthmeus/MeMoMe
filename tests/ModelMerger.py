@@ -1,6 +1,7 @@
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from copy import deepcopy
 
 import cobra
 import pandas as pd
@@ -37,16 +38,22 @@ def tr_reaction_prefix(reaction_id: str) -> str | None:
 class Test_ModelMerger(unittest.TestCase):
     this_directory = Path(__file__).parent
     dat = this_directory / "dat"
+    target_ori = MeMoModel.fromPath(dat / "tiny_ecoli_keep_inchi.xml")
+    source_ori = MeMoModel.fromPath(dat / "tiny_myb11.xml")
+    #target_ori.annotated = True
+    #source_ori.annotated = True
+    target_ori.annotate(allow_missing_dbs=True)
+    source_ori.annotate(allow_missing_dbs=True)
 
     def setUp(self):
-        self.target = MeMoModel.fromPath(self.dat / "tiny_ecoli_keep_inchi.xml")
-        self.source = MeMoModel.fromPath(self.dat / "tiny_myb11.xml")
+        self.target = self.target_ori.copy()
+        self.source = self.source_ori.copy()
 
     def test_translate_namespace_creates_translation_compartment(self):
-        self.target.annotate(allow_missing_dbs=True)
-        self.source.annotate(allow_missing_dbs=True)
+       # self.target.annotate(allow_missing_dbs=True)
+       # self.source.annotate(allow_missing_dbs=True)
         matches = self.target.match(self.source, keepAllMatches=True)
-        merger = ModelMerger(self.target.cobra_model, self.source.cobra_model, matches)
+        merger = ModelMerger(self.target, self.source, matches)
         merged_model = merger.translate_namespace()
         self.assertIn(ModelMerger.TRANSLATION_COMPARTMENT, merged_model.compartments)
 
@@ -85,8 +92,8 @@ class Test_ModelMerger(unittest.TestCase):
 
     def test_translate_namespace_with_match_output(self):
 
-        self.target.annotate(allow_missing_dbs=True)
-        self.source.annotate(allow_missing_dbs=True)
+        #self.target.annotate(allow_missing_dbs=True)
+        #self.source.annotate(allow_missing_dbs=True)
         matches = self.target.match(self.source, keepAllMatches=True)
 
         expected_pairs = [
@@ -104,7 +111,7 @@ class Test_ModelMerger(unittest.TestCase):
             self.assertFalse(pair.empty, f"Expected mapping {target_id}<-{source_id} not found")
         ## assert that no other matches exist
         #self.assertEqual(len(matches), len(expected_pairs), "Unexpected extra matches found")
-        merger = ModelMerger(self.target.cobra_model, self.source.cobra_model, matches)
+        merger = ModelMerger(self.target, self.source, matches)
         target_exchange_map = merger._build_exchange_map("model1_")
         source_exchange_map = merger._build_exchange_map("model2_")
         expected_matches = merger.matches[
@@ -115,6 +122,16 @@ class Test_ModelMerger(unittest.TestCase):
                                                 | (expected_matches["Name_score"] >= 0.9 & expected_matches["DB_score"] >= 0.5)]
        # if "Name_score" in expected_matches.columns:
        #     expected_matches = expected_matches.loc[]
+
+        # select matche which pass the matching score thresholds
+        sel = (
+                (expected_matches["inchi_score"] == 1.0) | 
+                ((expected_matches["Name_score"] >= 0.9) & 
+                 (expected_matches["DB_score"] >= 0.5))
+                )
+        expected_matches = expected_matches.loc[sel]
+       # if "Name_score" in expected_matches.columns:
+       #     expected_matches = expected_matches.loc[expected_matches["Name_score"] >= 0.9]
        # else:
        #     self.fail("Name_score not present in matches table columns")
         expected_matches = (
@@ -189,9 +206,6 @@ class Test_ModelMerger(unittest.TestCase):
                     prefixes.add(prefix)
             if prefixes == {"model1", "model2"}:
                 connected_targets.add(base_id)
-
-        print(connected_targets)
-        print(expected_targets)
         self.assertSetEqual(
             connected_targets,
             expected_targets,
@@ -228,7 +242,7 @@ class Test_ModelMerger_Slow(unittest.TestCase):
             source.annotate(allow_missing_dbs=True)
             matches = target.match(source, keepAllMatches=True)
 
-            merger = ModelMerger(target.cobra_model, source.cobra_model, matches)
+            merger = ModelMerger(target, source, matches)
             merged_model = merger.translate_namespace()
 
             cobra.io.write_sbml_model(merged_model, output_path)

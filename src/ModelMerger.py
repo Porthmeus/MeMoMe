@@ -20,8 +20,8 @@ class ModelMerger:
     TRANSLATION_COMPARTMENT = "t"
     def __init__(
         self,
-        model1: cobra.Model,
-        model2: cobra.Model,
+        meMoModel1: MeMoModel,
+        meMoModel2: MeMoModel,
         matches: pd.DataFrame,
     ) -> None:
         """
@@ -35,9 +35,8 @@ class ModelMerger:
             DataFrame produced by ``MeMoModel.match``. Must contain at least the
             ``met_id1``/``met_id2`` columns plus the score column used for filtering.
         """
-
-        self.model1 = model1.copy()
-        self.model2 = model2.copy()
+        self.meMoModel1 = meMoModel1
+        self.meMoModel2 = meMoModel2
         self.matches = matches.copy()
         # Rename columns for clarity
         self.matches = self.matches.rename(columns={'met_id2': 'source_namespace'})
@@ -85,12 +84,12 @@ class ModelMerger:
 
     def preprocess_models(self) -> None:
         """Remove duplicate metabolites/reactions from both input models"""
-        meMoModel1 = MeMoModel(cobra_model=self.model1)
-        meMoModel2 = MeMoModel(cobra_model=self.model2)
-        meMoModel1, _ = removeDuplicateMetabolites(meMoModel1)
-        self.model1 = meMoModel1.cobra_model
-        meMoModel2, _ = removeDuplicateMetabolites(meMoModel2)
-        self.model2 = meMoModel2.cobra_model
+        #meMoModel1 = self.meMoModel1#MeMoModel(cobra_model=self.model1)
+        #meMoModel2 = self.meMoModel2#MeMoModel(cobra_model=self.model2)
+        meMoModel1, _ = removeDuplicateMetabolites(self.meMoModel1)
+        self.model1 = self.meMoModel1.cobra_model.copy()
+        meMoModel2, _ = removeDuplicateMetabolites(self.meMoModel2)
+        self.model2 = self.meMoModel2.cobra_model.copy()
 
 
     def add_prefix_to_model_ids(self, model: cobra.Model, prefix: str) -> None:
@@ -244,7 +243,9 @@ class ModelMerger:
         self,
         #score_thr: float = 0.8,
         score_type: str = "total_score",
+        inchi_score_thr: float = 1.0,
         name_score_thr: float = 0.9,
+        db_score_thr: float = 0.5
     ) -> cobra.Model:
         """Public entry point that executes the full namespace translation pipeline."""
         target_exchange_map = self._build_exchange_map("model1_")
@@ -256,13 +257,17 @@ class ModelMerger:
             & self.matches["source_namespace"].isin(source_exchange_map)
         ]
         matches = matches.loc[
-            (matches["inchi_score"] == 1.0)
-            | ((matches["Name_score"] >= name_score_thr) & (matches["DB_score"] >= 0.5))
+            (matches["inchi_score"] == inchi_score_thr)
+            | ((matches["Name_score"] >= name_score_thr) & (matches["DB_score"] >= db_score_thr))
         ]
         #if "Name_score" in matches.columns:
         #    matches = matches.loc[matches["Name_score"] >= name_score_thr]
         #else:
         #    raise ValueError("Name_score not present in matches table columns")
+#        if "Name_score" in matches.columns:
+#            matches = matches.loc[matches["Name_score"] >= name_score_thr]
+#        else:
+#            raise ValueError("Name_score not present in matches table columns")
         matches = (
             matches.sort_values(
                 by=[score_type, "target_namespace", "source_namespace"],
