@@ -5,7 +5,6 @@
 Store relevant information of a SBML file in a MeMoModel
 '''
 from __future__ import annotations
-import traceback
 from pathlib import Path
 from warnings import warn
 import cobra as cb
