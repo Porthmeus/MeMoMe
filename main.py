@@ -7,6 +7,7 @@ import argparse
 import logging
 import sys
 
+from pathlib import Path
 from src.MeMoModel import *
 from src.ModelMerger import ModelMerger
 from src.download_db import download, databases_available, update_database
@@ -65,6 +66,11 @@ def main(args: argparse.Namespace):
         merger = ModelMerger(model1.cobra_model, model2.cobra_model, matching_table)
         merged_model = merger.translate_namespace()
         cobra.io.write_sbml_model(merged_model, args.merged_output)
+
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+
 
         matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
         matched_model.to_csv(args.output, index = False)
