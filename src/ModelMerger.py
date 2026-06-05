@@ -8,7 +8,7 @@ import pandas as pd
 from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 from src.removeDuplicateMetabolites import removeDuplicateMetabolites
-from src.MeMoMetabolite import MeMoMetabolite
+
 
 
 
@@ -66,21 +66,7 @@ class ModelMerger:
             merged_obj_id = f"model1_{original_id}"
             if merged_obj_id in merged_model.reactions:
                 merged_model.objective = merged_model.reactions.get_by_id(merged_obj_id)
-    
-    # DO FOR ALL METABOLITES  THAT MATCH BUT HAVE UNEQUAL AMOUNTS OF CARBON
-    # BTW THERE exists polymer-inchi yayy
-    #@staticmethod
-    #def translate_polymers(m1: MeMoMetabolite, m2: MeMoMetabolite ) -> None:
-    #    Cm1 = getCarbons(m1)
-    #    Cm2 = getCarbons(m2)
 
-    #    n = Cm1 / Cm2
-
-    #    if n > 1:
-    #      #create translation reaction that converts 
-    #      #Cm1 + 1/n*H_20  <-> nCm-2 
-    #    else:
-    #      # 1/n Cm1  <-> 1Cm_2  +  nH_2O
 
     def preprocess_models(self) -> None:
         """Remove duplicate metabolites/reactions from both input models"""
@@ -114,6 +100,22 @@ class ModelMerger:
 
         for gene in model.genes:
             gene.id = f"{prefix}{gene.id}"
+
+
+    # DO FOR ALL METABOLITES  THAT MATCH BUT HAVE UNEQUAL AMOUNTS OF CARBON
+    # BTW THERE exists polymer-inchi yayy
+    #@staticmethod
+    #def translate_polymers(m1: MeMoMetabolite, m2: MeMoMetabolite ) -> None:
+    #    Cm1 = getCarbons(m1)
+    #    Cm2 = getCarbons(m2)
+
+    #    n = Cm1 / Cm2
+
+    #    if n > 1:
+    #      #create translation reaction that converts 
+    #      #Cm1 + 1/n*H_20  <-> nCm-2 
+    #    else:
+    #      # 1/n Cm1  <-> 1Cm_2  +  nH_2O
 
     def add_translation_metabolite(self, target_namespace: str) -> cobra.Metabolite:
         """
@@ -260,10 +262,6 @@ class ModelMerger:
             (matches["inchi_score"] == inchi_score_thr)
             | ((matches["Name_score"] >= name_score_thr) & (matches["DB_score"] >= db_score_thr))
         ]
-        #if "Name_score" in matches.columns:
-        #    matches = matches.loc[matches["Name_score"] >= name_score_thr]
-        #else:
-        #    raise ValueError("Name_score not present in matches table columns")
 #        if "Name_score" in matches.columns:
 #            matches = matches.loc[matches["Name_score"] >= name_score_thr]
 #        else:

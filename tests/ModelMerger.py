@@ -118,10 +118,6 @@ class Test_ModelMerger(unittest.TestCase):
             merger.matches["target_namespace"].isin(target_exchange_map)
             & merger.matches["source_namespace"].isin(source_exchange_map)
         ]
-        expected_matches = expected_matches.loc[(expected_matches["inchi_score"] == 1.0)
-                                                | (expected_matches["Name_score"] >= 0.9 & expected_matches["DB_score"] >= 0.5)]
-       # if "Name_score" in expected_matches.columns:
-       #     expected_matches = expected_matches.loc[]
 
         # select matche which pass the matching score thresholds
         sel = (

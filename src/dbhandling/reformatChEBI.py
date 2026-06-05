@@ -55,7 +55,7 @@ def reformatChEBI(df: pd.DataFrame):
     df["formula"] = df["InChI"].progress_apply(inchi_to_formula)
 
     # Prepend "CHEBI:" to the CHEBI_ID column
-    df["CHEBI_ID"] = "CHEBI:" + df["CHEBI_ID"].astype(str)
+    df["CHEBI_ID"] = df["CHEBI_ID"].astype(str)
 
     # Set as index
     df.index = df["CHEBI_ID"]
