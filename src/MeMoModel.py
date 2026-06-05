@@ -120,7 +120,7 @@ class MeMoModel:
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
 
-       
+        self.annotated = True
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:

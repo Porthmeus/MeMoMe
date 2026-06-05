@@ -245,10 +245,10 @@ class ModelMerger:
             (matches["inchi_score"] == 1.0)
             | ((matches["Name_score"] >= name_score_thr) & (matches["DB_score"] >= 0.5))
         ]
-        if "Name_score" in matches.columns:
-            matches = matches.loc[matches["Name_score"] >= name_score_thr]
-        else:
-            raise ValueError("Name_score not present in matches table columns")
+        #if "Name_score" in matches.columns:
+        #    matches = matches.loc[matches["Name_score"] >= name_score_thr]
+        #else:
+        #    raise ValueError("Name_score not present in matches table columns")
         matches = (
             matches.sort_values(
                 by=[score_type, "target_namespace", "source_namespace"],

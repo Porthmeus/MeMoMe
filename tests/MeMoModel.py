@@ -153,7 +153,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
             metabolites.append(met)
         
         anno_res = handleMetabolites(metabolites, "ChEBI")
-        self.assertEqual(anno_res, AnnotationResult(3,0,0))
+        self.assertEqual(anno_res, AnnotationResult(3,0,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
 
         metabolites = []
@@ -163,7 +163,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
                 # TODO figure out why this is throwing an error!
             metabolites.append(met)
         anno_res = handleIDs(metabolites, "ChEBI")
-        self.assertEqual(anno_res, AnnotationResult(3,0,0))
+        self.assertEqual(anno_res, AnnotationResult(3,0,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
         
 
@@ -174,14 +174,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"bigg.metabolite":["glc__D"]})
         mets = [m1,m2]
         anno_res = handleMetabolites(mets, "BiGG")
-        self.assertEqual(anno_res, AnnotationResult(1,1,1))
+        self.assertEqual(anno_res, AnnotationResult(1,1,1,0))
         anno_res = handleIDs(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        self.assertTrue(anno_res == AnnotationResult(1,1,1,0))
         # redo to test for correct counting
         anno_res = handleMetabolites(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
         anno_res = handleIDs(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
 
     def test_annotateModelSEED(self):
         # create a small test for the annotateBigg functions
@@ -190,14 +190,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
         mets = [m1,m2]
         anno_res = handleMetabolites(mets, "ModelSeed")
-        self.assertEqual(anno_res, AnnotationResult(1,1,1))
+        self.assertEqual(anno_res, AnnotationResult(1,1,1,0))
         anno_res = handleIDs(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        self.assertTrue(anno_res == AnnotationResult(1,1,1,0))
         # redo the test and check that nothing is added
         anno_res = handleMetabolites(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
         anno_res = handleIDs(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
 
     def test_MeMoModelCompare(self):
         # test the comparison for metabolite matching

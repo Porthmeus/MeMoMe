@@ -111,11 +111,12 @@ class Test_ModelMerger(unittest.TestCase):
             merger.matches["target_namespace"].isin(target_exchange_map)
             & merger.matches["source_namespace"].isin(source_exchange_map)
         ]
-        expected_matches = expected_matches.loc[expected_matches["inchi_score"] == 1.0]
-        if "Name_score" in expected_matches.columns:
-            expected_matches = expected_matches.loc[expected_matches["Name_score"] >= 0.9]
-        else:
-            self.fail("Name_score not present in matches table columns")
+        expected_matches = expected_matches.loc[(expected_matches["inchi_score"] == 1.0)
+                                                | (expected_matches["Name_score"] >= 0.9 & expected_matches["DB_score"] >= 0.5)]
+       # if "Name_score" in expected_matches.columns:
+       #     expected_matches = expected_matches.loc[]
+       # else:
+       #     self.fail("Name_score not present in matches table columns")
         expected_matches = (
             expected_matches.sort_values(
                 by=["total_score", "target_namespace", "source_namespace"],
@@ -189,6 +190,8 @@ class Test_ModelMerger(unittest.TestCase):
             if prefixes == {"model1", "model2"}:
                 connected_targets.add(base_id)
 
+        print(connected_targets)
+        print(expected_targets)
         self.assertSetEqual(
             connected_targets,
             expected_targets,
