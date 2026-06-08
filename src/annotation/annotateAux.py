@@ -21,11 +21,11 @@ DBKey = NewType('DBKey', str)
 EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
 
 def annotateEntry(entry,
-                  database:pd.DataFrame = pd.DataFrame()) -> tuple[dict, list, str]:
+                  database:pd.DataFrame = pd.DataFrame()) -> tuple[dict, list, str, str | None]:
     """Takes an entry (id) for the database (db_name) and retrieves the annotations from the database.
     Return: A tuple with a dictionary containing the crosslinks to other databases, a list with alternative trivial names for the metabolite, the InChI string and the string from which database the annotation was obtained"""
     if database.empty:
-        return dict(), list(), "" 
+        return dict(), list(), "", None
     
     # get the names of the entry
     if "name" in database.columns:
@@ -63,48 +63,61 @@ def annotateEntry(entry,
             opt_inchi = findOptimalInchi(inchis.tolist())
         else:
             opt_inchi = ""
+    
+    if "formula" in database.columns:
+        formula_series = database.loc[database["id"] == entry, "formula"]
+        formula_series = formula_series.dropna()
 
-    return merged_annos, all_names, opt_inchi
+        if not formula_series.empty:
+          formula = str(formula_series.iloc[0])
+        else:
+          formula = None# Fallback if it was empty or NaN
+
+    else:
+      formula = None
+
+    return merged_annos, all_names, opt_inchi, formula
 
 class AnnotationResult():
-  def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int):
+  def __init__(self, annotated_inchis: int, annotated_dbs: int, annotated_names: int, annotated_formulas: int):
     self.annotated_inchis: int =  annotated_inchis
     self.annotated_dbs: int = annotated_dbs
     self.annotated_names: int = annotated_names
-    self.annotated_total: int = annotated_inchis + annotated_dbs + annotated_names
+    self.annotated_formulas: int = annotated_formulas 
+    self.annotated_total: int = annotated_inchis + annotated_dbs + annotated_names + annotated_formulas
   
   @classmethod
-  def fromTuple(cls, annotationResult: tuple[int, int, int]) -> AnnotationResult:
-    return cls(annotationResult[0], annotationResult[1], annotationResult[2])
+  def fromTuple(cls, annotationResult: tuple[int, int, int, int]) -> AnnotationResult:
+    return cls(annotationResult[0], annotationResult[1], annotationResult[2], annotationResult[3])
   
   @classmethod
   def fromAnnotation(cls, annotationResult: AnnotationResult) -> AnnotationResult:
-    return cls(annotationResult.annotated_inchis, annotationResult.annotated_dbs, annotationResult.annotated_names)
+    return cls(annotationResult.annotated_inchis, annotationResult.annotated_dbs, annotationResult.annotated_names, annotationResult.annotated_formulas)
 
   def __str__(self) -> str:
-    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names} Annotated formulas {self.annotated_formulas}"
 
   def __repr__(self) -> str:
-    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names}"
+    return f"Annotated inchis {self.annotated_inchis}, annotated dbs {self.annotated_dbs}, annotated names {self.annotated_names} Annotated formulas {self.annotated_formulas}"
 
   def __le__(self, other) -> bool:
-    return self.annotated_inchis <= other.annotated_inchis and self.annotated_dbs <= other.annotated_dbs and self.annotated_names <= other.annotated_names
+    return self.annotated_inchis <= other.annotated_inchis and self.annotated_dbs <= other.annotated_dbs and self.annotated_names <= other.annotated_names and self.annotated_formulas <= other.annotated_formulas
 
   def __gt__(self, other):
     return not (self.__le__(other))
 
   def __add__(self, other):
-    return AnnotationResult(self.annotated_inchis + other.annotated_inchis, self.annotated_dbs + other.annotated_dbs, self.annotated_names + other.annotated_names)
+    return AnnotationResult(self.annotated_inchis + other.annotated_inchis, self.annotated_dbs + other.annotated_dbs, self.annotated_names + other.annotated_names, self.annotated_formulas + other.annotated_formulas)
 
   def __iter__(self):
-      return iter([self.annotated_inchis, self.annotated_dbs, self.annotated_names])
+      return iter([self.annotated_inchis, self.annotated_dbs, self.annotated_names, self.annotated_formulas])
 
   def __eq__(self, other): 
       if not isinstance(other, AnnotationResult):
           # don't attempt to compare against unrelated types
           return NotImplemented
 
-      return self.annotated_inchis == other.annotated_inchis and self.annotated_dbs == other.annotated_dbs and self.annotated_names == other.annotated_names
+      return self.annotated_inchis == other.annotated_inchis and self.annotated_dbs == other.annotated_dbs and self.annotated_names == other.annotated_names, self.annotated_formulas == other.annotated_formulas
 ####################################
 
 
@@ -136,11 +149,12 @@ def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_
   new_annos = 0
   new_names = 0
   new_inchis = 0
+  new_formulas = 0
   source = db_name
   for met in metabolites:
     if any(db["id"]==met._id):
       if met._id is None: raise Exception("met._id is None")
-      new_met_anno_entry, new_names_entry, new_inchi_entry = annotateEntry(met._id,  db)
+      new_met_anno_entry, new_names_entry, new_inchi_entry, new_formula = annotateEntry(met._id,  db)
       # add names
       if len(new_names_entry) >0:
           x = met.add_names(new_names_entry, source)
@@ -154,9 +168,13 @@ def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_
       if new_inchi_entry != "":
            x = met.add_inchi_string(new_inchi_entry, source)
            new_inchis = new_inchis + x
+      
+      if new_formula is not None: 
+           x = met.add_formula(new_formula, source)
+           new_formulas = new_formulas + x
   # return the number of metabolites which got newly annotated with inchis,
   # annotations and names
-  anno_result = AnnotationResult(new_inchis, new_annos, new_names)
+  anno_result = AnnotationResult(new_inchis, new_annos, new_names, new_formulas)
   return anno_result
 
 
@@ -174,15 +192,17 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
     new_annos_added = 0
     new_names_added = 0
     new_inchis_added = 0
+    new_formulas_added = 0
     # go through the metabolites and check if there is data whigh can be added
     source = db_name
     for met in metabolites:
         new_met_anno = dict()
         new_names = list() 
         new_inchi = ""
+        new_formula = None
         if db_key in met.annotations.keys():
             for entry in met.annotations[db_key]:
-                new_met_anno_entry, new_names_entry, inchi = annotateEntry(entry, db)
+                new_met_anno_entry, new_names_entry, inchi, new_formula = annotateEntry(entry, db)
                 for key, value in new_met_anno_entry.items():
                     if key in new_met_anno.keys():
                         new_met_anno[key].extend(value)
@@ -209,6 +229,10 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
                 x = met.add_inchi_string(new_inchi, source)
                 new_inchis_added = new_inchis_added + x
 
-    anno_result = AnnotationResult(new_inchis_added, new_names_added, new_names_added)
+            if new_formula is not None: 
+                 x = met.add_formula(new_formula, source)
+                 new_formulas_added = new_formulas_added + x
+
+    anno_result = AnnotationResult(new_inchis_added, new_names_added, new_names_added, new_formulas_added)
     return anno_result
 

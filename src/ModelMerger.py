@@ -101,6 +101,22 @@ class ModelMerger:
         for gene in model.genes:
             gene.id = f"{prefix}{gene.id}"
 
+
+    # DO FOR ALL METABOLITES  THAT MATCH BUT HAVE UNEQUAL AMOUNTS OF CARBON
+    # BTW THERE exists polymer-inchi yayy
+    #@staticmethod
+    #def translate_polymers(m1: MeMoMetabolite, m2: MeMoMetabolite ) -> None:
+    #    Cm1 = getCarbons(m1)
+    #    Cm2 = getCarbons(m2)
+
+    #    n = Cm1 / Cm2
+
+    #    if n > 1:
+    #      #create translation reaction that converts 
+    #      #Cm1 + 1/n*H_20  <-> nCm-2 
+    #    else:
+    #      # 1/n Cm1  <-> 1Cm_2  +  nH_2O
+
     def add_translation_metabolite(self, target_namespace: str) -> cobra.Metabolite:
         """
         Add (or fetch) a translation-compartment metabolite and its exchange reaction.

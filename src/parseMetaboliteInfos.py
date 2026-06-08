@@ -81,15 +81,12 @@ def parseMetaboliteInfoFromSBML(modelfile: Path, validate: bool = True) -> list:
     # read the sbml file
     reader = sbml.SBMLReader()
     doc = reader.readSBMLFromFile(modelfile)
-
     # validate if necessary
     if validate:
         validateSBML(doc, strict=False)
 
     # get the actual model and its id from the file
     mod = doc.getModel()
-    mod_id = mod.getId()
-
     # extract the metabolites 
     memoMets = parseMetaboliteInfoFromSBMLMod(model=mod)
     return memoMets
@@ -105,6 +102,8 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
 
     # go through the metabolites in the model and extract the relevant information
     metabolites = model.getListOfSpecies()
+
+
     memoMets = []
     for met in metabolites:
         annotations = getAnnotationFromMet(met)
@@ -116,13 +115,15 @@ def parseMetaboliteInfoFromSBMLMod(model: sbml.Model) -> list:
                 inchi_string = None
         else:
             inchi_string = None
+        fbc_species = met.getPlugin("fbc")
+        formula = fbc_species.getChemicalFormula()
         # create a MeMoMetabolite
         memomet = MeMoMetabolite(_id=met.getId(),
                                  orig_ids=[met.getId()],
                                  _model_id=model.getId(),
                                  names=[met.getName()],
                                  _inchi_string=inchi_string,
-                                 _formula=None,
+                                 _formula= formula or None,
                                  _charge=met.getCharge(),
                                  annotations=annotations)
 
