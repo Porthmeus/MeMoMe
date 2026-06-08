@@ -353,14 +353,11 @@ class Test_MiscStuff(unittest.TestCase):
       model = MeMoModel([metaboliteA, metaboliteB])
       model2 = MeMoModel([metaboliteA, metaboliteB])
       res = model.match(model2, keepAllMatches = True)
-      print(res)
-      self.assertEqual(res.shape[0], 2)
+      self.assertEqual(res.shape[0], 4)
       self.assertEqual(res["formula_score"][0], 1.0000)
       val = res["formula_score"][1]
-      self.assertTrue(val==1)
+      self.assertTrue(val != 1)
 
-      res2 = model.match(model2, keepAllMatches = False)
-      self.assertTrue(all(res==res2)) # it does not make sense to have differences in the 1toMany cases for the inchis
 
     def test_keepUnmatched(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()

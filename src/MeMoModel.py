@@ -278,26 +278,30 @@ class MeMoModel:
     def matchOnSumFormula(self,
             model2: MeMoModel,
             output_formulas: bool) -> pd.DataFrame:
-        met1 = self.metabolites
-        met2 = model2.metabolites
   
         results = {"met_id1":[],
                 "met_id2":[],
-                "formula_met1":[],
-                "formula_met2":[],
                 "formula_score":[],
                 "carbon_ratio":[]
                    }
-        for met1 in met1:
-            for met2 in met2:
-              distance = MeMoModel.formula_similarity(met1.formula, met2.formula)
+        for met1 in self.metabolites:
+            for met2 in model2.metabolites:
+              distance = MeMoModel.formula_similarity(met1._formula, met2._formula)
               results["met_id1"].append(met1.id)
               results["met_id2"].append(met2.id)
               if output_formulas:
-                results["formula_met1"].append(met1.formula)
-                results["formula_met2"].append(met2.formula)
+                results.setdefault('formula_met1', []).append(met1._formula)
+                results.setdefault('formula_met2', []).append(met1._formula)
               results["formula_score"].append(distance)
-              results["carbon_ratio"].append(MeMoModel.get_carbon_count(met1.formula) / MeMoModel.get_carbon_count(met2.formula))
+              m1_carbons = MeMoModel.get_carbon_count(met1._formula)
+              m2_carbons = MeMoModel.get_carbon_count(met2._formula)
+              if m2_carbons == 0 or m1_carbons == 0: 
+                results["carbon_ratio"].append(pd.NA)
+              else:
+                ratio =  m1_carbons / m2_carbons
+                results["carbon_ratio"].append(ratio)
+
+        print(results)
         return pd.DataFrame(results)
   
     @staticmethod
