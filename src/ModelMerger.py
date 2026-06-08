@@ -5,6 +5,7 @@ from typing import Iterable
 import cobra
 import pandas as pd
 
+from src import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 from src.removeDuplicateMetabolites import removeDuplicateMetabolites
@@ -101,7 +102,49 @@ class ModelMerger:
         for gene in model.genes:
             gene.id = f"{prefix}{gene.id}"
 
-    def add_translation_metabolite(self, target_namespace: str) -> cobra.Metabolite:
+    # DONE 08_06_2026 (whole function)
+    @staticmethod
+    def is_external(metabolite: cobra.Metabolite) -> bool:
+        return metabolite.compartment in ("e", "e0")
+    
+    # DONE 08_06_2026 (whole function)
+    def is_water_metabolite(self, metabolite: MeMoMetabolite, model: cobra.Model) -> bool:
+        return ((metabolite._inchi == "InChI=1S/H2O/h1H2") or (metabolite._formula.lower() == "h2o")
+                 or (any("water" in name.lower() for name in metabolite._names))) and (self.is_external(metabolite, model))
+
+    # DONE 08_06_2026 (whole function)
+    def fetch_water_metabolites(self, memomodel1:MeMoModel, memomodel2:MeMoModel, model: cobra.Model) -> tuple[cobra.Metabolite, cobra.Metabolite]:
+        """
+        Fetch water metabolites from the merged cobra model for both source and target namespaces.
+        If water metabolites are found in the original models, they should have been prefixed and added to the merged model. 
+        This function identifies them based on their InChI, formula, or name, and returns the corresponding metabolite
+        objects from the merged model. If no water metabolite is found for a namespace, the corresponding return value 
+        will be None.
+
+        Parameters:
+            model (cobra.Model): The merged model containing both namespaces.
+        """
+        source_water_met = None
+        target_water_met = None
+
+        for memometab in memomodel1.metabolites:
+            #TODO:incorporate the is_external check in the is_water_metabolite function, and remove the is_external check from this loop
+            if self.is_water_metabolite(memometab):
+                target_water_met_id = f"model1_{memometab.id}"
+                candidate_target_water_met = model.metabolites.get_by_id(target_water_met_id)
+                if self.is_external(candidate_target_water_met):
+                   target_water_met = candidate_target_water_met
+
+        for memometab in memomodel2.metabolites:
+            if self.is_water_metabolite(memometab):
+                source_water_met_id = f"model2_{memometab.id}"
+                source_water_met = model.metabolites.get_by_id(source_water_met_id)
+        if target_water_met is None or source_water_met is None:
+            raise ValueError("No water metabolite found in one or both models.")
+        
+        return target_water_met, source_water_met
+    
+    def add_translation_metabolite(self, target_met_id: str) -> cobra.Metabolite:
         """
         Add (or fetch) a translation-compartment metabolite and its exchange reaction.
 
@@ -116,8 +159,9 @@ class ModelMerger:
             met_name = translation_met.name or translation_met.id
             reaction.name = f"Translation compartment {met_name} exchange"
 
-        translation_id = f"{target_namespace}_{self.TRANSLATION_COMPARTMENT}"
-        source_met = self._find_source_metabolite(target_namespace)
+        translation_id = f"{target_met_id}_{self.TRANSLATION_COMPARTMENT}"
+        # DONE 08_06_2026 (from this line to line 185 "self.merged_model.add_metabolites([translation_met])"
+        source_met = self._find_source_metabolite(target_met_id)
         if translation_id in self.merged_model.metabolites:
             translation_met = self.merged_model.metabolites.get_by_id(translation_id)
             if source_met is not None:
@@ -129,17 +173,20 @@ class ModelMerger:
                     translation_met.charge = source_met.charge
                 if not translation_met.annotation and source_met.annotation:
                     translation_met.annotation = dict(source_met.annotation)
+
+        if source_met is None:
+            raise Exception(f"No source metabolite found for target ID {target_met_id!r}")
         else:
-            name = source_met.name if source_met is not None else translation_id
-            formula = source_met.formula if source_met is not None else None
-            charge = source_met.charge if source_met is not None else None
-            annotation = dict(source_met.annotation) if source_met is not None else {}
+            name = source_met.name
+            formula = source_met.formula
+            charge = source_met.charge
+            annotation = dict(source_met.annotation)
             translation_met = cobra.Metabolite(
                 id=translation_id,
                 name=name,
                 formula=formula,
                 charge=charge,
-                compartment=self.TRANSLATION_COMPARTMENT,
+                compartment=self.TRANSLATION_COMPARTMENT
             )
             translation_met.annotation = annotation
             self.merged_model.add_metabolites([translation_met])
@@ -172,23 +219,28 @@ class ModelMerger:
         model_tag = model_prefix.rstrip("_")
         reaction.id = f"TR_{model_tag}_{base_id}"
 
-    def _find_source_metabolite(self, target_namespace: str) -> cobra.Metabolite | None:
+    # DONE 08_06_2026 (whole function, renamed target and added comments)
+    def _find_source_metabolite(self, target_met_id: str) -> cobra.Metabolite | None:
+        # Look for a metabolite object in the merged model that matches the target metabolite id, 
+        # ignoring prefixes and suffixes, and prefer those in the extracellular compartment if 
+        # multiple matching metabolites are found. Additionally, prefer a metabolite from the source model if possible. 
+        # If not, return any match that is found, or None if no matches are found.
         def pick_from_prefix(prefix: str) -> cobra.Metabolite | None:
             fallback = None
             for met in self.merged_model.metabolites:
                 if not met.id.startswith(prefix):
                     continue
                 base_id = handle_metabolites_prefix_suffix(met.id[len(prefix) :])
-                if base_id != target_namespace:
+                if base_id != target_met_id:
                     continue
-                if met.compartment in ("e", "e0"):
+                if self.is_external(met):
                     return met
                 if fallback is None:
                     fallback = met
             return fallback
 
         return pick_from_prefix("model1_") or pick_from_prefix("model2_")
-
+    
     def _build_exchange_map(
         self, model_prefix: str
     ) -> dict[str, list[tuple[cobra.Reaction, cobra.Metabolite]]]:
@@ -257,6 +309,10 @@ class ModelMerger:
             )
             .drop_duplicates(subset=["target_namespace"], keep="first")
         )
+
+        # DONE 08_06_2026
+        #fetch water metabolite for later use in polymerization or depolymerization of translation reactions, if needed
+        target_water_met, source_water_met = self.fetch_water_metabolites(memomodel1=self.memomodel1, memomodel2=self.memomodel2, model=self.merged_model)
 
         for target,source in matches[['target_namespace', 'source_namespace']].itertuples(index=False):
             target_ex_rxn, target_met = target_exchange_map[target][0]
