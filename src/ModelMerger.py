@@ -93,12 +93,12 @@ class ModelMerger:
         for gene in model.genes:
             gene.id = f"{prefix}{gene.id}"
 
-    def add_translation_metabolite(self, target_namespace: str) -> cobra.Metabolite:
+    def add_translation_metabolite(self, target_met_id: str) -> cobra.Metabolite:
         """
         Add (or fetch) a translation-compartment metabolite and its exchange reaction.
 
         Parameters:
-            target_namespace (str): The target namespace identifier (without the _{self.TRANSLATION_COMPARTMENT} suffix).
+            target_met_id (str): The target namespace identifier (without the _{self.TRANSLATION_COMPARTMENT} suffix).
         """
         def ensure_exchange_name(
             reaction: cobra.Reaction, translation_met: cobra.Metabolite
@@ -108,8 +108,8 @@ class ModelMerger:
             met_name = translation_met.name or translation_met.id
             reaction.name = f"Translation compartment {met_name} exchange"
 
-        translation_id = f"{target_namespace}_{self.TRANSLATION_COMPARTMENT}"
-        source_met = self._find_source_metabolite(target_namespace)
+        translation_id = f"{target_met_id}_{self.TRANSLATION_COMPARTMENT}"
+        source_met = self._find_source_metabolite(target_met_id)
         if translation_id in self.merged_model.metabolites:
             translation_met = self.merged_model.metabolites.get_by_id(translation_id)
             if source_met is not None:
@@ -121,11 +121,13 @@ class ModelMerger:
                     translation_met.charge = source_met.charge
                 if not translation_met.annotation and source_met.annotation:
                     translation_met.annotation = dict(source_met.annotation)
+        if source_met is None:
+            raise Exception(f"No source metabolite found for target ID {target_met_id!r}")
         else:
-            name = source_met.name if source_met is not None else translation_id
-            formula = source_met.formula if source_met is not None else None
-            charge = source_met.charge if source_met is not None else None
-            annotation = dict(source_met.annotation) if source_met is not None else {}
+            name = source_met.name
+            formula = source_met.formula
+            charge = source_met.charge
+            annotation = dict(source_met.annotation)
             translation_met = cobra.Metabolite(
                 id=translation_id,
                 name=name,
@@ -164,14 +166,18 @@ class ModelMerger:
         model_tag = model_prefix.rstrip("_")
         reaction.id = f"TR_{model_tag}_{base_id}"
 
-    def _find_source_metabolite(self, target_namespace: str) -> cobra.Metabolite | None:
+    def _find_source_metabolite(self, target_met_id: str) -> cobra.Metabolite | None:
+        # Look for a metabolite object in the merged model that matches the target metabolite id, 
+        # ignoring prefixes and suffixes, and prefer those in the extracellular compartment if 
+        # multiple matching metabolites are found. Additionally, prefer a metabolite from the source model if possible. 
+        # If not, return any match that is found, or None if no matches are found.
         def pick_from_prefix(prefix: str) -> cobra.Metabolite | None:
             fallback = None
             for met in self.merged_model.metabolites:
                 if not met.id.startswith(prefix):
                     continue
                 base_id = handle_metabolites_prefix_suffix(met.id[len(prefix) :])
-                if base_id != target_namespace:
+                if base_id != target_met_id:
                     continue
                 if met.compartment in ("e", "e0"):
                     return met
@@ -248,7 +254,7 @@ class ModelMerger:
             )
             .drop_duplicates(subset=["target_namespace"], keep="first")
         )
-
+        #TODO: fetch the target water metabolite
         for target,source in matches[['target_namespace', 'source_namespace']].itertuples(index=False):
             target_ex_rxn, target_met = target_exchange_map[target][0]
             # Add translation metabolite for each match, and creates its exchange reaction
