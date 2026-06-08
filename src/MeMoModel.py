@@ -14,6 +14,8 @@ import pandas as pd
 import numpy as np
 import logging
 import sys
+import re
+import math
 from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy, copy
@@ -218,6 +220,117 @@ class MeMoModel:
 
         return(res)
 
+    @staticmethod
+    def get_carbon_count(formula: str) -> int:
+        """
+        Extracts the total number of carbon (C) atoms from a chemical formula string.
+        Safely ignores other elements starting with C (e.g., Co, Cl, Ca, Cu).
+        """
+        # Regex ensures 'C' is not part of a two-letter element like 'Sc' or 'Co'
+        pattern = r'(?<![A-Z][a-z])C(?![a-z])(\d*)'
+        
+        matches = re.findall(pattern, formula)
+        
+        total_carbons = 0
+        for match in matches:
+            if match == '':
+                total_carbons += 1
+            else:
+                total_carbons += int(match)
+                
+        return total_carbons
+  
+    @staticmethod
+    def tokenize_formula(formula):
+        tokenized_formula = dict()
+        token = ""
+        value = ""
+        for char in formula:
+            if char.isupper():
+                if token != "":
+                    # Process the previous token and its value
+                    count = int(value) if value != "" else 1
+                    if token in tokenized_formula:
+                        tokenized_formula[token] += count
+                    else:
+                        tokenized_formula[token] = count
+                    value = ""
+                token = char
+            elif char.islower():
+                token += char
+            elif char.isdigit():
+                value += char
+        # Process the last token and its value
+        if token != "":
+            count = int(value) if value != "" else 1
+            if token in tokenized_formula:
+                tokenized_formula[token] += count
+            else:
+                tokenized_formula[token] = count
+        return tokenized_formula
+  
+    def matchOnSumFormula(self,
+            model2: MeMoModel,
+            output_formulas: bool) -> pd.DataFrame:
+        met1 = self.metabolites
+        met2 = model2.metabolites
+  
+        results = {"met_id1":[],
+                "met_id2":[],
+                "formula_met1":[],
+                "formula_met2":[],
+                "formula_score":[],
+                "carbon_ratio":[]
+                   }
+        for met1 in met1:
+            for met2 in met2:
+              distance = MeMoModel.formula_similarity(met1.formula, met2.formula)
+              results["met_id1"].append(met1.id)
+              results["met_id2"].append(met2.id)
+              if output_formulas:
+                results["formula_met1"].append(met1.formula)
+                results["formula_met2"].append(met2.formula)
+              results["formula_score"].append(distance)
+              results["carbon_ratio"].append(MeMoModel.get_carbon_count(met1.formula) / MeMoModel.get_carbon_count(met2.formula))
+        return pd.DataFrame(results)
+  
+    @staticmethod
+    def formula_similarity(formula1: str, formula2: str) -> float:
+      """
+      Calculates the NORMALIZED Euclidean distance between two chemical formulas.
+      Returns a value between 0.0 (identical) and 1.0 (completely different).
+      """
+      comp1 = MeMoModel.tokenize_formula(formula1)
+      comp2 = MeMoModel.tokenize_formula(formula2)
+    
+      # Handle edge case where both inputs are empty strings
+      if not comp1 and not comp2:
+        return 0.0
+    
+      all_elements = set(comp1.keys()).union(set(comp2.keys()))
+    
+      squares_sum = 0
+      sum_sq_1 = 0
+      sum_sq_2 = 0
+    
+      for element in all_elements:
+        count1 = comp1.get(element, 0)
+        count2 = comp2.get(element, 0)
+    
+        # Actual squared difference
+        squares_sum += (count1 - count2) ** 2
+    
+        # Components for max possible distance (worst case: no shared elements)
+        sum_sq_1 += count1 ** 2
+        sum_sq_2 += count2 ** 2
+    
+      euclidean_dist = math.sqrt(squares_sum)
+      max_dist = math.sqrt(sum_sq_1 + sum_sq_2)
+    
+      # Normalize: actual distance / worst-case distance
+      normalized_dist = euclidean_dist / max_dist
+    
+      return 1 - round(normalized_dist, 3)
     
     def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
 
