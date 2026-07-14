@@ -4,6 +4,8 @@ from typing import Iterable
 
 import cobra
 import pandas as pd
+import re
+from copy import deepcopy
 
 from src import MeMoMetabolite
 from src.MeMoModel import MeMoModel
@@ -13,17 +15,18 @@ from src.removeDuplicateMetabolites import removeDuplicateMetabolites
 
 
 
+
 class ModelMerger:
     """
     merge two metabolic models by translating metabolites from one namespace to another
     using a translation compartment, and integrating shared metabolites.
     """
-    TRANSLATION_COMPARTMENT = "t"
     def __init__(
         self,
         meMoModel1: MeMoModel,
         meMoModel2: MeMoModel,
         matches: pd.DataFrame,
+        translation_compartment:str = "t"
     ) -> None:
         """
         Parameters
@@ -41,26 +44,159 @@ class ModelMerger:
         self.model1: cobra.Model | None  = None
         self.model2: cobra.Model | None  = None
         self.matches = matches.copy()
-        # Rename columns for clarity
-        self.matches = self.matches.rename(columns={'met_id2': 'source_namespace'})
-        self.matches = self.matches.rename(columns={'met_id1': 'target_namespace'})
-        # Ensure that the matches DataFrame contains necessary columns
-        required_columns = {'source_namespace', 'target_namespace'}
-        if not required_columns.issubset(self.matches.columns):
-            raise ValueError(f"The matches DataFrame must contain columns: {required_columns}")
-        # Preprocess models to handle duplicates
+        self.translation_compartment = translation_compartment
+        if self.translation_compartment != "t":
+            warnings.warn("Translation compartment uses " + self.translation_compartment + " instead of the standard 't' - be aware that this could lead to problems if further mergings should take place. Use consistent translation compartment ids across all merging attempts.")
+        # remove duplicates and save cobra models on model1 and model2
         self.preprocess_models()
-        # TODO change hardcoded prefix
-        self.add_prefix_to_model_ids(self.model1, "model1_")
-        self.add_prefix_to_model_ids(self.model2, "model2_")
-        # No need to update matches DataFrame with prefixes since we'll remove them during translation
-        # Initialize merged model
-        self.merged_model = cobra.Model("merged_model")
-        # Add metabolites and reactions from both models, cobra.Model does not expose add_genes; genes referenced in GPRs are already added via add_reactions
-        self.merged_model.add_metabolites(self.model1.metabolites)
-        self.merged_model.add_reactions(self.model1.reactions)
-        self.merged_model.add_metabolites(self.model2.metabolites)
-        self.merged_model.add_reactions(self.model2.reactions)
+        self.translated = False
+    
+    def copy_rxn(self, rxn):
+        rxn_new = cobra.Reaction()
+        rxn_new.annotation = deepcopy(rxn.annotation)
+        rxn_new.bounds = deepcopy(rxn.bounds)
+        #rxn_new.compartments = deepcopy(rxn.compartments)
+        #rxn_new.gene_name_reaction_rule = rxn.gene_name_reaction_rule
+        rxn_new.gene_reaction_rule = rxn.gene_reaction_rule
+        #rxn_new.genes = deepcopy(rxn.genes)
+        rxn_new.id = rxn.id
+        #rxn_new.gpr = deepcopy(rxn.gpr)
+        rxn_new.name = rxn.name
+        rxn_new.notes = deepcopy(rxn.notes)
+        #rxn_new.objective_coefficient = rxn.objective_coefficient
+        rxn_new.reversibility = rxn.reversibility
+        rxn_new.subsystem = rxn.subsystem
+        rxn_new.add_metabolites(deepcopy(rxn.metabolites))
+        return(rxn_new)
+
+    def add_translation_compartment(self, model:cb.Model):
+        ex_comp = cobra.medium.find_external_compartment(model)
+        new_exchanges = []
+        currents_mets = [x.id for x in model.metabolites]
+        for met_id in currents_mets:
+            met = model.metabolites.get_by_id(met_id)
+            if met.compartment == ex_comp:
+                met_newEx = met.copy()
+                # rename all current exchange metabolites to translation metabolites
+                met.compartment = self.translation_compartment
+                met.id = re.sub(r"(_|\(|\[|__91__|__40__){compartment}($|\)$|\]$|__92__$|__41__$)".format(compartment = ex_comp),
+                   r"\1{compartment}\2".format(compartment = self.translation_compartment),
+                   met.id)
+                ex_rxn = [x for x in met.reactions if x.id.startswith("EX_")][0]
+                met_newEx.id = re.sub(r"(_|\(|\[|__91__|__40__){compartment}($|\)$|\]$|__92__$|__41__$)".format(compartment = ex_comp),
+                   r"_{compartment}".format(compartment = ex_comp),
+                   met_newEx.id)
+                ex_rxn.add_metabolites({met:1.0, met_newEx:-1.0}) # remove tranlation metabolite from reaction and add the "new" external metabolite to the reaction
+                # standardize ex_rxn ids
+                #ex_rxn.id = "EX_" + met_newEx.id
+
+                # add translation reaction
+                tr_rxn = cobra.Reaction()
+                tr_rxn.id = "TR_"+met.id
+                tr_rxn.name = "Translation reaction for " + met.id
+                tr_rxn.add_metabolites({met_newEx:1.0, met:-1.0})
+                tr_rxn.lower_bound = -1000
+                tr_rxn.upper_bound = 1000
+                new_exchanges.append(tr_rxn)
+        model.add_reactions(new_exchanges)
+        model._compartments.update({self.translation_compartment:"translation"})
+        return(model) 
+
+
+    def translate(self) -> None:
+        """Adds a translation compartment where metabolites are translated to the namespace of model1 """
+        for mod in [self.model1, self.model2]:
+            # create a new translation compartment
+            if not self.translation_compartment in mod.compartments.keys():
+                mod = self.add_translation_compartment(mod)
+            # somebody else already used t as compartment
+            else:
+                if not "translation" in mod.compartments.values():
+                    raise ValueError(f"Found a {self.translation_compartment} compartment in {mod.id} which is not used for translation - fix your models or change the translation compartment id while merging")
+        
+        # rename the metabolites for of the matching table in model2
+        ex_comp1 = cobra.medium.find_external_compartment(self.model1)
+        ex_comp2 = cobra.medium.find_external_compartment(self.model2)
+        exchange_ids2 = [x.id for x in self.model2.exchanges]
+        for met in self.model2.metabolites:
+            if met.compartment == ex_comp2:
+                met_id_basic = handle_metabolites_prefix_suffix(met.id)
+                new_met_id = self.matches.loc[self.matches["met_id2"] == met_id_basic,"met_id1"].item()
+                # first change exchange reaction name
+                for ex_rxn in met.reactions:
+                    if ex_rxn.id in exchange_ids2:
+                        ex_rxn.id = "EX_" + new_met_id + "_" + ex_comp1
+                # second change the metabolite name
+                met.id = new_met_id + "_" + ex_comp1
+                # third change compartment names
+                met.compartment = ex_comp1
+        # finally add compartment annotation to the model
+        self.model2._compartments.update({ex_comp1:self.model1.compartments[ex_comp1]})
+        
+        # set translated to true
+        self.translated = True
+        
+    def merge_models(self) -> None:
+        """ Merge both models together"""
+        if self.translated == False: 
+            self.translate()
+        
+        # check whether prefixes exist
+        prefixes1 = self.model1.notes.get("MeMoMe_prefixes")
+        prefixes2 = self.model2.notes.get("MeMoMe_prefixes")
+
+        if prefixes1 == None and prefixes2 == None:
+            self.merge_models_simple()
+        else:
+            raise NotImplemented("Model prefixing currently works only for non-merged models")
+            self.merge_models_with_prefixes()
+
+    def merge_models_simple(self) -> None:
+        
+        prefixed_model1 = self.add_prefix(self.model1.copy(), "M1")
+        prefixed_model2 = self.add_prefix(self.model2.copy(), "M2")
+        obj_rxns = [x.id for x in prefixed_model2.reactions if x.objective_coefficient == 1]
+    
+        # merge
+        unique_prefixed2_rxns_ids = list({x.id for x in prefixed_model2.reactions} - {x.id for x in prefixed_model1.reactions})
+        unique_prefixed2_rxns = [prefixed_model2.reactions.get_by_id(x) for x in unique_prefixed2_rxns_ids]
+        prefixed_model1.add_reactions(unique_prefixed2_rxns)
+        self.merged_model = prefixed_model1
+        
+        # adjust boundaries
+        common_prefixed_rxns_ids = list({x.id for x in prefixed_model2.reactions} & {x.id for x in prefixed_model1.reactions})
+        for rxn_id in common_prefixed_rxns_ids:
+            lwbnd = min(prefixed_model1.reactions.get_by_id(rxn_id).lower_bound,
+                        prefixed_model2.reactions.get_by_id(rxn_id).lower_bound)
+            upbnd = max(prefixed_model1.reactions.get_by_id(rxn_id).upper_bound,
+                        prefixed_model2.reactions.get_by_id(rxn_id).upper_bound)
+            self.merged_model.reactions.get_by_id(rxn_id).lower_bound = lwbnd
+            self.merged_model.reactions.get_by_id(rxn_id).upper_bound = upbnd
+
+        # add objective coefficients
+        for obj_r in obj_rxns:
+            r = self.merged_model.reactions.get_by_id(obj_r)
+            r.objective_coefficient = 1
+        
+        # change model id
+        self.merged_model.id = "MeMoMe_merged_model"
+        # add information for the prefixes to the model
+        self.merged_model.notes["MeMoMe_prefixes"] = {"M1" : self.model1.id,
+                                                      "M2" : self.model2.id}
+
+    def add_prefix(self, model: cobra.Model, prefix: str) -> cobra.Model:
+        
+        exch_comp = cobra.medium.find_external_compartment(model)
+        exchange_rxns = [x.id for x in model.exchanges]
+        external_mets = [x.id for x in model.metabolites if x.compartment == exch_comp]
+        for rxn in model.reactions:
+            if rxn.id not in exchange_rxns:
+                rxn.id = prefix+ "_" + rxn.id
+        for met in model.metabolites:
+            if met.id not in external_mets:
+                met.id = prefix + "_" + met.id
+        return(model)
+    
 
 
     def set_objective_reaction(self, target_model, merged_model: cobra.Model) -> None:
