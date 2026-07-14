@@ -31,8 +31,17 @@ class Test_ModelMerger(unittest.TestCase):
         match_table = pd.DataFrame({"met_id1":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod1.metabolites]))),
                                     "met_id2":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod2.metabolites])))})
         modMerger = ModelMerger(mod1, mod2, match_table)
-        tmod1, tmod2 = modMerger.translate()
-    
+        modMerger.translate()
+        modMerger.merge_models_simple()
+#        mergedMod = modMerger.merged_model.copy()
+#        mergedMod.notes
+#        [x.id for x in mergedMod.reactions if x.objective_coefficient == 1]
+#        mergedMod.optimize()
+#        for x in mergedMod.reactions:
+#            if x.lower_bound > 0:
+#                x.lower_bound = 0
+#
+#        [x.id for x in mergedMod.reactions if x.lower_bound >0]
         self.assertEqual(modMerger.model1.compartments, {"c":"cytosol", "e":"extracellular", "t":"translation"})
         self.assertTrue(all([rxn.compartments == {"e"} for rxn in modMerger.model1.exchanges]))
         self.assertTrue(all([rxn.compartments == {"t","e"} for rxn in modMerger.model1.reactions if rxn.id.startswith("TR_")]))
@@ -42,6 +51,7 @@ class Test_ModelMerger(unittest.TestCase):
         self.assertTrue(all([rxn.compartments == {"t","e"} for rxn in modMerger.model2.reactions if rxn.id.startswith("TR_")]))
         self.assertTrue(round(cmod1.optimize().objective_value,3) == round(tmod1.optimize().objective_value,3))
         self.assertTrue(round(cmod2.optimize().objective_value,3) == round(tmod2.optimize().objective_value,3))
+
 
 
 #def is_tr_reaction(reaction: cobra.Reaction) -> bool:
