@@ -11,18 +11,18 @@ from src.MeMoModel import MeMoModel
 from src.handle_metabolites_prefix_suffix import handle_metabolites_prefix_suffix
 
 class Test_ModelMerger(unittest.TestCase):
-    
-    def test_translate(self):
+
+    def setup(self):
         cmod1 = cobra.io.load_model("textbook")
         mod1 = MeMoModel().fromModel(cmod1)
 
         cmod2 = cobra.io.load_model("textbook")
         for met in cmod2.metabolites:
-            met.id = "M2_" + met.id.replace("_e","_e0")
+            met.id = "test2_" + met.id.replace("_e","_e0")
             if met.compartment == "e":
                 met.compartment = "e0"
         for rxn in cmod2.exchanges:
-            rxn.id =  rxn.id.replace("EX_","EX_M2_").replace("_e","_e0")
+            rxn.id =  rxn.id.replace("EX_","EX_test2_").replace("_e","_e0")
         cmod2._compartments.update({"e0":"external2"})
 
         mod2 = MeMoModel().fromModel(cmod2)
@@ -32,7 +32,11 @@ class Test_ModelMerger(unittest.TestCase):
                                     "met_id2":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod2.metabolites])))})
         modMerger = ModelMerger(mod1, mod2, match_table)
         modMerger.translate()
-        modMerger.merge_models_simple()
+        modMerger.merge_models()
+        return(modMerger, cmod1, cmod2)
+    
+    def test_translate(self):
+        modMerger, cmod1, cmod2 = self.setup()
         self.assertEqual(modMerger.model1.compartments, {"c":"cytosol", "e":"extracellular", "t":"translation"})
         self.assertTrue(all([rxn.compartments == {"e"} for rxn in modMerger.model1.exchanges]))
         self.assertTrue(all([rxn.compartments == {"t","e"} for rxn in modMerger.model1.reactions if rxn.id.startswith("TR_")]))
@@ -56,6 +60,12 @@ class Test_ModelMerger(unittest.TestCase):
         self.assertTrue(round(sol.objective_value,5) == round(cmod1.optimize().objective_value,5))
         self.assertTrue(round(sol.objective_value,5) == round(cmod2.optimize().objective_value,5))
 
+    def test_correct_prefix(self):
+        modMerger, cmod1, cmod2 = self.setup()
+        newMod1 = modMerger.merged_model
+        newMod2 = modMerger.correct_prefix(newMod1, translation = {"M1":"M2","M2":"M3"})
+        self.assertTrue(not any([x.id.startswith("M1") for x in newMod2.reactions]))
+        
 
 
 #def is_tr_reaction(reaction: cobra.Reaction) -> bool:
