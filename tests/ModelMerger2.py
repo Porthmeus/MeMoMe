@@ -33,15 +33,6 @@ class Test_ModelMerger(unittest.TestCase):
         modMerger = ModelMerger(mod1, mod2, match_table)
         modMerger.translate()
         modMerger.merge_models_simple()
-#        mergedMod = modMerger.merged_model.copy()
-#        mergedMod.notes
-#        [x.id for x in mergedMod.reactions if x.objective_coefficient == 1]
-#        mergedMod.optimize()
-#        for x in mergedMod.reactions:
-#            if x.lower_bound > 0:
-#                x.lower_bound = 0
-#
-#        [x.id for x in mergedMod.reactions if x.lower_bound >0]
         self.assertEqual(modMerger.model1.compartments, {"c":"cytosol", "e":"extracellular", "t":"translation"})
         self.assertTrue(all([rxn.compartments == {"e"} for rxn in modMerger.model1.exchanges]))
         self.assertTrue(all([rxn.compartments == {"t","e"} for rxn in modMerger.model1.reactions if rxn.id.startswith("TR_")]))
@@ -49,8 +40,21 @@ class Test_ModelMerger(unittest.TestCase):
         self.assertEqual(modMerger.model2.compartments, {"c":"cytosol", "e":"extracellular", "t":"translation"})
         self.assertTrue(all([rxn.compartments == {"e"} for rxn in modMerger.model2.exchanges]))
         self.assertTrue(all([rxn.compartments == {"t","e"} for rxn in modMerger.model2.reactions if rxn.id.startswith("TR_")]))
-        self.assertTrue(round(cmod1.optimize().objective_value,3) == round(tmod1.optimize().objective_value,3))
-        self.assertTrue(round(cmod2.optimize().objective_value,3) == round(tmod2.optimize().objective_value,3))
+
+        mergedMod = modMerger.merged_model.copy()
+        print(mergedMod.notes)
+        for x in mergedMod.reactions:
+            if x.lower_bound > 0:
+                x.lower_bound = 0
+        sol = mergedMod.optimize()
+        for x in cmod1.reactions:
+            if x.lower_bound > 0:
+                x.lower_bound = 0
+        for x in cmod2.reactions:
+            if x.lower_bound > 0:
+                x.lower_bound = 0
+        self.assertTrue(round(sol.objective_value,5) == round(cmod1.optimize().objective_value,5))
+        self.assertTrue(round(sol.objective_value,5) == round(cmod2.optimize().objective_value,5))
 
 
 
