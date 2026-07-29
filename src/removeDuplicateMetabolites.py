@@ -52,10 +52,12 @@ def mergeReactions(rxn1:cb.Reaction, rxn2:cb.Reaction, remove_orphans:bool = Tru
     
     
     # check if compartments are the same
-    if len(rxn1.compartments) > 1:
-        raise NotImplementedError("Reaction "+ rxn1.id + " is associated to more than one compartment, don't know how to handle that")
-    if len(rxn2.compartments) > 1:
-        raise NotImplementedError("Reaction "+ rxn2.id + " is associated to more than one compartment, don't know how to handle that")
+   # if len(rxn1.compartments) > 1:
+   #     print(rxn1.id, rxn1.compartments)
+   #     raise NotImplementedError("Reaction "+ rxn1.id + " is associated to more than one compartment, don't know how to handle that")
+   # if len(rxn2.compartments) > 1:
+   #     print(rxn2.id, rxn2.compartments)
+   #     raise NotImplementedError("Reaction "+ rxn2.id + " is associated to more than one compartment, don't know how to handle that")
     assert (rxn1.compartments == rxn2.compartments), f"You try to merge reactions which take place in different compartments ({rxn1.id=}, {rxn2.id =})"
 
     
@@ -88,7 +90,7 @@ def mergeReactions(rxn1:cb.Reaction, rxn2:cb.Reaction, remove_orphans:bool = Tru
                 # remove duplicates and sort
                 new_annolst = list(set(annotation[x]))
                 new_annolst.sort()
-                self.annotations[x] = new_annolst
+                annotation[x] = new_annolst
     elif rxn1.annotation != None:
         annotation = rxn1.annotation
     elif rxn2.annotation != None:
@@ -117,7 +119,7 @@ def exchangeMetabolite(met1:cb.Metabolite, met2:cb.Metabolite, prune:bool = True
                 met1 : -1*coef}
         rxn.subtract_metabolites(sub_dic)
 
-    if prune == True:
+    if prune == True and met2.model != None:
         met2.remove_from_model()
     
     # cast the information into a pandas data frame

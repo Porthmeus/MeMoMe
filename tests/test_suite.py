@@ -40,7 +40,6 @@ fast_tests = [Test_annotateMissingDbs,
 
 slow_tests = [
   Test_annotationPerformance, 
-  Test_ModelMerger_Slow
   ]
 
 formatting_tests = [TestConcatCols, TestRenameColumnsSafe, TestPrepare, TestGetAnnos, TestChebi]
