@@ -54,6 +54,7 @@ class ModelMerger:
         # otherwise, we will remove the tranlation reactions
         # self.preprocess_models()
         self.translated = False
+        self.merged_model = None
     
     def copy_rxn(self, rxn):
         rxn_new = cobra.Reaction()
@@ -261,7 +262,37 @@ class ModelMerger:
         old_prefix_notes = model.notes["MeMoMe_prefixes"]
         model.notes["MeMoMe_prefixes"] = dict(zip(translation.values(),old_prefix_notes.values()))
         return(model)
-
+    
+    def split_merged_model(self) -> list[cobra.Model]:
+        ''' Take a the merged model and split it again to individual models '''
+        if self.merged_model != None:
+            mmod = self.merged_model.copy()
+            ex_rxns = mmod.exchanges
+            # get the objective reaction
+            obj_rxn = [x.id for x in mmod.reactions if x.objective_coefficient !=0]
+            # go through the different models and create a new model
+            split_models = []
+            for prefix,mod_name in mmod.notes["MeMoMe_prefixes"].items():
+                # get the prefixed reactions 
+                mod_rxns = [self.copy_rxn(x) for x in mmod.reactions if x.id.startswith(prefix + "_")]
+                new_mod = cobra.Model()
+                new_mod.add_reactions(mod_rxns)
+                # remove the prefix and add objective coefficient
+                for rxn in new_mod.reactions:
+                    if rxn.id in obj_rxn:
+                        rxn.objective_coefficient = 1
+                    rxn.id = rxn.id[len(prefix) + 1:]
+                for met in new_mod.metabolites:
+                    if met.id.startswith(prefix + "_"):
+                        met.id = met.id[len(prefix) + 1:]
+                new_mod.add_reactions(ex_rxns)
+                # adjust the id
+                new_mod.id = mod_name
+                split_models.append(new_mod)
+            return(split_models)
+        else:
+            self.merge_models()
+            self.split_merged_model()
 
     def preprocess_models(self) -> None:
         """Remove duplicate metabolites/reactions from both input models"""

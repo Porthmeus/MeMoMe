@@ -46,8 +46,6 @@ class Test_ModelMerger(unittest.TestCase):
         mod2 = MeMoModel().fromModel(cmod2)
         mod1.annotated = True
         mod2.annotated = True
-        match_table = pd.DataFrame({"met_id1":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod1.metabolites]))),
-                                    "met_id2":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod2.metabolites])))})
         modMerger = ModelMerger(mod1, mod2, match_table)
         modMerger.preprocess_models()
         modMerger.translate()
@@ -79,6 +77,17 @@ class Test_ModelMerger(unittest.TestCase):
 
         # test the prefix note in the merged model
         self.assertEqual(mergedMod.notes["MeMoMe_prefixes"],  {'M1': 'e_coli_core', 'M2': 'e_coli_core'})
+        
+        # test splitting of the models into single models again
+        split_models = modMerger.split_merged_model()
+        sol = split_models[0].optimize()
+        ecore = cobra.io.load_model("textbook")
+        sol_ecore = ecore.optimize()
+        self.assertTrue(round(sol.objective_value,5) == round(sol_ecore.objective_value,5))
+        sol = split_models[1].optimize()
+        self.assertTrue(round(sol.objective_value,5) == round(sol_ecore.objective_value,5))
+        self.assertTrue(all([True for x in split_models[0].metabolites if "e" in x.compartment and x.id[:-2] in list(match_table["met_id1"])]))
+        self.assertTrue(all([True for x in split_models[1].metabolites if "e" in x.compartment and x.id[:-2] in list(match_table["met_id1"])]))
 
     def test_correct_prefix(self):
 
