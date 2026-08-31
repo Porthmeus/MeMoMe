@@ -6,22 +6,22 @@ DB_location: "Databases" # a directory relative to the path of the main script
 databases:
   ModelSeed:
     URL: "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/compounds.tsv"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/modelSeed_MMM.csv?download=1"
+    REFORMAT_URL: "https://zenodo.org/records/20286269/files/modelSeed_MMM.csv?download=1"
     file: "modelSeed.tsv"
     reformat: "modelSeed_MMM.csv"
   BiGG:
     URL: "http://bigg.ucsd.edu/static/namespace/bigg_models_metabolites.txt"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/BiGG_MMM.csv?download=1"
+    REFORMAT_URL: "https://zenodo.org/records/20286269/files/BiGG_MMM.csv?download=1"
     file: "BiGG.tsv"
     reformat: "BiGG_MMM.csv"
   VMH:
-    URL: "https://www.vmh.life/_api/metabolites/?format=jsonp&page_size=9999999&_dc=1670601370202&page=1&start=0&limit=9999999&callback=Ext.data.JsonP.callback19"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/VMH_MMM.csv?download=1"
+    URL: "http://49.12.211.202:7999/vmh.json"
+    REFORMAT_URL: "https://zenodo.org/records/20286269/files/VMH_MMM.csv?download=1"
     file: "vmh.json"
     reformat: "VMH_MMM.csv"
   ChEBI:
     URL: "https://ftp.ebi.ac.uk/pub/databases/chebi/archive/chebi_legacy/Flat_file_tab_delimited/chebiId_inchi.tsv"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/ChEBI_MMM.csv?download=1"
+    REFORMAT_URL: "https://zenodo.org/records/20286269/files/ChEBI_MMM.csv?download=1"
     file: "chebiId_inchi.tsv"
     reformat: "ChEBI_MMM.csv"
   Identifiers:
@@ -31,7 +31,7 @@ databases:
     reformat: "identifiers.org_registry.json"
   HMDB:
     URL: "http://49.12.211.202:7999/hmdb_metabolites.zip"
-    REFORMAT_URL: "https://zenodo.org/records/15591559/files/hmdb_metabolites_MMM.csv?download=1"
+    REFORMAT_URL: "https://zenodo.org/records/20286269/files/hmdb_metabolites_MMM.csv?download=1"
     file: "hmdb_metabolites.zip"
     reformat: "hmdb_metabolites_MMM.csv"
 

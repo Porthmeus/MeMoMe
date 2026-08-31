@@ -13,6 +13,8 @@ import pandas as pd
 import numpy as np
 import logging
 import sys
+import re
+import math
 from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy, copy
@@ -87,7 +89,7 @@ class MeMoModel:
                                   db_name = origin_db,
                                   allow_missing_dbs = allow_missing_dbs)
 
-        final_numbers = AnnotationResult(0,0,0)
+        final_numbers = AnnotationResult(0,0,0,0)
         id_based_threshold = 0.8
         id_based_applied = []
 
@@ -111,7 +113,7 @@ class MeMoModel:
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
-            anno_result= AnnotationResult(0,0,0)
+            anno_result= AnnotationResult(0,0,0,0)
             for db_name in get_config()["databases"].keys():
                 if db_name not in ["Identifiers", "TestCase"]:
                     temp_result = handleMetabolites(self.metabolites, db_name, allow_missing_dbs)
@@ -152,71 +154,192 @@ class MeMoModel:
                 mod_met.annotation = dict(sorted(mod_met.annotation.items()))
 
     def match(self,
-            model2: MeMoModel,
-            threshold_DB:float = 0,
-            threshold_name:float = 0.6,
-            threshold_total:float = 0,
-            keepAllMatches:bool = True,
-            output_names: bool = False,
-            output_dbs: bool = False,
-            keepUnmatched: bool = False) -> pd.DataFrame:
-        """ compares the metabolites of two models and returns a data frame
-        with additional information 
-        threshold_DB, threshold_name, threshold_total: value between 0 and 1. Defines a threshold on which a results should be kept
-        keepAllMatches: boolean, if true keeps all matches which survive the different thresholds, if false only top hits are being kept.
-        output_names: If true, output the names of the metabolites that led to match based on levenshtein
-        output_dbs: If true, output the names of the database entries which have been matched on
-        keepUnmatched: returns also unmatched metabolites
+              model2: MeMoModel,
+              threshold_DB:float = 0,
+              threshold_name:float = 0.6,
+              threshold_total:float = 0,
+              keepAllMatches:bool = True,
+              output_names: bool = False,
+              output_dbs: bool = False,
+              output_formulas: bool = False,
+              keepUnmatched: bool = False) -> pd.DataFrame:
+          """ compares the metabolites of two models and returns a data frame
+          with additional information 
+          threshold_DB, threshold_name, threshold_total: value between 0 and 1. Defines a threshold on which a results should be kept
+          keepAllMatches: boolean, if true keeps all matches which survive the different thresholds, if false only top hits are being kept.
+          output_names: If true, output the names of the metabolites that led to match based on levenshtein
+          output_dbs: If true, output the names of the database entries which have been matched on
+          keepUnmatched: returns also unmatched metabolites
+          """
+          res_inchi = self.matchOnInchi(model2)
+          res_db = self.matchOnDB(model2,
+                  threshold = threshold_DB,
+                  output_dbs = output_dbs)
+          res_name = self.matchOnName(model2,
+                  threshold = threshold_name,
+                  output_names = output_names)
+          res_formula = self.matchOnSumFormula(model2,
+                  output_formulas = output_formulas)
+
+          res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
+          res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
+          res = res.merge(res_formula, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_formula"])
+          res = res.rename(columns = {"charge_diff":"charge_diff_name", "inchi_string":"inchi_string_name"})
+
+          # calculate overall score in the result and remove NA
+          res.loc[pd.isna(res["inchi_score"]),res.columns =="inchi_score"] = 0
+          res.loc[pd.isna(res["DB_score"]),res.columns =="DB_score"] = 0
+          res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
+          res.loc[pd.isna(res["formula_score"]),res.columns =="formula_score"] = 0
+
+          ##### this is the place where we could change the weighting of the scoring ####
+          scores = [res["inchi_score"], res["DB_score"], res["Name_score"], res["formula_score"]]
+          res["total_score"] = sum(scores)/len(scores)
+          ###############################################################################
+
+          # remove pairs with score < threshold (default = 0)
+          res = res.loc[res["total_score"]>threshold_total]
+          
+          # if not keepAllMany, keep only the maximum score pair for each metabolite of both models
+          if keepAllMatches == False:
+              met1_max = res[["met_id1","total_score"]].groupby(['met_id1']).max()
+              met2_max = res[["met_id2","total_score"]].groupby(['met_id2']).max()
+              # get the index
+              keep_index = np.where([
+                  all(res.iloc[i]["total_score"] == met1_max.loc[res.iloc[i]["met_id1"]]) or
+                  all(res.iloc[i]["total_score"] == met2_max.loc[res.iloc[i]["met_id2"]]) for
+                  i in range(len(res))
+                  ])
+              res = res.iloc[keep_index]
+              res = res.reset_index(drop = True)
+                  
+          # add the unmatched metabolites
+          if keepUnmatched == True:
+              miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
+              missing_df1 = pd.DataFrame({"met_id1":miss_mets1})
+              miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
+              missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
+              res = pd.concat([res,missing_df1, missing_df2])
+
+
+          return(res)
+
+
+    @staticmethod
+    def get_carbon_count(formula: str) -> int:
         """
-        res_inchi = self.matchOnInchi(model2)
-        res_db = self.matchOnDB(model2,
-                threshold = threshold_DB,
-                output_dbs = output_dbs)
-        res_name = self.matchOnName(model2,
-                threshold = threshold_name,
-                output_names = output_names)
-
-        res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
-        res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
-        res = res.rename(columns = {"charge_diff":"charge_diff_name", "inchi_string":"inchi_string_name"})
-
-        # calculate overall score in the result and remove NA
-        res.loc[pd.isna(res["inchi_score"]),res.columns =="inchi_score"] = 0
-        res.loc[pd.isna(res["DB_score"]),res.columns =="DB_score"] = 0
-        res.loc[pd.isna(res["Name_score"]),res.columns =="Name_score"] = 0
-
-        ##### this is the place where we could change the weighting of the scoring ####
-        scores = [res["inchi_score"], res["DB_score"], res["Name_score"]]
-        res["total_score"] = sum(scores)/len(scores)
-        ###############################################################################
-
-        # remove pairs with score < threshold (default = 0)
-        res = res.loc[res["total_score"]>threshold_total]
+        Extracts the total number of carbon (C) atoms from a chemical formula string.
+        Safely ignores other elements starting with C (e.g., Co, Cl, Ca, Cu).
+        """
+        # Regex ensures 'C' is not part of a two-letter element like 'Sc' or 'Co'
+        pattern = r'(?<![A-Z][a-z])C(?![a-z])(\d*)'
         
-        # if not keepAllMany, keep only the maximum score pair for each metabolite of both models
-        if keepAllMatches == False:
-            met1_max = res[["met_id1","total_score"]].groupby(['met_id1']).max()
-            met2_max = res[["met_id2","total_score"]].groupby(['met_id2']).max()
-            # get the index
-            keep_index = np.where([
-                all(res.iloc[i]["total_score"] == met1_max.loc[res.iloc[i]["met_id1"]]) or
-                all(res.iloc[i]["total_score"] == met2_max.loc[res.iloc[i]["met_id2"]]) for
-                i in range(len(res))
-                ])
-            res = res.iloc[keep_index]
-            res = res.reset_index(drop = True)
+        matches = re.findall(pattern, formula)
+        
+        total_carbons = 0
+        for match in matches:
+            if match == '':
+                total_carbons += 1
+            else:
+                total_carbons += int(match)
                 
-        # add the unmatched metabolites
-        if keepUnmatched == True:
-            miss_mets1 = list(set([x.id for x in self.metabolites]) - set(res["met_id1"]))
-            missing_df1 = pd.DataFrame({"met_id1":miss_mets1})
-            miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
-            missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
-            res = pd.concat([res,missing_df1, missing_df2])
+        return total_carbons
+  
+    @staticmethod
+    def tokenize_formula(formula):
+        tokenized_formula = dict()
+        token = ""
+        value = ""
+        for char in formula:
+            if char.isupper():
+                if token != "":
+                    # Process the previous token and its value
+                    count = int(value) if value != "" else 1
+                    if token in tokenized_formula:
+                        tokenized_formula[token] += count
+                    else:
+                        tokenized_formula[token] = count
+                    value = ""
+                token = char
+            elif char.islower():
+                token += char
+            elif char.isdigit():
+                value += char
+        # Process the last token and its value
+        if token != "":
+            count = int(value) if value != "" else 1
+            if token in tokenized_formula:
+                tokenized_formula[token] += count
+            else:
+                tokenized_formula[token] = count
+        return tokenized_formula
+  
+    def matchOnSumFormula(self,
+            model2: MeMoModel,
+            output_formulas: bool) -> pd.DataFrame:
+  
+        results = {"met_id1":[],
+                "met_id2":[],
+                "formula_score":[],
+                "carbon_ratio":[]
+                   }
+        for met1 in self.metabolites:
+            for met2 in model2.metabolites:
+              distance = MeMoModel.formula_similarity(met1._formula, met2._formula)
+              results["met_id1"].append(met1.id)
+              results["met_id2"].append(met2.id)
+              if output_formulas:
+                results.setdefault('formula_met1', []).append(met1._formula)
+                results.setdefault('formula_met2', []).append(met1._formula)
+              results["formula_score"].append(distance)
+              m1_carbons = MeMoModel.get_carbon_count(met1._formula)
+              m2_carbons = MeMoModel.get_carbon_count(met2._formula)
+              if m2_carbons == 0 or m1_carbons == 0: 
+                results["carbon_ratio"].append(pd.NA)
+              else:
+                ratio =  m1_carbons / m2_carbons
+                results["carbon_ratio"].append(ratio)
 
-
-        return(res)
-
+        print(results)
+        return pd.DataFrame(results)
+  
+    @staticmethod
+    def formula_similarity(formula1: str, formula2: str) -> float:
+      """
+      Calculates the NORMALIZED Euclidean distance between two chemical formulas.
+      Returns a value between 0.0 (identical) and 1.0 (completely different).
+      """
+      comp1 = MeMoModel.tokenize_formula(formula1)
+      comp2 = MeMoModel.tokenize_formula(formula2)
+    
+      # Handle edge case where both inputs are empty strings
+      if not comp1 and not comp2:
+        return 0.0
+    
+      all_elements = set(comp1.keys()).union(set(comp2.keys()))
+    
+      squares_sum = 0
+      sum_sq_1 = 0
+      sum_sq_2 = 0
+    
+      for element in all_elements:
+        count1 = comp1.get(element, 0)
+        count2 = comp2.get(element, 0)
+    
+        # Actual squared difference
+        squares_sum += (count1 - count2) ** 2
+    
+        # Components for max possible distance (worst case: no shared elements)
+        sum_sq_1 += count1 ** 2
+        sum_sq_2 += count2 ** 2
+    
+      euclidean_dist = math.sqrt(squares_sum)
+      max_dist = math.sqrt(sum_sq_1 + sum_sq_2)
+    
+      # Normalize: actual distance / worst-case distance
+      normalized_dist = euclidean_dist / max_dist
+    
+      return 1 - round(normalized_dist, 3)
     
     def matchOnInchi(self, model2: MeMoModel) -> pd.DataFrame:
 

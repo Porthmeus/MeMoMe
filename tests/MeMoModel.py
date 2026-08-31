@@ -1,6 +1,7 @@
-# Porthmeus
+# PorthmeusMemoMode
 # 02.08.23
 
+from os import wait
 import unittest
 import cobra as cb
 import pandas as pd
@@ -11,7 +12,7 @@ import sqlite3
 from pathlib import Path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
-from src.annotation.annotateAux import AnnotationResult, load_database, handleMetabolites, handleIDs
+from src.annotation.annotateAux import AnnotationResult, DBName, load_database, handleMetabolites, handleIDs
 from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
 
 print(sys.version)
@@ -35,6 +36,109 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertIsInstance(mod.cobra_model, cb.Model)
 
 
+    def test_SumFormulaParsing(self):
+        # load e.coli core as a reference in two of the three supported methods
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        #ecore has annotations for ALL metabolites
+        for m in mod.metabolites:
+          self.assertTrue(m.get_formula() is not None)
+
+
+
+    def test_SumFormulaSet(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+
+      metaboliteA.set_formula("C21H26N7O14P2", "src")
+
+      self.assertEqual(metaboliteA._formula, "C21H26N7O14P2")
+      self.assertEqual(metaboliteA._formula_source, "src")
+
+    def test_SumFormulaAdd(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+
+      self.assertEqual(metaboliteA.add_formula("C21H26N7O14P2", "src"), 1)
+      self.assertEqual(metaboliteA.add_formula("C21H26N7O14P2", "src"), 0)
+
+      self.assertEqual(metaboliteA._formula, "C21H26N7O14P2")
+      self.assertEqual(metaboliteA._formula_source, "src")
+
+    def test_SumFormulaAnnotationSeed_id(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("cpd00001")
+      metaboliteC.set_id("cpd00003")
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleIDs(mod.metabolites, DBName("ModelSeed"))
+
+      self.assertEqual(metaboliteA._formula, "H2O")
+      self.assertEqual(metaboliteC._formula, "C21H26N7O14P2")
+
+
+    def test_SumFormulaAnnotationSeed_metabolite(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.annotations = {"seed.compound": ["cpd00001"]}
+      metaboliteC.annotations = {"seed.compound": ["cpd00003"]}
+
+
+      # TODO WHY DOE WE NOT HAVE TO SET ANNOATION SOURCE
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleMetabolites(mod.metabolites, DBName("ModelSeed"))
+      self.assertEqual(metaboliteA._formula, "H2O")
+      self.assertEqual(metaboliteC._formula, "C21H26N7O14P2")
+
+
+    def test_SumFormulaAnnotationVMH_id(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("12dihdglyc")
+      metaboliteC.set_id("12dipdglyc")
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleIDs(mod.metabolites, DBName("VMH"))
+
+      self.assertEqual(metaboliteA._formula, "C37H72O5")
+      self.assertEqual(metaboliteC._formula, "C33H64O5")
+
+
+    def test_SumFormulaAnnotationVMH_metabolite(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteC: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.annotations = {"vmhmetabolite": ["12dihdglyc"]}
+      metaboliteC.annotations = {"vmhmetabolite": ["12dipdglyc"]}
+                                 
+      metaboliteA.annotations_source = {"vmhmetabolite": ["VMH"]}
+      metaboliteC.annotations_source = {"vmhmetabolite": ["VMH"]}
+
+
+      mod = MeMoModel([metaboliteA, metaboliteC])
+      handleMetabolites(mod.metabolites, DBName("VMH"))
+      self.assertEqual(metaboliteA._formula, "C37H72O5")
+      self.assertEqual(metaboliteC._formula, "C33H64O5")
+
+
+
+    def test_MeMoModelAnnotation(self):
+        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
+        mod_path = self.dat.joinpath("e_coli_core.xml")
+        mod = MeMoModel.fromPath(mod_path)
+        pre_inchis = [x._inchi_string for x in mod.metabolites]
+        mod.annotate()
+        post_inchis = [x._inchi_string for x in mod.metabolites]
+        self.assertTrue(any([x != y for x,y in zip(pre_inchis, post_inchis)]))
+        # check if it also works if we remove the annotations
+        mod = MeMoModel.fromPath(mod_path)
+        # ignore the warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            [x.set_annotations({},source = "test") for x in mod.metabolites]
+        mod.annotate()
+
     def test_annotateChEBI(self):
         # test the matchInchi algorithm and find expected matches
         # read the data of the test cases - I picked three random cases from the ChEBI file
@@ -50,7 +154,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
             metabolites.append(met)
         
         anno_res = handleMetabolites(metabolites, "ChEBI")
-        self.assertEqual(anno_res, AnnotationResult(3,0,0))
+        self.assertEqual(anno_res, AnnotationResult(3,0,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
 
         metabolites = []
@@ -60,7 +164,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
                 # TODO figure out why this is throwing an error!
             metabolites.append(met)
         anno_res = handleIDs(metabolites, "ChEBI")
-        self.assertEqual(anno_res, AnnotationResult(3,0,0))
+        self.assertEqual(anno_res, AnnotationResult(3,0,0,0))
         self.assertTrue(all([y==z for y,z in zip([x._inchi_string for x in metabolites], inchis)]))    
         
 
@@ -71,14 +175,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"bigg.metabolite":["glc__D"]})
         mets = [m1,m2]
         anno_res = handleMetabolites(mets, "BiGG")
-        self.assertEqual(anno_res, AnnotationResult(1,1,1))
+        self.assertEqual(anno_res, AnnotationResult(1,1,1,0))
         anno_res = handleIDs(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        self.assertTrue(anno_res == AnnotationResult(1,1,1,0))
         # redo to test for correct counting
         anno_res = handleMetabolites(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
         anno_res = handleIDs(mets, "BiGG")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
 
     def test_annotateModelSEED(self):
         # create a small test for the annotateBigg functions
@@ -87,14 +191,14 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         m2 = MeMoMetabolite(_id = "mock_id",annotations = {"seed.compound":["cpd00027"]})
         mets = [m1,m2]
         anno_res = handleMetabolites(mets, "ModelSeed")
-        self.assertEqual(anno_res, AnnotationResult(1,1,1))
+        self.assertEqual(anno_res, AnnotationResult(1,1,1,0))
         anno_res = handleIDs(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(1,1,1))
+        self.assertTrue(anno_res == AnnotationResult(1,1,1,0))
         # redo the test and check that nothing is added
         anno_res = handleMetabolites(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
         anno_res = handleIDs(mets, "ModelSeed")
-        self.assertTrue(anno_res == AnnotationResult(0,0,0))
+        self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
 
     def test_MeMoModelAnnotateAndCompare(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
@@ -237,6 +341,23 @@ class Test_MiscStuff(unittest.TestCase):
 
       res2 = model.match(model2, keepAllMatches = False)
       self.assertTrue(all(res==res2)) # it does not make sense to have differences in the 1toMany cases for the inchis
+
+    def test_1toManyMatchingOnSumFormula(self):
+      metaboliteA: MeMoMetabolite = MeMoMetabolite()
+      metaboliteB: MeMoMetabolite = MeMoMetabolite()
+      metaboliteA.set_id("A")
+      metaboliteB.set_id("B")
+      metaboliteA.set_formula("H2O", source = "test")
+      metaboliteB.set_formula("CH4", source = "test")
+
+      model = MeMoModel([metaboliteA, metaboliteB])
+      model2 = MeMoModel([metaboliteA, metaboliteB])
+      res = model.match(model2, keepAllMatches = True)
+      self.assertEqual(res.shape[0], 4)
+      self.assertEqual(res["formula_score"][0], 1.0000)
+      val = res["formula_score"][1]
+      self.assertTrue(val != 1)
+
 
     def test_keepUnmatched(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
