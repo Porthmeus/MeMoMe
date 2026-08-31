@@ -1,0 +1,4 @@
+biomass_simplified
+EX_cpd00011_e0
+EX_cpd00013_e0
+EX_cpd00067_e0

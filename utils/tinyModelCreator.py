@@ -111,7 +111,8 @@ def shrink_model(cobra_model, desired_biomass_components, required_excretions, d
 
     # Set new id and name to the model
     cobra_model.id = cobra_model.id + "_shrunk"
-    cobra_model.name = cobra_model.name + "after shrinking model's content"
+    original_name = cobra_model.name if cobra_model.name not in (None, "") else cobra_model.id
+    cobra_model.name = original_name + "after shrinking model's content"
 
     # This avoids problems that would occur when saving the model
     for reac in cobra_model.reactions:

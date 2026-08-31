@@ -1,0 +1,49 @@
+ORIG DB VMH
+Origin DB fractions: {'ModelSeed': np.float64(0.0), 'BiGG': np.float64(0.9628173042545585), 'VMH': np.float64(1.0), 'ChEBI': np.float64(0.0), 'HMDB': np.float64(0.0)}
+ModelSeed (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+BiGG (id): Annotated inchis 69, annotated dbs 1596, annotated names 1118
+VMH (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+ID-based annotators applied: ['ModelSeed', 'BiGG', 'VMH', 'ChEBI', 'HMDB'] (threshold 0.8)
+ModelSeed: Annotated inchis 47, annotated dbs 851, annotated names 851
+BiGG: Annotated inchis 8, annotated dbs 58, annotated names 58
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 54, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ModelSeed: Annotated inchis 2, annotated dbs 38, annotated names 38
+BiGG: Annotated inchis 0, annotated dbs 1, annotated names 1
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ModelSeed: Annotated inchis 0, annotated dbs 0, annotated names 0
+BiGG: Annotated inchis 0, annotated dbs 0, annotated names 0
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ORIG DB ModelSeed
+Origin DB fractions: {'ModelSeed': np.float64(0.9937282229965156), 'BiGG': np.float64(0.0), 'VMH': np.float64(0.0), 'ChEBI': np.float64(0.0), 'HMDB': np.float64(0.0)}
+ModelSeed (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+BiGG (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+VMH (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB (id): Annotated inchis 0, annotated dbs 0, annotated names 0
+ID-based annotators applied: ['ModelSeed', 'BiGG', 'VMH', 'ChEBI', 'HMDB'] (threshold 0.8)
+ModelSeed: Annotated inchis 0, annotated dbs 2, annotated names 2
+BiGG: Annotated inchis 138, annotated dbs 1151, annotated names 1151
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ModelSeed: Annotated inchis 40, annotated dbs 312, annotated names 312
+BiGG: Annotated inchis 0, annotated dbs 9, annotated names 9
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ModelSeed: Annotated inchis 0, annotated dbs 3, annotated names 3
+BiGG: Annotated inchis 0, annotated dbs 0, annotated names 0
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0
+ChEBI: Annotated inchis 0, annotated dbs 0, annotated names 0
+HMDB: Annotated inchis 0, annotated dbs 0, annotated names 0
+ModelSeed: Annotated inchis 0, annotated dbs 0, annotated names 0
+BiGG: Annotated inchis 0, annotated dbs 0, annotated names 0
+VMH: Annotated inchis 0, annotated dbs 0, annotated names 0

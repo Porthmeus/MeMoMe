@@ -17,7 +17,7 @@ from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy, copy
 from src.download_db import get_config
-from src.annotation.annotateAux import AnnotationResult, handleIDs, handleMetabolites
+from src.annotation.annotateAux import AnnotationResult, DBName, handleIDs, handleMetabolites
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -50,6 +50,7 @@ class MeMoModel:
         """ Read the model from the SBML file """
         metabolites = parseMetaboliteInfoFromSBML(sbmlfile, validate=True)
         cobra_model, errors = cb.io.sbml.validate_sbml_model(sbmlfile)
+        #metabolites = parseMetaboliteInfoFromCobra(cobra_model)
         if any([len(x) > 0 for x in errors.values() ]):
           logger.error(f"There were problems with the sbml model {sbmlfile}")
           logger.error(f"{errors}")
@@ -76,16 +77,37 @@ class MeMoModel:
         """Goes through the different bulk annotation methods and tries to annotate InChI strings to the metabolites
         in the model"""
 
-
         origin_dbs = origin_databases(self.metabolites)
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
-        #print(f"ORIG DB {origin_db}")
+        print(f"ORIG DB {origin_db}")
+        print(f"Origin DB fractions: {origin_dbs}")
+
         logger.debug(origin_db)
         final_numbers = handleIDs(metabolites = self.metabolites,
                                   db_name = origin_db,
                                   allow_missing_dbs = allow_missing_dbs)
 
-        print(origin_db, final_numbers)
+        final_numbers = AnnotationResult(0,0,0)
+        id_based_threshold = 0.8
+        id_based_applied = []
+
+        for db_name in get_config()["databases"].keys():
+            if db_name not in ["Identifiers", "TestCase"]:
+              temp_result = handleIDs(self.metabolites, db_name, allow_missing_dbs)
+              print(f"{db_name} (id):", temp_result)
+              final_numbers = final_numbers + temp_result
+              id_based_applied.append(db_name)
+
+        if not id_based_applied:
+            cpd_count = sum(1 for met in self.metabolites if met._id and met._id.startswith("cpd"))
+            cpd_ratio = cpd_count / len(self.metabolites) if self.metabolites else 0
+            if cpd_ratio >= id_based_threshold:
+                temp_result = handleIDs(self.metabolites, DBName("ModelSeed"), allow_missing_dbs)
+                print("ModelSEED (id fallback):", temp_result)
+                final_numbers = final_numbers + temp_result
+                id_based_applied.append("ModelSEED")
+        print(f"ID-based annotators applied: {id_based_applied or 'none'} (threshold {id_based_threshold})")
+
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
@@ -97,9 +119,8 @@ class MeMoModel:
                     anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
-
-        #self.annotated = True
-        #print("TOTAL:", final_numbers)
+        # mark the model as annotated
+        self.annotated = True
         return(final_numbers)
 
     def writeAnnotationToCobraModel(self) -> None:
@@ -111,11 +132,16 @@ class MeMoModel:
                 mod_met = self.cobra_model.metabolites.get_by_id(met_id)
                 for x in met.annotations.keys():
                     if x in mod_met.annotation.keys():
-                        mod_met.annotation[x].extend(met.annotations[x])
-                        # remove duplicates and sort list
-                        new_annolst = list(set(mod_met.annotation[x]))
-                        new_annolst.sort()
-                        mod_met.annotation[x] = new_annolst
+                        if x == "inchi":
+                            mod_met.annotation[x] = met.annotations[x]
+                        else:
+                            if type(mod_met.annotation[x]) != list:
+                                mod_met.annotation[x] = [mod_met.annotation[x]]
+                            mod_met.annotation[x].extend(met.annotations[x])
+                            # remove duplicates and sort list
+                            new_annolst = list(set(mod_met.annotation[x]))
+                            new_annolst.sort()
+                            mod_met.annotation[x] = new_annolst
                     else:
                         mod_met.annotation[x] = met.annotations[x]
                 # add the inchi string if possible
@@ -392,4 +418,5 @@ class MeMoModel:
         new_model = MeMoModel(metabolites = deepcopy(self.metabolites),
                               cobra_model = self.cobra_model.copy(),
                               _id = copy(self._id))
+        new_model.annotated = self.annotated
         return(new_model)
