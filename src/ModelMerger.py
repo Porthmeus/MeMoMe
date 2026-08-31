@@ -5,6 +5,7 @@ from typing import Iterable
 import cobra
 import pandas as pd
 import re
+import warnings
 from copy import deepcopy
 
 from src import MeMoMetabolite
@@ -41,18 +42,16 @@ class ModelMerger:
         """
         self.meMoModel1 = meMoModel1
         self.meMoModel2 = meMoModel2
-        self.model1: cobra.Model | None  = None
-        self.model2: cobra.Model | None  = None
-        self.matches = matches.copy()
-        self.translation_compartment = translation_compartment
-        if self.translation_compartment != "t":
-            warnings.warn("Translation compartment uses " + self.translation_compartment + " instead of the standard 't' - be aware that this could lead to problems if further mergings should take place. Use consistent translation compartment ids across all merging attempts.")
-        self.model1 = self.meMoModel1.cobra_model.copy()
-        self.model2 = self.meMoModel2.cobra_model.copy()
+        self.model1: cobra.Model = self.meMoModel1.cobra_model.copy()
+        self.model2: cobra.Model = self.meMoModel2.cobra_model.copy()
         # remove duplicates and save cobra models on model1 and model2 - this
         # should only be done if the models have not been merged yet,
         # otherwise, we will remove the tranlation reactions
         # self.preprocess_models()
+        self.matches = matches.copy()
+        self.translation_compartment = translation_compartment
+        if self.translation_compartment != "t":
+            warnings.warn("Translation compartment uses " + self.translation_compartment + " instead of the standard 't' - be aware that this could lead to problems if further mergings should take place. Use consistent translation compartment ids across all merging attempts.")
         self.translated = False
         self.merged_model = None
     

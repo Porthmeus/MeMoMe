@@ -94,4 +94,27 @@ def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> NamedResult:
     return (NamedResult(temp_name_1, temp_name_2, score))
     
     
+def filter_matching_table(matching_table:pd.DataFrame,
+                          Inchi_threshold : float = 0,
+                          DB_threshold : float = 0,
+                          Name_threshold: float = 0):
+    
+    """
+    Filters candidate met_id2 matches by per-score thresholds, then keeps
+    the best (highest total_score) match per met_id1.
+
+    Inchi_threshold / DB_threshold / Name_threshold:
+        Minimum acceptable value for inchi_score, DB_score, Name_score.
+    """
+    mask = (
+        (matching_table['inchi_score'] >= Inchi_threshold) &
+        (matching_table['DB_score'] >= DB_threshold) &
+        (matching_table['Name_score'] >= Name_threshold)
+    )
+
+    filtered = matching_table[mask]
+
+    idx = filtered.groupby(["met_id1"])['total_score'].idxmax()
+    best = filtered.loc[idx].sort_values(["met_id1"]).reset_index(drop=True)
+    return best 
 

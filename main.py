@@ -6,11 +6,14 @@ Main entry point of the programt
 import argparse
 import logging
 import sys
+import cobra
+import os
 
 from pathlib import Path
 from src.MeMoModel import *
 from src.ModelMerger import ModelMerger
 from src.download_db import download, databases_available, update_database
+from src.matchMets import filter_matching_table
 
 
 # Configure the logger
@@ -45,11 +48,6 @@ def main(args: argparse.Namespace):
         if args.model2 is None:
             print("Please supply a second model with the --model2 parameter")
             sys.exit(1)
-        # Check if exactly two models were supplied
-        if args.output is None:
-            print("Please provide at path and output file name <path>/<outname>.csv", file=sys.stderr)
-            logger.error("User did not provide an output path")
-            sys.exit(1)
 
 
         # Load the model
@@ -58,22 +56,32 @@ def main(args: argparse.Namespace):
         # bulk annotate the model
         model1.annotate(args.allow_missing_dbs)
         model2.annotate(args.allow_missing_dbs)
-
-
+        # create output directory
+        output_path = args.output
+        output_path.mkdir(parents=True, exist_ok=True)
+        # do the matching and safe the matching table
         matching_table = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
-        matching_table.to_csv(args.output, index = False)
+        matching_table.to_csv(args.output/Path("matching_table.csv"), index = False)
+        # filter matching table
+        matching_table = filter_matching_table(matching_table,
+                                               Inchi_threshold = args.InChI_threshold,
+                                               DB_threshold = args.DB_threshold,
+                                               Name_threshold = args.Name_threshold)
 
-        merger = ModelMerger(model1.cobra_model, model2.cobra_model, matching_table)
-        merged_model = merger.translate_namespace()
-        cobra.io.write_sbml_model(merged_model, args.merged_output)
+        # merge the models and save to sbml
+        merger = ModelMerger(model1, model2, matching_table)
+        merger.preprocess_models()
+        merger.translate()
+        merger.merge_models()
+        print(type(args.merged_output))
+        cobra.io.write_sbml_model(merger.merged_model,
+                                  output_path / args.merged_output)
+        if args.save_translated_model:
+            split_models = merger.split_merged_model()
+            for i, nm  in enumerate(merger.merged_model.notes["MeMoMe_prefixes"].keys()):
+                cobra.io.write_sbml_model(split_models[i],
+                                          output_path / Path(nm+".sbml"))
 
-        output_path = Path(args.output)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-
-
-
-        matched_model = model1.match(model2, output_names = args.output_names, output_dbs = args.output_dbs, keepUnmatched = args.keep_unmatched)
-        matched_model.to_csv(args.output, index = False)
 
 
 if __name__ == '__main__':
@@ -87,9 +95,14 @@ if __name__ == '__main__':
     parser.add_argument('--reformat', action='store_true', help='Reformat all required databases')
     parser.add_argument('--model1', action='store', help='Path to the first model that should be merged')
     parser.add_argument('--model2', action='store', help='Path to the second model that should be merged')
-    parser.add_argument('--output', action='store', help='Path where the output should be stored (as a csv)')
+    parser.add_argument('--output', action='store', default = "MeMoMe_output", help='Path where of the output directory', type = Path)
     parser.add_argument('--allow_missing_dbs', action='store_true', help='If set to true program does not abort if a databse is missing')
-    parser.add_argument('--merged-output', action='store', help='Path where the merged model should be stored (as an SBML file)')
+    parser.add_argument('--merged-output', action='store', default = "merged_model.xml", help='Path where the merged model should be stored (as an SBML file)', type = Path)
+    parser.add_argument('--save-translated-model', action='store_true', default=False, help='Should the merged models be saved as individual sbml files?')
+    parser.add_argument("--InChI-threshold", action = "store", default = 0, type = float, help = "Minimum InChI threshold which needs to be achieved to retain a match in the matching table (note InChI score is either 0 or 1)")
+    parser.add_argument("--DB-threshold", action = "store", default = 0, type = float, help = "Minimum DB threshold which needs to be achieved to retain a match in the matching table")
+    parser.add_argument("--Name-threshold", action = "store", default = 0, type = float, help = "Minimum name threshold which needs to be achieved to retain a match in the matching table")
+
     args = parser.parse_args()
     # Log arguments
     logger.debug(args)
