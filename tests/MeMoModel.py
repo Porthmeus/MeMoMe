@@ -14,6 +14,7 @@ from src.MeMoMetabolite import MeMoMetabolite
 from src.MeMoModel import MeMoModel
 from src.annotation.annotateAux import AnnotationResult, DBName, load_database, handleMetabolites, handleIDs
 from src.removeDuplicateMetabolites import detectDuplicates, removeDuplicateMetabolites
+from src.matchMets import filter_matching_table
 
 print(sys.version)
 
@@ -22,13 +23,16 @@ class Test_annotateBulkRoutines(unittest.TestCase):
     #this_directory = Path("tests")
     this_directory = Path(__file__).parent
     dat = this_directory.joinpath("dat")
+    mod_path = dat.joinpath("e_coli_core.xml")
+    mod = MeMoModel.fromPath(mod_path)
+    # reduce it to the first 10 metabolites to speed up the process
+    mod.metabolites = mod.metabolites[1:10]
+    mod.annotate()
 
     def test_MeMoModel(self):
         # load e.coli core as a reference in two of the three supported methods
-        mod_path = self.dat.joinpath("tiny_myb11.xml")
-        mod = MeMoModel.fromPath(mod_path)
-        self.assertIsInstance(mod, MeMoModel)
-        self.assertIsInstance(mod.cobra_model, cb.Model)
+        self.assertIsInstance(self.mod, MeMoModel)
+        self.assertIsInstance(self.mod.cobra_model, cb.Model)
 
         cb_mod = cb.io.read_sbml_model(str(mod_path))
         mod = MeMoModel.fromModel(cb_mod)
@@ -123,21 +127,27 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
 
 
-    def test_MeMoModelAnnotation(self):
+    def test_MeMoModelAnnotationAndCompare(self):
         # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
-        mod_path = self.dat.joinpath("e_coli_core.xml")
-        mod = MeMoModel.fromPath(mod_path)
+        mod = MeMoModel.fromPath(self.mod_path)
         pre_inchis = [x._inchi_string for x in mod.metabolites]
-        mod.annotate()
-        post_inchis = [x._inchi_string for x in mod.metabolites]
+        post_inchis = [x._inchi_string for x in self.mod.metabolites]
         self.assertTrue(any([x != y for x,y in zip(pre_inchis, post_inchis)]))
         # check if it also works if we remove the annotations
-        mod = MeMoModel.fromPath(mod_path)
+        mod.metabolites = mod.metabolites[1:10]
         # ignore the warnings
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             [x.set_annotations({},source = "test") for x in mod.metabolites]
-        mod.annotate()
+        anno_res = mod.annotate()
+        self.assertGreater(sum([x for x in anno_res]), 0)
+
+        # test the comparison for metabolite matching
+        # self comparison
+        res = mod.match(mod,keepAllMatches = False)
+        self.assertIsInstance(res, pd.DataFrame)
+        self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
+        self.assertTrue(all([x==y  for x,y in zip(res.met_id1,res.met_id2)]))
 
     def test_annotateChEBI(self):
         # test the matchInchi algorithm and find expected matches
@@ -200,32 +210,6 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         anno_res = handleIDs(mets, "ModelSeed")
         self.assertTrue(anno_res == AnnotationResult(0,0,0,0))
 
-    def test_MeMoModelAnnotateAndCompare(self):
-        # load the e.coli core model and bulk annotate the metabolites. Check if any annoation tkes place (Chebi should cover all metabolites)
-        mod_path = self.dat.joinpath("e_coli_core.xml")
-        mod = MeMoModel.fromPath(mod_path)
-        pre_inchis = [x._inchi_string for x in mod.metabolites]
-        mod.annotate()
-        post_inchis = [x._inchi_string for x in mod.metabolites]
-        self.assertTrue(any([x != y for x,y in zip(pre_inchis, post_inchis)]))
-
-        # check if it also works if we remove the annotations
-        mod2 = MeMoModel.fromPath(mod_path)
-        # ignore the warnings
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            [x.set_annotations({},source = "test") for x in mod2.metabolites]
-        mod.annotate()
-
-        # test the comparison for metabolite matching
-        # self comparison
-        res = mod.match(mod,keepAllMatches = False)
-        self.assertIsInstance(res, pd.DataFrame)
-        self.assertTrue(all([x in res.columns for x in ["met_id1","met_id2"]]))
-        self.assertTrue(all([x==y  for x,y in zip(res.met_id1,res.met_id2)]))
-
-
-class Test_MiscStuff(unittest.TestCase):
 
     def test_MeMoModelOutPutNames(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
@@ -376,41 +360,6 @@ class Test_MiscStuff(unittest.TestCase):
       self.assertEqual(res.shape[0], 3)
       self.assertEqual(pd.notna(res["met_id2"]).iloc[1], False)
       self.assertEqual(pd.notna(res["met_id1"]).iloc[2], False)
-
-   ## these tests are done again above or in the ModelMerger test
-   ##def test_tiny_models_cross_namespace_matching(self):
-   ##  this_directory = Path(__file__).parent
-   ##  dat = this_directory.joinpath("dat")
-   ##  model_seed = MeMoModel.fromPath(dat.joinpath("tiny_myb11.xml"))
-   ##  model_bigg = MeMoModel.fromPath(dat.joinpath("tiny_ecoli_keep_inchi.xml"))
-   ##  model_seed.annotate(allow_missing_dbs = True)
-   ##  model_bigg.annotate(allow_missing_dbs = True)
-   ##  matches = model_seed.match(model_bigg, keepAllMatches = True)
-   ##  self.assertGreater(len(matches), 0)
-   ##  expected_pairs = [
-   ##      ("cpd00001", "h2o"),
-   ##      ("cpd00007", "o2"),
-   ##      ("cpd00009", "pi"),
-   ##      ("cpd00011", "co2"),
-   ##  ]
-   ##  for seed_id, bigg_id in expected_pairs:
-   ##    pair = matches[(matches["met_id1"] == seed_id) & (matches["met_id2"] == bigg_id)]
-   ##    self.assertFalse(pair.empty, f"Expected mapping {seed_id}->{bigg_id} not found")
-   ##  self.assertFalse(matches.loc[matches["inchi_score"] == 1.0].empty)
-
-   ## def test_annotationCount(self):
-   ##     #this_directory = Path(__file__).parent
-   ##     #dat = this_directory.joinpath("../manually_merged_models")
-   ##     try:
-   ##         mod = cb.io.load_model("textbook")
-   ##     except (sqlite3.OperationalError, PermissionError) as exc:
-   ##         self.skipTest(f"Cannot load textbook model in this environment: {exc}")
-   ##     mod = MeMoModel.fromModel(mod)
-   ##     le = len(mod.metabolites)
-   ##     print(f"Amount of metabs {le}")
-   ##     print(f"Amount of unannotated inchis {sum([x._inchi_string == None for x in mod.metabolites])}")
-   ##     print(f"Annotated {mod.annotate()}")
-   ##     print(f"Amount of unannotated inchis after Annotation {sum([x._inchi_string == None for x in mod.metabolites])}")
 
 class Test_removeDuplicates(unittest.TestCase):
     this_directory = Path(__file__).parent

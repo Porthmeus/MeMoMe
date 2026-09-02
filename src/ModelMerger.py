@@ -73,6 +73,34 @@ class ModelMerger:
         rxn_new.add_metabolites(deepcopy(rxn.metabolites))
         return(rxn_new)
 
+    def fetch_water_metabolites(self) -> [cobra.Metabolite, cobra.Metabolite]:
+        # return a list of exactly two external water molecules for the two models to be merged
+        ext_comp1 = cobra.medium.find_external_compartment(self.model1)
+        ext_comp2 = cobra.medium.find_external_compartment(self.model2)
+        ret = [None,None]
+        for metabolite in self.model1.metabolites:
+            if (((metabolite.id.startswith("h2o|cpd00001|C00001|WATER")) or
+                (metabolite.formula.lower() == "h2o") or 
+                (metabolite.name.lower() == "water")) and
+                (metabolite.compartment == ext_comp1)):
+                    ret[0] = metabolite
+                    break
+
+        for metabolite in self.model2.metabolites:
+            if (((metabolite.id.startswith("h2o|cpd00001|C00001|WATER")) or
+                (metabolite.formula.lower() == "h2o") or 
+                (metabolite.name.lower() == "water")) and
+                (metabolite.compartment == ext_comp1)):
+                    ret[1] = metabolite
+                    break
+
+        if any([x == None for x in ret]):
+            raise ValueError("I cannot find any water molecule for one of the models")
+        return(ret)
+
+
+
+
     def add_translation_compartment(self, model:cb.Model):
         ''' Adds a new translation compartment in between the cell compartments and the exchange compartments. The metabolites will be translated via translation reactions which are preceded by an "TR_" prefix. This function will just add the layer but no translation yet '''
         # the order in which the metabolites and exchange reactions have to be
@@ -81,7 +109,7 @@ class ModelMerger:
         # retained properly with this weird order.
         # 1. We create a copy of the exchange metabolite which will become the new exchange metabolite
         # 2. The original exchange metabolite becomes the translation metabolite (same namespace as the original model)
-        # 3. We remove the tranlation metabolite (that was formerly the original exchange metabolite) from the exchange reaction
+        # 3. We remove the translation metabolite (that was formerly the original exchange metabolite) from the exchange reaction
         # 4. We create a translation reaction, which transports the metabolite from the translation compartment to the external compartment
 
         ex_comp = cobra.medium.find_external_compartment(model)
@@ -131,10 +159,12 @@ class ModelMerger:
                 if not "translation" in mod.compartments.values():
                     raise ValueError(f"Found a {self.translation_compartment} compartment in {mod.id} which is not used for translation - fix your models or change the translation compartment id while merging")
         
-        # rename the metabolites for of the matching table in model2
+        # rename the metabolites for of the matching table in model2 and adjust stoichiometry for polymers
+
         ex_comp1 = cobra.medium.find_external_compartment(self.model1)
         ex_comp2 = cobra.medium.find_external_compartment(self.model2)
         exchange_ids2 = [x.id for x in self.model2.exchanges]
+        h2o_1,h2o_2 = self.fetch_water_metabolites() 
         for met in self.model2.metabolites:
             if met.compartment == ex_comp2:
                 met_id_basic = handle_metabolites_prefix_suffix(met.id)
@@ -148,6 +178,39 @@ class ModelMerger:
                     met.id = new_met_id + "_" + ex_comp1
                     # third change compartment names
                     met.compartment = ex_comp1
+
+        # forth adjust the stoichiometry to adjust for differing
+        # polymer lengths
+        # requires a new loop, otherwise we could add water before it is translated
+        for met in self.model2.metabolites:
+            if met.compartment == self.translation_compartment:
+                met_id_basic = handle_metabolites_prefix_suffix(met.id)
+                print(met_id_basic)
+                if met_id_basic in list(self.matches["met_id2"]):
+                    new_met_id = self.matches.loc[self.matches["met_id2"] == met_id_basic,"met_id1"].item()
+                    c_ratio = self.matches.loc[self.matches["met_id2"] == met_id_basic, "carbon_ratio"].item()
+                    if not pd.isna(c_ratio) and c_ratio != 1:
+                        # find the translation reaction
+                        for tr_rxn in met.reactions:
+                            if tr_rxn.id.startswith("TR_") and self.translation_compartment in tr_rxn.compartments:
+                                mets_dic = tr_rxn.metabolites
+                                met1 = list(mets_dic.keys())[0]
+                                # add the stoichiometry - if the met1 is larger
+                                if c_ratio > 1:
+                                    new_dic = {met1 : (1/c_ratio),
+                                               h2o_1 : (1/c_ratio),
+                                               met : -1}
+                                # add the stoichiometry - if the met2 is larger
+                                elif c_ratio < 1:
+                                    new_dic = {met1 : 1,
+                                               h2o_2: -(c_ratio),
+                                               met: -(c_ratio)}
+                                else:
+                                    raise Error("Something is really wrong with the polymer stoichiometry setting")
+                                # update the reaction
+                                tr_rxn.subtract_metabolites(tr_rxn.metabolites)
+                                tr_rxn.add_metabolites(new_dic)
+
         # finally add compartment annotation to the model
         self.model2._compartments.update({ex_comp1:self.model1.compartments[ex_comp1]})
         
