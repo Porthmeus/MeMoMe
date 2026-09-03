@@ -37,7 +37,8 @@ class Test_ModelMerger(unittest.TestCase):
         cmod2._compartments.update({"e0":"external3"})
 
         match_table = pd.DataFrame({"met_id1":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod1.metabolites]))),
-                                    "met_id2":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod2.metabolites])))})
+                                    "met_id2":sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod2.metabolites]))),
+                                    "carbon_ratio" : [1]*len(sorted(list(set([handle_metabolites_prefix_suffix(x.id) for x in cmod1.metabolites]))))})
         return(match_table, cmod1, cmod2, cmod3)
     
     def test_translate(self):
@@ -118,7 +119,8 @@ class Test_ModelMerger(unittest.TestCase):
         mod2_exchangeMets = ["test2_"+x for x in mod1_exchangeMets]
         match_table = pd.DataFrame({"met_id1":mod1_exchangeMets,
 
-                                    "met_id2":mod2_exchangeMets})
+                                    "met_id2":mod2_exchangeMets,
+                                    "carbon_ratio":[1]*len(mod2_exchangeMets)})
 
         mod1 = MeMoModel().fromModel(newMod2)
         mod2 = MeMoModel().fromModel(cmod3)
