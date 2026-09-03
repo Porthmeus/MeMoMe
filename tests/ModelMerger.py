@@ -202,15 +202,31 @@ class Test_ModelMerger(unittest.TestCase):
 
         bigg = MeMoModel.fromModel(bigg_model)
         seed = MeMoModel.fromModel(modelseed_model)
-        print([x._id for x in seed.metabolites])
-        #bigg.annotate()
-        #seed.annotate()
+
+        # use bigg as reference model
         matches =bigg.match(seed)
         matches_filt =filter_matching_table(matches)
+        self.assertEqual(matches_filt.shape[0],3) # test the filtering function
         merger = ModelMerger(bigg, seed, matches_filt)
         merger.translate()
         merger.merge_models()
         bigg_tr,seed_tr = merger.split_merged_model()
-        print(seed_tr.reactions.get_by_id("TR_cpd11657_t").metabolites)
-
-
+        poly_trans = seed_tr.reactions.get_by_id("TR_cpd11657_t").metabolites
+        test_trans = {seed_tr.metabolites.get_by_id("cpd11657_t") : -5.5,
+                      seed_tr.metabolites.get_by_id("h2o_e") : 4.5,
+                      seed_tr.metabolites.get_by_id("strch_e") : 1}
+        self.assertEqual(poly_trans, test_trans)
+        
+        # use seed as reference model
+        matches =seed.match(bigg)
+        matches_filt =filter_matching_table(matches)
+        self.assertEqual(matches_filt.shape[0],3) # test the filtering function
+        merger = ModelMerger(seed, bigg, matches_filt)
+        merger.translate()
+        merger.merge_models()
+        seed_tr,bigg_tr = merger.split_merged_model()
+        poly_trans = bigg_tr.reactions.get_by_id("TR_strch_t").metabolites
+        test_trans = {bigg_tr.metabolites.get_by_id("cpd11657_e") : 5.5,
+                      bigg_tr.metabolites.get_by_id("cpd00001_e") : -4.5,
+                      bigg_tr.metabolites.get_by_id("strch_t") : -1}
+        self.assertEqual(poly_trans, test_trans)

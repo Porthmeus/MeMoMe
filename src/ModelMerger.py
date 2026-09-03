@@ -78,20 +78,20 @@ class ModelMerger:
         ext_comp1 = cobra.medium.find_external_compartment(self.model1)
         ext_comp2 = cobra.medium.find_external_compartment(self.model2)
         ret = [None,None]
-        for metabolite in self.model1.metabolites:
-            if (((metabolite.id.startswith("h2o|cpd00001|C00001|WATER")) or
-                (metabolite.formula.lower() == "h2o") or 
-                (metabolite.name.lower() == "water")) and
-                (metabolite.compartment == ext_comp1)):
-                    ret[0] = metabolite
+        for met1 in self.model1.metabolites:
+            if (((met1.id.startswith("h2o|cpd00001|C00001|WATER")) or
+                (met1.formula.lower() == "h2o") or 
+                (met1.name.lower() == "water")) and
+                (met1.compartment == ext_comp1)):
+                    ret[0] = met1
                     break
 
-        for metabolite in self.model2.metabolites:
-            if (((metabolite.id.startswith("h2o|cpd00001|C00001|WATER")) or
-                (metabolite.formula.lower() == "h2o") or 
-                (metabolite.name.lower() == "water")) and
-                (metabolite.compartment == ext_comp1)):
-                    ret[1] = metabolite
+        for met2 in self.model2.metabolites:
+            if (((met2.id.startswith("h2o|cpd00001|C00001|WATER")) or
+                (met2.formula.lower() == "h2o") or 
+                (met2.name.lower() == "water")) and
+                (met2.compartment == ext_comp2)):
+                    ret[1] = met2
                     break
 
         if any([x == None for x in ret]):
@@ -185,7 +185,6 @@ class ModelMerger:
         for met in self.model2.metabolites:
             if met.compartment == self.translation_compartment:
                 met_id_basic = handle_metabolites_prefix_suffix(met.id)
-                print(met_id_basic)
                 if met_id_basic in list(self.matches["met_id2"]):
                     new_met_id = self.matches.loc[self.matches["met_id2"] == met_id_basic,"met_id1"].item()
                     c_ratio = self.matches.loc[self.matches["met_id2"] == met_id_basic, "carbon_ratio"].item()
@@ -197,14 +196,14 @@ class ModelMerger:
                                 met1 = list(mets_dic.keys())[0]
                                 # add the stoichiometry - if the met1 is larger
                                 if c_ratio > 1:
-                                    new_dic = {met1 : (1/c_ratio),
-                                               h2o_1 : (1/c_ratio),
-                                               met : -1}
+                                    new_dic = {met1 : 1,
+                                               h2o_1 : (c_ratio-1),
+                                               met : -c_ratio}
                                 # add the stoichiometry - if the met2 is larger
                                 elif c_ratio < 1:
-                                    new_dic = {met1 : 1,
-                                               h2o_2: -(c_ratio),
-                                               met: -(c_ratio)}
+                                    new_dic = {met1 : (1/c_ratio),
+                                               h2o_1: -((1/c_ratio)-1),
+                                               met: -1}
                                 else:
                                     raise Error("Something is really wrong with the polymer stoichiometry setting")
                                 # update the reaction
