@@ -231,6 +231,9 @@ class MeMoModel:
         Extracts the total number of carbon (C) atoms from a chemical formula string.
         Safely ignores other elements starting with C (e.g., Co, Cl, Ca, Cu).
         """
+        # handle edge case of None type
+        if formula == None:
+            return 0
         # Regex ensures 'C' is not part of a two-letter element like 'Sc' or 'Co'
         pattern = r'(?<![A-Z][a-z])C(?![a-z])(\d*)'
         
@@ -309,6 +312,14 @@ class MeMoModel:
       Calculates the NORMALIZED Euclidean distance between two chemical formulas.
       Returns a value between 0.0 (identical) and 1.0 (completely different).
       """
+      # handle edge cases of None types
+      if formula1 == None and formula2 == None:
+          return 0.0
+      elif formula1 == None and formula2 != None:
+          return 1.0
+      elif formula1 != None and formula2 == None:
+          return 1.0
+
       comp1 = MeMoModel.tokenize_formula(formula1)
       comp2 = MeMoModel.tokenize_formula(formula2)
     
