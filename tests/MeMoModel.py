@@ -34,7 +34,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
         self.assertIsInstance(self.mod, MeMoModel)
         self.assertIsInstance(self.mod.cobra_model, cb.Model)
 
-        cb_mod = cb.io.read_sbml_model(str(mod_path))
+        cb_mod = cb.io.read_sbml_model(str(self.mod_path))
         mod = MeMoModel.fromModel(cb_mod)
         self.assertIsInstance(mod, MeMoModel)
         self.assertIsInstance(mod.cobra_model, cb.Model)
@@ -227,8 +227,8 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       self.assertTrue("name_id1" in res.columns)
       self.assertTrue("name_id2" in res.columns)
 
-      self.assertEqual(res["name_id1"][0], "Glucose")
-      self.assertEqual(res["name_id2"][0], "Glukose")
+      self.assertEqual(res["name_id1"].iloc[0], "Glucose")
+      self.assertEqual(res["name_id2"].iloc[0], "Glukose")
 
 
     def test_MeMoModelOutputDBs(self):
@@ -250,8 +250,8 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       self.assertTrue("commonIds" in res.columns)
       self.assertTrue("allIds" in res.columns)
       
-      self.assertEqual(res["commonDBs"][0], "DatabaseA")
-      self.assertEqual(res["commonIds"][0], "['DatabaseA.stuff']")
+      self.assertEqual(res["commonDBs"].iloc[0], "DatabaseA")
+      self.assertEqual(res["commonIds"].iloc[0], "['DatabaseA.stuff']")
       self.assertEqual(res["allIds"][0], "['DatabaseA.stuff', 'DatabaseA.stuff3']")
 
     def test_1toManyMatchingOnName(self):
@@ -267,19 +267,19 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       res = model.match(model2, keepAllMatches = True)
 
       self.assertEqual(res.shape[0], 4)
-      self.assertEqual(res["Name_score"][0], 1.0000)
-      val = res["Name_score"][1]
+      self.assertEqual(res["Name_score"].iloc[0], 1.0000)
+      val = res["Name_score"].iloc[1]
       self.assertTrue(math.isclose(val, 0.857143, rel_tol=1e-2))
 
       res = model.match(model2, keepAllMatches = False)
       self.assertEqual(res.shape[0], 2)
-      self.assertEqual(res["Name_score"][0], 1.0000)
-      self.assertEqual(res["Name_score"][1], 1.0000)
+      self.assertEqual(res["Name_score"].iloc[0], 1.0000)
+      self.assertEqual(res["Name_score"].iloc[1], 1.0000)
       
       res = model.match(model2, keepAllMatches = True, threshold_name = 0.9)
       self.assertEqual(res.shape[0], 2)
-      self.assertEqual(res["Name_score"][0], 1.0000)
-      self.assertEqual(res["Name_score"][1], 1.0000)
+      self.assertEqual(res["Name_score"].iloc[0], 1.0000)
+      self.assertEqual(res["Name_score"].iloc[1], 1.0000)
 
     def test_1toManyMatchingOnDB(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
@@ -293,19 +293,19 @@ class Test_annotateBulkRoutines(unittest.TestCase):
 
       res = model.match(model2, keepAllMatches = True)
       self.assertEqual(res.shape[0], 4)
-      self.assertEqual(res["DB_score"][0], 1.0000)
-      val = res["DB_score"][1]
+      self.assertEqual(res["DB_score"].iloc[0], 1.0000)
+      val = res["DB_score"].iloc[1]
       self.assertTrue(math.isclose(val, 0.5, rel_tol=1e-2))
 
       res = model.match(model2, keepAllMatches = False)
       self.assertEqual(res.shape[0], 2)
-      self.assertEqual(res["DB_score"][0], 1.0000)
-      self.assertEqual(res["DB_score"][1], 1.0000)
+      self.assertEqual(res["DB_score"].iloc[0], 1.0000)
+      self.assertEqual(res["DB_score"].iloc[1], 1.0000)
 
       res = model.match(model2, keepAllMatches = True, threshold_DB = 0.6)
       self.assertEqual(res.shape[0], 2)
-      self.assertEqual(res["DB_score"][0], 1.0000)
-      self.assertEqual(res["DB_score"][1], 1.0000)
+      self.assertEqual(res["DB_score"].iloc[0], 1.0000)
+      self.assertEqual(res["DB_score"].iloc[1], 1.0000)
 
     def test_1toManyMatchingOnInchi(self):
       metaboliteA: MeMoMetabolite = MeMoMetabolite()
@@ -319,11 +319,13 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       model2 = MeMoModel([metaboliteA, metaboliteB])
       res = model.match(model2, keepAllMatches = True)
       self.assertEqual(res.shape[0], 2)
-      self.assertEqual(res["inchi_score"][0], 1.0000)
-      val = res["inchi_score"][1]
+      self.assertEqual(res["inchi_score"].iloc[0], 1.0000)
+      val = res["inchi_score"].iloc[1]
       self.assertTrue(val==1)
 
       res2 = model.match(model2, keepAllMatches = False)
+      res = res.reset_index(drop=True)
+      res2 = res2.reset_index(drop=True)
       self.assertTrue(all(res==res2)) # it does not make sense to have differences in the 1toMany cases for the inchis
 
     def test_1toManyMatchingOnSumFormula(self):
@@ -339,7 +341,7 @@ class Test_annotateBulkRoutines(unittest.TestCase):
       res = model.match(model2, keepAllMatches = True)
       self.assertEqual(res.shape[0], 4)
       self.assertEqual(res["formula_score"][0], 1.0000)
-      val = res["formula_score"][1]
+      val = res["formula_score"].iloc[1]
       self.assertTrue(val != 1)
 
 
