@@ -66,7 +66,8 @@ def main(args: argparse.Namespace):
         matching_table = filter_matching_table(matching_table,
                                                Inchi_threshold = args.InChI_threshold,
                                                DB_threshold = args.DB_threshold,
-                                               Name_threshold = args.Name_threshold)
+                                               Name_threshold = args.Name_threshold,
+                                               score_type = args.score_type)
 
         # merge the models and save to sbml
         merger = ModelMerger(model1, model2, matching_table)
@@ -99,9 +100,11 @@ if __name__ == '__main__':
     parser.add_argument('--allow_missing_dbs', action='store_true', help='If set to true program does not abort if a databse is missing')
     parser.add_argument('--merged-output', action='store', default = "merged_model.xml", help='Path where the merged model should be stored (as an SBML file)', type = Path)
     parser.add_argument('--save-translated-model', action='store_true', default=False, help='Should the merged models be saved as individual sbml files?')
-    parser.add_argument("--InChI-threshold", action = "store", default = 0, type = float, help = "Minimum InChI threshold which needs to be achieved to retain a match in the matching table (note InChI score is either 0 or 1)")
-    parser.add_argument("--DB-threshold", action = "store", default = 0, type = float, help = "Minimum DB threshold which needs to be achieved to retain a match in the matching table")
-    parser.add_argument("--Name-threshold", action = "store", default = 0, type = float, help = "Minimum name threshold which needs to be achieved to retain a match in the matching table")
+    parser.add_argument("--InChI-threshold", action = "store", default = 1.0, type = float, help = "Minimum InChI score sufficient to retain a match on its own (default: 1.0; score is either 0 or 1)")
+    parser.add_argument("--DB-threshold", action = "store", default = 0.5, type = float, help = "Minimum DB score required together with the name threshold when the InChI threshold is not met (default: 0.5)")
+    parser.add_argument("--Name-threshold", action = "store", default = 0.9, type = float, help = "Minimum name score required together with the DB threshold when the InChI threshold is not met (default: 0.9)")
+
+    parser.add_argument("--score-type", default="total_score", help="Score column used to select the best match per metabolite (default: total_score)")
 
     args = parser.parse_args()
     # Log arguments

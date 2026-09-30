@@ -6,6 +6,7 @@ from __future__ import annotations
 from rdkit import Chem, RDLogger
 from Levenshtein import ratio
 from collections import namedtuple
+import pandas as pd
 from pandas import isna
 
 def matchMetsByInchi(nminchi1: str,
@@ -93,28 +94,37 @@ def matchMetsByName(met1:MeMoMetabolite, met2:MeMoMetabolite) -> NamedResult:
                 score = tmp_score
     return (NamedResult(temp_name_1, temp_name_2, score))
     
-    
-def filter_matching_table(matching_table:pd.DataFrame,
-                          Inchi_threshold : float = 0,
-                          DB_threshold : float = 0,
-                          Name_threshold: float = 0):
-    
-    """
-    Filters candidate met_id2 matches by per-score thresholds, then keeps
-    the best (highest total_score) match per met_id1.
 
-    Inchi_threshold / DB_threshold / Name_threshold:
-        Minimum acceptable value for inchi_score, DB_score, Name_score.
+def filter_matching_table(matching_table: pd.DataFrame,
+                          Inchi_threshold: float = 1.0,
+                          DB_threshold: float = 0.5,
+                          Name_threshold: float = 0.9,
+                          score_type: str = "total_score") -> pd.DataFrame:
+    """Keep the best candidate per met_id1 using the translation score rules.
+
+    Candidates must meet Inchi_threshold or both Name_threshold and
+    DB_threshold. Rank by score_type (descending), breaking ties by metabolite
+    IDs (ascending).
     """
+    required_columns = ["met_id1", "met_id2", "inchi_score", "DB_score",
+                        "Name_score", score_type]
+    for column in required_columns:
+        if column not in matching_table.columns:
+            raise ValueError(f"{column!r} not present in matches table columns")
+
     mask = (
-        (matching_table['inchi_score'] >= Inchi_threshold) &
-        (matching_table['DB_score'] >= DB_threshold) &
-        (matching_table['Name_score'] >= Name_threshold)
+        (matching_table["inchi_score"] >= Inchi_threshold)
+        | (
+            (matching_table["Name_score"] >= Name_threshold)
+            & (matching_table["DB_score"] >= DB_threshold)
+        )
     )
-
-    filtered = matching_table[mask]
-
-    idx = filtered.groupby(["met_id1"])['total_score'].idxmax()
-    best = filtered.loc[idx].sort_values(["met_id1"]).reset_index(drop=True)
-    return best 
-
+    filtered = matching_table.loc[mask].dropna(subset=["met_id1", "met_id2"])
+    return (
+        filtered.sort_values(
+            by=[score_type, "met_id1", "met_id2"],
+            ascending=[False, True, True],
+        )
+        .drop_duplicates(subset=["met_id1"], keep="first")
+        .reset_index(drop=True)
+    )

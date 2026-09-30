@@ -162,7 +162,45 @@ class Test_ModelMerger(unittest.TestCase):
         # test the prefix note in the merged model
         self.assertEqual(mergedMod.notes["MeMoMe_prefixes"],  {'M1': 'e_coli_core', 'M2': 'e_coli_core', 'M3': 'e_coli_core'})
 
+    def test_filter_logic(self):
+        dat = pd.DataFrame(
+            [
+                ["glc__D1", "cpd00001", 0.0, 0.000000, 0.0, 0.036500],
+                ["glc__D2", "cpd00027", 0.5, 0.750000, 0.0, 0.437500],
+                ["glc__D3", "cpd11657", 0.0, 0.153846, 0.0, 0.186462],
+                ["h2o1",    "cpd00001", 0.0, 0.000000, 1.0, 0.250000],
+                ["h2o2",    "cpd00027", 0.0, 0.142857, 0.0, 0.072214],
+                ["h2o3",    "cpd11657", 0.0, 0.363636, 0.0, 0.109909],
+                ["strch1",  "cpd00001", 0.0, 0.000000, 0.0, 0.003500],
+                ["strch2",  "cpd00027", 0.0, 0.133333, 0.0, 0.060333],
+                ["strch3",  "cpd11657", 0.5, 0.933333, 0.0, 0.260333],
+            ],
+    columns=["met_id1", "met_id2", "DB_score", "Name_score", "inchi_score", "total_score"],
+)
+        dat_filt = filter_matching_table(dat,
+                                         Inchi_threshold = 1,
+                                         DB_threshold = 0,
+                                         Name_threshold = 0.5)
+        self.assertEqual(dat_filt.shape[0], 3)
 
+        dat_filt = filter_matching_table(dat,
+                                         Inchi_threshold = 1,
+                                         DB_threshold = 0,
+                                         Name_threshold = 0)
+        self.assertEqual(dat_filt.shape[0], 9)
+
+        dat_filt = filter_matching_table(dat,
+                                         Inchi_threshold = 1,
+                                         DB_threshold = 0.5,
+                                         Name_threshold = 0)
+        self.assertEqual(dat_filt.shape[0], 3)
+        dat_filt = filter_matching_table(dat,
+                                         Inchi_threshold = 1,
+                                         DB_threshold = 0.5,
+                                         Name_threshold = 0.9)
+        self.assertEqual(dat_filt.shape[0], 2)
+
+        
     def test_polymer_handling(self):
         # create a mock model with bigg id starch and modelseed starch
         # bigg model - can import starch and decompose it into glucose
@@ -185,7 +223,7 @@ class Test_ModelMerger(unittest.TestCase):
         # seed model - can import starch and decompose it into glucose
         cpd11657 = cobra.Metabolite( "cpd11657_e", formula="C12H22O11", name="Starch", compartment="e") # 2 glucose starch
         cpd00027 = cobra.Metabolite( "cpd00027_e", formula="C6H12O6", name="D-Glucose", compartment="e")
-        cpd00001 = cobra.Metabolite( "cpd00001_e", formula="H2O", name="H2O", compartment="e")
+        cpd00001 = cobra.Metabolite( "cpd00001_e", formula="H2O", name="water", compartment="e")
         split_strch = cobra.Reaction( "split_strch", name="Starch hydrolysis", lower_bound=-1000, upper_bound=1000)
         # starch + H2O -> 2 glucose
         split_strch.add_metabolites({
@@ -204,10 +242,11 @@ class Test_ModelMerger(unittest.TestCase):
 
         bigg = MeMoModel.fromModel(bigg_model)
         seed = MeMoModel.fromModel(modelseed_model)
-
+        
+        
         # use bigg as reference model
         matches =bigg.match(seed)
-        matches_filt =filter_matching_table(matches)
+        matches_filt =filter_matching_table(matches, DB_threshold = 0.0, Name_threshold = 0.6)
         self.assertEqual(matches_filt.shape[0],3) # test the filtering function
         merger = ModelMerger(bigg, seed, matches_filt)
         merger.translate()
@@ -221,7 +260,7 @@ class Test_ModelMerger(unittest.TestCase):
         
         # use seed as reference model
         matches =seed.match(bigg)
-        matches_filt =filter_matching_table(matches)
+        matches_filt =filter_matching_table(matches, DB_threshold = 0, Name_threshold = 0.6)
         self.assertEqual(matches_filt.shape[0],3) # test the filtering function
         merger = ModelMerger(seed, bigg, matches_filt)
         merger.translate()

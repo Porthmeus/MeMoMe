@@ -180,7 +180,6 @@ class MeMoModel:
                   output_names = output_names)
           res_formula = self.matchOnSumFormula(model2,
                   output_formulas = output_formulas)
-
           res = res_inchi.merge(res_db, how = "outer", on = ["met_id1","met_id2"],suffixes=["_inchi","_db"])
           res = res.merge(res_name, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_name"])
           res = res.merge(res_formula, how = "outer", on = ["met_id1","met_id2"],suffixes=["","_formula"])
@@ -220,7 +219,6 @@ class MeMoModel:
               miss_mets2 = list(set([x.id for x in model2.metabolites]) - set(res["met_id2"]))
               missing_df2 = pd.DataFrame({"met_id2":miss_mets2})
               res = pd.concat([res,missing_df1, missing_df2])
-
 
           return(res)
 
@@ -303,7 +301,6 @@ class MeMoModel:
                 ratio =  m1_carbons / m2_carbons
                 results["carbon_ratio"].append(ratio)
 
-        print(results)
         return pd.DataFrame(results)
   
     @staticmethod
