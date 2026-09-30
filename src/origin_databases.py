@@ -24,7 +24,9 @@ def origin_databases(metabolites:list[MeMoMetabolite]) -> dict:
       try:
           df = pd.read_table(db_path, sep = ",", low_memory=False)
           metabolites_count = df_metabolites["model_metabolites"].isin(df["id"]).sum()
-          metabolite_namespace[db] = metabolites_count / len(df_metabolites["model_metabolites"])
+          l = len(df_metabolites["model_metabolites"])
+          assert l > 0
+          metabolite_namespace[db] = metabolites_count / l
       except FileNotFoundError as e:
           warnings.warn(str(e))
 
