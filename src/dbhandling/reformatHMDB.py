@@ -156,7 +156,7 @@ def do_all(df: pd.DataFrame) -> pd.DataFrame:
     dat_all = pd.concat([dat_all, DBsF], axis = 1)
     dat_all.columns = ["id", "name","inchi","DBs"]
     df.index = df["id"]
-    dat_all = pd.concat([dat_all, df[["smiles", "inchi_key"]]], axis = 1)
+    dat_all = pd.concat([dat_all, df[["smiles", "inchi_key", "formula"]]], axis = 1)
     print("Concated columns")
     dat_all = reformat_small_ids(dat_all)
     print("Added small ids")

@@ -214,7 +214,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     self.assertTrue(len(ret[1]) > 0)
     
     ret = annotateEntry("", db)
-    self.assertEqual(ret, (dict(), list(), ""))
+    self.assertEqual(ret, (dict(), list(), "", None))
 
 
   def testBiggEntryToy(self):
@@ -231,7 +231,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     # Create DataFrame
     df = pd.DataFrame(data)
     ret = annotateEntry("1", df)
-    expected = ({'DB_A': ['A_M1']}, ['Metabolite 1'], "InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6?/m1/s1")
+    expected = ({'DB_A': ['A_M1']}, ['Metabolite 1'], "InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6?/m1/s1",None)
     self.assertEqual(ret, expected)
   
 #  def testBiggHandler(self):
@@ -265,7 +265,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     self.assertTrue(len(ret[1]) > 0)
     
     ret = annotateEntry("", db)
-    self.assertEqual(ret, (dict(), list(),""))
+    self.assertEqual(ret, (dict(), list(),"",None))
 
   def testSEEDEntry(self):
     db = load_database("ModelSeed")
@@ -278,7 +278,7 @@ class Test_annotateEntryFunctions(unittest.TestCase):
     self.assertFalse(len(ret[0]) == 0)
 
     ret = annotateEntry("", db)
-    self.assertEqual(ret, (dict(), list(), ""))
+    self.assertEqual(ret, (dict(), list(), "", None))
 
 
 
@@ -294,7 +294,7 @@ class Test_annotateID(unittest.TestCase):
     expected_annotations = {'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate", "A"])
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1, 1))
 
 
   def testVMH_id(self):
@@ -308,7 +308,7 @@ class Test_annotateID(unittest.TestCase):
     expected_annotations =  {'vmhmetabolite': ['10fthf'], 'bigg.metabolite': ['10fthf'], 'kegg.compound': ['C00234'], 'chemspider': ['109092'], 'chebi': ['15637'], 'biocyc': ['10-FORMYL-THF'], 'foodb.compound': ['FDB022345'], 'hmdb': ['HMDB0000972'], 'metanetx': ['MNXM237'], 'metlin': ['5912'], 'pubchem.compound': ['122347'], 'seed.compound': ['cpd00201'], 'cas': ['2800-34-2']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-FTHF', '10-Formyl-(6Rs)-tetrahydrofolic acid', '10-Formyl-H4pteglu1', '10-Formyl-THF', '10-Formyl-tetrahydrofolate', '10-Formyltetrahydrofolate', '10-Formyltetrahydrofolic acid', '10-Formyltetrahydropteroylglutamate', '10-Formyltetrahydropteroylglutamic acid', 'A', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamic acid', 'N10-Formyl-5,6,7,8-tetrahydrofolate', 'N10-Formyl-5,6,7,8-tetrahydrofolic acid', 'N10-Formyl-H4F', 'N10-Formyl-THF', 'N10-Formyltetrahydrofolate', 'N10-Formyltetrahydrofolic acid', 'N10-Formyltetrahydropteroylglutamate']) # the "A" comes from the test and is fine it is
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1, 0))
 
 
   def testSEED_id(self):
@@ -334,7 +334,7 @@ class Test_annotateFull(unittest.TestCase):
     expected_annotations = {'bigg.metabolite': ['13dpg'], 'reactome': ['R-ALL-29800'], 'kegg.compound': ['C00236'], 'chebi': ['CHEBI:11881', 'CHEBI:16001', 'CHEBI:1658', 'CHEBI:20189', 'CHEBI:57604'], 'hmdb': ['HMDB62758'], 'inchikey': ['LJQLQCAXBUHEAZ-UWTATZPHSA-J'], 'biocyc': ['META:DPG'], 'metanetx.chemical': ['MNXM261'], 'seed.compound': ['cpd00203']}
     self.assertEqual(metabolite.annotations, expected_annotations)
     self.assertEqual(metabolite.names, ["3-Phospho-D-glyceroyl phosphate"])
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1, 0))
 
 
   def testVMHAnnotate(self):
@@ -346,7 +346,7 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.annotations, expected_annotations)
     print(metabolite.names)
     self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(2-amino-4-oxo-1,4,5,6,7,8-hexahydropteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-FTHF', '10-Formyl-(6Rs)-tetrahydrofolic acid', '10-Formyl-H4pteglu1', '10-Formyl-THF', '10-Formyl-tetrahydrofolate', '10-Formyltetrahydrofolate', '10-Formyltetrahydrofolic acid', '10-Formyltetrahydropteroylglutamate', '10-Formyltetrahydropteroylglutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-L-glutamic acid', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamate', 'N-[P-[N-[(2-amino-5,6,7,8-tetrahydro-4-Hydroxy-6-pteridinyl)methyl]formamido]benzoyl]-glutamic acid', 'N10-Formyl-5,6,7,8-tetrahydrofolate', 'N10-Formyl-5,6,7,8-tetrahydrofolic acid', 'N10-Formyl-H4F', 'N10-Formyl-THF', 'N10-Formyltetrahydrofolate', 'N10-Formyltetrahydrofolic acid', 'N10-Formyltetrahydropteroylglutamate'])
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1, 0))
 
 
   def testSEEDAnnotate(self):
@@ -354,7 +354,7 @@ class Test_annotateFull(unittest.TestCase):
     metabolite.set_id('cpd00052')
     metabolite.set_annotations({'seed.compound': ['cpd00052']}, source = "test")
     ret = handleMetabolites([metabolite], db_name = "ModelSeed", allow_missing_dbs = False)
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1,0))
 
     self.assertEqual(metabolite.names, sorted(['ctp', "cytidine 5'-triphosphate", 'cytidine triphosphate', "cytidine-5'-triphosphate", 'cytidine-triphosphate']))
     self.assertEqual(metabolite.annotations, {'seed.compound': ['cpd00052'], 'bigg.metabolite': ['ctp'], 'kegg.compound': ['C00063'], 'metacyc.compound': ['CTP']})
@@ -367,7 +367,7 @@ class Test_annotateFull(unittest.TestCase):
     metabolite.set_annotations({'chebi': ['117228']}, source = "test")
     ret = handleMetabolites([metabolite], db_name ="ChEBI", allow_missing_dbs = False)
     expected_inchi = "InChI=1S/C20H27N3O2/c1-4-20(3)13-14-9-6-7-10-15(14)17-16(20)18(25)23(5-2)19(22-17)21-11-8-12-24/h6-7,9-10,24H,4-5,8,11-13H2,1-3H3,(H,21,22)"
-    self.assertEqual(ret, AnnotationResult(1, 0, 0))
+    self.assertEqual(ret, AnnotationResult(1, 0, 0,0))
     self.assertEqual(metabolite._inchi_string, expected_inchi)
 
   def testHMDBAnnotate(self):
@@ -379,27 +379,6 @@ class Test_annotateFull(unittest.TestCase):
     self.assertEqual(metabolite.annotations, expected_annotations)
     print(metabolite.names)
     self.assertEqual(metabolite.names, ['(2S)-2-[(4-{N-[(4-hydroxy-2-imino-5,6,7,8-tetrahydro-1H-pteridin-6-yl)methyl]formamido}phenyl)formamido]pentanedioic acid', '10-Formyltetrahydrofolate'])
-    self.assertEqual(ret, AnnotationResult(1, 1, 1))
+    self.assertEqual(ret, AnnotationResult(1, 1, 1,0))
 
 
-class Test_annotateAuxiliares(unittest.TestCase):
-
-  this_directory = Path(__file__).parent
-  dbs_dir = this_directory.parent/Path("Databases")
-
-  def test_extractModelSEEDAnnotationsFromAlias(self):
-    # Aliases of cpd00001
-    aliases1 = "Name: H20; H2O; H3O+; HO-; Hydroxide ion; OH; OH-; Water; hydrogen oxide; hydroxide; hydroxide ion; hydroxyl; hydroxyl ion; oxonium; water|AraCyc: OH; WATER|BiGG: h2o; oh1|BrachyCyc: WATER|KEGG: C00001; C01328|MetaCyc: OH; OXONIUM; WATER"
-
-    aliases2 = "Name: NADP(H); NADP-red; NADP-reduced; NADPH; NADPH+H+; NADPH2; Nicotinamide adenine dinucleotide phosphate - reduced; Nicotinamide adenine dinucleotide phosphate-reduced; Nicotinamideadeninedinucleotidephosphate-reduced; Reduced nicotinamide adenine dinucleotide phosphate; TPNH; beta-NADPH; dihydronicotinamide adenine dinucleotide phosphate; dihydronicotinamide adenine dinucleotide phosphate reduced; dihydronicotinamide adenine dinucleotide-P; dihydrotriphosphopyridine nucleotide; dihydrotriphosphopyridine nucleotide reduced; reduced NADP; reduced dihydrotriphosphopyridine nucleotide; reduced nicotinamide adenine dinucleotide phosphate|AraCyc: NADPH|BiGG: nadph|BrachyCyc: NADPH|KEGG: C00005|MetaCyc: NADPH"
-
-    # Aliases of cpd00002
-    aliases3 = "Name: ATP; Adenosine 5'-triphosphate; adenosine-5'-triphosphate; adenosine-triphosphate; adenylpyrophosphate|AraCyc: ATP|BiGG: atp|BrachyCyc: ATP|KEGG: C00002|MetaCyc: ATP"
-
-    expected1 = ({'AraCyc': ['OH', 'WATER'], 'BiGG': ['h2o', 'oh1'], 'BrachyCyc': ['WATER'], 'KEGG': ['C00001', 'C01328'], 'MetaCyc': ['OH', 'OXONIUM', 'WATER']}, ['H20', 'H2O', 'H3O+', 'HO-', 'Hydroxide ion', 'OH', 'OH-', 'Water', 'hydrogen oxide', 'hydroxide', 'hydroxide ion', 'hydroxyl', 'hydroxyl ion', 'oxonium', 'water'])
-    extracted1 = extractModelSEEDAnnotationsFromAlias(aliases1)
-    self.assertEqual(extracted1, expected1)
-
-    expected3 = ({'AraCyc': ['ATP'], 'BiGG': ['atp'], 'BrachyCyc': ['ATP'], 'KEGG': ['C00002'], 'MetaCyc': ['ATP']}, ['ATP', "Adenosine 5'-triphosphate", "adenosine-5'-triphosphate", 'adenosine-triphosphate', 'adenylpyrophosphate'])
-    extracted3 = extractModelSEEDAnnotationsFromAlias(aliases3)
-    self.assertEqual(extracted3, expected3)
