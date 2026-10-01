@@ -158,3 +158,5 @@ tests/utils/.~lock.stuff.csv#
 tests/utils/__init.py__
 tests/utils/stuff.csv
 vmh_formatted.csv
+
+AGENTS.md
