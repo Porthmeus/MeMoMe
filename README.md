@@ -66,3 +66,6 @@ cd into the MeMoMe folder
 ```bash
 docker compose run prod # This will run the tests
 ```
+
+
+python3 utils/benchmark_matching.py --memome matching_tables/gapseq_recon3D_matching_table.csv --reference tests/dat/manually_merged_models/gapseq_recon3D/met_matches.csv 
