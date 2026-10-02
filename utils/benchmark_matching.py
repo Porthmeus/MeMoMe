@@ -27,6 +27,8 @@ How reference ids are matched to MeMoMe ids:
     the SBML escaping of special characters is applied ('ala-L' -> 'ala__45__L').
     The start of the output reports how many reference pairs were found in the
     MeMoMe table - pairs that are not found count as FN for every cutoff.
+    Because compartments are dropped, one id covers a metabolite in all of its
+    compartments: 'tre_c' and 'tre_e' in the reference are the same pair 'tre'.
 
 Scoring:
     TP  predicted pair that is in the reference
@@ -46,6 +48,13 @@ Exchange-only mode (--exchanges-only, needs --model1/--model2):
     Exchange metabolites are the participants of reactions with a single
     (non-boundary) metabolite that sit in the external compartment, taken as the
     compartment holding most of these reactions (sinks/demands are excluded).
+    The chosen external compartment of each model is printed - check it if a
+    model has unusual compartments.
+    The SBML files are read with libsbml, not cobra, and the ids are stripped like
+    above: cobra would decode 'ala__45__L' to 'ala-L', which is not the id in the
+    matching table. As the ids carry no compartment, "exchange metabolite" means
+    "this metabolite has an exchange reaction in the external compartment" - the
+    same compartment-free lookup ModelMerger.translate() does.
     Reference pairs outside the scope are dropped and listed in the output.
 
 Picking the best cutoffs:
@@ -146,9 +155,10 @@ def _sbml_escape(met_id: str) -> str:
     return re.sub(r"[^A-Za-z0-9_]", lambda m: f"__{ord(m.group())}__", met_id)
 
 
-def exchange_metabolite_ids(sbml_path: Path) -> set[str]:
+def exchange_metabolite_ids(sbml_path: Path) -> tuple[set[str], str | None]:
     """
-    Return the MeMoMe ids of all metabolites that are exchanged with the environment.
+    Return the MeMoMe ids of all metabolites that are exchanged with the environment, and
+    the compartment that was taken as the external one (None if there are no exchanges).
     Parameters
     ----------
         sbml_path : Path - the SBML model the matching table was created from
@@ -176,12 +186,12 @@ def exchange_metabolite_ids(sbml_path: Path) -> set[str]:
     # cobra.medium.find_external_compartment, take the compartment holding most of these
     # reactions as the external one and keep only its metabolites
     if not exchanged:
-        return set()
+        return set(), None
     external = Counter(compartment_of[sp] for sp in exchanged).most_common(1)[0][0]
     ids = {handle_metabolites_prefix_suffix(sp) for sp in exchanged if compartment_of[sp] == external}
     # handle_metabolites_prefix_suffix returns None for invalid cpd ids
     ids.discard(None)
-    return ids
+    return ids, external
 
 
 def load_reference(path: Path, memome: pd.DataFrame,
@@ -308,12 +318,16 @@ def main() -> None:
 
     scope = None
     if args.exchanges_only:
-        scope = (exchange_metabolite_ids(args.model1), exchange_metabolite_ids(args.model2))
+        ex1, external1 = exchange_metabolite_ids(args.model1)
+        ex2, external2 = exchange_metabolite_ids(args.model2)
+        scope = (ex1, ex2)
+        # print the guessed external compartments so a wrong guess is noticed
+        print(f"Exchanges only: external compartment '{external1}' in model1, '{external2}' in model2")
         # reference pairs outside the scope could never be predicted in scope - drop them
         # instead of counting them as FN, and say which ones so they can be checked
         out_of_scope = sorted(p for p in reference if p[0] not in scope[0] or p[1] not in scope[1])
         reference = reference - set(out_of_scope)
-        print(f"Exchanges only: {len(scope[0])} exchange metabolites in model1, {len(scope[1])} in model2 | "
+        print(f"  {len(scope[0])} exchange metabolites in model1, {len(scope[1])} in model2 | "
               f"{len(reference)} reference pairs in scope")
         if out_of_scope:
             print(f"  {len(out_of_scope)} reference pairs dropped (not exchanged in both models): {out_of_scope}")
