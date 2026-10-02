@@ -6,7 +6,7 @@ import pandas as pd
 import warnings
 import os
 import sys
-from typing import Callable, List, NewType
+from typing import Callable, List, NamedTuple, NewType
 from src.download_db import get_config, get_database_path
 from src.MeMoMetabolite import MeMoMetabolite
 from src.annotation.annotateInchiRoutines import findOptimalInchi
@@ -21,15 +21,25 @@ DBKey = NewType('DBKey', str)
 EntryAnnotationFunction = Callable[[AnnotationKey, pd.DataFrame, bool], tuple[dict, list, str]]
 
 def annotateEntry(entry,
-                  database:pd.DataFrame = pd.DataFrame()) -> tuple[dict, list, str, str | None]:
+                  database:pd.DataFrame = pd.DataFrame(),
+                  index: dict | None = None) -> tuple[dict, list, str, str | None]:
     """Takes an entry (id) for the database (db_name) and retrieves the annotations from the database.
+    index: optional id -> row positions mapping of the database (see indexDatabase). Without it
+    the database is scanned for the entry, which is slow for large databases.
     Return: A tuple with a dictionary containing the crosslinks to other databases, a list with alternative trivial names for the metabolite, the InChI string and the string from which database the annotation was obtained"""
     if database.empty:
         return dict(), list(), "", None
-    
+
+    # select the rows of the entry once - comparing the whole id column for every
+    # lookup was the main cost of the annotation
+    if index is not None:
+        rows = database.iloc[index.get(entry, [])]
+    else:
+        rows = database.loc[database["id"] == entry]
+
     # get the names of the entry
     if "name" in database.columns:
-        names = database.loc[database["id"] == entry, "name"]
+        names = rows["name"]
         all_names = list()
         for name in names:
             if not pd.isna(name):
@@ -40,7 +50,7 @@ def annotateEntry(entry,
     
     # get annotations
     if "DBs" in database.columns:
-        annos = database.loc[database["id"] == entry, "DBs"]
+        annos = rows["DBs"]
         all_annos = []
         for anno in annos:
             if anno.startswith("{") and anno.endswith("}"):
@@ -57,7 +67,7 @@ def annotateEntry(entry,
         merged_annos = dict()
     # get the inchi string
     if "inchi" in database.columns:
-        inchis = database.loc[database["id"] == entry, "inchi"]
+        inchis = rows["inchi"]
         inchis = inchis.dropna()
         if len(inchis) != 0:
             opt_inchi = findOptimalInchi(inchis.tolist())
@@ -65,7 +75,7 @@ def annotateEntry(entry,
             opt_inchi = ""
     
     if "formula" in database.columns:
-        formula_series = database.loc[database["id"] == entry, "formula"]
+        formula_series = rows["formula"]
         formula_series = formula_series.dropna()
 
         if not formula_series.empty:
@@ -137,24 +147,51 @@ def load_database(db_name: str = "", allow_missing_dbs: bool = False) -> pd.Data
     db = pd.DataFrame()
   return(db)
 
-def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_dbs: bool = False) -> AnnotationResult:
+
+class IndexedDatabase(NamedTuple):
+  """A loaded database together with its id -> row positions index (see indexDatabase)."""
+  frame: pd.DataFrame
+  index: dict
+
+
+def indexDatabase(db: pd.DataFrame) -> dict:
+  """
+  Map every id of the database to the positions of its rows, so entries can be looked up
+  without scanning the whole id column. Row order is kept, so the lookup returns the rows
+  in the same order as a boolean selection would.
+  """
+  if db.empty or "id" not in db.columns:
+    return dict()
+  return db.groupby("id", sort = False).indices
+
+
+def loadIndexedDatabase(db_name: str = "", allow_missing_dbs: bool = False) -> IndexedDatabase:
+  """Load the given database (see load_database) and index it by id."""
+  db = load_database(db_name, allow_missing_dbs)
+  return IndexedDatabase(db, indexDatabase(db))
+
+def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_dbs: bool = False,
+              database: IndexedDatabase | None = None) -> AnnotationResult:
   """
   Checks for each metabolite if the metabolite id can be found in the column `db_key` can be found in `db`. 
   db: a dataframe with columns `db_key`. This column will be comparted to the metabolite id (met._id)
   metabolites: A list of metabolites that will be checked
   db_key: The column in the db dataframe
   annotation_function: Defines how to get an entry from the db which the given met._id (Check annotateVMH/BiGG for example usages.
+  database: the already loaded and indexed database - if None it is loaded from disk
   """
-  db = load_database(db_name, allow_missing_dbs)
+  # load only if the caller did not pass the database, loading is slow for the large databases
+  if database is None:
+    database = loadIndexedDatabase(db_name, allow_missing_dbs)
+  db, db_index = database
   new_annos = 0
   new_names = 0
   new_inchis = 0
   new_formulas = 0
   source = db_name
   for met in metabolites:
-    if any(db["id"]==met._id):
-      if met._id is None: raise Exception("met._id is None")
-      new_met_anno_entry, new_names_entry, new_inchi_entry, new_formula = annotateEntry(met._id,  db)
+    if met._id in db_index:
+      new_met_anno_entry, new_names_entry, new_inchi_entry, new_formula = annotateEntry(met._id, db, db_index)
       # add names
       if len(new_names_entry) >0:
           x = met.add_names(new_names_entry, source)
@@ -178,8 +215,10 @@ def handleIDs(metabolites: List[MeMoMetabolite], db_name:DBName,  allow_missing_
   return anno_result
 
 
-def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_missing_dbs: bool = False) -> AnnotationResult:
-    """Checks the annotation dictionary entries and use them for further annotation of the metabolites"""
+def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_missing_dbs: bool = False,
+                      database: IndexedDatabase | None = None) -> AnnotationResult:
+    """Checks the annotation dictionary entries and use them for further annotation of the metabolites
+    database: the already loaded and indexed database - if None it is loaded from disk"""
     # conversion from internal database annotation to identifier.org annotation
     # TODO save this as yaml to enable user annotation tables
     db_keys = {"BiGG" : "bigg.metabolite",
@@ -188,7 +227,10 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
                "ModelSeed" : "seed.compound",
                "ChEBI" : "chebi"}
     db_key = db_keys[db_name]
-    db = load_database(db_name, allow_missing_dbs)
+    # load only if the caller did not pass the database, loading is slow for the large databases
+    if database is None:
+        database = loadIndexedDatabase(db_name, allow_missing_dbs)
+    db, db_index = database
     new_annos_added = 0
     new_names_added = 0
     new_inchis_added = 0
@@ -202,7 +244,7 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
         new_formula = None
         if db_key in met.annotations.keys():
             for entry in met.annotations[db_key]:
-                new_met_anno_entry, new_names_entry, inchi, new_formula = annotateEntry(entry, db)
+                new_met_anno_entry, new_names_entry, inchi, new_formula = annotateEntry(entry, db, db_index)
                 for key, value in new_met_anno_entry.items():
                     if key in new_met_anno.keys():
                         new_met_anno[key].extend(value)
@@ -233,6 +275,6 @@ def handleMetabolites(metabolites: List[MeMoMetabolite],  db_name:DBName, allow_
                  x = met.add_formula(new_formula, source)
                  new_formulas_added = new_formulas_added + x
 
-    anno_result = AnnotationResult(new_inchis_added, new_names_added, new_names_added, new_formulas_added)
+    anno_result = AnnotationResult(new_inchis_added, new_annos_added, new_names_added, new_formulas_added)
     return anno_result
 

@@ -19,7 +19,7 @@ from deepdiff import DeepDiff
 from rdkit import Chem
 from copy import deepcopy, copy
 from src.download_db import get_config
-from src.annotation.annotateAux import AnnotationResult, DBName, handleIDs, handleMetabolites
+from src.annotation.annotateAux import AnnotationResult, DBName, handleIDs, handleMetabolites, loadIndexedDatabase
 from src.matchMets import matchMetsByDB, matchMetsByInchi, matchMetsByName
 from src.parseMetaboliteInfos import parseMetaboliteInfoFromSBML, parseMetaboliteInfoFromSBMLMod, \
     parseMetaboliteInfoFromCobra
@@ -83,42 +83,37 @@ class MeMoModel:
         origin_db = max(origin_dbs, key = lambda k: origin_dbs[k])
         print(f"ORIG DB {origin_db}")
         print(f"Origin DB fractions: {origin_dbs}")
-
         logger.debug(origin_db)
-        final_numbers = handleIDs(metabolites = self.metabolites,
-                                  db_name = origin_db,
-                                  allow_missing_dbs = allow_missing_dbs)
 
+        # load and index every database once - they are used in every pass below and
+        # reloading them for each call was a large part of the runtime
+        db_names = [db_name for db_name in get_config()["databases"].keys()
+                    if db_name not in ["Identifiers", "TestCase"]]
+        databases = {db_name: loadIndexedDatabase(db_name, allow_missing_dbs) for db_name in db_names}
+
+        # id based annotation - the database the ids most likely come from goes first,
+        # then the others in config order
         final_numbers = AnnotationResult(0,0,0,0)
-        id_based_threshold = 0.8
-        id_based_applied = []
+        id_based_order = [origin_db] + [db_name for db_name in db_names if db_name != origin_db]
+        for db_name in id_based_order:
+            if db_name not in databases:
+                continue
+            temp_result = handleIDs(self.metabolites, db_name, allow_missing_dbs,
+                                    database = databases[db_name])
+            print(f"{db_name} (id):", temp_result)
+            final_numbers = final_numbers + temp_result
 
-        for db_name in get_config()["databases"].keys():
-            if db_name not in ["Identifiers", "TestCase"]:
-              temp_result = handleIDs(self.metabolites, db_name, allow_missing_dbs)
-              print(f"{db_name} (id):", temp_result)
-              final_numbers = final_numbers + temp_result
-              id_based_applied.append(db_name)
-
-        if not id_based_applied:
-            cpd_count = sum(1 for met in self.metabolites if met._id and met._id.startswith("cpd"))
-            cpd_ratio = cpd_count / len(self.metabolites) if self.metabolites else 0
-            if cpd_ratio >= id_based_threshold:
-                temp_result = handleIDs(self.metabolites, DBName("ModelSeed"), allow_missing_dbs)
-                print("ModelSEED (id fallback):", temp_result)
-                final_numbers = final_numbers + temp_result
-                id_based_applied.append("ModelSEED")
-        print(f"ID-based annotators applied: {id_based_applied or 'none'} (threshold {id_based_threshold})")
-
+        # annotation based on the cross references - repeat until no new information is
+        # found, as each pass can add cross references that lead into another database
         total = 1
         while total != 0:
             # count the number of newly annotated metabolites
             anno_result= AnnotationResult(0,0,0,0)
-            for db_name in get_config()["databases"].keys():
-                if db_name not in ["Identifiers", "TestCase"]:
-                    temp_result = handleMetabolites(self.metabolites, db_name, allow_missing_dbs)
-                    print(db_name + ":", temp_result)
-                    anno_result = anno_result + temp_result
+            for db_name in db_names:
+                temp_result = handleMetabolites(self.metabolites, db_name, allow_missing_dbs,
+                                                database = databases[db_name])
+                print(db_name + ":", temp_result)
+                anno_result = anno_result + temp_result
             final_numbers = final_numbers + anno_result
             total = anno_result.annotated_total
         # mark the model as annotated
